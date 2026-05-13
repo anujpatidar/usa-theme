@@ -1,0 +1,117 @@
+<div class="frido-split">
+  <div class="frido-page-width">
+    <div class="frido-split__grid{% if section.settings.image_position == 'right' %} frido-split__grid--media-right{% endif %}">
+      <div class="frido-split__media">
+        {% if section.settings.image != blank %}
+          {%- assign split_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '550,750,1100,1200', sizes: '(min-width: 990px) 45vw, 100vw', alt: split_alt }}
+        {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'class="placeholder-svg"' }}
+        {% endif %}
+      </div>
+      <div class="frido-split__prose">
+        {% if section.settings.heading != blank %}
+          <h2>{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.body != blank %}
+          <div class="rte">{{ section.settings.body }}</div>
+        {% endif %}
+        {% if section.blocks.size > 0 %}
+          <div class="frido-feature-list" style="margin-top:2rem">
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <div {{ block.shopify_attributes }}>
+                  {% render 'frido-feature-item', title: block.settings.title, text: block.settings.text, icon: block.settings.icon %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — image & features",
+  "tag": "section",
+  "class": "section-frido-split",
+  "settings": [
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Desktop image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Experience ultimate foot comfort with Frido!"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Text",
+      "default": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Wide Toe Box" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Give your toes room to spread naturally for better balance."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "foot", "label": "Foot" },
+            { "value": "align", "label": "Alignment" },
+            { "value": "flex", "label": "Flexible" },
+            { "value": "sole", "label": "Sole" }
+          ],
+          "default": "foot"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Frido — image & features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Wide Toe Box",
+            "text": "Give your toes room to spread naturally for better balance.",
+            "icon": "foot"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Natural Cushioning",
+            "text": "Responsive cushioning that supports every step.",
+            "icon": "sole"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

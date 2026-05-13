@@ -1,0 +1,42 @@
+<div class="frido-as-seen">
+  <div class="frido-page-width">
+    {% if section.settings.label != blank %}
+      <p class="frido-as-seen__label">{{ section.settings.label | escape }}</p>
+    {% endif %}
+    <div class="frido-as-seen__logos">
+      {% for block in section.blocks %}
+        {% if block.type == 'logo' and block.settings.image != blank %}
+          <div {{ block.shopify_attributes }}>
+            {%- assign logo_alt = block.settings.image.alt | default: 'Press logo' | escape -%}
+            {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: logo_alt }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — as seen on",
+  "tag": "section",
+  "class": "section-frido-as-seen",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "AS SEEN ON SPONSORED CONTENT."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "Frido — as seen on" }]
+}
+{% endschema %}

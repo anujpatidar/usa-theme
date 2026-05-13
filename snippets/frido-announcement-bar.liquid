@@ -1,0 +1,27 @@
+{% comment %}
+  @param message {String} HTML allowed if caller uses | newline - prefer escape in section
+  @param help_url
+  @param track_url
+{% endcomment %}
+<div class="frido-announcement">
+  <div class="frido-announcement__inner frido-page-width">
+    <div class="frido-announcement__center">
+      {% if message != blank %}
+        {{ message }}
+      {% endif %}
+    </div>
+    <div class="frido-announcement__right">
+      {% if help_url != blank %}
+        <a href="{{ help_url }}">Help</a>
+      {% else %}
+        <a href="{{ pages.contact.url | default: routes.root_url }}">Help</a>
+      {% endif %}
+      <span class="frido-announcement__sep">|</span>
+      {% if track_url != blank %}
+        <a href="{{ track_url }}">Track Your Order</a>
+      {% else %}
+        <a href="{{ routes.root_url }}/pages/track-order">Track Your Order</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

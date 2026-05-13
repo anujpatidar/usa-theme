@@ -1,0 +1,127 @@
+{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+
+<footer class="frido-footer">
+  <div class="frido-page-width frido-footer__grid">
+    <div>
+      <span class="frido-footer__logo">{{ section.settings.logo_text | default: 'Frido' | escape }}</span>
+      {% if section.settings.brand_text != blank %}
+        <p class="frido-footer__muted">{{ section.settings.brand_text }}</p>
+      {% endif %}
+      {% if section.settings.hours != blank %}
+        <p class="frido-footer__muted" style="margin-top:1rem">{{ section.settings.hours | escape }}</p>
+      {% endif %}
+      {% if section.settings.email != blank %}
+        <p class="frido-footer__muted" style="margin-top:0.6rem">
+          <a href="mailto:{{ section.settings.email }}">{{ section.settings.email | escape }}</a>
+        </p>
+      {% endif %}
+      {% if section.settings.show_social %}
+        <div class="frido-footer__social">
+          {% render 'social-icons' %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <h3 class="frido-footer__heading">{{ section.settings.newsletter_heading | escape }}</h3>
+      <p class="frido-footer__muted" style="margin-bottom:1rem">{{ section.settings.newsletter_text | escape }}</p>
+      {% form 'customer', id: 'FridoFooterNewsletter', class: 'footer-newsletter' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="FridoNewsEmail-{{ section.id }}">Email</label>
+        <input
+          id="FridoNewsEmail-{{ section.id }}"
+          type="email"
+          name="contact[email]"
+          value="{{ form.email }}"
+          placeholder="{{ 'newsletter.label' | t }}"
+          required
+        >
+        <button type="submit" class="frido-footer__subscribe">{{ section.settings.newsletter_button | escape }}</button>
+      {% endform %}
+    </div>
+
+    <div>
+      <h3 class="frido-footer__heading">{{ section.settings.menu_help_title | escape }}</h3>
+      {% if section.settings.menu_help != blank %}
+        <ul>
+          {% for link in section.settings.menu_help.links %}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      <h3 class="frido-footer__heading">{{ section.settings.menu_shop_title | escape }}</h3>
+      {% if section.settings.menu_shop != blank %}
+        <ul>
+          {% for link in section.settings.menu_shop.links %}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      <h3 class="frido-footer__heading">{{ section.settings.menu_company_title | escape }}</h3>
+      {% if section.settings.menu_company != blank %}
+        <ul>
+          {% for link in section.settings.menu_company.links %}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="frido-page-width frido-footer__bottom">
+    <p class="frido-footer__muted" style="margin:0">
+      © {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: shop.name | escape }}. {{ section.settings.copyright_extra | escape }}
+    </p>
+    {% if section.settings.payment_enable %}
+      <ul class="list list-payment" role="list">
+        {% for type in shop.enabled_payment_types %}
+          <li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Frido footer",
+  "class": "section-frido-footer",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Frido" },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand description",
+      "default": "Frido designs healthy barefoot-inspired footwear to support natural movement and all-day comfort."
+    },
+    { "type": "text", "id": "hours", "label": "Support hours", "default": "Customer care: Mon–Fri 9am–5pm EST" },
+    { "type": "text", "id": "email", "label": "Support email", "default": "hello@frido.com" },
+    { "type": "checkbox", "id": "show_social", "label": "Show social icons", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Newsletter" },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "Sign up for drops, guides, and exclusive offers."
+    },
+    { "type": "text", "id": "newsletter_button", "label": "Subscribe button", "default": "Subscribe" },
+    { "type": "text", "id": "menu_help_title", "label": "Help column title", "default": "Help" },
+    { "type": "link_list", "id": "menu_help", "label": "Help menu" },
+    { "type": "text", "id": "menu_shop_title", "label": "Shop column title", "default": "Shop" },
+    { "type": "link_list", "id": "menu_shop", "label": "Shop menu" },
+    { "type": "text", "id": "menu_company_title", "label": "Company column title", "default": "Company" },
+    { "type": "link_list", "id": "menu_company", "label": "Company menu" },
+    { "type": "text", "id": "copyright_name", "label": "Copyright name", "default": "Frido" },
+    { "type": "text", "id": "copyright_extra", "label": "Copyright suffix", "default": "All rights reserved." },
+    { "type": "checkbox", "id": "payment_enable", "label": "Show payment icons", "default": true }
+  ],
+  "presets": [{ "name": "Frido footer" }]
+}
+{% endschema %}

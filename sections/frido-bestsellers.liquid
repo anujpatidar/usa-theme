@@ -1,0 +1,58 @@
+{%- liquid
+  assign coll = section.settings.collection
+  assign limit = section.settings.products_to_show | default: 8
+-%}
+
+<div class="frido-collection">
+  <div class="frido-page-width">
+    <div class="frido-section-head">
+      {% if section.settings.title != blank %}
+        <h2>{{ section.settings.title | escape }}</h2>
+      {% endif %}
+      {% if section.settings.view_all_label != blank %}
+        <a href="{{ coll.url | default: routes.all_products_collection_url }}" class="frido-btn frido-btn--outline">
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="frido-collection__grid{% if section.settings.swipe_mobile %} frido-collection--peek{% endif %}">
+      {% if coll != blank and coll.products_count > 0 %}
+        {% for product in coll.products limit: limit %}
+          {% render 'frido-product-card', card_product: product %}
+        {% endfor %}
+      {% else %}
+        {% for i in (1..4) %}
+          <div class="frido-pcard" style="opacity:0.85">
+            <div class="frido-pcard__img">{{ 'product-apparel-2' | placeholder_svg_tag: 'class="placeholder-svg"' }}</div>
+            <div class="frido-pcard__body">
+              <div class="frido-pcard__cat">WOMEN</div>
+              <h3 class="frido-pcard__title">Frido bestseller</h3>
+              <div class="frido-pcard__row">{% render 'frido-stars', rating: 5 %}<span class="frido-stars__label">(0)</span></div>
+              <div class="frido-pcard__row" style="margin-top:0.6rem">
+                <span class="frido-pcard__price">{{ 1999 | money }}</span>
+                <span class="frido-pcard__compare">{{ 3999 | money }}</span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — bestsellers",
+  "tag": "section",
+  "class": "section-frido-bestsellers",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Bestsellers" },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "SHOP ALL" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 1, "default": 8, "label": "Products" },
+    { "type": "checkbox", "id": "swipe_mobile", "label": "Horizontal scroll on mobile", "default": true }
+  ],
+  "presets": [{ "name": "Frido — bestsellers" }]
+}
+{% endschema %}

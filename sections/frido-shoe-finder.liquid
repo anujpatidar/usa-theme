@@ -1,0 +1,61 @@
+<div class="frido-shoe-finder">
+  <div class="frido-page-width frido-shoe-finder__grid">
+    <div>
+      {% if section.settings.heading != blank %}
+        <h2 style="margin:0 0 0.6rem;font-size:2.6rem;font-weight:800;color:var(--frido-blue-ink)">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <p style="margin:0;font-size:1.5rem;color:var(--frido-gray-600)">{{ section.settings.text | escape }}</p>
+      {% endif %}
+    </div>
+    <div>
+      <form class="frido-shoe-finder__filters" action="{{ section.settings.results_link | default: routes.all_products_collection_url }}" method="get">
+        <label class="visually-hidden" for="frido-g-{{ section.id }}">Gender</label>
+        <select class="frido-select" id="frido-g-{{ section.id }}">
+          <option>{{ section.settings.opt_gender | escape }}</option>
+        </select>
+        <label class="visually-hidden" for="frido-c-{{ section.id }}">Condition</label>
+        <select class="frido-select" id="frido-c-{{ section.id }}">
+          <option>{{ section.settings.opt_condition | escape }}</option>
+        </select>
+        <label class="visually-hidden" for="frido-cat-{{ section.id }}">Category</label>
+        <select class="frido-select" id="frido-cat-{{ section.id }}">
+          <option>{{ section.settings.opt_category | escape }}</option>
+        </select>
+        <label class="visually-hidden" for="frido-a-{{ section.id }}">Activity</label>
+        <select class="frido-select" id="frido-a-{{ section.id }}">
+          <option>{{ section.settings.opt_activity | escape }}</option>
+        </select>
+        <div style="grid-column:1/-1;margin-top:0.8rem">
+          <button type="submit" class="frido-btn frido-btn--yellow" style="width:100%;max-width:28rem">
+            {{ section.settings.button_label | escape }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — shoe finder",
+  "tag": "section",
+  "class": "section-frido-shoe-finder",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shoe Finder" },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subtext",
+      "default": "Find the barefoot shoe that fits your lifestyle."
+    },
+    { "type": "text", "id": "opt_gender", "label": "Gender placeholder", "default": "SELECT GENDER" },
+    { "type": "text", "id": "opt_condition", "label": "Condition placeholder", "default": "SELECT CONDITION" },
+    { "type": "text", "id": "opt_category", "label": "Category placeholder", "default": "SELECT CATEGORY" },
+    { "type": "text", "id": "opt_activity", "label": "Activity placeholder", "default": "SELECT ACTIVITY" },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Find My Shoes" },
+    { "type": "url", "id": "results_link", "label": "Form action URL" }
+  ],
+  "presets": [{ "name": "Frido — shoe finder" }]
+}
+{% endschema %}

@@ -1,0 +1,42 @@
+<div class="frido-support">
+  <div class="frido-page-width frido-support__inner">
+    <div>
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <p>{{ section.settings.text | escape }}</p>
+      {% endif %}
+    </div>
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link | default: routes.root_url }}" class="frido-btn frido-btn--outline">
+        {{ section.settings.button_label | escape }}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — support banner",
+  "tag": "section",
+  "class": "section-frido-support",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Do you have any questions?"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subtext",
+      "default": "Our team is available Mon–Fri, 9am–5pm EST."
+    },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "CONTACT US" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Frido — support banner" }]
+}
+{% endschema %}

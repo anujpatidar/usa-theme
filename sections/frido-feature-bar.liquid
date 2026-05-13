@@ -1,0 +1,55 @@
+<div class="frido-feature-bar">
+  <div class="frido-page-width frido-feature-bar__row">
+    {% for block in section.blocks %}
+      {% if block.type == 'item' %}
+        <div class="frido-feature-bar__item" {{ block.shopify_attributes }}>
+          <div class="frido-feature-bar__icon" aria-hidden="true">
+            {% case block.settings.icon %}
+              {% when 'flex' %}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 4l-3 8h4l-2 8 10-11h-5l4-5H7z"/></svg>
+              {% else %}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 20c2-6 2-10 4-14 1 2 2 5 2 8h2c0-4 1-7 2-9 2 4 2 8 4 15"/></svg>
+            {% endcase %}
+          </div>
+          <div class="frido-feature-bar__text">
+            <strong>{{ block.settings.title | escape }}</strong>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — feature bar",
+  "tag": "section",
+  "class": "section-frido-feature-bar",
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Zero Drop Sole" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [{ "value": "foot", "label": "Foot" }, { "value": "flex", "label": "Flexible" }],
+          "default": "foot"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Frido — feature bar",
+      "blocks": [
+        { "type": "item", "settings": { "title": "Zero Drop Sole", "icon": "foot" } },
+        { "type": "item", "settings": { "title": "Ultra Flexible Material", "icon": "flex" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

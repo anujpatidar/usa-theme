@@ -1,0 +1,21 @@
+{% comment %}
+  @param label {String}
+  @param url {String}
+  @param style {String} blue | yellow | outline
+  @param class {String} extra classes
+  @param wide {Boolean} full width when true
+  @param show_arrow {Boolean}
+{% endcomment %}
+{%- liquid
+  assign btn_style = style | default: 'blue'
+  assign is_block = wide | default: false
+-%}
+<a
+  href="{{ url | default: '#' }}"
+  class="frido-btn frido-btn--{{ btn_style }}{% if is_block %} frido-btn--block{% endif %}{% if class != blank %} {{ class }}{% endif %}"
+>
+  {{- label -}}
+  {%- if show_arrow == true -%}
+    <span aria-hidden="true">→</span>
+  {%- endif -%}
+</a>

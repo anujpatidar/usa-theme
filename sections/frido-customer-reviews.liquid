@@ -1,0 +1,73 @@
+<div class="frido-reviews">
+  <div class="frido-page-width">
+    {% if section.settings.heading != blank %}
+      <h2 style="margin:0 0 2rem;font-size:clamp(2.4rem,3vw,3.2rem);font-weight:800;color:var(--frido-blue-ink)">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    <div class="frido-reviews__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'review' %}
+          {%- liquid
+            assign av = ''
+            if block.settings.avatar != blank
+              assign av = block.settings.avatar | image_url: width: 88
+            endif
+          -%}
+          <div {{ block.shopify_attributes }}>
+            {% render 'frido-review-card',
+              quote: block.settings.quote,
+              name: block.settings.name,
+              location: block.settings.location,
+              product: block.settings.product,
+              avatar_url: av
+            %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — reviews",
+  "tag": "section",
+  "class": "section-frido-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See why our customers are so satisfied.."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>Finally shoes that feel like they were made for my feet. I can walk all day without pain.</p>"
+        },
+        { "type": "text", "id": "name", "label": "Name", "default": "Alex M." },
+        { "type": "text", "id": "location", "label": "Location", "default": "Austin, TX" },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar" },
+        { "type": "product", "id": "product", "label": "Featured product" }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [
+    {
+      "name": "Frido — reviews",
+      "blocks": [
+        { "type": "review", "settings": { "name": "Alex M.", "location": "Austin, TX" } },
+        { "type": "review", "settings": { "name": "Jordan P.", "location": "Seattle, WA" } },
+        { "type": "review", "settings": { "name": "Sam R.", "location": "Denver, CO" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

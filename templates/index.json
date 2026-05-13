@@ -1,210 +1,307 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "frido_hero": {
+      "type": "frido-hero-home",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "f1": {
+          "type": "feature",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "title": "Wide Toe Box",
+            "icon": "foot"
           }
         },
-        "text": {
-          "type": "text",
+        "f2": {
+          "type": "feature",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "title": "Natural Alignment",
+            "icon": "align"
           }
         },
-        "button": {
-          "type": "buttons",
+        "f3": {
+          "type": "feature",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "title": "Zero Drop",
+            "icon": "sole"
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "title": "Light & Flexible",
+            "icon": "flex"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "button"
+        "f1",
+        "f2",
+        "f3",
+        "f4"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "badge_1": "FREE SHIPPING",
+        "badge_2": "30-DAY GUARANTEE",
+        "overlay_prefix": "UP TO",
+        "overlay_highlight": "50%",
+        "overlay_suffix": "OFF ON BESTSELLERS",
+        "rating_line": "2M+ lives improved",
+        "heading": "Healthy Barefoot Shoes",
+        "subheading": "Your path to pain-free walking",
+        "cta_label": "SHOP BESTSELLERS",
+        "cta_link": "shopify://collections/all"
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "frido_feature_bar": {
+      "type": "frido-feature-bar",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "b1": {
+          "type": "item",
           "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
+            "title": "Zero Drop Sole",
+            "icon": "foot"
           }
         },
-        "text": {
-          "type": "text",
+        "b2": {
+          "type": "item",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "title": "Ultra Flexible Material",
+            "icon": "flex"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text"
+        "b1",
+        "b2"
       ],
+      "settings": {}
+    },
+    "frido_as_seen": {
+      "type": "frido-as-seen",
       "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
+        "label": "AS SEEN ON SPONSORED CONTENT."
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "frido_shoe_finder": {
+      "type": "frido-shoe-finder",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
+        "heading": "Shoe Finder",
+        "text": "Find the barefoot shoe that fits your lifestyle.",
+        "opt_gender": "SELECT GENDER",
+        "opt_condition": "SELECT CONDITION",
+        "opt_category": "SELECT CATEGORY",
+        "opt_activity": "SELECT ACTIVITY",
+        "button_label": "Find My Shoes",
+        "results_link": "shopify://collections/all"
+      }
+    },
+    "frido_categories": {
+      "type": "frido-category-grid",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "title": "Barefoot Shoes"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "title": "Barefoot Boots"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "title": "Sandals"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "title": "Insoles"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "title": "Explore Your Path to Healthy Freedom"
+      }
+    },
+    "frido_bestsellers": {
+      "type": "frido-bestsellers",
+      "settings": {
+        "title": "Bestsellers",
+        "view_all_label": "SHOP ALL",
         "collection": "all",
         "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 28,
-        "padding_bottom": 36
+        "swipe_mobile": true
       }
     },
-    "collage": {
-      "type": "collage",
+    "frido_split": {
+      "type": "frido-content-split",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
+        "s1": {
+          "type": "feature",
           "settings": {
-            "collection": ""
+            "title": "Wide Toe Box",
+            "text": "Give your toes room to spread naturally for better balance.",
+            "icon": "foot"
           }
         },
-        "product": {
-          "type": "product",
+        "s2": {
+          "type": "feature",
           "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
+            "title": "Anatomical Support",
+            "text": "Support where you need it without restricting natural motion.",
+            "icon": "align"
           }
         }
       },
       "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
+        "s1",
+        "s2"
       ],
       "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "image_position": "left",
+        "heading": "Experience ultimate foot comfort with Frido!",
+        "body": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
       }
     },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
+    "frido_compare": {
+      "type": "frido-comparison-table",
       "blocks": {
-        "column1": {
-          "type": "column",
+        "r1": {
+          "type": "row",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "label": "Wide Toe Box",
+            "brand_text": "Roomy toe box",
+            "competitor_text": "Cramped toe area",
+            "show_x": true
           }
         },
-        "column2": {
-          "type": "column",
+        "r2": {
+          "type": "row",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "label": "Lightweight",
+            "brand_text": "Featherlight feel",
+            "competitor_text": "Often heavy",
+            "show_x": true
           }
         },
-        "column3": {
-          "type": "column",
+        "r3": {
+          "type": "row",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "label": "Flexible Materials",
+            "brand_text": "Natural flex",
+            "competitor_text": "Rigid soles",
+            "show_x": true
           }
         }
       },
       "block_order": [
-        "column1",
-        "column2",
-        "column3"
+        "r1",
+        "r2",
+        "r3"
       ],
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "heading": "Podiatrists-Tested & Recommended",
+        "brand_column_title": "Frido",
+        "competitor_title": "Modern Brands"
+      }
+    },
+    "frido_split2": {
+      "type": "frido-content-split",
+      "blocks": {
+        "p1": {
+          "type": "feature",
+          "settings": {
+            "title": "Clinically informed design",
+            "text": "Developed with foot health experts to support daily wear.",
+            "icon": "align"
+          }
+        }
+      },
+      "block_order": [
+        "p1"
+      ],
+      "settings": {
+        "image_position": "right",
+        "heading": "Trusted by professionals",
+        "body": "<p>We combine clinical insight with modern materials so you can move with confidence — from morning walks to long workdays.</p>"
+      }
+    },
+    "frido_reviews": {
+      "type": "frido-customer-reviews",
+      "blocks": {
+        "v1": {
+          "type": "review",
+          "settings": {
+            "quote": "<p>Finally shoes that feel like they were made for my feet. I can walk all day without pain.</p>",
+            "name": "Alex M.",
+            "location": "Austin, TX"
+          }
+        },
+        "v2": {
+          "type": "review",
+          "settings": {
+            "quote": "<p>Great arch support without feeling stiff. The yellow accents are a nice touch too.</p>",
+            "name": "Jordan P.",
+            "location": "Seattle, WA"
+          }
+        },
+        "v3": {
+          "type": "review",
+          "settings": {
+            "quote": "<p>My podiatrist recommended trying barefoot-style shoes — Frido was the first brand that actually fit.</p>",
+            "name": "Sam R.",
+            "location": "Denver, CO"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "settings": {
+        "heading": "See why our customers are so satisfied.."
+      }
+    },
+    "frido_support": {
+      "type": "frido-support-banner",
+      "settings": {
+        "heading": "Do you have any questions?",
+        "text": "Our customer service team is here Mon–Fri, 9am–5pm EST.",
+        "button_label": "CONTACT US",
+        "button_link": "shopify://pages/contact"
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "frido_hero",
+    "frido_feature_bar",
+    "frido_as_seen",
+    "frido_shoe_finder",
+    "frido_categories",
+    "frido_bestsellers",
+    "frido_split",
+    "frido_compare",
+    "frido_split2",
+    "frido_reviews",
+    "frido_support"
   ]
 }

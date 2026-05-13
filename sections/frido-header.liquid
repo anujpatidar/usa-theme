@@ -1,0 +1,196 @@
+{% comment %} Frido — site header (announcement + responsive nav) {% endcomment %}
+{% liquid
+  assign menu = section.settings.menu
+  assign sale_url = section.settings.sale_link | default: routes.all_products_collection_url
+%}
+
+{% render 'frido-announcement-bar',
+  message: section.settings.announcement,
+  help_url: section.settings.help_url,
+  track_url: section.settings.track_url
+%}
+
+<header class="frido-header" data-section-id="{{ section.id }}">
+  <div class="frido-page-width">
+    {%- comment -%} Mobile bar {%- endcomment -%}
+    <div class="frido-header__main frido-header__bar frido-header__bar--mobile">
+      <div style="display:flex;align-items:center;gap:0.2rem">
+        <button
+          type="button"
+          class="frido-header__icon-btn"
+          data-frido-menu-toggle
+          aria-controls="FridoMenu-{{ section.id }}"
+          aria-expanded="false"
+          aria-label="{{ 'sections.header.menu' | t }}"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <a href="{{ routes.search_url }}" class="frido-header__icon-btn" aria-label="{{ 'general.search.search' | t }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>
+          </svg>
+        </a>
+      </div>
+      <a href="{{ routes.root_url }}" class="frido-header__logo" style="position:absolute;left:50%;transform:translateX(-50%)">
+        {{ section.settings.logo_text | default: 'Frido' }}
+      </a>
+      <div style="display:flex;align-items:center;gap:0.2rem;margin-left:auto">
+        <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
+          </svg>
+        </a>
+        <span class="frido-header__icon-btn" aria-hidden="true" title="{{ localization.country.name }}">
+          <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
+            <rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/>
+            <rect width="9" height="8" fill="#3C3B6E"/>
+          </svg>
+        </span>
+        {% if shop.customer_accounts_enabled %}
+          <a
+            href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+            class="frido-header__icon-btn"
+            aria-label="{{ 'customer.account_fallback' | t }}"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {%- comment -%} Desktop bar {%- endcomment -%}
+    <div class="frido-header__main frido-header__bar frido-header__bar--desktop">
+      <a href="{{ routes.root_url }}" class="frido-header__logo">
+        {{ section.settings.logo_text | default: 'Frido' }}
+        {% if section.settings.logo_subtitle != blank %}
+          <small>{{ section.settings.logo_subtitle | escape }}</small>
+        {% endif %}
+      </a>
+
+      {% if menu != blank and menu.links.size > 0 %}
+        <nav class="frido-header__nav-desktop" aria-label="{{ 'sections.header.menu' | t }}">
+          <ul class="frido-header__nav-list">
+            <li>
+              <a class="frido-header__sale-pill" href="{{ sale_url }}">{{ section.settings.sale_label | escape }}</a>
+            </li>
+            {% for link in menu.links %}
+              <li>
+                <a href="{{ link.url }}">
+                  {{ link.title | escape }}
+                  {% if link.links != blank %}
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+
+      <div class="frido-header__actions">
+        <form class="frido-header__search" action="{{ routes.search_url }}" method="get" role="search">
+          <span class="frido-header__search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          </span>
+          <input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" value="{{ search.terms | escape }}">
+        </form>
+        <div class="frido-header__desktop-tools">
+          <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
+            </svg>
+          </a>
+          <span class="frido-header__icon-btn" aria-hidden="true">
+            <svg width="24" height="17" viewBox="0 0 22 16"><rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/><rect width="9" height="8" fill="#3C3B6E"/></svg>
+          </span>
+          {% if shop.customer_accounts_enabled %}
+            <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="frido-header__icon-btn" aria-label="{{ 'customer.account_fallback' | t }}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="FridoMenu-{{ section.id }}" class="frido-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'sections.header.menu' | t }}">
+    <div class="frido-menu-panel__sheet">
+      <button type="button" class="frido-menu-panel__close" data-frido-menu-close>{{ 'accessibility.close' | t }}</button>
+      <a class="frido-btn frido-btn--outline frido-btn--block" href="{{ sale_url }}" style="margin-bottom:1.2rem">{{ section.settings.sale_label | escape }}</a>
+      {% if menu != blank %}
+        <ul>
+          {% for link in menu.links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              {% if link.links != blank %}
+                <ul style="padding-left:1rem;margin:0 0 0.5rem">
+                  {% for child in link.links %}
+                    <li><a href="{{ child.url }}" style="border:0;padding:0.6rem 0">{{ child.title | escape }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<style>
+  .frido-header__bar--mobile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 5.6rem;
+  }
+  .frido-header__bar--desktop {
+    display: none;
+  }
+  @media screen and (min-width: 990px) {
+    .frido-header__bar--mobile {
+      display: none;
+    }
+    .frido-header__bar--desktop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      min-height: 6.8rem;
+    }
+    .frido-header__logo[style] {
+      position: static !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Frido header",
+  "class": "section-frido-header",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "announcement",
+      "label": "Announcement",
+      "default": "<p>30-day money-back guarantee</p>"
+    },
+    { "type": "url", "id": "help_url", "label": "Help link" },
+    { "type": "url", "id": "track_url", "label": "Track order link" },
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Frido" },
+    { "type": "text", "id": "logo_subtitle", "label": "Logo subtitle", "default": "FOOTWEAR" },
+    { "type": "link_list", "id": "menu", "label": "Menu" },
+    { "type": "text", "id": "sale_label", "label": "Sale pill label", "default": "Spring Sale" },
+    { "type": "url", "id": "sale_link", "label": "Sale pill link" }
+  ],
+  "presets": [{ "name": "Frido header" }]
+}
+{% endschema %}

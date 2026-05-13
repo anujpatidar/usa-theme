@@ -1,0 +1,36 @@
+{% comment %}
+  Frido review card (global)
+  @param quote, @param name, @param location, @param product (optional product object), @param avatar_url
+{% endcomment %}
+<div class="frido-review-card">
+  <div class="frido-review-card__text rte">{{ quote }}</div>
+  {% render 'frido-stars', rating: 5 %}
+  <div class="frido-review-card__author">
+    {% if avatar_url != blank %}
+      <img class="frido-review-card__avatar" src="{{ avatar_url }}" width="88" height="88" alt="" loading="lazy">
+    {% else %}
+      <span class="frido-review-card__avatar" aria-hidden="true"></span>
+    {% endif %}
+    <div>
+      <strong>{{ name | escape }}</strong><br>
+      <span class="frido-footer__muted">{{ location | escape }}</span>
+    </div>
+  </div>
+  {% if product != blank %}
+    <hr class="frido-review-card__hr">
+    <div class="frido-review-card__mini">
+      {% if product.featured_media %}
+        {{ product.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}
+      {% endif %}
+      <div>
+        <a href="{{ product.url }}" style="font-weight:700;color:var(--frido-blue-ink)">{{ product.title | escape }}</a>
+        <div class="frido-pcard__row" style="margin-top:0.4rem">
+          <span class="frido-pcard__price">{{ product.price | money }}</span>
+          {% if product.compare_at_price > product.price %}
+            <span class="frido-pcard__compare">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,63 @@
+<div class="frido-cat-grid">
+  <div class="frido-page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="frido-cat-grid__title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    <div class="frido-cat-grid__items">
+      {% for block in section.blocks %}
+        {% if block.type == 'category' %}
+          <a href="{{ block.settings.link | default: '#' }}" class="frido-cat-card" {{ block.shopify_attributes }}>
+            <div class="frido-cat-card__media">
+              {% if block.settings.image != blank %}
+                {%- assign cat_alt = block.settings.title | default: 'Category' | escape -%}
+                {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: cat_alt }}
+              {% else %}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'class="placeholder-svg"' }}
+              {% endif %}
+            </div>
+            <div class="frido-cat-card__label">{{ block.settings.title | escape }}</div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — category grid",
+  "tag": "section",
+  "class": "section-frido-cat-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Explore Your Path to Healthy Freedom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Label", "default": "Barefoot Shoes" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Frido — category grid",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Barefoot Shoes" } },
+        { "type": "category", "settings": { "title": "Barefoot Boots" } },
+        { "type": "category", "settings": { "title": "Sandals" } },
+        { "type": "category", "settings": { "title": "Insoles" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

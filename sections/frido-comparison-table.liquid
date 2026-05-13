@@ -1,0 +1,97 @@
+<div class="frido-compare">
+  <div class="frido-page-width">
+    {% if section.settings.heading != blank %}
+      <h2 style="margin:0 0 1.6rem;font-size:clamp(2.2rem,3vw,3rem);font-weight:800;color:var(--frido-blue-ink)">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    <div class="frido-compare__shell">
+      <div class="frido-compare__scroll">
+        <div class="frido-compare__grid">
+          <div class="frido-compare__head"></div>
+          <div class="frido-compare__head frido-compare__head--brand">{{ section.settings.brand_column_title | escape }}</div>
+          <div class="frido-compare__head">{{ section.settings.competitor_title | escape }}</div>
+
+          {% for block in section.blocks %}
+            {% if block.type == 'row' %}
+              <div class="frido-compare__cell frido-compare__cell--muted" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</div>
+              <div class="frido-compare__cell frido-compare__head--brand frido-compare__ok">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
+                {{ block.settings.brand_text | escape }}
+              </div>
+              <div class="frido-compare__cell frido-compare__bad">
+                {% if block.settings.show_x %}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                {% endif %}
+                {{ block.settings.competitor_text | escape }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — comparison",
+  "tag": "section",
+  "class": "section-frido-compare",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Podiatrists-Tested & Recommended"
+    },
+    { "type": "text", "id": "brand_column_title", "label": "Your brand column", "default": "Frido" },
+    { "type": "text", "id": "competitor_title", "label": "Competitor column", "default": "Modern Brands" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Feature", "default": "Wide Toe Box" },
+        { "type": "text", "id": "brand_text", "label": "Frido column", "default": "Yes" },
+        { "type": "text", "id": "competitor_text", "label": "Other brands", "default": "Often narrow" },
+        { "type": "checkbox", "id": "show_x", "label": "Show X icon", "default": true }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Frido — comparison",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "label": "Wide Toe Box",
+            "brand_text": "Roomy toe box",
+            "competitor_text": "Cramped toe area",
+            "show_x": true
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Lightweight",
+            "brand_text": "Featherlight feel",
+            "competitor_text": "Often heavy",
+            "show_x": true
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Flexible Materials",
+            "brand_text": "Natural flex",
+            "competitor_text": "Rigid soles",
+            "show_x": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
