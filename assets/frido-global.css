@@ -381,7 +381,7 @@ body.frido-header-sticky .frido-header {
 }
 
 .frido-btn--blue {
-  background: var(--frido-blue);
+  background: var(#fcd00b);
   color: #fff;
 }
 
