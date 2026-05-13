@@ -52,7 +52,7 @@
         "f4"
       ],
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "image": "shopify://shop_images/homepage_banner.png",
         "badge_1": "",
         "badge_2": "",
@@ -64,39 +64,6 @@
         "subheading": "Your path to pain-free walking",
         "cta_label": "SHOP BESTSELLERS",
         "cta_link": "shopify://collections/all"
-      }
-    },
-    "frido_feature_bar": {
-      "type": "frido-feature-bar",
-      "blocks": {
-        "b1": {
-          "type": "item",
-          "settings": {
-            "title": "Zero Drop Sole",
-            "icon": "foot"
-          }
-        },
-        "b2": {
-          "type": "item",
-          "settings": {
-            "title": "Ultra Flexible Material",
-            "icon": "flex"
-          }
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2"
-      ],
-      "settings": {
-        "color_scheme": ""
-      }
-    },
-    "frido_as_seen": {
-      "type": "frido-as-seen",
-      "settings": {
-        "color_scheme": "",
-        "label": "AS SEEN ON SPONSORED CONTENT."
       }
     },
     "frido_shoe_finder": {
@@ -317,8 +284,6 @@
   },
   "order": [
     "frido_hero",
-    "frido_feature_bar",
-    "frido_as_seen",
     "frido_shoe_finder",
     "frido_categories",
     "frido_bestsellers",
