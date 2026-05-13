@@ -14,16 +14,21 @@
     "frido-header": {
       "type": "frido-header",
       "settings": {
+        "color_scheme": "",
         "announcement": "<p>30-day money-back guarantee</p>",
         "help_url": "",
         "track_url": "",
+        "logo_image": "shopify://shop_images/Frido_logo_small_70bf7fbe-ba9d-489b-bc72-7c7ff230d476.png",
+        "logo_max_width": 180,
         "logo_text": "Frido",
-        "logo_subtitle": "FOOTWEAR",
+        "logo_subtitle": "",
         "menu": "main-menu",
         "sale_label": "Spring Sale",
         "sale_link": "shopify://collections/all"
       }
     }
   },
-  "order": ["frido-header"]
+  "order": [
+    "frido-header"
+  ]
 }
