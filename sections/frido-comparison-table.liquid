@@ -1,7 +1,7 @@
-<div class="frido-compare">
+<div class="frido-compare color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     {% if section.settings.heading != blank %}
-      <h2 style="margin:0 0 1.6rem;font-size:clamp(2.2rem,3vw,3rem);font-weight:800;color:var(--frido-blue-ink)">{{ section.settings.heading | escape }}</h2>
+      <h2 class="frido-title-block frido-title-block--compare">{{ section.settings.heading | escape }}</h2>
     {% endif %}
     <div class="frido-compare__shell">
       <div class="frido-compare__scroll">
@@ -37,6 +37,12 @@
   "tag": "section",
   "class": "section-frido-compare",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "heading",

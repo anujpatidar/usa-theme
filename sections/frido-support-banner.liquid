@@ -1,4 +1,4 @@
-<div class="frido-support{% if section.settings.image != blank %} frido-support--has-image{% endif %}">
+<div class="frido-support{% if section.settings.image != blank %} frido-support--has-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width frido-support__inner">
     {% if section.settings.image != blank %}
       {%- assign sup_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
@@ -32,6 +32,12 @@
   "tag": "section",
   "class": "section-frido-support",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "image_picker",
       "id": "image",

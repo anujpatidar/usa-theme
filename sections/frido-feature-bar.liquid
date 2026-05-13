@@ -1,4 +1,4 @@
-<div class="frido-feature-bar">
+<div class="frido-feature-bar color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width frido-feature-bar__row">
     {% for block in section.blocks %}
       {% if block.type == 'item' %}
@@ -26,6 +26,14 @@
   "tag": "section",
   "class": "section-frido-feature-bar",
   "max_blocks": 2,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
   "blocks": [
     {
       "type": "item",

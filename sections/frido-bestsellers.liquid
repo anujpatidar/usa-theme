@@ -3,7 +3,7 @@
   assign limit = section.settings.products_to_show | default: 8
 -%}
 
-<div class="frido-collection">
+<div class="frido-collection color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     <div class="frido-section-head">
       {% if section.settings.title != blank %}
@@ -47,6 +47,12 @@
   "tag": "section",
   "class": "section-frido-bestsellers",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     { "type": "text", "id": "title", "label": "Heading", "default": "Bestsellers" },
     { "type": "text", "id": "view_all_label", "label": "View all label", "default": "SHOP ALL" },
     { "type": "collection", "id": "collection", "label": "Collection" },

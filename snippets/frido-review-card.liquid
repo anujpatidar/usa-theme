@@ -23,7 +23,7 @@
         {{ product.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}
       {% endif %}
       <div>
-        <a href="{{ product.url }}" style="font-weight:700;color:var(--frido-blue-ink)">{{ product.title | escape }}</a>
+        <a href="{{ product.url }}" class="frido-link-product">{{ product.title | escape }}</a>
         <div class="frido-pcard__row" style="margin-top:0.4rem">
           <span class="frido-pcard__price">{{ product.price | money }}</span>
           {% if product.compare_at_price > product.price %}

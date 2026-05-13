@@ -1,7 +1,7 @@
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 
-<footer class="frido-footer">
+<footer class="frido-footer color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width frido-footer__grid">
     <div>
       {% if section.settings.logo_image != blank %}
@@ -105,6 +105,12 @@
   "name": "Frido footer",
   "class": "section-frido-footer",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "image_picker",
       "id": "logo_image",

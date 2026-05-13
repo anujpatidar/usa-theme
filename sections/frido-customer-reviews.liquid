@@ -1,7 +1,7 @@
-<div class="frido-reviews">
+<div class="frido-reviews color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     {% if section.settings.heading != blank %}
-      <h2 style="margin:0 0 2rem;font-size:clamp(2.4rem,3vw,3.2rem);font-weight:800;color:var(--frido-blue-ink)">{{ section.settings.heading | escape }}</h2>
+      <h2 class="frido-title-block frido-title-block--reviews">{{ section.settings.heading | escape }}</h2>
     {% endif %}
     <div class="frido-reviews__grid">
       {% for block in section.blocks %}
@@ -33,6 +33,12 @@
   "tag": "section",
   "class": "section-frido-reviews",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "heading",

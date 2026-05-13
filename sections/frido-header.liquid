@@ -10,7 +10,7 @@
   track_url: section.settings.track_url
 %}
 
-<header class="frido-header" data-section-id="{{ section.id }}">
+<header class="frido-header color-{{ section.settings.color_scheme }} gradient" data-section-id="{{ section.id }}">
   <div class="frido-page-width">
     {%- comment -%} Mobile bar {%- endcomment -%}
     <div class="frido-header__main frido-header__bar frido-header__bar--mobile">
@@ -203,6 +203,12 @@
   "name": "Frido header",
   "class": "section-frido-header",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "richtext",
       "id": "announcement",

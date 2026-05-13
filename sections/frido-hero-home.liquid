@@ -1,6 +1,6 @@
 {% comment %} Frido homepage hero — desktop split + mobile stack (CTA order) {% endcomment %}
 
-<div class="frido-hero">
+<div class="frido-hero color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     <div class="frido-hero__grid">
       <div class="frido-hero__media">
@@ -24,7 +24,7 @@
                   | image_tag: loading: 'lazy', class: 'frido-hero__badge-icon', widths: '32,48,64,96', sizes: '18px', alt: ''
                 }}
               {% else %}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--frido-blue)" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
               {% endif %}
               {% if section.settings.badge_1 != blank %}
                 <span>{{ section.settings.badge_1 | escape }}</span>
@@ -40,7 +40,7 @@
                   | image_tag: loading: 'lazy', class: 'frido-hero__badge-icon', widths: '32,48,64,96', sizes: '18px', alt: ''
                 }}
               {% else %}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--frido-blue)" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
               {% endif %}
               {% if section.settings.badge_2 != blank %}
                 <span>{{ section.settings.badge_2 | escape }}</span>
@@ -112,6 +112,12 @@
   "tag": "section",
   "class": "section-frido-hero",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     { "type": "image_picker", "id": "image", "label": "Hero image" },
     { "type": "text", "id": "badge_1", "label": "Badge 1 text", "default": "FREE SHIPPING" },
     {

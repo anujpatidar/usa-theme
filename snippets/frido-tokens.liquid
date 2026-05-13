@@ -1,21 +1,7 @@
 {% comment %}
-  Single source for Frido colors + font — driven by Theme settings → Frido brand.
+  Frido typography — colors come from each section’s Color scheme (Dawn color_schemes).
 {% endcomment %}
 {%- liquid
-  assign c_yellow = settings.frido_color_yellow | default: '#fcd00b'
-  assign c_yellow_dark = settings.frido_color_yellow_dark | default: '#c9a600'
-  assign c_yellow_soft = settings.frido_color_yellow_soft | default: '#fff8d6'
-  assign c_ink = settings.frido_color_blue_ink | default: '#061f33'
-  assign c_deep = settings.frido_color_blue_deep | default: '#0a2540'
-  assign c_blue = settings.frido_color_blue | default: '#1a4f8c'
-  assign c_bright = settings.frido_color_blue_bright | default: '#2563eb'
-  assign c_sky = settings.frido_color_blue_sky | default: '#e3f0fb'
-  assign c_pale = settings.frido_color_blue_pale | default: '#f4f9fc'
-  assign c_g600 = settings.frido_color_gray_600 | default: '#4a5568'
-  assign c_g400 = settings.frido_color_gray_400 | default: '#718096'
-  assign c_line = settings.frido_color_line | default: '#e2e8f0'
-  assign c_danger = settings.frido_color_danger | default: '#c53030'
-
   assign use_outfit = true
   if settings.frido_use_outfit_font == false
     assign use_outfit = false
@@ -28,19 +14,6 @@
 -%}
 {% style %}
   :root {
-    --frido-yellow: {{ c_yellow }};
-    --frido-yellow-dark: {{ c_yellow_dark }};
-    --frido-yellow-soft: {{ c_yellow_soft }};
-    --frido-blue-ink: {{ c_ink }};
-    --frido-blue-deep: {{ c_deep }};
-    --frido-blue: {{ c_blue }};
-    --frido-blue-bright: {{ c_bright }};
-    --frido-blue-sky: {{ c_sky }};
-    --frido-blue-pale: {{ c_pale }};
-    --frido-gray-600: {{ c_g600 }};
-    --frido-gray-400: {{ c_g400 }};
-    --frido-line: {{ c_line }};
-    --frido-danger: {{ c_danger }};
     --frido-font: {{ frido_font_stack }};
   }
 {% endstyle %}

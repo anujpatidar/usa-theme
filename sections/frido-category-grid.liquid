@@ -1,4 +1,4 @@
-<div class="frido-cat-grid">
+<div class="frido-cat-grid color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     {% if section.settings.title != blank %}
       <h2 class="frido-cat-grid__title">{{ section.settings.title | escape }}</h2>
@@ -29,6 +29,12 @@
   "tag": "section",
   "class": "section-frido-cat-grid",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "title",

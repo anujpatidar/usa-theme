@@ -1457,7 +1457,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Frido colors, sticky header, and Outfit apply across Frido sections and brand tokens. Dawn color schemes below also use #fcd00b accents in the default preset."
+        "content": "Frido sections use each section’s Color scheme (same as the rest of the theme). Edit colors under Theme settings → Colors, or pick a scheme on each Frido section. Sticky header and Outfit apply site-wide."
       },
       {
         "type": "checkbox",
@@ -1472,88 +1472,6 @@
         "label": "Use Outfit across the entire site",
         "default": true,
         "info": "Loads Google Font Outfit and applies it to all theme typography (headings + body)."
-      },
-      {
-        "type": "header",
-        "content": "Colors"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_yellow",
-        "label": "Accent yellow",
-        "default": "#fcd00b"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_yellow_dark",
-        "label": "Accent yellow (pressed / dark)",
-        "default": "#c9a600"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_yellow_soft",
-        "label": "Accent yellow (soft backgrounds)",
-        "default": "#fff8d6"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_blue_ink",
-        "label": "Blue — ink (headings / icons)",
-        "default": "#061f33"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_blue_deep",
-        "label": "Blue — deep (announcement / footer)",
-        "default": "#0a2540"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_blue",
-        "label": "Blue — primary (buttons / links)",
-        "default": "#1a4f8c"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_blue_bright",
-        "label": "Blue — bright (hovers)",
-        "default": "#2563eb"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_blue_sky",
-        "label": "Blue — sky (soft sections)",
-        "default": "#e3f0fb"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_blue_pale",
-        "label": "Blue — pale (cards / surfaces)",
-        "default": "#f4f9fc"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_gray_600",
-        "label": "Gray — body secondary",
-        "default": "#4a5568"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_gray_400",
-        "label": "Gray — muted / labels",
-        "default": "#718096"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_line",
-        "label": "Borders / dividers",
-        "default": "#e2e8f0"
-      },
-      {
-        "type": "color",
-        "id": "frido_color_danger",
-        "label": "Comparison — competitor (negative)",
-        "default": "#c53030"
       }
     ]
   }

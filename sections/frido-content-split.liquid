@@ -1,4 +1,4 @@
-<div class="frido-split">
+<div class="frido-split color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     <div class="frido-split__grid{% if section.settings.image_position == 'right' %} frido-split__grid--media-right{% endif %}">
       <div class="frido-split__media">
@@ -43,6 +43,12 @@
   "tag": "section",
   "class": "section-frido-split",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "select",
       "id": "image_position",
