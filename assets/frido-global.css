@@ -442,7 +442,7 @@ body.frido-header-sticky .frido-header {
 @media (min-width: 990px) {
   .frido-hero__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 3.2rem;
     align-items: center;
   }
