@@ -1,0 +1,2033 @@
+     font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .continue-btn:hover {
+            background-color: #595959;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--Neutral-N400, #e3e3e3);
+            font-size: 18px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .order-id-info {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            /* Light gray text */
+            padding-top: 24px;
+        }
+
+        .order-id-info a {
+            color: #007bff;
+            /* Link color */
+            text-decoration: none;
+        }
+
+        .order-id-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styling for "Where to find Order ID" text */
+        .order-id-info {
+            color: #b7b7b7;
+            font-family: Outfit;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 110%;
+        }
+
+        /* Styling for "Learn more" link */
+        .learn-more {
+            color: #307fe2;
+            font-family: Outfit;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 110%;
+            text-decoration: underline;
+            text-underline-offset: auto;
+            text-decoration-thickness: auto;
+            cursor: pointer;
+            background:transparent;
+            border:none;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 18px;
+            margin-top: 0px;
+        }
+
+        .delete-product {
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Container for product items */
+        #product-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Style for Add More Product button */
+
+        .add-more-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* Adjust spacing between icon and text */
+            background: transparent;
+            border: none;
+            color: #307fe2;
+            font-family: Outfit;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .add-more-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        #product-group {
+            margin-bottom: 32px;
+        }
+
+        #frOrderId {
+            font-size: 14px;
+            padding: 20px;
+            text-transform: uppercase;
+        }
+
+        .order-id-group {
+            margin-bottom: 32px;
+        }
+
+        /* Delete button next to dropdown */
+        .delete-btn {
+            margin-left: 10px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            /* Adjust as needed */
+        }
+
+        .back-btn,
+        .submit-btn {
+            flex: 1;
+            /* Equal width for both buttons */
+            padding: 14px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 14px;
+            height: 56px;
+            box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.12);
+        }
+
+        .back-btn {
+            /* background-color: #e3e3e3; */
+            /* Light gray */
+            color: #000;
+            background: none;
+            box-shadow: none;
+        }
+
+        .submit-btn {
+            background-color: #000;
+            /* Black */
+            color: #fff;
+        }
+
+        #placeOfPurchase {
+            width: 100%;
+            height: 44px;
+            padding: 10px 32px 10px 12px;
+            /* Adds right padding for space before the icon */
+            font-family: Outfit;
+            font-size: 14px;
+            font-weight: 400;
+            color: #131313;
+            border: 1px solid var(--Neutral-N400, #e3e3e3);
+            /* Updated border */
+            border-radius: 12px;
+            /* Updated border-radius */
+            background-color: white;
+            appearance: none;
+            /* Removes default dropdown arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23131313" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            /* Adjusts the chevron position */
+            background-size: 16px;
+            cursor: pointer;
+            padding-left: 20px;
+            padding-right: 20px;
+            color: var(--Brand-Colors-Black, #101820);
+            font-family: Outfit;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 110%;
+            margin-bottom:0px;
+            /* 15.4px */
+        }
+
+        #placeOfPurchase option {
+            color: var(--Brand-Colors-Black, #101820);
+            font-family: Outfit;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 110%;
+        }
+
+        /* Remove focus outline */
+        #placeOfPurchase:focus {
+            outline: none;
+            border-color: #307fe2;
+            /* Changes border color on focus */
+        }
+
+        .select-product {
+            width: 100%;
+            height: 44px;
+            padding: 10px 32px 10px 12px;
+            /* Added padding for gap in chevron */
+            font-family: Outfit;
+            font-size: 14px;
+            margin-top: 0px;
+            font-weight: 400;
+            color: var(--Brand-Colors-Black, #101820);
+            border: 1px solid var(--Neutral-N400, #e3e3e3);
+            border-radius: 12px;
+            background-color: white;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23101320" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            /* Added gap for chevron */
+            background-size: 16px;
+            padding-left: 20px;
+            padding-right: 20px;
+            cursor: pointer;
+            line-height: 110%;
+        }
+
+        /* Styling for selected option & placeholder text */
+        .select-product option {
+            color: var(--Brand-Colors-Black, #101820);
+            font-family: Outfit;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 110%;
+        }
+
+        /* .upload-box {
+            border-radius: 20px;
+            border: 1px dashed #e3e3e3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px 16px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .upload-box:hover {
+            background-color: #f9f9f9;
+        }
+
+        .upload-content {
+            text-align: center;
+        }
+
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+           
+            color: var(--Brand-Colors-Blue, #307fe2);
+            text-align: center;
+            font-family: Outfit;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%;
+         
+            letter-spacing: 0.14px;
+        }
+
+        .file-types {
+            font-size: 12px;
+            color: #888;
+        } */
+
+        .upload-box {
+            border-radius: 20px;
+            border: 1px dashed #e3e3e3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px 16px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .upload-box:hover {
+            background-color: #f9f9f9;
+        }
+
+        .upload-content {
+            text-align: center;
+        }
+
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            color: var(--Brand-Colors-Blue, #307fe2);
+            text-align: center;
+            font-family: Outfit;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%;
+            letter-spacing: 0.14px;
+        }
+
+        .file-types {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Image Preview Styles */
+        .image-preview {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-top: 12px;
+        }
+
+        #previewImg {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: solid 1px #DDD;
+            border-radius: 12px;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .delete-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        #terms {
+            margin-top: 0px;
+        }
+
+        .terms-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* Adjust spacing between checkbox and text */
+        }
+
+        .terms-group input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+
+        .terms-group label {
+            font-size: 14px;
+            color: #333;
+            /* Adjust color as needed */
+            cursor: pointer;
+        }
+
+        .terms-group label a {
+            color: #307fe2;
+            text-decoration: none;
+        }
+
+        .terms-group label a:hover {
+            text-decoration: underline;
+        }
+
+        .terms-label {
+            margin-bottom: 0px;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 18px;
+            margin-top: 0px;
+            position: relative;
+        }
+
+        /* Base styling for the custom dropdown */
+        .custom-select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-product-header {
+            width: 100%;
+            height: 44px;
+            padding: 10px 32px 10px 12px;
+            font-family: Outfit, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--Brand-Colors-Black, #101820);
+            border: 1px solid var(--Neutral-N400, #e3e3e3);
+            border-radius: 12px;
+            background-color: white;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23101320" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-left: 20px;
+            padding-right: 20px;
+            cursor: pointer;
+            line-height: 110%;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        /* Dropdown content styling */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid var(--Neutral-N400, #e3e3e3);
+            border-radius: 12px;
+            z-index: 1000;
+            margin-top: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Search input in dropdown */
+        .search-container {
+            padding: 10px;
+            border-bottom: 1px solid var(--Neutral-N400, #e3e3e3);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 2;
+        }
+
+        .search-container input {
+        margin-bottom:0px ; 
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            font-family: Outfit, sans-serif;
+            font-size: 14px;
+            border: 1px solid var(--Neutral-N400, #e3e3e3);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Dropdown options */
+        .option-item {
+            padding: 10px 20px;
+            font-family: Outfit, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--Brand-Colors-Black, #101820);
+            cursor: pointer;
+            line-height: 110%;
+        }
+
+        .option-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Show the dropdown when active */
+        .dropdown-active {
+            display: block;
+        }
+
+        /* Hidden select for form submission */
+        .hidden-select {
+            display: none;
+        }
+
+        /* Delete button styling */
+        /* .delete-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            height: 44px;
+        } */
+
+        .error {
+            border-color: red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 4px;
+            margin-bottom: 8px;
+        }
+
+        .error-message-2 {
+            color: red;
+            font-size: 12px;
+            position: absolute;
+            margin-top: 40px;
+        }
+
+        .error-message-3 {
+            color: red;
+            font-size: 12px;
+            position: absolute;
+            margin-top: 164px;
+            left: 21px;
+        }
+
+        .error-message-4 {
+            color: red;
+            font-size: 12px;
+            margin-top: 49px;
+            position: absolute;
+        }
+
+        .no-results {
+            padding: 10px 20px;
+            font-family: Outfit, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--Brand-Colors-Black, #101820);
+            cursor: pointer;
+            line-height: 110%;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .form-container {
+                padding: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+
+ <div class="form-container">
+        <!-- <div class="progress-bar"></div> -->
+
+        <div id="form-step-1">
+            <p class="small-heading">Step 1/3</p>
+            <h2 class="big-heading">Register Your Product</h2>
+
+            <form class="form" id="step1-form">
+                <div class="form-group">
+                    <label class="fr-pro-reg-label" for="fullName">Full Name<span class="mandatory-star">*</span></label>
+                    <input class="fr-pro-reg-input" type="text" id="frFullName" name="fullName" placeholder="Enter full name" />
+                </div>
+
+                <div class="form-group">
+                    <label class="fr-pro-reg-label" for="email">Email<span class="mandatory-star">*</span></label>
+                    <input class="fr-pro-reg-input" type="email" id="frEmail" name="email" placeholder="Enter e-mail" />
+                </div>
+
+                <div class="form-group" class="last-field">
+                    <label class="fr-pro-reg-label" for="phone">Phone Number<span class="mandatory-star">*</span></label>
+                    <input class="fr-pro-reg-input" type="tel" id="frPhone" name="phone" placeholder="Enter mobile number" />
+                </div>
+
+                <button id="continue-btn" class="continue-btn">Continue</button>
+            </form>
+        </div>
+
+        <div id="form-step-2" style="display: none">
+            <p class="small-heading">Step 2/3</p>
+            <h2 class="big-heading">Register Your Product</h2>
+
+            <form class="form" id="step2-form">
+                <!-- Place of Purchase -->
+                <div class="form-group">
+                    <label class="fr-pro-reg-label" for="placeOfPurchase">Place of Purchase<span class="mandatory-star">*</span></label>
+                    <select id="placeOfPurchase" name="placeOfPurchase">
+                        <option value="Amazon" selected>Amazon</option>
+                        <option value="Flipkart">Flipkart</option>
+                        <option value="Blinkit">Blinkit</option>
+                        <option value="Zepto">Zepto</option>
+                    </select>
+                </div>
+
+                <!-- Order ID -->
+                <div class="form-group" class="order-id-group">
+                    <label class="fr-pro-reg-label" for="frOrderId">Order ID<span class="mandatory-star">*</span></label>
+                    <input class="fr-pro-reg-input" type="text" id="frOrderId" name="orderId" placeholder="e.g. 406-8202803-9829949" />
+                    <p class="order-id-info ">
+                        Where to find Order ID -
+                        <button class="learn-more fr-pro-reg-find-order-id-popup-trigger-button">Learn more</button>
+                    </p>
+                </div>
+
+                <!-- Purchased Products -->
+                <div class="form-group last-field" id="product-group">
+                    <label class="fr-pro-reg-label">Purchased Products<span class="mandatory-star">*</span></label>
+                    <div id="product-container">
+                        <div class="product-item">
+                            <div class="custom-select-container">
+                                <!-- Hidden select for form submission -->
+                                <select class="hidden-select" name="purchasedProducts[]">
+                                    <!-- <option value="" disabled>Select a product</option> -->
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+
+                                <!-- Custom dropdown header -->
+                                <div class="select-product-header">
+                                    <span class="selected-text">Select a product</span>
+                                </div>
+
+                                <!-- Dropdown content -->
+                                <div class="dropdown-content">
+                                    <div class="search-container">
+                                        <input type="text" class="search-input" placeholder="Search products...">
+                                    </div>
+                                    <!-- <div class="option-item" data-value="">Select a product</div> -->
+                                    <!-- Options will be populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add More Product Button -->
+                    <button type="button" id="add-product-btn" class="add-more-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <g clip-path="url(#clip0_100_7286)">
+                                <path
+                                    d="M3 12C3 13.1819 3.23279 14.3522 3.68508 15.4442C4.13738 16.5361 4.80031 17.5282 5.63604 18.364C6.47177 19.1997 7.46392 19.8626 8.55585 20.3149C9.64778 20.7672 10.8181 21 12 21C13.1819 21 14.3522 20.7672 15.4442 20.3149C16.5361 19.8626 17.5282 19.1997 18.364 18.364C19.1997 17.5282 19.8626 16.5361 20.3149 15.4442C20.7672 14.3522 21 13.1819 21 12C21 9.61305 20.0518 7.32387 18.364 5.63604C16.6761 3.94821 14.3869 3 12 3C9.61305 3 7.32387 3.94821 5.63604 5.63604C3.94821 7.32387 3 9.61305 3 12Z"
+                                    stroke="#307FE2" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M9 12H15" stroke="#307FE2" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 9V15" stroke="#307FE2" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_100_7286">
+                                    <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        Add More Product
+                    </button>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button id="back-btn" class="back-btn">Back</button>
+                    <button type="submit" id="continue-btn-2" class="submit-btn">
+                        Continue
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="form-step-3" style="display: none">
+            <p class="small-heading">Step 3/3</p>
+            <h2 class="big-heading">Upload Your Invoice</h2>
+
+            <form class="form" id="step3-form">
+               
+                <div class="form-group">
+                    <label class="fr-pro-reg-label" for="invoiceUpload">Upload Invoice Copy<span class="mandatory-star">*</span></label>
+                    <div id="upload-container">
+                        <!-- Upload Box -->
+                        <div class="upload-box" id="uploadBox">
+                            <input class="fr-pro-reg-input" type="file" id="invoiceUpload" name="invoiceUpload" accept=".jpg,.png,.pdf" hidden />
+                            <div class="upload-content">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <g clip-path="url(#clip0_100_7379)">
+                                        <path
+                                            d="M3 12C3 13.1819 3.23279 14.3522 3.68508 15.4442C4.13738 16.5361 4.80031 17.5282 5.63604 18.364C6.47177 19.1997 7.46392 19.8626 8.55585 20.3149C9.64778 20.7672 10.8181 21 12 21C13.1819 21 14.3522 20.7672 15.4442 20.3149C16.5361 19.8626 17.5282 19.1997 18.364 18.364C19.1997 17.5282 19.8626 16.5361 20.3149 15.4442C20.7672 14.3522 21 13.1819 21 12C21 9.61305 20.0518 7.32387 18.364 5.63604C16.6761 3.94821 14.3869 3 12 3C9.61305 3 7.32387 3.94821 5.63604 5.63604C3.94821 7.32387 3 9.61305 3 12Z"
+                                            stroke="#307FE2" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M9 12H15" stroke="#307FE2" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12 9V15" stroke="#307FE2" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_100_7379">
+                                            <rect width="24" height="24" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                <p class="upload-text">
+                                    Upload your Invoice <br />
+                                    (File upload - PDF, JPG, PNG accepted)
+                                </p>
+                                 <input type="hidden" id="invoiceUrlField" name="invoiceUrl" value="">
+                            </div>
+                        </div>
+
+                        <!-- Image Preview (initially hidden) -->
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview">
+                            <div class="delete-button" id="deleteButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
+                                    fill="none">
+                                    <rect x="0.25" y="0.25" width="31.5" height="31.5" rx="15.75" fill="white" />
+                                    <rect x="0.25" y="0.25" width="31.5" height="31.5" rx="15.75" stroke="#FF585D"
+                                        stroke-width="0.5" />
+                                    <path d="M9 11.4179H22.666" stroke="#FF585D" stroke-width="1.70825"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M14.125 14.834V19.9587" stroke="#FF585D" stroke-width="1.70825"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17.541 14.834V19.9587" stroke="#FF585D" stroke-width="1.70825"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M9.85352 11.4179L10.7076 21.6674C10.7076 22.1205 10.8876 22.555 11.208 22.8753C11.5283 23.1957 11.9628 23.3757 12.4159 23.3757H19.2489C19.702 23.3757 20.1365 23.1957 20.4568 22.8753C20.7772 22.555 20.9572 22.1205 20.9572 21.6674L21.8113 11.4179"
+                                        stroke="#FF585D" stroke-width="1.70825" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M13.2695 11.4175V8.8551C13.2695 8.62857 13.3595 8.41132 13.5197 8.25114C13.6799 8.09096 13.8971 8.00098 14.1237 8.00098H17.5402C17.7667 8.00098 17.9839 8.09096 18.1441 8.25114C18.3043 8.41132 18.3943 8.62857 18.3943 8.8551V11.4175"
+                                        stroke="#FF585D" stroke-width="1.70825" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="form-group terms-group">
+                    <input type="checkbox" id="terms" name="terms" required />
+                    <label class="terms-label" for="terms">
+                        I accept the
+                        <a target="_blank" href="https://myfrido.com/pages/privacy-cookie-policy">privacy & policy.</a>
+                        <span class="mandatory-star">*</span>
+                    </label>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button id="back-btn-2" class="back-btn" type="button">Back</button>
+                    <button type="submit" id="fr-form-final-submit" class="submit-btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+  <script>
+
+        const triggerButton = document.querySelector(".fr-pro-reg-find-order-id-popup-trigger-button");
+
+         triggerButton.addEventListener("click", () => {
+        popupOverlay.style.display = "flex";
+        // Force reflow to ensure animations work
+        setTimeout(() => {
+          document.querySelector(
+            ".fr-pro-reg-find-order-id-popup-tab-content.active .fr-pro-reg-find-order-id-popup-placeholder-image"
+          ).style.transform = "translateX(0)";
+        }, 10);
+      });
+      
+        const productList = [
+            { id: "1", name: "Dual Gel Insole" },
+            { id: "2", name: "Max Comfort Arch Cushion Insole" },
+            { id: "3", name: "Heel Pad" },
+            { id: "4", name: "Arch Support Insole (Semi-Rigid)" },
+            { id: "5", name: "Arch Support Insole" },
+            { id: "6", name: "Arch Support Insole (Rigid)" },
+            { id: "7", name: "Arch Sports Insole" },
+            { id: "8", name: "Memory Foam Insole" },
+            { id: "9", name: "Dual Gel Pro Insole" },
+            { id: "10", name: "High Heels Ball of Foot" },
+            { id: "11", name: "Gel Cloud Insole" },
+            { id: "12", name: "Wedge Plus Cushion" },
+            { id: "13", name: "Car Wedge Seat Cushion" },
+            { id: "14", name: "Pro Seat Cushion" },
+            { id: "15", name: "Wedge Cushion" },
+            { id: "16", name: "Tailbone Pain Relief Cushion" },
+            { id: "17", name: "Car Backrest Cushion" },
+            { id: "18", name: "Posture Corrector Backrest" },
+            { id: "19", name: "Lumbar Back Rest Cushion" },
+            { id: "20", name: "Coccyx Seat Cushion" },
+            { id: "21", name: "Socket Seat Cushion" },
+            { id: "22", name: "Sofa Backrest Cushion" },
+            { id: "23", name: "Wedge Cushion" },
+            { id: "24", name: "Cozy Pillow" },
+            { id: "25", name: "Car Neck Pillow" },
+            { id: "26", name: "Cervical Plus Pillow" },
+            { id: "27", name: "Sleep Pillow" },
+            { id: "28", name: "Lap Desk Pillow" },
+            { id: "29", name: "Car Wedge Seat Cushion" },
+            { id: "30", name: "Travel Neck Pillow" },
+            { id: "31", name: "Deep Sleep Pillow" },
+            { id: "32", name: "Car Neck Rest Pillow" },
+            { id: "33", name: "Contour Cervical Pillow" },
+            { id: "34", name: "Cervical Butterfly Pillow" },
+            { id: "35", name: "Cuddle Pillow" },
+            { id: "36", name: "Cervical Pillow" },
+            { id: "37", name: "Sleeping Pillow for Neck & Shoulder Pain" },
+            { id: "38", name: "Office Neck Rest Pillow" },
+            { id: "39", name: "Barefoot Sock Shoe" },
+            { id: "40", name: "Active Socks" },
+            { id: "41", name: "Mattress Topper" },
+            { id: "42", name: "Lumbo Belt" },
+            { id: "43", name: "AeroMesh Ergo Chair" },
+            { id: "44", name: "3D Posture Plus Ergonomic Chair" },
+            { id: "45", name: "Frido Baby shoes" },
+            { id: "46", name: "Frido Heavy Duty Recliner Electric Wheelchair" },
+            { id: "47", name: "Frido Foldable Electric Wheelchair" },
+            { id: "48", name: "Frido Prime Electric Wheelchair" },
+            { id: "49", name: "Frido Foldable Travel Wheelchair" },
+            { id: "50", name: "Frido Walker" },
+            { id: "51", name: "Frido Walker with wheels" },
+            { id: "52", name: "Frido Walker Pro With Wheels" },
+            { id: "53", name: "Frido Shower Chair Pro" },
+            { id: "54", name: "2000 Commode Wheelchair" },
+            { id: "55", name: "Mobility SAC100 | Multipurpose Shower Commode Wheelchair" },
+            { id: "56", name: "Prime FPA007 | Attendant Propelled Shower Commode Wheelchair" },
+            { id: "57", name: "Prime FPS005 | Self Propelled Shower Commode Wheelchair" },
+            { id: "58", name: "Prime SAS100 | Attendant Propelled Shower Commode Wheelchair" },
+            { id: "59", name: "Prime SSS100 | Self Propelled Shower Commode Wheelchair" },
+            { id: "60", name: "GO Attendant Propelled | Travel and Shower Commode Wheelchair" },
+            { id: "61", name: "GO Self Propelled | Travel and Shower Commode Wheelchair" }
+        ];
+
+        let invoiceURL = "";
+        // For demonstration, let's generate 50 more products
+
+        function showError(input, message, opt = "") {
+            // If there's already an error displayed, remove it first
+            removeError(input);
+
+            // Add 'error' class to the input field
+            input.classList.add("error");
+
+            // Create error message element
+            const errorMsg = document.createElement("div");
+
+            if (opt === 'file-terms') {
+                errorMsg.classList.add("error-message-2");
+                errorMsg.classList.add("error-message-3");
+                document.getElementsByClassName("terms-group")[0].style.paddingTop = "4px";
+                document.getElementsByClassName("upload-box")[0].style.border = "1px solid red";
+                errorMsg.innerText = message;
+                input.parentNode.appendChild(errorMsg);
+                return;
+            }
+            else if (opt === "checkbox") {
+                errorMsg.classList.add("error-message-2");
+                errorMsg.innerText = message;
+                input.parentNode.appendChild(errorMsg);
+                return;
+            }
+            else if (opt === 'file') {
+                document.getElementsByClassName("terms-group")[0].style.paddingTop = "4px";
+                errorMsg.classList.add("error-message-3");
+                //make padding top to 4px of class terms-group
+                document.getElementsByClassName("upload-box")[0].style.border = "1px solid red";
+
+                errorMsg.innerText = message;
+                input.parentNode.appendChild(errorMsg);
+                return;
+            }
+            else if (opt === 'product') {
+                //make border red 
+
+                // errorMsg.classList.add("error-message-4");
+                // errorMsg.innerText = message;
+                document.querySelector(".add-more-btn").style.marginTop = "27px";
+
+                const productContainer = document.getElementById("product-container");
+
+                // Get all product items
+                const productItems = productContainer.getElementsByClassName("product-item");
+
+                if (productItems.length > 0) {
+
+
+                    const lastProductItem = productItems[productItems.length - 1];
+
+                    // Get its hidden select element
+                    const hiddenSelect = lastProductItem.querySelector('.hidden-select');
+
+
+                    // if (!hiddenSelect.value && productItems.length === 1) {
+                    //     return;
+                    // }
+                    // Check if a value has been selected
+                    if (!hiddenSelect.value) {
+                        // Remove any existing error message first
+                        const existingError = lastProductItem.querySelector('.error-message-4');
+                        if (existingError) existingError.remove();
+
+                        // Create and display error message
+                        const errorMessage = document.createElement('div');
+                        errorMessage.classList.add('error-message-4');
+                        errorMessage.textContent = 'Please select atleast one product';
+                        // errorMessage.style.color = '#FF0000';
+                        // errorMessage.style.fontSize = '12px';
+                        // errorMessage.style.marginTop = '5px';
+                        // errorMessage.style.marginBottom = '10px';
+
+                        // Insert error message below the dropdown
+                        lastProductItem.appendChild(errorMessage);
+
+                        // Highlight the dropdown to indicate error
+                        const header = lastProductItem.querySelector('.select-product-header');
+                        header.style.borderColor = '#FF0000';
+
+                        return; // Stop execution to prevent adding a new dropdown
+                    }
+
+                }
+                // Insert error message directly after the input
+                input.insertAdjacentElement('afterend', errorMsg);
+                return;
+            }
+            else {
+                errorMsg.classList.add("error-message");
+                errorMsg.innerText = message;
+                // Insert error message directly after the input
+                input.insertAdjacentElement('afterend', errorMsg);
+                return;
+            }
+
+
+        }
+
+        // --- Helper function to remove error for a specific input ---
+        function removeError(input) {
+            // Remove error class from input
+            input.classList.remove("error");
+
+            // Get the parent container
+            const parent = input.parentNode;
+
+            // Check for different error message classes
+            const errorMessages = parent.querySelectorAll(".error-message, .error-message-2, .error-message-3, .error-message-4");
+
+            // Remove all error message elements if they exist
+            errorMessages.forEach(msg => {
+                parent.removeChild(msg);
+            });
+
+            // Reset any special styling that may have been applied
+            if (parent.classList.contains("terms-group")) {
+                document.getElementsByClassName("terms-group")[0].style.paddingTop = "";
+            }
+
+            // Reset upload box border if it exists
+            const uploadBox = document.getElementsByClassName("upload-box")[0];
+            if (uploadBox) {
+                uploadBox.style.border = "";
+            }
+        }
+
+        function uploadFileToGCS(file) {
+            const bucketUrl = 'https://storage.googleapis.com/upload/storage/v1/b/[YOUR_BUCKET_NAME]/o?uploadType=multipart';
+
+            // Prepare the form data
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('name', file.name);  // This can be adjusted based on your naming convention
+
+            // Use the fetch API to upload the file
+            fetch(bucketUrl, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer [YOUR_OAUTH_TOKEN]', // Add OAuth token if needed (optional)
+                },
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.mediaLink) {
+                        // You get a URL like: https://storage.googleapis.com/[bucket_name]/[file_name]
+                        const fileUrl = data.mediaLink;
+                        //console.log('File uploaded successfully, URL:', fileUrl);
+                        // You can now send this URL to your Google Sheet or display it as needed
+                        return fileUrl;
+                    } else {
+                        console.error('Upload failed:', data);
+                        return null;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                    return null;
+                });
+        }
+
+        const eventHandlers = new WeakMap();
+
+        const selectedProductMap = new Map(); // Maps product ID to container element
+
+        function initializeSearchableDropdowns() {
+            const selectContainers = document.querySelectorAll('.custom-select-container');
+
+            selectContainers.forEach(container => {
+                // Get references to the elements
+                const header = container.querySelector('.select-product-header');
+                const dropdown = container.querySelector('.dropdown-content');
+                const searchInput = container.querySelector('.search-input');
+                const hiddenSelect = container.querySelector('.hidden-select');
+                const selectedText = container.querySelector('.selected-text');
+
+                // First, remove any existing event listeners
+                if (eventHandlers.has(container)) {
+                    const handlers = eventHandlers.get(container);
+
+                    if (handlers.headerClick) {
+                        header.removeEventListener('click', handlers.headerClick);
+                    }
+
+                    if (handlers.searchInput) {
+                        searchInput.removeEventListener('input', handlers.searchInput);
+                    }
+
+                    // Remove option click handlers
+                    if (handlers.optionClicks) {
+                        handlers.optionClicks.forEach(handler => {
+                            handler.element.removeEventListener('click', handler.fn);
+                        });
+                    }
+                }
+
+                // Store new handlers
+                const handlers = {
+                    optionClicks: []
+                };
+
+                // Create header click handler
+                handlers.headerClick = function (e) {
+                    // Close all other open dropdowns first
+                    document.querySelectorAll('.dropdown-content').forEach(el => {
+                        if (el !== dropdown) el.classList.remove('dropdown-active');
+                    });
+
+                    // Before showing dropdown, update the dropdown options to hide already selected products
+                    updateDropdownOptions(container);
+
+                    dropdown.classList.toggle('dropdown-active');
+                    if (dropdown.classList.contains('dropdown-active')) {
+                        searchInput.focus();
+                    }
+                };
+
+                // Create search input handler
+                handlers.searchInput = function () {
+                    const searchValue = this.value.toLowerCase();
+                    let hasResults = false;
+
+                    // Get all option items except the placeholder
+                    const options = container.querySelectorAll('.option-item:not([data-value=""])');
+
+                    options.forEach(option => {
+                        // Skip if the option is already hidden due to being selected elsewhere
+                        if (option.classList.contains('already-selected')) return;
+
+                        const text = option.textContent.toLowerCase();
+
+                        if (text.indexOf(searchValue) > -1) {
+                            option.style.display = '';
+                            hasResults = true;
+                        } else {
+                            option.style.display = 'none';
+                        }
+                    });
+
+                    // Check if we need to show a "no results" message
+                    let noResultsEl = dropdown.querySelector('.no-results');
+
+                    if (!hasResults) {
+                        if (!noResultsEl) {
+                            noResultsEl = document.createElement('div');
+                            noResultsEl.classList.add('no-results');
+                            noResultsEl.textContent = 'No matching products found';
+                            dropdown.appendChild(noResultsEl);
+                        }
+                        noResultsEl.style.display = '';
+                    } else if (noResultsEl) {
+                        noResultsEl.style.display = 'none';
+                    }
+                };
+
+                // Add handlers to elements
+                header.addEventListener('click', handlers.headerClick);
+                searchInput.addEventListener('input', handlers.searchInput);
+
+                // Add click listeners to all option items
+                const options = container.querySelectorAll('.option-item');
+                options.forEach(option => {
+                    const optionHandler = function () {
+                        const value = this.getAttribute('data-value');
+                        const text = this.textContent;
+
+                        // If there was a previously selected value, remove it from the selected map
+                        const previousValue = hiddenSelect.value;
+                        if (previousValue && selectedProductMap.get(previousValue) === container) {
+                            selectedProductMap.delete(previousValue);
+                        }
+
+                        // Add the new value to the selected map
+                        if (value) {
+                            selectedProductMap.set(value, container);
+                        }
+
+                        // Update hidden select
+                        for (let i = 0; i < hiddenSelect.options.length; i++) {
+                            if (hiddenSelect.options[i].value === value) {
+                                hiddenSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+
+                        // Update displayed text
+                        selectedText.textContent = text;
+
+                        // Close dropdown
+                        dropdown.classList.remove('dropdown-active');
+
+                        // Clear search input
+                        searchInput.value = '';
+
+                        // Reset display of all options
+                        container.querySelectorAll('.option-item').forEach(opt => {
+                            opt.style.display = '';
+                        });
+
+                        // Hide no results message if it exists
+                        const noResults = container.querySelector('.no-results');
+                        if (noResults) noResults.style.display = 'none';
+
+                        // Trigger change event on hidden select
+                        const event = new Event('change', { bubbles: true });
+                        hiddenSelect.dispatchEvent(event);
+
+                        // Update all other dropdowns to reflect this selection
+                        refreshAllDropdowns();
+                    };
+
+                    // Store reference to this handler
+                    handlers.optionClicks.push({
+                        element: option,
+                        fn: optionHandler
+                    });
+
+                    option.addEventListener('click', optionHandler);
+                });
+
+                // Store all handlers for this container
+                eventHandlers.set(container, handlers);
+
+                // If this container has a selected value, add it to the map
+                if (hiddenSelect.value) {
+                    selectedProductMap.set(hiddenSelect.value, container);
+                }
+            });
+        }
+
+        // Update all dropdowns to reflect current selections
+        function refreshAllDropdowns() {
+            document.querySelectorAll('.custom-select-container').forEach(container => {
+                updateDropdownOptions(container);
+            });
+        }
+
+        // Update a specific dropdown's options based on current selections
+        function updateDropdownOptions(container) {
+            const dropdown = container.querySelector('.dropdown-content');
+            const hiddenSelect = container.querySelector('.hidden-select');
+
+            // Get all non-placeholder option items
+            const options = container.querySelectorAll('.option-item:not([data-value=""])');
+
+            options.forEach(option => {
+                const value = option.getAttribute('data-value');
+
+                // If this value is selected in another dropdown, hide it
+                if (selectedProductMap.has(value) && selectedProductMap.get(value) !== container) {
+                    option.style.display = 'none';
+                    option.classList.add('already-selected');
+                } else {
+                    option.style.display = '';
+                    option.classList.remove('already-selected');
+                }
+            });
+        }
+
+        // Populate dropdowns with product list
+        function populateDropdownWithProducts(container) {
+            const dropdown = container.querySelector('.dropdown-content');
+            const hiddenSelect = container.querySelector('.hidden-select');
+
+            // Clear existing product options (but keep the placeholder)
+            const existingOptions = dropdown.querySelectorAll('.option-item:not([data-value=""])');
+            existingOptions.forEach(option => option.remove());
+
+            // Clear hidden select options except the first one
+            while (hiddenSelect.options.length > 1) {
+                hiddenSelect.remove(1);
+            }
+
+            // Add placeholder option if it doesn't exist
+            // let placeholderOption = dropdown.querySelector('.option-item[data-value=""]');
+            // if (!placeholderOption) {
+            //     placeholderOption = document.createElement('div');
+            //     placeholderOption.classList.add('option-item');
+            //     placeholderOption.setAttribute('data-value', '');
+            //     placeholderOption.textContent = 'Select a product';
+            //     dropdown.appendChild(placeholderOption);
+            // }
+
+            // Add placeholder to hidden select if needed
+            if (hiddenSelect.options.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'Select a product';
+                option.selected = true;
+                option.disabled = true;
+                hiddenSelect.appendChild(option);
+            }
+
+            // Add products to dropdown
+            productList.forEach(product => {
+                // Add to dropdown UI
+                const optionItem = document.createElement('div');
+                optionItem.classList.add('option-item');
+                optionItem.setAttribute('data-value', product.id);
+                optionItem.textContent = product.name;
+
+                // If this product is already selected in another dropdown, hide it
+                if (selectedProductMap.has(product.id) && selectedProductMap.get(product.id) !== container) {
+                    optionItem.style.display = 'none';
+                    optionItem.classList.add('already-selected');
+                }
+
+                dropdown.appendChild(optionItem);
+
+                // Add to hidden select
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = product.name;
+                hiddenSelect.appendChild(option);
+            });
+        }
+
+        // Create a new searchable dropdown
+        function createSearchableDropdown() {
+            // Create container
+            const container = document.createElement("div");
+            container.classList.add("custom-select-container");
+
+            // Create hidden select
+            const hiddenSelect = document.createElement("select");
+            hiddenSelect.classList.add("hidden-select");
+            hiddenSelect.name = "purchasedProducts[]";
+            hiddenSelect.innerHTML = `<option value="" selected disabled>Select a product</option>`;
+
+            // Create dropdown header
+            const header = document.createElement("div");
+            header.classList.add("select-product-header");
+            header.innerHTML = '<span class="selected-text">Select a product</span>';
+
+            // Create dropdown content
+            const content = document.createElement("div");
+            content.classList.add("dropdown-content");
+            content.innerHTML = `
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search products...">
+        </div>
+      
+    `;
+
+            // Assemble the dropdown
+            container.appendChild(hiddenSelect);
+            container.appendChild(header);
+            container.appendChild(content);
+
+            // Populate it with available products
+            populateDropdownWithProducts(container);
+
+            return container;
+        }
+
+        // Helper function to add delete button to product item
+        function addDeleteButton(productItem) {
+            // Check if it already has a delete button
+            if (productItem.querySelector('.delete-product-btn')) return;
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.type = "button";
+            deleteBtn.classList.add("delete-product-btn");
+            deleteBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    `;
+
+            // Add click event to delete button
+            deleteBtn.addEventListener("click", function () {
+                // Get the selected product ID from this dropdown
+                const hiddenSelect = productItem.querySelector('.hidden-select');
+                const selectedValue = hiddenSelect.value;
+
+                // Remove it from the selectedProductMap if it belongs to this container
+                if (selectedValue && selectedProductMap.get(selectedValue) === productItem.querySelector('.custom-select-container')) {
+                    selectedProductMap.delete(selectedValue);
+                }
+
+                // Remove the product item from DOM
+                productItem.remove();
+
+                // Refresh all other dropdowns to reflect the removal
+                refreshAllDropdowns();
+
+                // If only one product remains, remove its delete button
+                const productItems = document.querySelectorAll('.product-item');
+                if (productItems.length === 1) {
+                    const deleteBtn = productItems[0].querySelector('.delete-product-btn');
+                    if (deleteBtn) deleteBtn.remove();
+                }
+            });
+
+            productItem.appendChild(deleteBtn);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Populate first dropdown with products
+            const firstContainer = document.querySelector('.custom-select-container');
+            populateDropdownWithProducts(firstContainer);
+
+            // Initialize all dropdowns
+            initializeSearchableDropdowns();
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.custom-select-container')) {
+                    document.querySelectorAll('.dropdown-content').forEach(el => {
+                        el.classList.remove('dropdown-active');
+                    });
+                }
+            });
+        });
+
+        // Handle add more button
+        document.getElementById("add-product-btn").addEventListener("click", function () {
+            const productContainer = document.getElementById("product-container");
+
+            // Get all product items
+            const productItems = productContainer.getElementsByClassName("product-item");
+
+            if (productItems.length > 0) {
+
+                // Get the most recently added product item (last one)
+                const lastProductItem = productItems[productItems.length - 1];
+
+                // Get its hidden select element
+                const hiddenSelect = lastProductItem.querySelector('.hidden-select');
+
+
+                if (!hiddenSelect.value && productItems.length === 1) {
+                    return;
+                }
+                // Check if a value has been selected
+                if (!hiddenSelect.value) {
+                    // Remove any existing error message first
+                    const existingError = lastProductItem.querySelector('.error-message');
+                    if (existingError) existingError.remove();
+
+                    // Create and display error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.classList.add('error-message-4');
+                    errorMessage.textContent = 'Please select a product before adding another';
+                    // errorMessage.style.color = '#FF0000';
+                    // errorMessage.style.fontSize = '12px';
+                    // errorMessage.style.marginTop = '5px';
+                    // errorMessage.style.marginBottom = '10px';
+
+                    // Insert error message below the dropdown
+                    lastProductItem.appendChild(errorMessage);
+
+                    // Highlight the dropdown to indicate error
+                    const header = lastProductItem.querySelector('.select-product-header');
+                    header.style.borderColor = '#FF0000';
+
+                    return; // Stop execution to prevent adding a new dropdown
+                }
+
+            }
+
+            // If this is the second product being added, add a delete button to the first one
+            if (productItems.length === 1) {
+                addDeleteButton(productItems[0]);
+            }
+
+            // Create a new product wrapper
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("product-item");
+
+            // Add the new searchable dropdown
+            wrapper.appendChild(createSearchableDropdown());
+
+            // Add delete button
+            addDeleteButton(wrapper);
+
+            // Add to the container
+            productContainer.appendChild(wrapper);
+
+            // Initialize the new dropdown
+            initializeSearchableDropdowns();
+        });
+        document.querySelector('.upload-box').addEventListener('click', function () {
+            const invoiceUpload = document.getElementById("invoiceUpload");
+
+            if (typeof removeError === 'function') {
+                removeError(invoiceUpload);
+            }
+
+            // Trigger the hidden file input when the box is clicked
+            invoiceUpload.click();
+        });
+
+        document
+        .getElementById("invoiceUpload")
+        .addEventListener("change", async function () {
+          if (this.files && this.files[0]) {
+            const file = this.files[0];
+
+            // Display preview for the selected file
+            handleFilePreview(file);
+
+            try {
+              // Show loading indicator
+              const statusElement =
+                document.getElementById("uploadStatus") ||
+                document.createElement("div");
+              statusElement.id = "uploadStatus";
+              statusElement.textContent = "Uploading...";
+              
+              //submit btn should be disabled
+               const submitBtn=document.getElementById("fr-form-final-submit"); 
+                submitBtn.disabled = true;
+
+             
+
+              if (!document.getElementById("uploadStatus")) {
+                document
+                  .getElementById("imagePreview")
+                  .appendChild(statusElement);
+              }
+
+              // Upload file through server endpoint
+              const invoiceURL = await uploadFileToServer(file);
+              //console.log("File URL:", invoiceURL);
+
+              // Update status and store the URL for form submission
+              statusElement.textContent = "";
+              submitBtn.disabled = false;
+              statusElement.classList.add("success");
+
+              // Store the URL in a hidden input for later form submission
+              document.getElementById("invoiceUrlField").value = invoiceURL;
+            } catch (error) {
+              console.error("Error uploading file:", error);
+              const statusElement =
+                document.getElementById("uploadStatus") ||
+                document.createElement("div");
+              statusElement.id = "uploadStatus";
+              statusElement.textContent = "Upload failed. Please try again.";
+              statusElement.classList.add("error");
+              if (!document.getElementById("uploadStatus")) {
+                document
+                  .getElementById("imagePreview")
+                  .appendChild(statusElement);
+              }
+            }
+          }
+        });
+
+      // Function to display file preview
+      function handleFilePreview(file) {
+        if (file.type.match("image.*")) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("previewImg").src = e.target.result;
+            document.getElementById("uploadBox").style.display = "none";
+            document.getElementById("imagePreview").style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        } else if (file.type === "application/pdf") {
+          // For PDF files, show a placeholder
+          document.getElementById("previewImg").src =
+            "https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/969ab5e4-9447-4cc9-a6be-617ea513e08b?width=200&height=300&fit=contain";
+          document.getElementById("uploadBox").style.display = "none";
+          document.getElementById("imagePreview").style.display = "block";
+        }
+      }
+
+      // Function to upload file to server
+      async function uploadFileToServer(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("https://frido-product-registration-server.onrender.com/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || `Upload failed with status: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+        //console.log("File uploaded successfully:", data);
+        return data.secure_url;
+      }
+
+      
+
+        document.getElementById('deleteButton').addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent triggering the upload box click
+
+            // Clear the file input
+            const invoiceUpload = document.getElementById('invoiceUpload');
+            invoiceUpload.value = '';
+
+            // Hide the preview and show the upload box again
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('uploadBox').style.display = 'flex';
+
+            // Reset the invoiceURL if you're using it
+            // invoiceURL = '';
+        });
+
+        document.getElementById('terms').addEventListener('click', function () {
+            removeError(this);
+        });
+
+        //pn click on dropdown of product selection, remove class error-message-4
+        document.querySelectorAll('.custom-select-container').forEach(container => {
+            container.addEventListener('click', function () {
+                // const errorMsg = document.querySelector('.error-message-4');
+                // if (errorMsg) {
+                //     errorMsg.remove();
+                // }
+                const productContainer = document.getElementById("product-container");
+
+                // Get all product items
+                const productItems = productContainer.getElementsByClassName("product-item");
+
+                if (productItems.length > 0) {
+
+
+                    const lastProductItem = productItems[productItems.length - 1];
+
+                    // Get its hidden select element
+                    const hiddenSelect = lastProductItem.querySelector('.hidden-select');
+
+
+
+                    const existingError = lastProductItem.querySelector('.error-message-4');
+                    if (existingError) existingError.remove();
+
+                    // Create and display error message
+                    // const errorMessage = document.createElement('div');
+                    // errorMessage.classList.add('error-message-4');
+                    // errorMessage.textContent = 'Please select atleast one product';
+                    // errorMessage.style.color = '#FF0000';
+                    // errorMessage.style.fontSize = '12px';
+                    // errorMessage.style.marginTop = '5px';
+                    // errorMessage.style.marginBottom = '10px';
+
+                    // Insert error message below the dropdown
+                    // lastProductItem.appendChild(errorMessage);
+
+                    // Highlight the dropdown to indicate error
+                    //const header = lastProductItem.querySelectorAll('.select-product-header');
+                    // header.style.borderColor = '#e3e3e3';
+                    document.querySelectorAll('.select-product-header').forEach(header => {
+                        header.style.borderColor = '#e3e3e3';
+                    });
+
+                    return; // Stop execution to prevent adding a new dropdown
+
+
+                }
+
+            });
+        });
+        const nameInputField = document.getElementById("frFullName");
+        const emailInputField = document.getElementById("frEmail");
+        const phoneInputField = document.getElementById("frPhone");
+        const orderIdInputField = document.getElementById("frOrderId");
+        const placeOfPurchaseInputField = document.getElementById("placeOfPurchase");
+        const purchasedProductsInputField = document.querySelectorAll('select[name="purchasedProducts[]"]');
+
+
+        nameInputField.addEventListener("input", function () {
+            this.classList.add("active-input");
+        });
+
+        emailInputField.addEventListener("input", function () {
+            this.classList.add("active-input");
+        });
+
+        phoneInputField.addEventListener("input", function () {
+            this.classList.add("active-input");
+        });
+
+        [
+            nameInputField,
+            emailInputField,
+            phoneInputField,
+            orderIdInputField,
+        ].forEach((field) => {
+            field.addEventListener("input", () => removeError(field));
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentStep = 1;
+
+            function updateProgressBar(step) {
+                const progressBar = document.querySelector(".progress-bar");
+                progressBar.classList.remove(
+                    "progress-step-1",
+                    "progress-step-2",
+                    "progress-step-3"
+                );
+                progressBar.classList.add(`progress-step-${step}`);
+            }
+
+            document
+                .getElementById("continue-btn")
+                .addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const submitBtn = this;
+                    submitBtn.disabled = true;
+
+                    // Trim values
+                    const fullName = nameInputField.value.trim();
+                    const email = emailInputField.value.trim();
+                    const phone = phoneInputField.value.trim();
+
+                    // Validate phone number (required)
+                    let hasError = false;
+
+                    if (!fullName) {
+                        showError(nameInputField, "Enter valid name");
+                        hasError = true;
+                    }
+
+
+                    if (!phone) {
+                        showError(phoneInputField, "Enter your mobile number");
+                        hasError = true;
+                    } else if (!/^\d{10}$/.test(phone.trim())) {
+                        showError(phoneInputField, "Enter a valid 10-digit mobile number");
+                        hasError = true;
+                    }
+
+                    // Email format validation
+                    const emailFormatRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    // Only run these validations if email is not empty
+                    if (!email) {
+                        showError(emailInputField, "Enter your email address");
+                        hasError = true;
+                    }
+                    else if (!emailFormatRegex.test(email)) {
+                        showError(emailInputField, "Enter a valid email address");
+                        hasError = true;
+                    }
+
+
+                    if (hasError) {
+                        submitBtn.disabled = false;
+                        return;
+                    }
+
+                    submitBtn.disabled = false;
+
+
+                    document.getElementById("form-step-1").style.display = "none";
+                    document.getElementById("form-step-2").style.display = "block";
+                    document.getElementById("form-step-3").style.display = "none";
+                    currentStep = 2;
+                    updateProgressBar(currentStep);
+                });
+
+            document
+                .getElementById("continue-btn-2")
+                .addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const submitBtn = this;
+                    submitBtn.disabled = true;
+
+                    const placeOfPurchase = document.getElementById("placeOfPurchase").value;
+                    const orderId = document.getElementById("frOrderId").value;
+
+                    const purchasedProducts = document.querySelectorAll('select[name="purchasedProducts[]"]');
+
+                    const hiddenSelects = document.querySelectorAll('.hidden-select');
+                    const selectedProducts = [];
+
+                    // Collect all selected products
+                    hiddenSelects.forEach(select => {
+                        if (select.value) {
+                            // Option 1: Get product names
+                            const selectedOption = select.options[select.selectedIndex];
+                            selectedProducts.push({
+                                id: select.value,
+                                name: selectedOption.textContent
+                            });
+                        }
+                    });
+
+                    let hasError = false;
+
+
+                    if (!orderId) {
+                        showError(document.getElementById("frOrderId"), "Enter your order ID");
+                        hasError = true;
+                    }
+                    if (orderId.length < 5) {
+                        showError(document.getElementById("frOrderId"), "Enter a valid order ID");
+                        hasError = true;
+                    }
+
+
+
+                    // Check if at least one product is selected
+                    if (selectedProducts.length === 0) {
+                        showError(document.querySelector('.custom-select-container'), "Select at least one product", 'product');
+                        hasError = true;
+                    }
+
+
+
+                    if (hasError) {
+                        submitBtn.disabled = false;
+                        return;
+                    }
+
+                    submitBtn.disabled = false;
+
+
+                    document.getElementById("form-step-1").style.display = "none";
+                    document.getElementById("form-step-2").style.display = "none";
+                    document.getElementById("form-step-3").style.display = "block";
+                    currentStep = 3;
+                    updateProgressBar(currentStep);
+                });
+
+            document
+                .getElementById("back-btn")
+                .addEventListener("click", function (e) {
+                    e.preventDefault();
+                    document.getElementById("form-step-2").style.display = "none";
+                    document.getElementById("form-step-1").style.display = "block";
+                    currentStep = 1;
+                    updateProgressBar(currentStep);
+                });
+
+            document
+                .getElementById("back-btn-2")
+                .addEventListener("click", function (e) {
+                    e.preventDefault();
+                    document.getElementById("form-step-2").style.display = "block";
+                    document.getElementById("form-step-3").style.display = "none";
+                    document.getElementById("form-step-1").style.display = "none";
+                    currentStep = 2;
+                    updateProgressBar(currentStep);
+                });
+        });
+
+        document.getElementById("placeOfPurchase").addEventListener("change", function () {
+            const orderIdInput = document.getElementById("frOrderId");
+            const placeholders = {
+                Amazon: "e.g. 406-8202803-9829949",
+                Flipkart: "e.g. OD123456789012345000",
+                Blinkit: "e.g. BLINK123456789",
+                Zepto: "e.g. #C&C15PBIQXXXXX"
+            };
+
+            orderIdInput.placeholder =
+                placeholders[this.value] || "Enter your order Id";
+        });
+
+        document.getElementById("fr-form-final-submit").addEventListener("click", async function () {
+
+            event.preventDefault();
+            // Get all hidden selects
+            const hiddenSelects = document.querySelectorAll('.hidden-select');
+            const selectedProducts = [];
+
+            // Collect all selected products
+            hiddenSelects.forEach(select => {
+                if (select.value) {
+                    // Option 1: Get product names
+                    const selectedOption = select.options[select.selectedIndex];
+                    selectedProducts.push({
+                        id: select.value,
+                        name: selectedOption.textContent
+                    });
+                }
+            });
+
+            // Display in console
+            //console.log('Selected Products:', selectedProducts);
+            const submitBtn = this;
+            submitBtn.disabled = true;
+            const invoiceUpload = document.getElementById("invoiceUpload");
+            const termsCheckbox = document.getElementById("terms");
+            let hasError = false;
+            if (!invoiceUpload.files.length && !termsCheckbox.checked) {
+                showError(termsCheckbox, "You must accept the privacy and policy", 'file-terms', invoiceUpload);
+                hasError = true;
+            }
+
+            if (!invoiceUpload.files.length) {
+                showError(invoiceUpload, "Please upload your invoice", 'file');
+                hasError = true;
+            }
+            if (!termsCheckbox.checked) {
+                showError(termsCheckbox, "You must accept the privacy and policy", 'checkbox');
+                hasError = true;
+            }
+            if (hasError) {
+                submitBtn.disabled = false;
+                return;
+            }
+            submitBtn.disabled = false;
+            // Form submission logic here
+
+            const fullName = nameInputField.value.trim();
+            const email = emailInputField.value.trim();
+            const phone = phoneInputField.value.trim();
+            const placeOfPurchase = placeOfPurchaseInputField.value.trim();
+            const orderId = orderIdInputField.value.trim();
+            //selectedProducts is array, combine the items by commas
+            const purchasedProducts = selectedProducts.map(product => product.name).join(", ");
+            const invoiceFile = invoiceUpload.files[0];
+
+            const sheetData = {
+                'Full Name': fullName,
+                'Email': email,
+                'Phone': phone,
+                'Place of Purchase': placeOfPurchase,
+                'Order ID': orderId,
+                'Purchased Products': purchasedProducts,
+                "Invoice File": document.getElementById("invoiceUrlField").value || "NA",
+            };
+
+            try {
+                submitBtn.innerText = "SUBMITTING...";
+                const response = await fetch('https://script.google.com/macros/s/AKfycbz0peHQGDDZ-kcY7erCC_gy3o3rUaEv1T98PAyFz87eH9WGcRkLFmasmmgxnYnmuDnw/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(sheetData)
+                });
+
+                 const jotformData = {
+                    fullName: fullName,
+                    email: email,
+                    phone: phone,
+                    purchasedProducts: purchasedProducts
+                    };
+                    
+           
+            const jotformResponse = await fetch(
+              "https://59y5rjzbq4.execute-api.ap-south-1.amazonaws.com/myfrido/jotform",
+              {
+                method: "POST",
+                mode: "no-cors", // Add no-cors mode to prevent CORS errors
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(jotformData),
+              }
+            );
+            
+           // console.log("Jotform API response:", jotformResponse);
+               // console.log(response);
+                submitBtn.innerText = "SUBMITTED";
+                
+                window.location.replace("https://myfrido.com/pages/product-registration-thank-you");
+            } catch (error) {
+                // window.location.replace("https://myfrido.com/pages/404-page");
+                submitBtn.innerText = "TRY AGAIN";
+                console.error('Error:', error);
+            }
+            return;
+
+        });
+
+
+
+        // Function to add delete button with SVG icon
+        function addDeleteButton(wrapper) {
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("delete-product");
+            deleteBtn.type = "button";
+            deleteBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_529_504)">
+                    <path d="M4 7H20" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 11V17" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 11V17" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 7L6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19L19 7" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 7V4C9 3.73478 9.10536 3.48043 9.29289 3.29289C9.48043 3.10536 9.73478 3 10 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4V7" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                    <clipPath id="clip0_529_504">
+                    <rect width="24" height="24" fill="white"/>
+                    </clipPath>
+                </defs>
+                </svg>
+                    `;
+
+            deleteBtn.addEventListener("click", function () {
+                wrapper.remove();
+
+                const productContainer = document.getElementById("product-container");
+                const productItems =
+                    productContainer.getElementsByClassName("product-item");
+
+                // Remove delete button from the last remaining dropdown
+                if (productItems.length === 1) {
+                    const existingDeleteBtn =
+                        productItems[0].querySelector(".delete-product");
+                    if (existingDeleteBtn) existingDeleteBtn.remove();
+                }
+            });
+
+            wrapper.appendChild(deleteBtn);
+        }
+
+    </script></div></div><div data-rid="37ea5e2a-b9a1-4dab-9630-4b6e8af4ab2f" data-replo-repeated-index=".0.0.0.0" class="r-pj35a2"><div data-rid="5a195658-e666-4781-afaa-4cb55117a0f1" data-replo-repeated-index=".0.0.0.0.0" class="r-ki594g"><div data-rid="bbe5fbf0-bac0-4f8d-ba9d-64b06e9f5c50" data-replo-repeated-index=".0.0.0.0.0.0" class="r-p33x3u alchemy-rte"><span style="width:100%"><p>How it works ?</p></span></div><div data-rid="3e40a801-f26a-40ce-947a-09801fac1238" data-replo-repeated-index=".0.0.0.0.0.0" class="r-4n9b6p"><div data-rid="280e9c4f-9c48-46de-98d4-d5dc45e82c3b" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-1egrvv5"><div data-rid="2529e5b2-84d3-4dc8-8bbe-97f37f885ac4" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-moflth"><div data-rid="50759a51-5e5c-4555-b430-78ccf14bda76" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-12f9x26 alchemy-rte"><span style="width:100%"><p>01<br></p></span></div></div><div data-rid="bca98df5-96e7-44b1-874d-8b0622f283b2" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1do94o5"><picture data-rid="40b63224-d897-4370-bc95-8451b6e11ca3" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-y7gnfz"><source media="(max-width: 640px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7a8048d3-6cc4-435f-be30-890ea6abd734?width=472" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7a8048d3-6cc4-435f-be30-890ea6abd734?width=472" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7a8048d3-6cc4-435f-be30-890ea6abd734" alt="Illustration of a person using a phone with a sign-up icon above." class="r-1jnq3jv" loading="eager"/></picture></div><div data-rid="d04fa0c3-34c8-4720-aa01-0e75865dc137" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-19ddwej"><div data-rid="f5f146f7-fc58-43ec-b16f-0750fe14b9bd" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1lyvz3m alchemy-rte"><span style="width:100%"><p>Fill up a quick</p><p>form</p></span></div></div></div><div data-rid="5ffdc816-2c56-403e-8e8f-350d6a3027e7" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-b3qw0k"><div data-rid="539b60c3-20b2-42ac-8001-e73356bbb3be" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1og774u"><div data-rid="eb887a97-89cc-4be5-b4ad-1bb7729fad70" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-ibussj alchemy-rte"><span style="width:100%"><p>02<br></p></span></div></div><div data-rid="621070dd-5ad1-42e6-874b-da5ca897d1d0" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-ttlppy"><picture data-rid="dbffbe31-d43a-44f8-84cc-221d990b92f0" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-f3blen"><source media="(max-width: 640px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e90926b-673c-4fba-86f5-77ae49f0d58d?width=450" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e90926b-673c-4fba-86f5-77ae49f0d58d?width=450" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e90926b-673c-4fba-86f5-77ae49f0d58d" alt="Illustration of a person sitting with a phone, next to a cushion and a diagram." class="r-gk6i9m" loading="eager"/></picture></div><div data-rid="345b0221-c8ed-4309-ad09-8413990843ce" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1metneh"><div data-rid="37caa98c-b804-477b-a651-f9673da116cb" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-ytgc6x alchemy-rte"><span style="width:100%"><p>Register your products</p></span></div></div></div><div data-rid="954410fa-26d9-4f12-93c8-2f2c097ef148" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-hwxqms"><div data-rid="dfb3d270-c6ea-489a-8086-50297a96c09d" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1qvv410"><div data-rid="a534e5b8-d1d8-4ddb-9fe0-ad2152ecae8b" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-xqtclm alchemy-rte"><span style="width:100%"><p>03<br></p></span></div></div><div data-rid="dcc54e1c-ec2b-4b1d-ad79-b8ce1507a664" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1o37cdg"><picture data-rid="f5901216-5cfd-4ad8-9b2b-474d07a34eaf" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-c3ei4s"><source media="(max-width: 640px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/f7c6c65f-5641-470b-9824-cdcdf2c030fc?width=450" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/f7c6c65f-5641-470b-9824-cdcdf2c030fc?width=450" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/f7c6c65f-5641-470b-9824-cdcdf2c030fc" alt="Illustration of a person sitting with a gift box and a star symbol." class="r-1mezu0l" loading="eager"/></picture></div><div data-rid="f3514398-bcb7-4f54-9fbb-f6df59bb2feb" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-17wi1oj"><div data-rid="cf5ca948-983c-4a56-810e-94eb1a3eb476" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-i4akki alchemy-rte"><span style="width:100%"><p>Unlock exclusive perks</p></span></div></div></div></div></div><div data-rid="98f0bbd7-4a55-4f12-93bd-9685600bce5c" data-replo-repeated-index=".0.0.0.0.0" class="r-kkbubg"><div data-rid="23405f7d-d79f-4e9d-bdd1-fb829c65c6db" data-replo-repeated-index=".0.0.0.0.0.0" class="r-1qs13cw"><div data-rid="7f56f0a9-d130-480e-8b11-1598bd4a49cb" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-1iibws3 alchemy-rte"><span style="width:100%"><p>Why register?</p></span></div></div><div data-rid="1b296419-5c01-46f5-8c00-c452e26bbbc7" data-replo-repeated-index=".0.0.0.0.0.0" class="r-2xdfr6"><div class="r-1hwyfbr" data-rid="1"><div data-rid="87acf150-333e-4fb6-a903-5e38a47d6834" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-186pm8r"><div data-rid="535d25b4-4f56-437f-841d-6bfe4d5702c2" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-4mkqu6"><div data-rid="50d06d63-92a3-418e-81b6-1e994a39428e" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1e820ca"><div data-rid="664da5f0-e990-4a38-8d0d-e9871c986a0b" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0" class="r-9obltg alchemy-rte"><span style="width:100%"><p><span>Extended Warranty</span></p></span></div><div data-rid="72c099bc-5264-47d6-a000-55f77e545ebd" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0" class="r-1giostk alchemy-rte"><span style="width:100%"><p><span>Add extra months to your warranty at no cost</span></p></span></div></div><picture data-rid="4864a20a-e2e6-4721-9b96-b49c96032f62" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-8q27c3"><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Frame_1410086671.jpg?v=1734353031&amp;width=820" media="(max-width: 640px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7bec5858-fbc1-4881-8a7e-57bf68812d7a?width=1024" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7bec5858-fbc1-4881-8a7e-57bf68812d7a?width=1800" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7bec5858-fbc1-4881-8a7e-57bf68812d7a" alt="Woman holding phone with security shield icon in the background." class="r-1m8ttuq" loading="eager"/></picture></div><div data-rid="ee903b26-8350-4f92-87e5-be70259a4bc6" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1auq0y1"><div data-rid="22b4a13f-9042-4402-8f94-aa4d12df5cf8" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1ywqxln"><div data-rid="59bd787b-9c8a-433f-b984-5bb1325df67e" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0" class="r-1te5tnd alchemy-rte"><span style="width:100%"><p>VIP Support Access</p></span></div><div data-rid="3d97bfd6-6f0c-4828-a34c-0d9257da07a3" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0" class="r-9lvqy7 alchemy-rte"><span style="width:100%"><p>Get faster solutions when you need them most</p></span></div></div><picture data-rid="2298cc93-65ad-4aa2-9bdd-3e9aceb8f99f" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1rfbff1"><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/3505f652-a333-42da-9fd3-6d83be0f5795?width=820" media="(max-width: 640px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/3505f652-a333-42da-9fd3-6d83be0f5795?width=1024" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/3505f652-a333-42da-9fd3-6d83be0f5795?width=1800" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/3505f652-a333-42da-9fd3-6d83be0f5795" alt="Illustration of a woman at a computer wearing a headset, with a chat bubble icon." class="r-11eaysx" loading="eager"/></picture></div><div data-rid="68889810-d091-4d51-bdcb-fe62320ce5ee" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-sp9l5a"><div data-rid="36ff0d25-eb01-409b-bc55-727cfd4b6411" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-16i59f0"><div data-rid="6ca4ac43-d0f1-40da-a739-936d39ead092" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0" class="r-e170wb alchemy-rte"><span style="width:100%"><p>Member Only Deals</p></span></div><div data-rid="182575d9-6793-4869-b01e-11d93c23c0cc" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0" class="r-1tniobf alchemy-rte"><span style="width:100%"><p><span>Receive special pricing and preview upcoming products.</span></p></span></div></div><picture data-rid="4bf6dd22-8f73-48fd-b552-3605a4b45f07" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1cdqiiw"><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e1979a7-9bc0-4568-b081-b18b19294b32?width=820" media="(max-width: 640px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e1979a7-9bc0-4568-b081-b18b19294b32?width=1024" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e1979a7-9bc0-4568-b081-b18b19294b32?width=1800" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e1979a7-9bc0-4568-b081-b18b19294b32" alt="Man presenting a gift box to a surprised woman." class="r-1fstsdx" loading="eager"/></picture></div></div></div></div>{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<!-- -->{% assign reploOriginalProductR6jr2 = product %}<!-- -->{% capture productHandle %}frido-arch-support-semi-rigid-insole{% endcapture %}<!-- -->{% assign product = all_products[productHandle] %}<!-- -->{% assign reploOriginalProductVariantR6jr2 = reploSelectedVariant %}<!-- -->{% assign reploSelectedVariant = blank %}<!-- -->{% assign reploOriginalSPGR6jr2 = reploSortedSellingPlans %}<!-- -->{% assign reploSortedSellingPlans = blank %}<!-- -->{% assign reploOriginalSSPR6jr2 = reploSelectedSellingPlan %}<!-- -->{% assign reploSelectedSellingPlan = blank %}<!-- -->{% assign reploOriginalSSPPriceR6jr2 = reploSelectedSellingPlanPrice %}<!-- -->{% assign reploSelectedSellingPlanPrice = blank %}<!-- -->{% assign reploOriginalComparePricePercentR6jr2 = reploCompareAtPriceDifferencePercentage %}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = blank %}<!-- -->{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}<!-- -->{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<!-- -->{% capture reploVariantIdString %}null{% endcapture %}<!-- -->{% capture reploSellingPlanIdString %}null{% endcapture %}<!-- -->{% capture reploIdKey %}id{% endcapture %}<!-- -->{% capture reploPercentageKey %}percentage{% endcapture %}<!-- -->{% capture reploPriceKey %}price{% endcapture %}<!-- -->{% capture reploFixedAmountKey %}fixed_amount{% endcapture %}<!-- -->{% capture spKey %}selling_plan{% endcapture %}<!-- -->{%- liquid
+              assign reploVariantId = reploVariantIdString | times: 1
+              assign reploSelectedVariant = product.variants | where: reploIdKey, reploVariantId | first
+              if reploSelectedVariant == blank
+                assign reploSelectedVariant = product.selected_or_first_available_variant
+              endif
+              assign reploSelectedSellingPlanPrice = reploSelectedVariant.price
+              if product.selling_plan_groups[0]
+                assign reploAllSellingPlans = reploSelectedVariant.selling_plan_allocations | map: spKey
+                assign reploSortedSellingPlans = reploAllSellingPlans | sort: reploIdKey
+                if true
+                  assign reploSellingPlanId = reploSellingPlanIdString | times: 1
+                  assign reploSelectedSellingPlan = reploSortedSellingPlans | where: reploIdKey, reploSellingPlanId | first
+                  if reploSelectedSellingPlan.price_adjustments[0]
+                    assign adjustment = reploSelectedSellingPlan.price_adjustments[0]
+                    case adjustment.value_type
+                      when reploPercentageKey
+                        assign amountOff = 100 | minus: adjustment.value
+                        assign reploSelectedSellingPlanPrice = reploSelectedSellingPlanPrice | times: amountOff | divided_by: 100
+                      when reploFixedAmountKey
+                        assign reploSelectedSellingPlanPrice = reploSelectedSellingPlanPrice | minus: adjustment.value
+                      when reploPriceKey
+                        assign reploSelectedSellingPlanPrice = adjustment.value
+                    endcase
+                  endif
+                endif
+              endif
+            -%}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = 0 %}<!-- -->{% if reploSelectedVariant.compare_at_price != blank %}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = reploSelectedVariant.compare_at_price | minus: reploSelectedVariant.price | at_least: 0 | times: 100.0 | divided_by: reploSelectedVariant.compare_at_price | floor %}<!-- -->{% endif %}<!-- -->{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}<div data-rid="7cdfe979-8973-4d23-bdb6-c4edc1ebdd6e" data-replo-repeated-index=".0.0.0.0.0.0" class="r-4uukay" data-replo-product-container="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" data-replo-product-handle="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.handle}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}"><product-form style="display:none"><form id="product-form-{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" method="post" data-productid="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" encType="multipart/form-data" action="/cart/add" data-type="add-to-cart-form"><input type="hidden" name="id" data-productid="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" value="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{reploSelectedVariant.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}"/><input type="hidden" name="quantity" value="1"/><input type="hidden" name="selling_plan" value="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{%- if reploSelectedSellingPlan != blank -%}{{reploSelectedSellingPlan.id}}{%- endif -%}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}"/></form></product-form><div data-rid="79f08746-f14a-4b4b-9b46-00797fd806d3" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-wmaka3" id="replo-carousel::Rdujr2:" role="region" aria-label="Carousel" data-replo-carousel="true"><div data-rid="fa69ad1f-0a3c-410a-a679-25820f5da07f" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1pq5qyk"><div data-rid="338071f5-9826-481d-a6d8-922ee57d9a6c" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-9qg0d8"><div data-replo-component-root="carousel" data-replo-part="slides" data-replo-root-id="replo-carousel:Retujr2:" data-orientation="horizontal" data-active-slide-position="start" role="region" aria-label="Carousel slides" dir="ltr" style="padding-left:0;padding-right:0;width:100%;height:100%;overflow:visible;position:relative" id="replo-carousel:Retujr2::track"><div data-replo-component-root="carousel" data-replo-part="slide-track" data-replo-root-id="replo-carousel:Retujr2:" data-orientation="horizontal" data-active-slide-position="start" style="--replo-carousel-slides-per-page:1;transform:translate3d(0px, 0px, 0px);display:flex;overflow:visible;backface-visibility:hidden;gap:var(--replo-gap, 0px);height:100%;margin:0;padding:0;transition-duration:0ms;transition-property:none"><div data-replo-component-root="carousel" data-replo-part="slide" data-replo-root-id="replo-carousel:Retujr2:" data-slide-index="0" data-slide-source-index="0" data-is-active="true" data-is-cloned="true" data-slide-id="replo-carousel:Retujr2::slide:0:0" id="replo-carousel:Retujr2::slide:0:0:Rdetujr2::clone:0" aria-hidden="true" tabindex="-1" role="group" aria-label="Slide 1" style="display:flex;height:100%;width:calc((100% + var(--replo-gap, 0px)) / var(--replo-carousel-slides-per-page, 1) - var(--replo-gap, 0px));padding:0;margin:0;backface-visibility:hidden;flex-shrink:0;position:relative" data-component-id="269d7485-2e12-4aee-b76f-f68af93601f8" class="r-1becdjx"><div data-rid="269d7485-2e12-4aee-b76f-f68af93601f8" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0" class="r-4r5kdt"><div data-rid="8fe41643-b675-4a74-bf67-2f473657d0a4" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0" class="r-1xfuu5y"><div data-rid="b58c86cc-106a-42e3-b861-e9590b8bb11c" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0.0" class="r-1cu7dtv alchemy-rte"><span style="width:100%">Extended Warranty</span></div><div data-rid="a3ab88e3-d2ce-4198-9f67-5253d9ac8f4d" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0.0" class="r-1yzmowh alchemy-rte"><span style="width:100%"><p><span>Add extra months to your warranty at no cost</span></p></span></div></div><picture data-rid="fadea6ea-96bf-4b4a-b788-9af91e4255f3" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0" class="r-89ugif"><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7bec5858-fbc1-4881-8a7e-57bf68812d7a?width=820" media="(max-width: 640px)"/><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702&amp;width=1024" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702&amp;width=1800" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702" alt="Person using a smartphone with a security shield icon and calendar nearby." class="r-5aiomr" loading="eager"/></picture></div></div><div data-replo-component-root="carousel" data-replo-part="slide" data-replo-root-id="replo-carousel:Retujr2:" data-slide-index="1" data-slide-source-index="1" data-is-cloned="true" data-is-target="true" data-slide-id="replo-carousel:Retujr2::slide:1:1" id="replo-carousel:Retujr2::slide:1:1:Rletujr2::clone:1" aria-hidden="true" tabindex="-1" role="group" aria-label="Slide 2" style="display:flex;height:100%;width:calc((100% + var(--replo-gap, 0px)) / var(--replo-carousel-slides-per-page, 1) - var(--replo-gap, 0px));padding:0;margin:0;backface-visibility:hidden;flex-shrink:0;position:relative" data-component-id="fca4ca1c-4207-4019-853f-6ffd33a6a86e" class="r-1becdjx"><div data-rid="fca4ca1c-4207-4019-853f-6ffd33a6a86e" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0" class="r-178b0q2"><div data-rid="bf160b7b-f583-499f-bca5-bc3002863f66" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0" class="r-38pc55"><div data-rid="2ceca002-f125-445a-abef-c3997483be2c" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0.0" class="r-1wpcjv5 alchemy-rte"><span style="width:100%"><p>VIP Support Access</p></span></div><div data-rid="0d20c2da-cf17-4908-8f6b-31637f832341" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0.0" class="r-1xyxhrc alchemy-rte"><span style="width:100%"><p><span>Get faster solutions when you need them most</span></p></span></div></div><picture data-rid="026bdb9d-0f40-4e22-8a24-383087aceca6" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0" class="r-mjjul3"><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/3505f652-a333-42da-9fd3-6d83be0f5795?width=820" media="(max-width: 640px)"/><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702&amp;width=1024" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702&amp;width=1800" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702" alt="A woman in a headset working at a computer with a speech bubble." class="r-podqt8" loading="eager"/></picture></div></div><div data-replo-component-root="carousel" data-replo-part="slide" data-replo-root-id="replo-carousel:Retujr2:" data-slide-index="2" data-slide-source-index="2" data-is-cloned="true" data-slide-id="replo-carousel:Retujr2::slide:2:2" id="replo-carousel:Retujr2::slide:2:2:Rtetujr2::clone:2" aria-hidden="true" tabindex="-1" role="group" aria-label="Slide 3" style="display:flex;height:100%;width:calc((100% + var(--replo-gap, 0px)) / var(--replo-carousel-slides-per-page, 1) - var(--replo-gap, 0px));padding:0;margin:0;backface-visibility:hidden;flex-shrink:0;position:relative" data-component-id="f6b597a1-a0a0-4074-8a25-a838768b6127" class="r-1becdjx"><div data-rid="f6b597a1-a0a0-4074-8a25-a838768b6127" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0" class="r-e6f7ac"><div data-rid="bbd61b15-f0a7-4213-8220-5928eb955f9d" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0" class="r-15rwifb"><div data-rid="7577cd54-a2c1-4a57-b17b-f7d0c966231b" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0.0" class="r-96khjo alchemy-rte"><span style="width:100%"><p>Member Only Deals</p></span></div><div data-rid="1a2e02c9-3094-42dc-bdaf-ea1255aff5d8" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0.0" class="r-j8a6qe alchemy-rte"><span style="width:100%"><p><span>Receive special pricing and preview upcoming products.</span></p></span></div></div><picture data-rid="4d22a5f8-340c-4935-919e-7356981e4dd0" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0.0" class="r-1ti3tt0"><source srcSet="https://assets.replocdn.com/projects/6e10548c-60cd-452c-a8fe-ff9e1038ddfe/7e1979a7-9bc0-4568-b081-b18b19294b32?width=820" media="(max-width: 640px)"/><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702&amp;width=1024" media="(min-width: 641px) and (max-width: 1024px)"/><source srcSet="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702&amp;width=1800" media="(min-width: 1025px) and (max-width: 2400px)"/><img src="https://cdn.shopify.com/s/files/1/0728/4663/9319/files/Imagery_1.png?v=1734346702" alt="A person gives a gift to another, who appears surprised and delighted." class="r-8pu5s4" loading="eager"/></picture></div></div></div></div></div><div data-rid="5a9efeee-7140-4a0b-b518-c7c184fa5d33" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-5dfvfz"><div data-rid="7d3eebf5-b7f6-4cc4-85d3-e95d610e309e" aria-current="true" aria-label="Go to slide 1" role="button" tabindex="0" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.0" class="r-1jpl5qa r-1binekk"></div><div data-rid="7d3eebf5-b7f6-4cc4-85d3-e95d610e309e" aria-current="false" aria-label="Go to slide 2" role="button" tabindex="0" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.1" class="r-1jpl5qa"></div><div data-rid="7d3eebf5-b7f6-4cc4-85d3-e95d610e309e" aria-current="false" aria-label="Go to slide 3" role="button" tabindex="0" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0.0.2" class="r-1jpl5qa"></div></div></div></div>{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<!-- -->{% assign product = reploOriginalProductR6jr2 %}<!-- -->{% assign reploSelectedVariant = reploOriginalProductVariantR6jr2 %}<!-- -->{% assign reploSortedSellingPlans = reploOriginalSPGR6jr2 %}<!-- -->{% assign reploSelectedSellingPlan = reploOriginalSSPR6jr2 %}<!-- -->{% assign reploSelectedSellingPlanPrice = reploOriginalSSPPriceR6jr2 %}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = reploOriginalComparePricePercentR6jr2 %}<!-- -->{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}</div></div></div><div data-rid="3bac7102-8abf-4288-b487-d566c0d93b78" data-replo-repeated-index=".0.0.0.0" data-alchemy-url-hashmark="form" tabindex="-1" id="form" data-alchemy-url-hashmark-ignore="true" class="r-2l69g">{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<!-- -->{% assign reploOriginalProductRcr2 = product %}<!-- -->{% capture productHandle %}frido-arch-support-semi-rigid-insole{% endcapture %}<!-- -->{% assign product = all_products[productHandle] %}<!-- -->{% assign reploOriginalProductVariantRcr2 = reploSelectedVariant %}<!-- -->{% assign reploSelectedVariant = blank %}<!-- -->{% assign reploOriginalSPGRcr2 = reploSortedSellingPlans %}<!-- -->{% assign reploSortedSellingPlans = blank %}<!-- -->{% assign reploOriginalSSPRcr2 = reploSelectedSellingPlan %}<!-- -->{% assign reploSelectedSellingPlan = blank %}<!-- -->{% assign reploOriginalSSPPriceRcr2 = reploSelectedSellingPlanPrice %}<!-- -->{% assign reploSelectedSellingPlanPrice = blank %}<!-- -->{% assign reploOriginalComparePricePercentRcr2 = reploCompareAtPriceDifferencePercentage %}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = blank %}<!-- -->{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}<!-- -->{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<!-- -->{% capture reploVariantIdString %}null{% endcapture %}<!-- -->{% capture reploSellingPlanIdString %}null{% endcapture %}<!-- -->{% capture reploIdKey %}id{% endcapture %}<!-- -->{% capture reploPercentageKey %}percentage{% endcapture %}<!-- -->{% capture reploPriceKey %}price{% endcapture %}<!-- -->{% capture reploFixedAmountKey %}fixed_amount{% endcapture %}<!-- -->{% capture spKey %}selling_plan{% endcapture %}<!-- -->{%- liquid
+              assign reploVariantId = reploVariantIdString | times: 1
+              assign reploSelectedVariant = product.variants | where: reploIdKey, reploVariantId | first
+              if reploSelectedVariant == blank
+                assign reploSelectedVariant = product.selected_or_first_available_variant
+              endif
+              assign reploSelectedSellingPlanPrice = reploSelectedVariant.price
+              if product.selling_plan_groups[0]
+                assign reploAllSellingPlans = reploSelectedVariant.selling_plan_allocations | map: spKey
+                assign reploSortedSellingPlans = reploAllSellingPlans | sort: reploIdKey
+                if true
+                  assign reploSellingPlanId = reploSellingPlanIdString | times: 1
+                  assign reploSelectedSellingPlan = reploSortedSellingPlans | where: reploIdKey, reploSellingPlanId | first
+                  if reploSelectedSellingPlan.price_adjustments[0]
+                    assign adjustment = reploSelectedSellingPlan.price_adjustments[0]
+                    case adjustment.value_type
+                      when reploPercentageKey
+                        assign amountOff = 100 | minus: adjustment.value
+                        assign reploSelectedSellingPlanPrice = reploSelectedSellingPlanPrice | times: amountOff | divided_by: 100
+                      when reploFixedAmountKey
+                        assign reploSelectedSellingPlanPrice = reploSelectedSellingPlanPrice | minus: adjustment.value
+                      when reploPriceKey
+                        assign reploSelectedSellingPlanPrice = adjustment.value
+                    endcase
+                  endif
+                endif
+              endif
+            -%}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = 0 %}<!-- -->{% if reploSelectedVariant.compare_at_price != blank %}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = reploSelectedVariant.compare_at_price | minus: reploSelectedVariant.price | at_least: 0 | times: 100.0 | divided_by: reploSelectedVariant.compare_at_price | floor %}<!-- -->{% endif %}<!-- -->{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}<div data-rid="cc108dd3-b755-45ab-bdb8-bf2937f20980" data-replo-repeated-index=".0.0.0.0.0" class="r-19w6bsb" data-replo-product-container="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" data-replo-product-handle="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.handle}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}"><product-form style="display:none"><form id="product-form-{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" method="post" data-productid="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" encType="multipart/form-data" action="/cart/add" data-type="add-to-cart-form"><input type="hidden" name="id" data-productid="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{product.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}" value="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{{reploSelectedVariant.id}}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}"/><input type="hidden" name="quantity" value="1"/><input type="hidden" name="selling_plan" value="{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}{%- if reploSelectedSellingPlan != blank -%}{{reploSelectedSellingPlan.id}}{%- endif -%}{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}"/></form></product-form>{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<!-- -->{% assign product = reploOriginalProductRcr2 %}<!-- -->{% assign reploSelectedVariant = reploOriginalProductVariantRcr2 %}<!-- -->{% assign reploSortedSellingPlans = reploOriginalSPGRcr2 %}<!-- -->{% assign reploSelectedSellingPlan = reploOriginalSSPRcr2 %}<!-- -->{% assign reploSelectedSellingPlanPrice = reploOriginalSSPPriceRcr2 %}<!-- -->{% assign reploCompareAtPriceDifferencePercentage = reploOriginalComparePricePercentRcr2 %}<!-- -->{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}</div></div><div data-rid="a84ee2d4-3de7-4b42-a2fa-c3df325c391a" data-replo-repeated-index=".0.0.0.0" data-alchemy-url-hashmark="FAQs" tabindex="-1" id="FAQs" data-alchemy-url-hashmark-ignore="true" class="r-1gppylu"><div data-rid="0332119f-29d2-4707-991f-9f1d154b0683" data-replo-repeated-index=".0.0.0.0.0" class="r-1ip3zrz"><div data-rid="663d97ae-4ff6-478a-8c03-906e73232449" data-replo-repeated-index=".0.0.0.0.0.0" class="r-3lr37b"><div data-rid="566f0e93-8d4e-4352-844e-2479337d25a8" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-11wtu7 alchemy-rte"><span style="width:100%"><p>FAQs</p></span></div></div><div data-rid="c4b7f65e-7eed-4a8b-afdf-fb284793f215" data-replo-repeated-index=".0.0.0.0.0.0" class="r-qtv9h"><div data-rid="ba0e8969-c43d-40e4-9ea3-6f91929b0b24" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-14p0ubu" data-replo-collapsible="true" data-state="closed"><div data-rid="8d7205a5-3c93-4d7a-8f32-3ec9704bd0ea" aria-expanded="false" aria-controls="replo-:R3dr2:" data-replo-repeated-index=".0.0.0.0.0.0.0.0" tabindex="0" role="button" class="r-16p7fse"><div data-rid="02f65edc-dd94-44ce-a23a-c18305d84270" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1l14iln alchemy-rte"><span style="width:100%"><p>Why do I need to create an account to register my product?</p></span></div><div data-rid="3a717c38-70b7-41e0-be09-f6d870ef407f" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-amiqzr"><span style="display:contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down" style="fill: none;stroke: currentColor;width: var(--rsw, 100%);height: 100%" role="presentation"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div></div><div class="replo-animated" hidden="" id="replo-:R3dr2:" aria-controls="replo-:R3dr2:" aria-expanded="false"><div data-rid="db37dbf9-b5b8-46dd-b575-c9c50ecae9c5" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-42bwxs"><div data-rid="2a973081-a82d-4114-a099-f2185b1e7472" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-qzcp8f alchemy-rte"><span style="width:100%"><p>Your Frido account is your VIP pass—it centralizes all your products in one dashboard, tracks warranty status automatically, unlocks priority support, and gives you exclusive access to member-only deals and early product releases. It takes just seconds to create but adds months of protection and perks.</p></span></div></div></div></div><div data-rid="d5ed56f5-5b62-4b44-86db-9ba015e9ab4c" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-19d2fl9"></div><div data-rid="86f83e7b-e860-4cb0-adbb-fcce6cf911cd" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-ctnncp" data-replo-collapsible="true" data-state="closed"><div data-rid="9bf0fa26-0dff-4705-acfa-1376e10e90ac" aria-expanded="false" aria-controls="replo-:R7dr2:" data-replo-repeated-index=".0.0.0.0.0.0.0.0" tabindex="0" role="button" class="r-1jgjgvx"><div data-rid="aecc2717-cc4a-4873-9cf9-c560668933f3" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-2ux1a3 alchemy-rte"><span style="width:100%"><p>Where can I find my product's serial number?</p></span></div><div data-rid="67955b99-3084-407f-a939-635e14a04d3f" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1y3ep5q"><span style="display:contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down" style="fill: none;stroke: currentColor;width: var(--rsw, 100%);height: 100%" role="presentation"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div></div><div class="replo-animated" hidden="" id="replo-:R7dr2:" aria-controls="replo-:R7dr2:" aria-expanded="false"><div data-rid="b1626a25-4acf-43f5-8c3d-a63c44a5ff86" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-6qqgbv"><div data-rid="7594be09-68e7-4bcc-ac84-b971b19593a9" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1bbn41y alchemy-rte"><span style="width:100%"><p>Your product's serial number can be found on a sticker located on the product packaging, at the bottom of the product, or on the warranty card included in the box. It typically appears as a combination of letters and numbers, often beginning with "FR" or "FRIDO" followed by digits.</p></span></div></div></div></div><div data-rid="c7cf85d0-7859-4986-8acd-81ecb0691fc7" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-1g8fbat"></div><div data-rid="12396439-0c2f-471d-9962-09a1580d3784" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-18k9akd" data-replo-collapsible="true" data-state="closed"><div data-rid="7d0f17b7-070e-434d-a5fe-fda1109fda0f" aria-expanded="false" aria-controls="replo-:Rbdr2:" data-replo-repeated-index=".0.0.0.0.0.0.0.0" tabindex="0" role="button" class="r-vpgbhe"><div data-rid="9d38e1c1-adbc-4521-8261-541f0fae0544" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1jal0xx alchemy-rte"><span style="width:100%"><p>What if my serial number is already registered?</p></span></div><div data-rid="eb15fa97-2f67-490e-8cab-9d6b2552edf8" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-14q0me7"><span style="display:contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down" style="fill: none;stroke: currentColor;width: var(--rsw, 100%);height: 100%" role="presentation"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div></div><div class="replo-animated" hidden="" id="replo-:Rbdr2:" aria-controls="replo-:Rbdr2:" aria-expanded="false"><div data-rid="89e100d1-2f2a-48be-b463-8dbabdcdd047" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-ksc9qj"><div data-rid="8514c0df-2b92-4805-8e09-bec6b7adc7c7" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1uo2ebe alchemy-rte"><span style="width:100%"><p>If your serial number shows as already registered, this may indicate you've purchased a previously registered item or there might be a system error. Please contact our support team via the help chat or at <a href="mailto:support@myfrido.com">support@myfrido.com</a> with your proof of purchase, and we'll help verify ownership and transfer the warranty to your account.</p></span></div></div></div></div><div data-rid="455f2a29-d301-46e9-8ac6-991c7db1537e" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-1cbcpbg"></div><div data-rid="cca7ab4e-33bb-4326-a0e0-0511dd7b9ce3" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-19tdsaz" data-replo-collapsible="true" data-state="closed"><div data-rid="da840f68-71db-465a-9514-43bbd0b4bcd2" aria-expanded="false" aria-controls="replo-:Rfdr2:" data-replo-repeated-index=".0.0.0.0.0.0.0.0" tabindex="0" role="button" class="r-1b750sp"><div data-rid="f89ead57-c19d-4879-b599-97175ccd4345" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1g57rbk alchemy-rte"><span style="width:100%"><p>Do I need to upload an invoice for registration?</p></span></div><div data-rid="be48f7fa-f6c2-40fb-bad3-2c533c520859" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1xapxm5"><span style="display:contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down" style="fill: none;stroke: currentColor;width: var(--rsw, 100%);height: 100%" role="presentation"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div></div><div class="replo-animated" hidden="" id="replo-:Rfdr2:" aria-controls="replo-:Rfdr2:" aria-expanded="false"><div data-rid="7ff6fc3e-5a8b-424e-bc4c-116596472b98" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-1vnfyxa"><div data-rid="ad530c74-6d5f-4a9f-aa9a-419f87926725" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-xrj1sn alchemy-rte"><span style="width:100%"><p>While not always required for initial registration, keeping your invoice handy is recommended. For certain premium benefits and warranty claims, you may need to provide proof of purchase. You can upload your invoice during registration or add it to your product profile later through your account dashboard.</p></span></div></div></div></div><div data-rid="114da80b-3b0b-4f31-8ec2-24984a55297c" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-40rjml"></div><div data-rid="31c33239-2f1f-422c-a63e-e874d1a49a7a" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-19x3rwt" data-replo-collapsible="true" data-state="closed"><div data-rid="9fd76d62-e1e8-4114-95f4-c3f149fe859f" aria-expanded="false" aria-controls="replo-:Rjdr2:" data-replo-repeated-index=".0.0.0.0.0.0.0.0" tabindex="0" role="button" class="r-2sggai"><div data-rid="19cd6c3e-4741-4204-9aa7-9ae9cc27a86a" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-53cuwl alchemy-rte"><span style="width:100%"><p>How do I claim my warranty after registering?</p></span></div><div data-rid="e12054ea-d4a8-490b-8330-f649580b541b" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1bogdvo"><span style="display:contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down" style="fill: none;stroke: currentColor;width: var(--rsw, 100%);height: 100%" role="presentation"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div></div><div class="replo-animated" hidden="" id="replo-:Rjdr2:" aria-controls="replo-:Rjdr2:" aria-expanded="false"><div data-rid="93c6a534-4ceb-4f38-9e5a-9a8b8c11e5f6" data-replo-repeated-index=".0.0.0.0.0.0.0.0" class="r-9rgdob"><div data-rid="7c0d6da7-b237-4bc0-ae09-223b8dd241ca" data-replo-repeated-index=".0.0.0.0.0.0.0.0.0" class="r-1a1r3cu alchemy-rte"><span style="width:100%"><p>Frido electric wheelchairs come with various safety features, such as adjustable seat belts, robust braking systems, and user-friendly controls to ensure a secure and comfortable experience</p></span></div></div></div></div><div data-rid="f1b6aef6-79f2-4493-8218-5bd47a05b46d" data-replo-repeated-index=".0.0.0.0.0.0.0" class="r-1fug04i"></div></div></div></div></div></div></div></div><style>@import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900;950&family=Red+Hat+Display:wght@100;200;300;400;500;600;700;800;900;950)</style></div>
+{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}
+  <script type="application/json" id="replo-deps-products">
+    [{"id":"8768561283287","handle": "frido-arch-support-semi-rigid-insole","data":{{ all_products['frido-arch-support-semi-rigid-insole'] | json }}}]
+  </script>
+  {%- comment -%}replo-liquid-chunk-end{%- endcomment -%}{%- comment -%}replo-liquid-chunk-begin{%- endcomment -%}<script type="application/json" id="replo-deps-shopify-store">{ "shop": { "moneyFormat": {{ shop.money_format | json }} } }</script>{%- comment -%}replo-liquid-chunk-end{%- endcomment -%}
