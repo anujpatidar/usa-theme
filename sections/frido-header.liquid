@@ -33,20 +33,34 @@
           </svg>
         </a>
       </div>
-      <a href="{{ routes.root_url }}" class="frido-header__logo" style="position:absolute;left:50%;transform:translateX(-50%)">
-        {{ section.settings.logo_text | default: 'Frido' }}
-      </a>
+      {% render 'frido-header-logo',
+        url: routes.root_url,
+        image: section.settings.logo_image,
+        text: section.settings.logo_text,
+        subtitle: section.settings.logo_subtitle,
+        max_width: section.settings.logo_max_width,
+        show_subtitle: false,
+        mobile_center: true
+      %}
       <div style="display:flex;align-items:center;gap:0.2rem;margin-left:auto">
         <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
           </svg>
         </a>
-        <span class="frido-header__icon-btn" aria-hidden="true" title="{{ localization.country.name }}">
-          <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
-            <rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/>
-            <rect width="9" height="8" fill="#3C3B6E"/>
-          </svg>
+        <span class="frido-header__icon-btn frido-header__region" aria-hidden="true" title="{{ localization.country.name }}">
+          {% if section.settings.region_icon != blank %}
+            {{
+              section.settings.region_icon
+              | image_url: width: 64
+              | image_tag: loading: 'lazy', class: 'frido-header__region-img', widths: '32,48,64', sizes: '28px', alt: ''
+            }}
+          {% else %}
+            <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
+              <rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/>
+              <rect width="9" height="8" fill="#3C3B6E"/>
+            </svg>
+          {% endif %}
         </span>
         {% if shop.customer_accounts_enabled %}
           <a
@@ -64,12 +78,15 @@
 
     {%- comment -%} Desktop bar {%- endcomment -%}
     <div class="frido-header__main frido-header__bar frido-header__bar--desktop">
-      <a href="{{ routes.root_url }}" class="frido-header__logo">
-        {{ section.settings.logo_text | default: 'Frido' }}
-        {% if section.settings.logo_subtitle != blank %}
-          <small>{{ section.settings.logo_subtitle | escape }}</small>
-        {% endif %}
-      </a>
+      {% render 'frido-header-logo',
+        url: routes.root_url,
+        image: section.settings.logo_image,
+        text: section.settings.logo_text,
+        subtitle: section.settings.logo_subtitle,
+        max_width: section.settings.logo_max_width,
+        show_subtitle: true,
+        mobile_center: false
+      %}
 
       {% if menu != blank and menu.links.size > 0 %}
         <nav class="frido-header__nav-desktop" aria-label="{{ 'sections.header.menu' | t }}">
@@ -104,8 +121,16 @@
               <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
             </svg>
           </a>
-          <span class="frido-header__icon-btn" aria-hidden="true">
-            <svg width="24" height="17" viewBox="0 0 22 16"><rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/><rect width="9" height="8" fill="#3C3B6E"/></svg>
+          <span class="frido-header__icon-btn frido-header__region" aria-hidden="true">
+            {% if section.settings.region_icon != blank %}
+              {{
+                section.settings.region_icon
+                | image_url: width: 64
+                | image_tag: loading: 'lazy', class: 'frido-header__region-img', widths: '32,48,64', sizes: '28px', alt: ''
+              }}
+            {% else %}
+              <svg width="24" height="17" viewBox="0 0 22 16"><rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/><rect width="9" height="8" fill="#3C3B6E"/></svg>
+            {% endif %}
           </span>
           {% if shop.customer_accounts_enabled %}
             <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="frido-header__icon-btn" aria-label="{{ 'customer.account_fallback' | t }}">
@@ -144,6 +169,11 @@
 </header>
 
 <style>
+  .frido-header__logo--mobile-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .frido-header__bar--mobile {
     position: relative;
     display: flex;
@@ -165,10 +195,6 @@
       gap: 2rem;
       min-height: 6.8rem;
     }
-    .frido-header__logo[style] {
-      position: static !important;
-      transform: none !important;
-    }
   }
 </style>
 
@@ -185,8 +211,30 @@
     },
     { "type": "url", "id": "help_url", "label": "Help link" },
     { "type": "url", "id": "track_url", "label": "Track order link" },
-    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Frido" },
-    { "type": "text", "id": "logo_subtitle", "label": "Logo subtitle", "default": "FOOTWEAR" },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image",
+      "info": "Upload PNG, JPG, or SVG from your library. If empty, logo text is used."
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 80,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo max width",
+      "default": 180
+    },
+    { "type": "text", "id": "logo_text", "label": "Logo text (fallback)", "default": "Frido" },
+    { "type": "text", "id": "logo_subtitle", "label": "Logo subtitle (text logo only)", "default": "FOOTWEAR" },
+    {
+      "type": "image_picker",
+      "id": "region_icon",
+      "label": "Region / country icon",
+      "info": "Optional. Replaces the default flag graphic next to the cart."
+    },
     { "type": "link_list", "id": "menu", "label": "Menu" },
     { "type": "text", "id": "sale_label", "label": "Sale pill label", "default": "Spring Sale" },
     { "type": "url", "id": "sale_link", "label": "Sale pill link" }

@@ -1,0 +1,36 @@
+{% comment %}
+  Frido header logo — image (editor) or text fallback.
+  @param url {String}
+  @param image {Image}
+  @param text {String}
+  @param subtitle {String}
+  @param max_width {Number} px
+  @param show_subtitle {Boolean}
+  @param mobile_center {Boolean} optional absolute center on mobile
+{% endcomment %}
+{%- liquid
+  assign mw = max_width | default: 180
+  assign show_sub = show_subtitle
+  if show_sub == nil
+    assign show_sub = true
+  endif
+-%}
+<a
+  href="{{ url }}"
+  class="frido-header__logo{% if image != blank %} frido-header__logo--image{% endif %}{% if mobile_center %} frido-header__logo--mobile-center{% endif %}"
+  style="--frido-logo-max: {{ mw }}px;"
+>
+  {% if image != blank %}
+    {%- assign la = image.alt | default: text | escape -%}
+    {{
+      image
+      | image_url: width: 600
+      | image_tag: loading: 'eager', class: 'frido-header__logo-media', widths: '180,260,360,480,600', sizes: '(max-width: 989px) 160px, min(50vw, 360px)', alt: la
+    }}
+  {% else %}
+    <span class="frido-header__logo-text">{{ text | default: 'Frido' | escape }}</span>
+    {% if show_sub and subtitle != blank %}
+      <small>{{ subtitle | escape }}</small>
+    {% endif %}
+  {% endif %}
+</a>

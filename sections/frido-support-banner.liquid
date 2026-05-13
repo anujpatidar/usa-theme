@@ -1,6 +1,16 @@
-<div class="frido-support">
+<div class="frido-support{% if section.settings.image != blank %} frido-support--has-image{% endif %}">
   <div class="frido-page-width frido-support__inner">
-    <div>
+    {% if section.settings.image != blank %}
+      {%- assign sup_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
+      <div class="frido-support__media" aria-hidden="true">
+        {{
+          section.settings.image
+          | image_url: width: 700
+          | image_tag: loading: 'lazy', widths: '300,450,600,700', sizes: '(max-width: 749px) 100vw, 320px', alt: sup_alt
+        }}
+      </div>
+    {% endif %}
+    <div class="frido-support__copy">
       {% if section.settings.heading != blank %}
         <h2>{{ section.settings.heading | escape }}</h2>
       {% endif %}
@@ -9,7 +19,7 @@
       {% endif %}
     </div>
     {% if section.settings.button_label != blank %}
-      <a href="{{ section.settings.button_link | default: routes.root_url }}" class="frido-btn frido-btn--outline">
+      <a href="{{ section.settings.button_link | default: routes.root_url }}" class="frido-btn frido-btn--outline frido-support__btn">
         {{ section.settings.button_label | escape }}
       </a>
     {% endif %}
@@ -22,6 +32,12 @@
   "tag": "section",
   "class": "section-frido-support",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Side image",
+      "info": "Optional. Shows beside the text in the editor (PNG/JPG/SVG from library)."
+    },
     {
       "type": "text",
       "id": "heading",

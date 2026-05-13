@@ -21,7 +21,12 @@
             {% for block in section.blocks %}
               {% if block.type == 'feature' %}
                 <div {{ block.shopify_attributes }}>
-                  {% render 'frido-feature-item', title: block.settings.title, text: block.settings.text, icon: block.settings.icon %}
+                  {% render 'frido-feature-item',
+                    title: block.settings.title,
+                    text: block.settings.text,
+                    icon: block.settings.icon,
+                    icon_image: block.settings.icon_image
+                  %}
                 </div>
               {% endif %}
             {% endfor %}
@@ -77,7 +82,7 @@
         {
           "type": "select",
           "id": "icon",
-          "label": "Icon",
+          "label": "Icon (if no image)",
           "options": [
             { "value": "foot", "label": "Foot" },
             { "value": "align", "label": "Alignment" },
@@ -85,6 +90,12 @@
             { "value": "sole", "label": "Sole" }
           ],
           "default": "foot"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Feature icon image",
+          "info": "Optional. Upload PNG/SVG from the library."
         }
       ]
     }

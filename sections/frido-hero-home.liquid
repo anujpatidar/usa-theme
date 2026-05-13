@@ -15,16 +15,36 @@
           {{ 'lifestyle-2' | placeholder_svg_tag: 'class="placeholder-svg"' }}
         {% endif %}
         <div class="frido-hero__badges">
-          {% if section.settings.badge_1 != blank %}
+          {% if section.settings.badge_1 != blank or section.settings.badge_1_image != blank %}
             <span class="frido-hero__badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--frido-blue)" stroke-width="2.5"><path d="M5 12l4 4L19 7"/></svg>
-              {{ section.settings.badge_1 | escape }}
+              {% if section.settings.badge_1_image != blank %}
+                {{
+                  section.settings.badge_1_image
+                  | image_url: width: 96
+                  | image_tag: loading: 'lazy', class: 'frido-hero__badge-icon', widths: '32,48,64,96', sizes: '18px', alt: ''
+                }}
+              {% else %}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--frido-blue)" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
+              {% endif %}
+              {% if section.settings.badge_1 != blank %}
+                <span>{{ section.settings.badge_1 | escape }}</span>
+              {% endif %}
             </span>
           {% endif %}
-          {% if section.settings.badge_2 != blank %}
+          {% if section.settings.badge_2 != blank or section.settings.badge_2_image != blank %}
             <span class="frido-hero__badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--frido-blue)" stroke-width="2.5"><path d="M5 12l4 4L19 7"/></svg>
-              {{ section.settings.badge_2 | escape }}
+              {% if section.settings.badge_2_image != blank %}
+                {{
+                  section.settings.badge_2_image
+                  | image_url: width: 96
+                  | image_tag: loading: 'lazy', class: 'frido-hero__badge-icon', widths: '32,48,64,96', sizes: '18px', alt: ''
+                }}
+              {% else %}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--frido-blue)" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
+              {% endif %}
+              {% if section.settings.badge_2 != blank %}
+                <span>{{ section.settings.badge_2 | escape }}</span>
+              {% endif %}
             </span>
           {% endif %}
         </div>
@@ -61,7 +81,11 @@
             {% for block in section.blocks %}
               {% if block.type == 'feature' %}
                 <div {{ block.shopify_attributes }}>
-                  {% render 'frido-feature-circle', title: block.settings.title, icon: block.settings.icon %}
+                  {% render 'frido-feature-circle',
+                    title: block.settings.title,
+                    icon: block.settings.icon,
+                    icon_image: block.settings.icon_image
+                  %}
                 </div>
               {% endif %}
             {% endfor %}
@@ -89,8 +113,20 @@
   "class": "section-frido-hero",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Hero image" },
-    { "type": "text", "id": "badge_1", "label": "Badge 1", "default": "FREE SHIPPING" },
-    { "type": "text", "id": "badge_2", "label": "Badge 2", "default": "30-DAY GUARANTEE" },
+    { "type": "text", "id": "badge_1", "label": "Badge 1 text", "default": "FREE SHIPPING" },
+    {
+      "type": "image_picker",
+      "id": "badge_1_image",
+      "label": "Badge 1 icon image",
+      "info": "Optional. Replaces the checkmark SVG (PNG/SVG from library)."
+    },
+    { "type": "text", "id": "badge_2", "label": "Badge 2 text", "default": "30-DAY GUARANTEE" },
+    {
+      "type": "image_picker",
+      "id": "badge_2_image",
+      "label": "Badge 2 icon image",
+      "info": "Optional. Replaces the checkmark SVG."
+    },
     { "type": "text", "id": "overlay_prefix", "label": "Overlay — before highlight", "default": "UP TO" },
     { "type": "text", "id": "overlay_highlight", "label": "Overlay — highlight", "default": "50%" },
     { "type": "text", "id": "overlay_suffix", "label": "Overlay — after highlight", "default": "OFF ON BESTSELLERS" },
@@ -109,7 +145,7 @@
         {
           "type": "select",
           "id": "icon",
-          "label": "Icon",
+          "label": "Icon (if no image)",
           "options": [
             { "value": "foot", "label": "Foot" },
             { "value": "align", "label": "Alignment" },
@@ -117,6 +153,12 @@
             { "value": "sole", "label": "Sole" }
           ],
           "default": "foot"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Feature icon image",
+          "info": "Optional. Upload your own icon (PNG/SVG). Overrides the built-in icon."
         }
       ]
     }

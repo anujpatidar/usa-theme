@@ -1457,14 +1457,21 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "All Frido sections (header, hero, footer, cards) use these colors and font. Edit here to rebrand the whole Frido UI from one place."
+        "content": "Frido colors, sticky header, and Outfit apply across Frido sections and brand tokens. Dawn color schemes below also use #fcd00b accents in the default preset."
+      },
+      {
+        "type": "checkbox",
+        "id": "frido_header_sticky",
+        "label": "Sticky Frido header",
+        "default": true,
+        "info": "When on, the Frido header (announcement + nav) stays at the top while scrolling."
       },
       {
         "type": "checkbox",
         "id": "frido_use_outfit_font",
-        "label": "Use Outfit for Frido UI",
+        "label": "Use Outfit across the entire site",
         "default": true,
-        "info": "Loads Google Font Outfit. When off, Frido uses your Theme settings → Typography body font."
+        "info": "Loads Google Font Outfit and applies it to all theme typography (headings + body)."
       },
       {
         "type": "header",

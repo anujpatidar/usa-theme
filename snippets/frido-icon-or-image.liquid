@@ -1,0 +1,42 @@
+{% comment %}
+  @param image {Image} optional
+  @param icon {String} foot | align | flex | sole
+  @param size {Number} display size for raster (default 56)
+  @param layout {String} circle (28) | item (24) | bar (22)
+{% endcomment %}
+{%- liquid
+  assign sz = size | default: 56
+  assign layout = layout | default: 'circle'
+  case layout
+    when 'item'
+      assign dim = 24
+    when 'bar'
+      assign dim = 22
+    else
+      assign dim = 28
+  endcase
+  assign img_w = sz | times: 4
+  if img_w < 120
+    assign img_w = 120
+  endif
+  assign icon_alt = image.alt | default: '' | escape
+  assign sizes_attr = sz | append: 'px'
+-%}
+{%- if image != blank -%}
+  {{
+    image
+    | image_url: width: img_w
+    | image_tag: loading: 'lazy', class: 'frido-icon-or-image__img', widths: '64,128,200', sizes: sizes_attr, alt: icon_alt
+  }}
+{%- else -%}
+  {% case icon %}
+    {% when 'align' %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M8 6h8M6 18h12"/></svg>
+    {% when 'flex' %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 4l-3 8h4l-2 8 10-11h-5l4-5H7z"/></svg>
+    {% when 'sole' %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><ellipse cx="12" cy="14" rx="8" ry="5"/><path d="M6 12c2-3 10-3 12 0"/></svg>
+    {% else %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 20c2-6 2-10 4-14 1 2 2 5 2 8h2c0-4 1-7 2-9 2 4 2 8 4 15"/></svg>
+  {% endcase %}
+{%- endif -%}

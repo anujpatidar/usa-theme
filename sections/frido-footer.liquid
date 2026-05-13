@@ -4,7 +4,18 @@
 <footer class="frido-footer">
   <div class="frido-page-width frido-footer__grid">
     <div>
-      <span class="frido-footer__logo">{{ section.settings.logo_text | default: 'Frido' | escape }}</span>
+      {% if section.settings.logo_image != blank %}
+        <a href="{{ routes.root_url }}" class="frido-footer__logo-link" style="--frido-footer-logo-max: {{ section.settings.logo_max_width }}px;">
+          {%- assign fla = section.settings.logo_image.alt | default: shop.name | escape -%}
+          {{
+            section.settings.logo_image
+            | image_url: width: 600
+            | image_tag: loading: 'lazy', class: 'frido-footer__logo-img', widths: '200,360,480,600', sizes: '(max-width: 989px) 200px, 280px', alt: fla
+          }}
+        </a>
+      {% else %}
+        <span class="frido-footer__logo">{{ section.settings.logo_text | default: 'Frido' | escape }}</span>
+      {% endif %}
       {% if section.settings.brand_text != blank %}
         <p class="frido-footer__muted">{{ section.settings.brand_text }}</p>
       {% endif %}
@@ -94,7 +105,23 @@
   "name": "Frido footer",
   "class": "section-frido-footer",
   "settings": [
-    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Frido" },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image",
+      "info": "Optional. If set, replaces footer logo text (PNG/SVG from library)."
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 100,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "label": "Footer logo max width",
+      "default": 200
+    },
+    { "type": "text", "id": "logo_text", "label": "Logo text (fallback)", "default": "Frido" },
     {
       "type": "textarea",
       "id": "brand_text",

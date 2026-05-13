@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="{{ settings.frido_color_yellow | default: '#fcd00b' }}">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
@@ -264,6 +264,15 @@
       }
     {% endstyle %}
 
+    {%- if settings.frido_use_outfit_font != false -%}
+      {% style %}
+        :root {
+          --font-body-family: Outfit, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          --font-heading-family: Outfit, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+      {% endstyle %}
+    {%- endif -%}
+
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {% render 'frido-tokens' %}
     {{ 'frido-global.css' | asset_url | stylesheet_tag }}
@@ -310,7 +319,7 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% unless settings.frido_header_sticky == false %} frido-header-sticky{% endunless %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

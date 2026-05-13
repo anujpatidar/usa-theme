@@ -1,19 +1,11 @@
 {% comment %}
   @param title {String}
   @param icon {String} foot | align | flex | sole
+  @param icon_image {Image} optional upload from editor
 {% endcomment %}
 <div class="frido-feature-circle">
   <div class="frido-feature-circle__icon" aria-hidden="true">
-    {% case icon %}
-      {% when 'align' %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M8 6h8M6 18h12"/></svg>
-      {% when 'flex' %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 4l-3 8h4l-2 8 10-11h-5l4-5H7z"/></svg>
-      {% when 'sole' %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="14" rx="8" ry="5"/><path d="M6 12c2-3 10-3 12 0"/></svg>
-      {% else %}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 20c2-6 2-10 4-14 1 2 2 5 2 8h2c0-4 1-7 2-9 2 4 2 8 4 15"/></svg>
-    {% endcase %}
+    {% render 'frido-icon-or-image', image: icon_image, icon: icon, size: 56, layout: 'circle' %}
   </div>
   <div class="frido-feature-circle__label">{{ title | escape }}</div>
 </div>
