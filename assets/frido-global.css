@@ -584,7 +584,7 @@ body.frido-header-sticky .frido-header {
   border: 1px solid var(--frido-line);
   border-radius: var(--frido-radius-pill);
   padding: 0.6rem 1.2rem;
-  box-shadow: 0 4px 0px rgba(10, 37, 64, 0.06);
+  box-shadow: 0 2px 4px rgba(10, 37, 64, 0.02);
 }
 
 .frido-hero__h1 {
