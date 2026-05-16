@@ -380,8 +380,8 @@ body.frido-header-sticky .frido-header {
   text-align: center;
 }
 
-.frido-btn{
-  width: 100%;
+.frido-btn--block{
+  max-width: 100%;
 }
 
 .frido-btn--blue {
