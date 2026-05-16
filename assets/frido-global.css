@@ -463,6 +463,7 @@ body.frido-header-sticky .frido-header {
 
   .frido-hero__content {
     order: 1;
+    margin-right: auto;
   }
 }
 
@@ -527,7 +528,7 @@ body.frido-header-sticky .frido-header {
   flex-direction: column;
   gap: 1.2rem;
   max-width: 560px;
-  margin-right: auto;
+
 }
 
 @media (max-width: 989px) {
