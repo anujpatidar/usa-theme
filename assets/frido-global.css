@@ -589,7 +589,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-hero__h1 {
   font-size: clamp(3rem, 5vw, 4.6rem);
-  font-weight: 800;
+  font-weight: 600;
   color: var(--frido-blue-ink);
   line-height: 1.05;
   margin: 0;
