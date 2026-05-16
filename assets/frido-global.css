@@ -14,7 +14,7 @@ body.frido-menu-open {
 }
 
 .frido-page-width {
-  width: var(--frido-page);
+
   max-width: 100%;
 }
 
