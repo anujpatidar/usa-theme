@@ -1080,7 +1080,7 @@ body.frido-header-sticky .frido-header {
 .frido-split__body {
   font-size: 1.5rem;
   line-height: 1.65;
-  color: var(--frido-gray-600);
+  color: #000;
   margin: 0 0 2rem;
 }
 
