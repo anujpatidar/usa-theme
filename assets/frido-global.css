@@ -654,7 +654,7 @@ body.frido-header-sticky .frido-header {
   .frido-feature-circle__icon {
     width: 60px;
     height: 60px;
-    margin: 0 0 8px 0;
+    margin: 0;
   
   }
   .frido-feature-circle__label{
