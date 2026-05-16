@@ -14,6 +14,9 @@
     "frido-footer": {
       "type": "frido-footer",
       "settings": {
+        "color_scheme": "scheme-3",
+        "logo_image": "shopify://shop_images/Frido_logo_small_70bf7fbe-ba9d-489b-bc72-7c7ff230d476.png",
+        "logo_max_width": 200,
         "logo_text": "Frido",
         "brand_text": "Frido designs healthy barefoot-inspired footwear to support natural movement and all-day comfort.",
         "hours": "Customer care: Mon–Fri 9am–5pm EST",
@@ -34,5 +37,7 @@
       }
     }
   },
-  "order": ["frido-footer"]
+  "order": [
+    "frido-footer"
+  ]
 }
