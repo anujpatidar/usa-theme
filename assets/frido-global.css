@@ -431,9 +431,7 @@ body.frido-header-sticky .frido-header {
 }
 
 /* ---------- Hero ---------- */
-.frido-hero {
-  padding: 2.4rem 0 3.2rem;
-}
+
 
 .frido-hero__grid {
   display: flex;
