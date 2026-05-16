@@ -77,6 +77,60 @@
         "swipe_mobile": true
       }
     },
+    "frido_split": {
+      "type": "frido-content-split",
+      "blocks": {
+        "s1": {
+          "type": "feature",
+          "settings": {
+            "title": "Wide Toe Box",
+            "text": "Give your toes room to spread naturally for better balance.",
+            "icon": "foot",
+            "icon_image": "shopify://shop_images/H_svg_1.svg"
+          }
+        },
+        "s2": {
+          "type": "feature",
+          "settings": {
+            "title": "Anatomical Support",
+            "text": "Support where you need it without restricting natural motion.",
+            "icon": "align",
+            "icon_image": "shopify://shop_images/h_svg_6.svg"
+          }
+        },
+        "feature_KeAF8T": {
+          "type": "feature",
+          "settings": {
+            "title": "Anatomical Support",
+            "text": "Support where you need it without restricting natural motion.",
+            "icon": "align",
+            "icon_image": "shopify://shop_images/h_svg_5.svg"
+          }
+        },
+        "feature_4PheJ6": {
+          "type": "feature",
+          "settings": {
+            "title": "Anatomical Support",
+            "text": "Support where you need it without restricting natural motion.",
+            "icon": "align",
+            "icon_image": "shopify://shop_images/H_svg_3.svg"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "feature_KeAF8T",
+        "feature_4PheJ6"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "image_position": "left",
+        "image": "shopify://shop_images/Desktop_1_99f454df-336b-416b-b012-8c3ea9c49182.jpg",
+        "heading": "Experience ultimate foot comfort with Frido!",
+        "body": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
+      }
+    },
     "frido_shoe_finder": {
       "type": "frido-shoe-finder",
       "settings": {
@@ -132,37 +186,6 @@
       "settings": {
         "color_scheme": "",
         "title": "Explore Your Path to Healthy Freedom"
-      }
-    },
-    "frido_split": {
-      "type": "frido-content-split",
-      "blocks": {
-        "s1": {
-          "type": "feature",
-          "settings": {
-            "title": "Wide Toe Box",
-            "text": "Give your toes room to spread naturally for better balance.",
-            "icon": "foot"
-          }
-        },
-        "s2": {
-          "type": "feature",
-          "settings": {
-            "title": "Anatomical Support",
-            "text": "Support where you need it without restricting natural motion.",
-            "icon": "align"
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2"
-      ],
-      "settings": {
-        "color_scheme": "",
-        "image_position": "left",
-        "heading": "Experience ultimate foot comfort with Frido!",
-        "body": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
       }
     },
     "frido_compare": {
@@ -285,9 +308,9 @@
   "order": [
     "frido_hero",
     "frido_bestsellers",
+    "frido_split",
     "frido_shoe_finder",
     "frido_categories",
-    "frido_split",
     "frido_compare",
     "frido_split2",
     "frido_reviews",
