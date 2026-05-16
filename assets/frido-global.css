@@ -528,7 +528,7 @@ body.frido-header-sticky .frido-header {
   flex-direction: column;
   gap: 1.2rem;
   max-width: 560px;
-
+  padding: 20px;
 }
 
 @media (max-width: 989px) {
