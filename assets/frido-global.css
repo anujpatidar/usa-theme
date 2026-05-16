@@ -656,6 +656,9 @@ body.frido-header-sticky .frido-header {
     margin: 0 0 8px 0;
   
   }
+  .frido-feature-circle__label{
+    text-align: start;
+  }
 }
 /* ---------- Feature bar (mobile row) ---------- */
 .frido-feature-bar {
