@@ -14,16 +14,15 @@
     "frido-footer": {
       "type": "frido-footer",
       "settings": {
-        "color_scheme": "scheme-3",
         "logo_image": "shopify://shop_images/Frido_logo_small_70bf7fbe-ba9d-489b-bc72-7c7ff230d476.png",
         "logo_max_width": 200,
-        "logo_text": "Frido",
-        "brand_text": "Frido designs healthy barefoot-inspired footwear to support natural movement and all-day comfort.",
-        "hours": "Customer care: Mon–Fri 9am–5pm EST",
+        "logo_text": "FRIDO",
+        "brand_text": "At Frido, we prioritize a healthier foot environment and natural alignment. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.",
+        "hours": "Our customer service team is available from <strong>Monday – Friday</strong>, contact us at:",
         "email": "hello@frido.com",
         "show_social": true,
         "newsletter_heading": "Newsletter",
-        "newsletter_text": "Sign up for drops, guides, and exclusive offers.",
+        "newsletter_text": "Be the first to access new product drops, exclusive promotions, and exciting giveaways!",
         "newsletter_button": "Subscribe",
         "menu_help_title": "Help",
         "menu_help": "footer",
@@ -32,7 +31,6 @@
         "menu_company_title": "Company",
         "menu_company": "footer",
         "copyright_name": "Frido",
-        "copyright_extra": "All rights reserved.",
         "payment_enable": true
       }
     }
