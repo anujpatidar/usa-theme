@@ -847,7 +847,6 @@ body.frido-header-sticky .frido-header {
 .frido-pcard {
   background: #fff;
   border-radius: 6px;
-  box-shadow: 0 8px 28px rgba(10, 37, 64, 0.08);
   overflow: hidden;
   position: relative;
   
