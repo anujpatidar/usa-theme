@@ -925,8 +925,8 @@ body.frido-header-sticky .frido-header {
 
 .frido-pcard__compare {
   text-decoration: line-through;
-  color: var(--frido-gray-400);
-  font-size: 1.35rem;
+  color: #000;
+  font-size: 16px;
 }
 
 /* ---------- Collection grid ---------- */
