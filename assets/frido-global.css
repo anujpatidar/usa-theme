@@ -617,8 +617,8 @@ body.frido-header-sticky .frido-header {
 }
 
 .frido-feature-circle__icon {
-  width: 6.4rem;
-  height: 6.4rem;
+  width: 80px;
+  height: 80px;
   margin: 0 auto 0.6rem;
   border-radius: 50%;
   background: #fff;
