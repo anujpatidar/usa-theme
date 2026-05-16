@@ -629,7 +629,7 @@ body.frido-header-sticky .frido-header {
 }
 
 .frido-feature-circle__label {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1.3rem;
   color: var(--frido-blue-ink);
 }
