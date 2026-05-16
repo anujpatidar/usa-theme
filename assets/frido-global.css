@@ -371,7 +371,6 @@ body.frido-header-sticky .frido-header {
   text-transform: uppercase;
   line-height: 100%;
   font-size: 18px;
-  padding: 12px 24px;
   border-radius: 6px;
   border: 1px solid transparent;
   text-decoration: none;
@@ -389,6 +388,7 @@ body.frido-header-sticky .frido-header {
 .frido-btn--blue {
   background: #fcd00b;
   color: #000;
+  padding: 12px 24px;
 }
 
 .frido-btn--blue:hover {
@@ -398,6 +398,7 @@ body.frido-header-sticky .frido-header {
 .frido-btn--yellow {
   background: #fcd00b;
   color: var(--frido-blue-deep);
+  padding: 12px 24px;
 }
 
 .frido-btn--yellow:hover {
@@ -408,6 +409,7 @@ body.frido-header-sticky .frido-header {
   background: transparent;
   border-color: #000;
   color: #000;
+  padding: 8px 20px;
 }
 
 .frido-btn--outline:hover {
