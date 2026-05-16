@@ -450,7 +450,6 @@ body.frido-header-sticky .frido-header {
 
 .frido-hero__media {
   position: relative;
-  border-radius: 6px;
   overflow: hidden;
   min-height: 28rem;
   background: var(--frido-blue-sky);
