@@ -861,6 +861,7 @@ body.frido-header-sticky .frido-header {
   left: 1rem;
   z-index: 2;
   background: #fcd00b;
+  line-height: 1;
   color: var(--frido-blue-deep);
   font-weight: 500;
   font-size: 12px;
