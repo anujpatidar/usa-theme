@@ -373,7 +373,7 @@ body.frido-header-sticky .frido-header {
   font-size: 18px;
   padding: 12px 24px;
   border-radius: 6px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
