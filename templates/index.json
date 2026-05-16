@@ -15,7 +15,7 @@
         "f1": {
           "type": "feature",
           "settings": {
-            "title": "Wide Toe Box",
+            "title": "Wide Toe <br> Box",
             "icon": "foot",
             "icon_image": "shopify://shop_images/H_svg_1.svg"
           }
