@@ -131,6 +131,29 @@
         "body": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
       }
     },
+    "frido_split2": {
+      "type": "frido-content-split",
+      "blocks": {
+        "p1": {
+          "type": "feature",
+          "settings": {
+            "title": "Clinically informed design",
+            "text": "Developed with foot health experts to support daily wear.",
+            "icon": "align"
+          }
+        }
+      },
+      "block_order": [
+        "p1"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "image_position": "right",
+        "image": "shopify://shop_images/ChatGPT_Image_May_13_2026_11_02_09_AM.png",
+        "heading": "Trusted by professionals",
+        "body": "<p>We combine clinical insight with modern materials so you can move with confidence — from morning walks to long workdays.</p>"
+      }
+    },
     "frido_shoe_finder": {
       "type": "frido-shoe-finder",
       "settings": {
@@ -231,28 +254,6 @@
         "competitor_title": "Modern Brands"
       }
     },
-    "frido_split2": {
-      "type": "frido-content-split",
-      "blocks": {
-        "p1": {
-          "type": "feature",
-          "settings": {
-            "title": "Clinically informed design",
-            "text": "Developed with foot health experts to support daily wear.",
-            "icon": "align"
-          }
-        }
-      },
-      "block_order": [
-        "p1"
-      ],
-      "settings": {
-        "color_scheme": "",
-        "image_position": "right",
-        "heading": "Trusted by professionals",
-        "body": "<p>We combine clinical insight with modern materials so you can move with confidence — from morning walks to long workdays.</p>"
-      }
-    },
     "frido_reviews": {
       "type": "frido-customer-reviews",
       "blocks": {
@@ -309,10 +310,10 @@
     "frido_hero",
     "frido_bestsellers",
     "frido_split",
+    "frido_split2",
     "frido_shoe_finder",
     "frido_categories",
     "frido_compare",
-    "frido_split2",
     "frido_reviews",
     "frido_support"
   ]
