@@ -609,7 +609,7 @@ body.frido-header-sticky .frido-header {
   grid-template-columns: repeat(auto-fit, minmax(40px, 90px));
   justify-content: space-between;
   gap: 3;
-  margin-top: 0.4rem;
+  padding: 16px 0;
 }
 
 .frido-feature-circle {
