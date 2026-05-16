@@ -1,3 +1,14 @@
+{%- liquid
+  assign results_collection = section.settings.collection
+  if results_collection != blank
+    assign form_action = results_collection.url
+  elsif section.settings.results_link != blank
+    assign form_action = section.settings.results_link
+  else
+    assign form_action = routes.all_products_collection_url
+  endif
+-%}
+
 <div class="frido-shoe-finder color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width frido-shoe-finder__grid">
     <div>
@@ -9,25 +20,78 @@
       {% endif %}
     </div>
     <div>
-      <form class="frido-shoe-finder__filters" action="{{ section.settings.results_link | default: routes.all_products_collection_url }}" method="get">
+      <form
+        class="frido-shoe-finder__filters"
+        action="{{ form_action }}"
+        method="get"
+        data-shoe-finder
+      >
         <label class="visually-hidden" for="frido-g-{{ section.id }}">Gender</label>
-        <select class="frido-select" id="frido-g-{{ section.id }}">
-          <option>{{ section.settings.opt_gender | escape }}</option>
+        <select
+          class="frido-select frido-shoe-finder__select"
+          id="frido-g-{{ section.id }}"
+          data-filter="gender"
+        >
+          <option value="">{{ section.settings.opt_gender | escape }}</option>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'filter_option' and block.settings.filter_group == 'gender' -%}
+              <option value="{{ block.settings.tag | escape }}">
+                {{- block.settings.label | escape -}}
+              </option>
+            {%- endif -%}
+          {%- endfor -%}
         </select>
+
         <label class="visually-hidden" for="frido-c-{{ section.id }}">Condition</label>
-        <select class="frido-select" id="frido-c-{{ section.id }}">
-          <option>{{ section.settings.opt_condition | escape }}</option>
+        <select
+          class="frido-select frido-shoe-finder__select"
+          id="frido-c-{{ section.id }}"
+          data-filter="condition"
+        >
+          <option value="">{{ section.settings.opt_condition | escape }}</option>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'filter_option' and block.settings.filter_group == 'condition' -%}
+              <option value="{{ block.settings.tag | escape }}">
+                {{- block.settings.label | escape -}}
+              </option>
+            {%- endif -%}
+          {%- endfor -%}
         </select>
+
         <label class="visually-hidden" for="frido-cat-{{ section.id }}">Category</label>
-        <select class="frido-select" id="frido-cat-{{ section.id }}">
-          <option>{{ section.settings.opt_category | escape }}</option>
+        <select
+          class="frido-select frido-shoe-finder__select"
+          id="frido-cat-{{ section.id }}"
+          data-filter="category"
+        >
+          <option value="">{{ section.settings.opt_category | escape }}</option>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'filter_option' and block.settings.filter_group == 'category' -%}
+              <option value="{{ block.settings.tag | escape }}">
+                {{- block.settings.label | escape -}}
+              </option>
+            {%- endif -%}
+          {%- endfor -%}
         </select>
+
         <label class="visually-hidden" for="frido-a-{{ section.id }}">Activity</label>
-        <select class="frido-select" id="frido-a-{{ section.id }}">
-          <option>{{ section.settings.opt_activity | escape }}</option>
+        <select
+          class="frido-select frido-shoe-finder__select"
+          id="frido-a-{{ section.id }}"
+          data-filter="activity"
+        >
+          <option value="">{{ section.settings.opt_activity | escape }}</option>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'filter_option' and block.settings.filter_group == 'activity' -%}
+              <option value="{{ block.settings.tag | escape }}">
+                {{- block.settings.label | escape -}}
+              </option>
+            {%- endif -%}
+          {%- endfor -%}
         </select>
-        <div style="grid-column:1/-1;margin-top:0.8rem">
-          <button type="submit" class="frido-btn frido-btn--yellow" style="width:100%;max-width:28rem">
+
+        <div class="frido-shoe-finder__submit">
+          <button type="submit" class="frido-btn frido-btn--yellow">
             {{ section.settings.button_label | escape }}
           </button>
         </div>
@@ -35,6 +99,8 @@
     </div>
   </div>
 </div>
+
+<script src="{{ 'frido-shoe-finder.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -55,13 +121,86 @@
       "label": "Subtext",
       "default": "Find the barefoot shoe that fits your lifestyle."
     },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Results collection",
+      "info": "Products are filtered by tags within this collection. Use All products or your main catalog collection."
+    },
+    {
+      "type": "url",
+      "id": "results_link",
+      "label": "Fallback results URL",
+      "info": "Used only if no collection is selected above."
+    },
     { "type": "text", "id": "opt_gender", "label": "Gender placeholder", "default": "SELECT GENDER" },
     { "type": "text", "id": "opt_condition", "label": "Condition placeholder", "default": "SELECT CONDITION" },
     { "type": "text", "id": "opt_category", "label": "Category placeholder", "default": "SELECT CATEGORY" },
     { "type": "text", "id": "opt_activity", "label": "Activity placeholder", "default": "SELECT ACTIVITY" },
-    { "type": "text", "id": "button_label", "label": "Button", "default": "Find My Shoes" },
-    { "type": "url", "id": "results_link", "label": "Form action URL" }
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Find My Shoes" }
   ],
-  "presets": [{ "name": "Frido — shoe finder" }]
+  "blocks": [
+    {
+      "type": "filter_option",
+      "name": "Filter option",
+      "settings": [
+        {
+          "type": "select",
+          "id": "filter_group",
+          "label": "Filter",
+          "options": [
+            { "value": "gender", "label": "Gender" },
+            { "value": "condition", "label": "Condition" },
+            { "value": "category", "label": "Category" },
+            { "value": "activity", "label": "Activity" }
+          ],
+          "default": "gender"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Dropdown label",
+          "default": "Option"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Product tag",
+          "info": "Must match the tag on products exactly (case-sensitive). Example: Women, Plantar Fasciitis, Shoes, Walking."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 40,
+  "presets": [
+    {
+      "name": "Frido — shoe finder",
+      "blocks": [
+        { "type": "filter_option", "settings": { "filter_group": "gender", "label": "Women", "tag": "Women" } },
+        { "type": "filter_option", "settings": { "filter_group": "gender", "label": "Men", "tag": "Men" } },
+        {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Plantar Fasciitis", "tag": "Plantar Fasciitis" }
+        },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Diabetes", "tag": "Diabetes" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Bunions", "tag": "Bunions" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Flat Feet", "tag": "Flat Feet" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Arthritis", "tag": "Arthritis" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Back Pain", "tag": "Back Pain" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Gout", "tag": "Gout" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Hammer Toes", "tag": "Hammer Toes" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Heel Spurs", "tag": "Heel Spurs" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Hip Pain", "tag": "Hip Pain" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Knee Pain", "tag": "Knee Pain" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Neuropathy", "tag": "Neuropathy" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Overpronation", "tag": "Overpronation" } },
+        { "type": "filter_option", "settings": { "filter_group": "condition", "label": "Swollen Feet", "tag": "Swollen Feet" } },
+        { "type": "filter_option", "settings": { "filter_group": "category", "label": "Shoes", "tag": "Shoes" } },
+        { "type": "filter_option", "settings": { "filter_group": "category", "label": "Socks", "tag": "Socks" } },
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Walking", "tag": "Walking" } },
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Work", "tag": "Work" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -762,6 +762,16 @@ body.frido-header-sticky .frido-header {
   }
 }
 
+.frido-shoe-finder__submit {
+  grid-column: 1 / -1;
+  margin-top: 0.8rem;
+}
+
+.frido-shoe-finder__submit .frido-btn {
+  width: 100%;
+  max-width: 28rem;
+}
+
 .frido-select {
   appearance: none;
   border: 1px solid var(--frido-line);

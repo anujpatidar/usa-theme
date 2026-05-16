@@ -131,25 +131,127 @@
         "body": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
       }
     },
-    "frido_dual_images_j6cJ9f": {
-      "type": "frido-dual-images",
-      "name": "Frido — dual images",
+    "frido_split2": {
+      "type": "frido-content-split",
       "settings": {
         "color_scheme": "",
-        "image_1": "shopify://shop_images/855ae158-9fd1-4bde-98d4-ecb1e98f6dec_d7dae4a4-ef0f-4a85-8fca-63024c0e9a17.png",
-        "link_1": "",
-        "image_2": "shopify://shop_images/ChatGPT_Image_May_13_2026_11_02_09_AM_05dc30fe-92ec-4e18-a7ce-cf0ab32ff342.png",
-        "link_2": "",
-        "mobile_layout": "stack",
-        "image_ratio": 100
+        "image_position": "right",
+        "image": "shopify://shop_images/ChatGPT_Image_May_13_2026_11_02_09_AM.png",
+        "heading": "Podiatrists-Tested & Recommended",
+        "body": "<p>We combine clinical insight with modern materials so you can move with confidence — from morning walks to long workdays.</p>"
       }
     },
     "frido_shoe_finder": {
       "type": "frido-shoe-finder",
+      "blocks": {
+        "sf_g_women": {
+          "type": "filter_option",
+          "settings": { "filter_group": "gender", "label": "Women", "tag": "Women" }
+        },
+        "sf_g_men": {
+          "type": "filter_option",
+          "settings": { "filter_group": "gender", "label": "Men", "tag": "Men" }
+        },
+        "sf_c_plantar": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Plantar Fasciitis", "tag": "Plantar Fasciitis" }
+        },
+        "sf_c_diabetes": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Diabetes", "tag": "Diabetes" }
+        },
+        "sf_c_bunions": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Bunions", "tag": "Bunions" }
+        },
+        "sf_c_flat": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Flat Feet", "tag": "Flat Feet" }
+        },
+        "sf_c_arthritis": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Arthritis", "tag": "Arthritis" }
+        },
+        "sf_c_back": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Back Pain", "tag": "Back Pain" }
+        },
+        "sf_c_gout": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Gout", "tag": "Gout" }
+        },
+        "sf_c_hammer": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Hammer Toes", "tag": "Hammer Toes" }
+        },
+        "sf_c_heel": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Heel Spurs", "tag": "Heel Spurs" }
+        },
+        "sf_c_hip": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Hip Pain", "tag": "Hip Pain" }
+        },
+        "sf_c_knee": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Knee Pain", "tag": "Knee Pain" }
+        },
+        "sf_c_neuro": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Neuropathy", "tag": "Neuropathy" }
+        },
+        "sf_c_over": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Overpronation", "tag": "Overpronation" }
+        },
+        "sf_c_swollen": {
+          "type": "filter_option",
+          "settings": { "filter_group": "condition", "label": "Swollen Feet", "tag": "Swollen Feet" }
+        },
+        "sf_cat_shoes": {
+          "type": "filter_option",
+          "settings": { "filter_group": "category", "label": "Shoes", "tag": "Shoes" }
+        },
+        "sf_cat_socks": {
+          "type": "filter_option",
+          "settings": { "filter_group": "category", "label": "Socks", "tag": "Socks" }
+        },
+        "sf_a_walk": {
+          "type": "filter_option",
+          "settings": { "filter_group": "activity", "label": "Walking", "tag": "Walking" }
+        },
+        "sf_a_work": {
+          "type": "filter_option",
+          "settings": { "filter_group": "activity", "label": "Work", "tag": "Work" }
+        }
+      },
+      "block_order": [
+        "sf_g_women",
+        "sf_g_men",
+        "sf_c_plantar",
+        "sf_c_diabetes",
+        "sf_c_bunions",
+        "sf_c_flat",
+        "sf_c_arthritis",
+        "sf_c_back",
+        "sf_c_gout",
+        "sf_c_hammer",
+        "sf_c_heel",
+        "sf_c_hip",
+        "sf_c_knee",
+        "sf_c_neuro",
+        "sf_c_over",
+        "sf_c_swollen",
+        "sf_cat_shoes",
+        "sf_cat_socks",
+        "sf_a_walk",
+        "sf_a_work"
+      ],
       "settings": {
         "color_scheme": "",
         "heading": "Shoe Finder",
         "text": "Find the barefoot shoe that fits your lifestyle.",
+        "collection": "all",
         "opt_gender": "SELECT GENDER",
         "opt_condition": "SELECT CONDITION",
         "opt_category": "SELECT CATEGORY",
@@ -300,7 +402,7 @@
     "frido_hero",
     "frido_bestsellers",
     "frido_split",
-    "frido_dual_images_j6cJ9f",
+    "frido_split2",
     "frido_shoe_finder",
     "frido_categories",
     "frido_compare",
