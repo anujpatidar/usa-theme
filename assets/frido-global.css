@@ -427,7 +427,7 @@ body.frido-header-sticky .frido-header {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  color: var(--frido-yellow);
+  color: #fcd00b;
 }
 
 .frido-stars__label {
