@@ -379,10 +379,12 @@ body.frido-header-sticky .frido-header {
   transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
   text-align: center;
 }
-
+@media (max-width: 700px){
 .frido-btn--block{
-  max-width: 100%;
+  width: 100%;
 }
+}
+
 
 .frido-btn--blue {
   background: #fcd00b;
@@ -442,6 +444,7 @@ body.frido-header-sticky .frido-header {
 }
 
 @media (min-width: 990px) {
+
   .frido-hero__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
