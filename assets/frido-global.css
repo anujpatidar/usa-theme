@@ -1218,7 +1218,7 @@ body.frido-header-sticky .frido-header {
     padding: 32px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
   }
 
   .frido-split__heading {
