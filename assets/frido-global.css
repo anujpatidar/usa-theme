@@ -626,7 +626,8 @@ body.frido-header-sticky .frido-header {
     align-items: center;
   }
   .frido-feature-circle__icon {
-
+    width: 60px;
+    height: 60px;
   }
 }
 
