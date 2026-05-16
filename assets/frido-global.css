@@ -893,7 +893,6 @@ body.frido-header-sticky .frido-header {
   padding: 1.4rem 1.6rem 1.8rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
   flex: 1;
 }
 
@@ -919,8 +918,8 @@ body.frido-header-sticky .frido-header {
 }
 
 .frido-pcard__price {
-  font-weight: 800;
-  font-size: 1.7rem;
+  font-weight: 300;
+  font-size: 18px;
   color: var(--frido-blue);
 }
 
