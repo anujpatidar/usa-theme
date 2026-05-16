@@ -898,11 +898,10 @@ body.frido-header-sticky .frido-header {
 }
 
 .frido-pcard__cat {
-  font-size: 1.1rem;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
   color: var(--frido-gray-400);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .frido-pcard__title {
