@@ -363,10 +363,10 @@ body.frido-header-sticky .frido-header {
   justify-content: center;
   gap: 0.8rem;
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 1.3rem;
+  font-size: 18px;
   padding: 12px 24px;
   border-radius: 6px;
   border: 2px solid transparent;
