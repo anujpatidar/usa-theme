@@ -469,16 +469,6 @@
         "color_scheme": "",
         "heading": "See why our customers are so satisfied.."
       }
-    },
-    "frido_support": {
-      "type": "frido-support-banner",
-      "settings": {
-        "color_scheme": "",
-        "heading": "Do you have any questions?",
-        "text": "Our customer service team is here Mon–Fri, 9am–5pm EST.",
-        "button_label": "CONTACT US",
-        "button_link": "shopify://pages/contact"
-      }
     }
   },
   "order": [
@@ -489,7 +479,6 @@
     "frido_shoe_finder",
     "frido_categories",
     "frido_compare",
-    "frido_reviews",
-    "frido_support"
+    "frido_reviews"
   ]
 }
