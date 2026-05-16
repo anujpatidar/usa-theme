@@ -367,7 +367,7 @@ body.frido-header-sticky .frido-header {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 1.3rem;
-  padding: 1.4rem 2.4rem;
+  padding: 12px 24px;
   border-radius: var(--frido-radius);
   border: 2px solid transparent;
   text-decoration: none;
