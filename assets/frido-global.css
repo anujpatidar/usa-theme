@@ -1069,7 +1069,7 @@ body.frido-header-sticky .frido-header {
 }
 
 .frido-split__heading {
-  font-size: clamp(2.2rem, 5.5vw, 2.8rem);
+  font-size: clamp(24px, 5.5vw, 2.8rem);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.02em;
