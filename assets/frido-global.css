@@ -658,6 +658,7 @@ body.frido-header-sticky .frido-header {
   }
   .frido-feature-circle__label{
     text-align: start;
+    font-size: 14px;
   }
 }
 /* ---------- Feature bar (mobile row) ---------- */
