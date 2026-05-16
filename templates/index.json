@@ -73,7 +73,7 @@
         "title": "Bestsellers",
         "view_all_label": "SHOP ALL",
         "collection": "all",
-        "products_to_show": 8,
+        "products_to_show": 4,
         "swipe_mobile": true
       }
     },
@@ -146,83 +146,163 @@
       "blocks": {
         "sf_g_women": {
           "type": "filter_option",
-          "settings": { "filter_group": "gender", "label": "Women", "tag": "Women" }
+          "settings": {
+            "filter_group": "gender",
+            "label": "Women",
+            "tag": "Women"
+          }
         },
         "sf_g_men": {
           "type": "filter_option",
-          "settings": { "filter_group": "gender", "label": "Men", "tag": "Men" }
+          "settings": {
+            "filter_group": "gender",
+            "label": "Men",
+            "tag": "Men"
+          }
         },
         "sf_c_plantar": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Plantar Fasciitis", "tag": "Plantar Fasciitis" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Plantar Fasciitis",
+            "tag": "Plantar Fasciitis"
+          }
         },
         "sf_c_diabetes": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Diabetes", "tag": "Diabetes" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Diabetes",
+            "tag": "Diabetes"
+          }
         },
         "sf_c_bunions": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Bunions", "tag": "Bunions" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Bunions",
+            "tag": "Bunions"
+          }
         },
         "sf_c_flat": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Flat Feet", "tag": "Flat Feet" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Flat Feet",
+            "tag": "Flat Feet"
+          }
         },
         "sf_c_arthritis": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Arthritis", "tag": "Arthritis" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Arthritis",
+            "tag": "Arthritis"
+          }
         },
         "sf_c_back": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Back Pain", "tag": "Back Pain" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Back Pain",
+            "tag": "Back Pain"
+          }
         },
         "sf_c_gout": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Gout", "tag": "Gout" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Gout",
+            "tag": "Gout"
+          }
         },
         "sf_c_hammer": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Hammer Toes", "tag": "Hammer Toes" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Hammer Toes",
+            "tag": "Hammer Toes"
+          }
         },
         "sf_c_heel": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Heel Spurs", "tag": "Heel Spurs" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Heel Spurs",
+            "tag": "Heel Spurs"
+          }
         },
         "sf_c_hip": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Hip Pain", "tag": "Hip Pain" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Hip Pain",
+            "tag": "Hip Pain"
+          }
         },
         "sf_c_knee": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Knee Pain", "tag": "Knee Pain" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Knee Pain",
+            "tag": "Knee Pain"
+          }
         },
         "sf_c_neuro": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Neuropathy", "tag": "Neuropathy" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Neuropathy",
+            "tag": "Neuropathy"
+          }
         },
         "sf_c_over": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Overpronation", "tag": "Overpronation" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Overpronation",
+            "tag": "Overpronation"
+          }
         },
         "sf_c_swollen": {
           "type": "filter_option",
-          "settings": { "filter_group": "condition", "label": "Swollen Feet", "tag": "Swollen Feet" }
+          "settings": {
+            "filter_group": "condition",
+            "label": "Swollen Feet",
+            "tag": "Swollen Feet"
+          }
         },
         "sf_cat_shoes": {
           "type": "filter_option",
-          "settings": { "filter_group": "category", "label": "Shoes", "tag": "Shoes" }
+          "settings": {
+            "filter_group": "category",
+            "label": "Shoes",
+            "tag": "Shoes"
+          }
         },
         "sf_cat_socks": {
           "type": "filter_option",
-          "settings": { "filter_group": "category", "label": "Socks", "tag": "Socks" }
+          "settings": {
+            "filter_group": "category",
+            "label": "Socks",
+            "tag": "Socks"
+          }
         },
         "sf_a_walk": {
           "type": "filter_option",
-          "settings": { "filter_group": "activity", "label": "Walking", "tag": "Walking" }
+          "settings": {
+            "filter_group": "activity",
+            "label": "Walking",
+            "tag": "Walking"
+          }
         },
         "sf_a_work": {
           "type": "filter_option",
-          "settings": { "filter_group": "activity", "label": "Work", "tag": "Work" }
+          "settings": {
+            "filter_group": "activity",
+            "label": "Work",
+            "tag": "Work"
+          }
         }
       },
       "block_order": [
@@ -252,12 +332,12 @@
         "heading": "Shoe Finder",
         "text": "Find the barefoot shoe that fits your lifestyle.",
         "collection": "all",
+        "results_link": "shopify://collections/all",
         "opt_gender": "SELECT GENDER",
         "opt_condition": "SELECT CONDITION",
         "opt_category": "SELECT CATEGORY",
         "opt_activity": "SELECT ACTIVITY",
-        "button_label": "Find My Shoes",
-        "results_link": "shopify://collections/all"
+        "button_label": "Find My Shoes"
       }
     },
     "frido_categories": {
