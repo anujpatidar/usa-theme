@@ -992,7 +992,7 @@ body.frido-header-sticky .frido-header {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 1.2rem;
-    margin-left: -1.5rem;
+
     margin-right: -1.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
