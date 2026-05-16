@@ -549,7 +549,7 @@ body.frido-header-sticky .frido-header {
   }
 
   .frido-hero__media {
-    order: 1;
+    order: 0;
   }
 }
 
