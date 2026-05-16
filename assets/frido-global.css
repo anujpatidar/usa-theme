@@ -606,7 +606,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-feature-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(40px, 90px));
   gap: 1.2rem 1.6rem;
   margin-top: 0.4rem;
 }
