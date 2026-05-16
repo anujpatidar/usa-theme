@@ -1106,7 +1106,7 @@ body.frido-header-sticky .frido-header {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1.2rem;
-  align-items: start;
+  align-items: center;
 }
 
 .frido-feature-item__icon {
