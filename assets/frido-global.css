@@ -422,8 +422,8 @@ body.frido-header-sticky .frido-header {
 .frido-stars__label {
   margin-left: 0.6rem;
   color: #000;
-  font-weight: 600;
-  font-size: 1.4rem;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 /* ---------- Hero ---------- */
@@ -584,7 +584,7 @@ body.frido-header-sticky .frido-header {
   border: 1px solid var(--frido-line);
   border-radius: var(--frido-radius-pill);
   padding: 0.6rem 1.2rem;
-  box-shadow: 0 4px 18px rgba(10, 37, 64, 0.06);
+  box-shadow: 0 4px 4px rgba(10, 37, 64, 0.06);
 }
 
 .frido-hero__h1 {
