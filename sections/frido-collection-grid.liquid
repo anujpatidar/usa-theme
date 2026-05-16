@@ -1,0 +1,158 @@
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+{{ 'frido-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-collection-redirect.js' | asset_url }}"></script>
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="frido-collection-page section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  {%- paginate collection.products by section.settings.products_per_page -%}
+    {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+      <div class="frido-page-width frido-collection-page__filters" id="main-collection-filters" data-id="{{ section.id }}">
+        {% render 'frido-facets',
+          results: collection,
+          enable_filtering: section.settings.enable_filtering,
+          enable_sorting: section.settings.enable_sorting,
+          paginate: paginate,
+          section: section
+        %}
+      </div>
+    {%- endif -%}
+
+    <div
+      class="product-grid-container frido-collection-page__grid"
+      id="ProductGridContainer"
+    >
+      {%- if collection.products.size == 0 -%}
+        <div class="frido-page-width frido-collection-page__empty">
+          <h2>{{ 'sections.collection_template.empty' | t }}</h2>
+          <p>
+            {{
+              'sections.collection_template.use_fewer_filters_html'
+              | t: link: collection.url, class: 'underlined-link link'
+            }}
+          </p>
+        </div>
+      {%- else -%}
+        <div class="frido-page-width">
+          <div class="collection frido-collection-page__products">
+            <ul
+              id="product-grid"
+              data-id="{{ section.id }}"
+              class="frido-collection-page__list"
+              style="--frido-cols: {{ section.settings.columns_desktop }}; --frido-cols-m: {{ section.settings.columns_mobile }};"
+            >
+              {%- for product in collection.products -%}
+                <li class="frido-collection-page__item">
+                  {% render 'frido-product-card', card_product: product %}
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {%- if paginate.pages > 1 -%}
+              <nav class="frido-collection-page__pagination" aria-label="{{ 'general.pagination.label' | t }}">
+                {%- if paginate.previous -%}
+                  <a href="{{ paginate.previous.url }}" class="frido-btn frido-btn--outline">← Previous</a>
+                {%- endif -%}
+                <span class="frido-collection-page__pagination-info">
+                  Page {{ paginate.current_page }} of {{ paginate.pages }}
+                </span>
+                {%- if paginate.next -%}
+                  <a href="{{ paginate.next.url }}" class="frido-btn frido-btn--outline">Next →</a>
+                {%- endif -%}
+              </nav>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Frido — collection grid",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 32,
+      "label": "Products per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2",
+      "label": "Columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable filtering",
+      "info": "Configure filters in Settings → Search & Discovery (Product tag, Color, Size, etc.)."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "Enable sorting"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}
