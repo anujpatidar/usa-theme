@@ -623,6 +623,7 @@ body.frido-header-sticky .frido-header {
   }
   .frido-feature-circle{
     display:flex;
+    align-items: center;
   }
 }
 
