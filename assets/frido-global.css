@@ -337,7 +337,7 @@ body.frido-header-sticky .frido-header {
   border: 0;
   background: var(--frido-blue-pale);
   padding: 0.8rem 1.2rem;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -368,7 +368,7 @@ body.frido-header-sticky .frido-header {
   letter-spacing: 0.06em;
   font-size: 1.3rem;
   padding: 12px 24px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 2px solid transparent;
   text-decoration: none;
   cursor: pointer;
@@ -448,7 +448,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-hero__media {
   position: relative;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
   min-height: 28rem;
   background: var(--frido-blue-sky);
@@ -733,7 +733,7 @@ body.frido-header-sticky .frido-header {
 .frido-select {
   appearance: none;
   border: 1px solid var(--frido-line);
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 1rem 3rem 1rem 1rem;
   font-size: 1.1rem;
   font-weight: 700;
@@ -776,7 +776,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-cat-card__media {
   background: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 8px 30px rgba(10, 37, 64, 0.08);
   padding: 1.6rem;
   margin-bottom: 1rem;
@@ -814,7 +814,7 @@ body.frido-header-sticky .frido-header {
 /* ---------- Product card ---------- */
 .frido-pcard {
   background: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 8px 28px rgba(10, 37, 64, 0.08);
   overflow: hidden;
   position: relative;
@@ -952,7 +952,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-split__media {
   order: 1;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
   background: var(--frido-blue-sky);
 }
@@ -1115,7 +1115,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-review-card {
   background: var(--frido-blue-pale);
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 2rem;
   height: 100%;
   display: flex;
@@ -1200,7 +1200,7 @@ body.frido-header-sticky .frido-header {
   width: 100%;
   max-height: 22rem;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 @media (min-width: 750px) {
@@ -1305,7 +1305,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-footer__newsletter input {
   width: 100%;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 0;
   padding: 1rem 1.2rem;
   margin-bottom: 0.8rem;
@@ -1320,7 +1320,7 @@ body.frido-header-sticky .frido-header {
   color: var(--frido-blue-deep);
   font-weight: 800;
   border: 0;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 1rem 1.4rem;
   cursor: pointer;
 }
