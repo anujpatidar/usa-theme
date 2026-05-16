@@ -836,7 +836,7 @@ body.frido-header-sticky .frido-header {
 .frido-section-head h2 {
   margin: 0;
   font-size: clamp(3rem, 3vw, 3.2rem);
-  font-weight: 500;
+  font-weight: 400;
   color: #000;
 }
 
