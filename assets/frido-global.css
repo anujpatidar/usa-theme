@@ -920,7 +920,7 @@ body.frido-header-sticky .frido-header {
 .frido-pcard__price {
   font-weight: 300;
   font-size: 18px;
-  color: var(--frido-blue);
+  color: lab(47.6086% 60.7129 50.0921);
 }
 
 .frido-pcard__compare {
