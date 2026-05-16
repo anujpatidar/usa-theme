@@ -621,6 +621,9 @@ body.frido-header-sticky .frido-header {
   .frido-feature-grid{
      grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .frido-feature-circle{
+    display:flex;
+  }
 }
 
 .frido-feature-circle {
