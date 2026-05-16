@@ -144,9 +144,9 @@
         "settings": {
           "background": "#fffef5",
           "background_gradient": "",
-          "text": "#1c1917",
+          "text": "#000000",
           "button": "#fcd00b",
-          "button_label": "#1c1917",
+          "button_label": "#000000",
           "secondary_button_label": "#92400e",
           "shadow": "#fcd00b"
         }
