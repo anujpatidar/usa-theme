@@ -969,6 +969,69 @@ body.frido-header-sticky .frido-header {
   }
 }
 
+/* ---------- Bestsellers (mobile carousel + footer CTA) ---------- */
+@media (max-width: 989px) {
+  .frido-bestsellers .frido-page-width {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .frido-bestsellers__head {
+    margin-bottom: 1.6rem;
+  }
+
+  .frido-bestsellers__shop-all--desktop {
+    display: none;
+  }
+
+  .frido-bestsellers__grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.2rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .frido-bestsellers__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .frido-bestsellers__grid .frido-pcard {
+    flex: 0 0 min(78vw, 32rem);
+    scroll-snap-align: start;
+  }
+
+  .frido-bestsellers__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .frido-bestsellers__shop-all--mobile {
+    display: inline-flex;
+    justify-content: center;
+    min-width: min(100%, 32rem);
+    padding-left: 3.2rem;
+    padding-right: 3.2rem;
+  }
+}
+
+@media (min-width: 990px) {
+  .frido-bestsellers__footer {
+    display: none;
+  }
+
+  .frido-bestsellers__shop-all--mobile {
+    display: none;
+  }
+}
+
 /* ---------- Content split ---------- */
 .frido-split {
   padding: 3.6rem 0;
