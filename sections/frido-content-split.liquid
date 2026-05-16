@@ -1,37 +1,51 @@
 <div class="frido-split color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
-    <div class="frido-split__grid{% if section.settings.image_position == 'right' %} frido-split__grid--media-right{% endif %}">
-      <div class="frido-split__media">
-        {% if section.settings.image != blank %}
-          {%- assign split_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
-          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '550,750,1100,1200', sizes: '(min-width: 990px) 45vw, 100vw', alt: split_alt }}
-        {% else %}
-          {{ 'lifestyle-1' | placeholder_svg_tag: 'class="placeholder-svg"' }}
-        {% endif %}
-      </div>
-      <div class="frido-split__prose">
-        {% if section.settings.heading != blank %}
-          <h2>{{ section.settings.heading | escape }}</h2>
-        {% endif %}
-        {% if section.settings.body != blank %}
-          <div class="rte">{{ section.settings.body }}</div>
-        {% endif %}
-        {% if section.blocks.size > 0 %}
-          <div class="frido-feature-list" style="margin-top:2rem">
-            {% for block in section.blocks %}
-              {% if block.type == 'feature' %}
-                <div {{ block.shopify_attributes }}>
-                  {% render 'frido-feature-item',
-                    title: block.settings.title,
-                    text: block.settings.text,
-                    icon: block.settings.icon,
-                    icon_image: block.settings.icon_image
-                  %}
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
+    <div class="frido-split__shell">
+      <div class="frido-split__grid{% if section.settings.image_position == 'right' %} frido-split__grid--media-right{% endif %}">
+        <div class="frido-split__media">
+          {% if section.settings.image != blank %}
+            {%- assign split_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
+            {{
+              section.settings.image
+              | image_url: width: 1400
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-split__img',
+                widths: '550,750,990,1100,1400',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                alt: split_alt
+            }}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'class="placeholder-svg frido-split__img"' }}
+          {% endif %}
+        </div>
+
+        <div class="frido-split__prose">
+          {% if section.settings.heading != blank %}
+            <h2 class="frido-split__heading">{{ section.settings.heading | escape }}</h2>
+          {% endif %}
+          {% if section.settings.body != blank %}
+            <div class="frido-split__body rte">{{ section.settings.body }}</div>
+          {% endif %}
+          {% if section.blocks.size > 0 %}
+            <div class="frido-feature-list frido-split__features">
+              {% for block in section.blocks %}
+                {% if block.type == 'feature' %}
+                  <div class="frido-split__feature" {{ block.shopify_attributes }}>
+                    {% render 'frido-feature-item',
+                      title: block.settings.title,
+                      text: block.settings.text,
+                      icon: block.settings.icon,
+                      icon_image: block.settings.icon_image,
+                      icon_size: 72,
+                      layout: 'split'
+                    %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -83,7 +97,7 @@
           "type": "textarea",
           "id": "text",
           "label": "Description",
-          "default": "Give your toes room to spread naturally for better balance."
+          "default": "Give your toes room to relax in their natural position with our wide toe box."
         },
         {
           "type": "select",
@@ -115,16 +129,24 @@
           "type": "feature",
           "settings": {
             "title": "Wide Toe Box",
-            "text": "Give your toes room to spread naturally for better balance.",
+            "text": "Give your toes room to relax in their natural position with our wide toe box.",
             "icon": "foot"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "title": "Natural Cushioning",
-            "text": "Responsive cushioning that supports every step.",
+            "title": "Thin Soles",
+            "text": "Feel truly connected with our ultra-thin soles for a barefoot sensation.",
             "icon": "sole"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Natural Comfort",
+            "text": "Experience natural comfort, support, and pain prevention with our footwear.",
+            "icon": "flex"
           }
         }
       ]

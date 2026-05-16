@@ -1,11 +1,17 @@
 {% comment %}
   @param title, @param text, @param icon, @param icon_image optional
+  @param icon_size {Number} optional raster size (default 52)
+  @param layout {String} item | split (default item)
 {% endcomment %}
-<div class="frido-feature-item">
+{%- liquid
+  assign feature_icon_size = icon_size | default: 52
+  assign feature_layout = layout | default: 'item'
+-%}
+<div class="frido-feature-item{% if feature_layout == 'split' %} frido-feature-item--split{% endif %}">
   <div class="frido-feature-item__icon" aria-hidden="true">
-    {% render 'frido-icon-or-image', image: icon_image, icon: icon, size: 52, layout: 'item' %}
+    {% render 'frido-icon-or-image', image: icon_image, icon: icon, size: feature_icon_size, layout: feature_layout %}
   </div>
-  <div>
+  <div class="frido-feature-item__copy">
     <h3>{{ title | escape }}</h3>
     {% if text != blank %}
       <p>{{ text }}</p>
