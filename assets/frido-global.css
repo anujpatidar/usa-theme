@@ -1175,10 +1175,7 @@ body.frido-header-sticky .frido-header {
 }
 
 @media (min-width: 990px) {
-  .frido-split {
-    padding: 4.8rem 0;
-    background: #fff;
-  }
+
 
   .frido-split__shell {
     background: transparent;
