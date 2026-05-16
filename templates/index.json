@@ -131,14 +131,17 @@
         "body": "<p>At Frido, our mission is personal: we aim to enhance your foot health and ease your foot pain. Our supportive, high-quality footwear is designed for natural foot alignment and all-day comfort with every step.</p>"
       }
     },
-    "frido_split2": {
-      "type": "frido-content-split",
+    "frido_dual_images_j6cJ9f": {
+      "type": "frido-dual-images",
+      "name": "Frido — dual images",
       "settings": {
         "color_scheme": "",
-        "image_position": "right",
-        "image": "shopify://shop_images/ChatGPT_Image_May_13_2026_11_02_09_AM.png",
-        "heading": "Podiatrists-Tested & Recommended",
-        "body": "<p>We combine clinical insight with modern materials so you can move with confidence — from morning walks to long workdays.</p>"
+        "image_1": "shopify://shop_images/855ae158-9fd1-4bde-98d4-ecb1e98f6dec_d7dae4a4-ef0f-4a85-8fca-63024c0e9a17.png",
+        "link_1": "",
+        "image_2": "shopify://shop_images/ChatGPT_Image_May_13_2026_11_02_09_AM_05dc30fe-92ec-4e18-a7ce-cf0ab32ff342.png",
+        "link_2": "",
+        "mobile_layout": "stack",
+        "image_ratio": 100
       }
     },
     "frido_shoe_finder": {
@@ -297,7 +300,7 @@
     "frido_hero",
     "frido_bestsellers",
     "frido_split",
-    "frido_split2",
+    "frido_dual_images_j6cJ9f",
     "frido_shoe_finder",
     "frido_categories",
     "frido_compare",
