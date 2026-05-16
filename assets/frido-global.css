@@ -464,6 +464,7 @@ body.frido-header-sticky .frido-header {
   .frido-hero__content {
     order: 1;
     margin-right: auto;
+    padding:0;
   }
 }
 
