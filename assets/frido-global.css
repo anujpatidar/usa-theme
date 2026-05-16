@@ -16,10 +16,6 @@ body.frido-menu-open {
 .frido-page-width {
   width: var(--frido-page);
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 /* ---------- Announcement ---------- */
@@ -51,6 +47,14 @@ body.frido-menu-open {
     padding-top: 0;
     padding-bottom: 0;
   }
+  .frido-page-width {
+  width: var(--frido-page);
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
 }
 
 .frido-announcement__center {
