@@ -617,6 +617,11 @@ body.frido-header-sticky .frido-header {
   gap: 3;
   padding: 16px 0;
 }
+@media (max-width: 700px){
+  .frido-feature-grid{
+     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 .frido-feature-circle {
   text-align: center;
