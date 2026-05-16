@@ -1019,9 +1019,7 @@ body.frido-header-sticky .frido-header {
   .frido-bestsellers__shop-all--mobile {
     display: inline-flex;
     justify-content: center;
-    width: 100%;
-    padding-left: 3.2rem;
-    padding-right: 3.2rem;
+    padding-left: 8px 20px;
   }
 }
 
