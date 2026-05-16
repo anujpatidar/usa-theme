@@ -66,6 +66,17 @@
         "cta_link": "shopify://collections/all"
       }
     },
+    "frido_bestsellers": {
+      "type": "frido-bestsellers",
+      "settings": {
+        "color_scheme": "",
+        "title": "Bestsellers",
+        "view_all_label": "SHOP ALL",
+        "collection": "all",
+        "products_to_show": 8,
+        "swipe_mobile": true
+      }
+    },
     "frido_shoe_finder": {
       "type": "frido-shoe-finder",
       "settings": {
@@ -121,17 +132,6 @@
       "settings": {
         "color_scheme": "",
         "title": "Explore Your Path to Healthy Freedom"
-      }
-    },
-    "frido_bestsellers": {
-      "type": "frido-bestsellers",
-      "settings": {
-        "color_scheme": "",
-        "title": "Bestsellers",
-        "view_all_label": "SHOP ALL",
-        "collection": "all",
-        "products_to_show": 8,
-        "swipe_mobile": true
       }
     },
     "frido_split": {
@@ -284,9 +284,9 @@
   },
   "order": [
     "frido_hero",
+    "frido_bestsellers",
     "frido_shoe_finder",
     "frido_categories",
-    "frido_bestsellers",
     "frido_split",
     "frido_compare",
     "frido_split2",
