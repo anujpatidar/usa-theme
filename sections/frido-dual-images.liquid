@@ -1,0 +1,122 @@
+<div class="frido-dual color-{{ section.settings.color_scheme }} gradient">
+  <div class="frido-page-width">
+    <div
+      class="frido-dual__shell"
+      style="--frido-dual-ar: {{ section.settings.image_ratio | default: 100 | times: 1.0 | divided_by: 100.0 }};"
+    >
+      <div class="frido-dual__grid frido-dual__grid--{{ section.settings.mobile_layout | default: 'stack' }}">
+        <div class="frido-dual__media">
+          {% if section.settings.image_1 != blank %}
+            {%- assign alt_1 = section.settings.image_1.alt | default: shop.name | escape -%}
+            {%- capture img_1 -%}
+              {{
+                section.settings.image_1
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'frido-dual__img',
+                  widths: '550,750,990,1100,1400',
+                  sizes: '(min-width: 990px) 50vw, 100vw',
+                  alt: alt_1
+              }}
+            {%- endcapture -%}
+            {% if section.settings.link_1 != blank %}
+              <a href="{{ section.settings.link_1 }}" class="frido-dual__link">{{ img_1 }}</a>
+            {% else %}
+              {{ img_1 }}
+            {% endif %}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'class="placeholder-svg frido-dual__img"' }}
+          {% endif %}
+        </div>
+
+        <div class="frido-dual__media">
+          {% if section.settings.image_2 != blank %}
+            {%- assign alt_2 = section.settings.image_2.alt | default: shop.name | escape -%}
+            {%- capture img_2 -%}
+              {{
+                section.settings.image_2
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'frido-dual__img',
+                  widths: '550,750,990,1100,1400',
+                  sizes: '(min-width: 990px) 50vw, 100vw',
+                  alt: alt_2
+              }}
+            {%- endcapture -%}
+            {% if section.settings.link_2 != blank %}
+              <a href="{{ section.settings.link_2 }}" class="frido-dual__link">{{ img_2 }}</a>
+            {% else %}
+              {{ img_2 }}
+            {% endif %}
+          {% else %}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'class="placeholder-svg frido-dual__img"' }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — dual images",
+  "tag": "section",
+  "class": "section-frido-dual-images",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Left image"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Left image link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Right image"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Right image link"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        { "value": "stack", "label": "Stacked" },
+        { "value": "side_by_side", "label": "Side by side (50% each)" }
+      ],
+      "default": "stack"
+    },
+    {
+      "type": "range",
+      "id": "image_ratio",
+      "min": 50,
+      "max": 150,
+      "step": 10,
+      "unit": "%",
+      "label": "Image height (aspect ratio)",
+      "default": 100,
+      "info": "100% = square. Lower = shorter, higher = taller."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Frido — dual images"
+    }
+  ]
+}
+{% endschema %}
