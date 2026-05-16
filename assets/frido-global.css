@@ -606,7 +606,7 @@ body.frido-header-sticky .frido-header {
 
 .frido-feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40px, 90px));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.2rem 1.6rem;
   margin-top: 0.4rem;
 }
@@ -631,6 +631,7 @@ body.frido-header-sticky .frido-header {
 .frido-feature-circle__label {
   font-weight: 500;
   font-size: 16px;
+  line-height: calc(1.5/1);
   color: var(--frido-blue-ink);
 }
 
