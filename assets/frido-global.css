@@ -1035,7 +1035,7 @@ body.frido-header-sticky .frido-header {
 /* ---------- Content split ---------- */
 .frido-split {
   padding: 2.4rem 0 3.2rem;
-  background: #f3f4f6;
+  background: var(--frido-yellow);
 }
 
 .frido-split__shell {
