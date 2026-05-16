@@ -35,7 +35,6 @@
           {{ card_product.vendor | upcase | default: 'SHOP' }}
         {%- endif -%}
       </div>
-      <h3 class="frido-pcard__title">{{ card_product.title | escape }}</h3>
       <div class="frido-pcard__row">
         {% render 'frido-stars', rating: 5 %}
         {%- liquid
@@ -46,6 +45,7 @@
         -%}
         <span class="frido-stars__label">({{ rc }})</span>
       </div>
+      <h3 class="frido-pcard__title">{{ card_product.title | escape }}</h3>
       <div class="frido-pcard__row" style="margin-top:0.6rem">
         <span class="frido-pcard__price">{{ price | money }}</span>
         {%- if compare != blank and compare > price -%}
