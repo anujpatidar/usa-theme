@@ -1444,7 +1444,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
   padding: 1rem;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
