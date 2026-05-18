@@ -2667,7 +2667,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-lifestyle__heading {
   margin: 0;
   max-width: 20rem;
-  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-size: clamp(36px, 6vw, 2.75rem);
   font-weight: 800;
   line-height: 1.15;
   color: #fff;
@@ -2709,8 +2709,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
   }
 
   .frido-lifestyle__heading {
-    max-width: 28rem;
-    font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+    max-width: 600px;
+    font-size: clamp(48px, 3.2vw, 3.4rem);
   }
 
   .frido-lifestyle__btn {
