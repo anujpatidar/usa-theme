@@ -1,0 +1,56 @@
+{% comment %}
+  Compact product card for header search
+  @param card_product {Product}
+  @param lazy {Boolean}
+{% endcomment %}
+{%- if card_product != blank -%}
+  {%- liquid
+    assign compare = card_product.compare_at_price
+    assign price = card_product.price
+    assign lazy_load = lazy | default: true
+    assign rc = 128
+    if card_product.metafields.reviews.rating_count.value != blank
+      assign rc = card_product.metafields.reviews.rating_count.value
+    endif
+  -%}
+  <article class="frido-scard">
+    <a class="frido-scard__link" href="{{ card_product.url }}">
+      <div class="frido-scard__img">
+        {%- if card_product.featured_media -%}
+          {%- assign img_alt = card_product.featured_media.alt | default: card_product.title | escape -%}
+          {{
+            card_product.featured_media
+            | image_url: width: 400
+            | image_tag:
+              loading: lazy_load,
+              widths: '200,300,400',
+              sizes: '(min-width: 990px) 180px, 42vw',
+              alt: img_alt
+          }}
+        {%- else -%}
+          {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="frido-scard__body">
+        <p class="frido-scard__cat">
+          {%- if card_product.type != blank -%}
+            {{ card_product.type | upcase }}
+          {%- else -%}
+            {{ card_product.vendor | upcase | default: 'SHOP' }}
+          {%- endif -%}
+        </p>
+        <div class="frido-scard__meta">
+          {% render 'frido-stars', rating: 5 %}
+          <span class="frido-scard__reviews">({{ rc }})</span>
+        </div>
+        <h3 class="frido-scard__title">{{ card_product.title | escape }}</h3>
+        <div class="frido-scard__prices">
+          <span class="frido-scard__price">{{ price | money }}</span>
+          {%- if compare != blank and compare > price -%}
+            <span class="frido-scard__compare">{{ compare | money }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </a>
+  </article>
+{%- endif -%}

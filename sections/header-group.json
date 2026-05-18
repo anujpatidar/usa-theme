@@ -36,7 +36,11 @@
           }
         }
       },
-      "block_order": ["ann_1", "ann_2", "ann_3"],
+      "block_order": [
+        "ann_1",
+        "ann_2",
+        "ann_3"
+      ],
       "settings": {
         "color_scheme": "",
         "announcement": "<p>30-day money-back guarantee</p>",

@@ -1,0 +1,108 @@
+{% comment %} Search dropdown / mobile overlay @param section {Section} {% endcomment %}
+{%- liquid
+  assign trending_collection = section.settings.search_trending_collection
+  assign trending_limit = 4
+  if trending_collection != blank
+    assign trending_products = trending_collection.products
+  else
+    assign trending_products = collections.all.products
+  endif
+-%}
+<div
+  id="FridoSearchPanel-{{ section.id }}"
+  class="frido-search-panel"
+  data-frido-search-panel
+  data-section-id="{{ section.id }}"
+  hidden
+>
+  <div class="frido-search-panel__backdrop" data-frido-search-backdrop aria-hidden="true"></div>
+
+  <div class="frido-search-panel__sheet">
+    <div class="frido-search-panel__mobile-bar">
+      <form class="frido-search-panel__mobile-form" action="{{ routes.search_url }}" method="get" role="search">
+        <span class="frido-search-panel__mobile-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        </span>
+        <input
+          type="search"
+          name="q"
+          class="frido-search-panel__mobile-input"
+          data-frido-search-input
+          placeholder="{{ section.settings.search_placeholder | default: 'Search' | escape }}"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-controls="FridoSearchPanel-{{ section.id }}"
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+      </form>
+      <button type="button" class="frido-search-panel__close" data-frido-search-close aria-label="{{ 'accessibility.close' | t }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="frido-search-panel__body frido-page-width">
+      <div class="frido-search-panel__loading" data-frido-search-loading hidden>
+        <span class="frido-search-panel__spinner" aria-hidden="true"></span>
+      </div>
+
+      <div class="frido-search-panel__idle" data-frido-search-idle>
+        <div class="frido-search-panel__main">
+          {% if section.settings.search_trending_title != blank %}
+            <h2 class="frido-search-panel__heading">{{ section.settings.search_trending_title | escape }}</h2>
+          {% endif %}
+          <div class="frido-search-results__grid frido-search-results__grid--trending">
+            {%- for product in trending_products limit: trending_limit -%}
+              {% render 'frido-search-card', card_product: product, lazy: true %}
+            {%- endfor -%}
+          </div>
+          {% if section.settings.search_bestsellers_label != blank %}
+            <a
+              href="{{ section.settings.search_bestsellers_link | default: routes.all_products_collection_url }}"
+              class="frido-search-panel__cta"
+            >
+              {{ section.settings.search_bestsellers_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+
+        <aside class="frido-search-panel__aside">
+          {% if section.settings.search_popular_title != blank %}
+            <h3 class="frido-search-panel__subheading">{{ section.settings.search_popular_title | escape }}</h3>
+            <hr class="frido-search-panel__rule">
+          {% endif %}
+          {%- assign popular_terms = section.settings.search_popular_terms | newline_to_br | split: '<br />' -%}
+          {%- if popular_terms.size > 0 -%}
+            <ul class="frido-search-panel__links">
+              {%- for term in popular_terms -%}
+                {%- assign t = term | strip -%}
+                {%- if t != blank -%}
+                  <li>
+                    <a href="{{ routes.search_url }}?q={{ t | url_param_escape }}">{{ t | escape }}</a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {% if section.settings.search_help_menu != blank %}
+            {% if section.settings.search_helpful_title != blank %}
+              <h3 class="frido-search-panel__subheading frido-search-panel__subheading--spaced">{{ section.settings.search_helpful_title | escape }}</h3>
+              <hr class="frido-search-panel__rule">
+            {% endif %}
+            <ul class="frido-search-panel__links">
+              {%- for link in section.settings.search_help_menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </aside>
+      </div>
+
+      <div class="frido-search-panel__results" data-frido-search-results hidden></div>
+    </div>
+  </div>
+</div>

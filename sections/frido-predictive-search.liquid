@@ -1,0 +1,33 @@
+{% comment %} Rendered via predictive search API (section_id=frido-predictive-search) {% endcomment %}
+{%- if predictive_search.performed -%}
+  {%- assign product_count = predictive_search.resources.products.size -%}
+  <div id="frido-predictive-results" class="frido-search-results" data-frido-search-results-inner>
+    {%- if product_count > 0 -%}
+      <p class="frido-search-results__count">
+        Found {{ product_count }} product{% if product_count != 1 %}s{% endif %}
+      </p>
+      <div class="frido-search-results__grid">
+        {%- for product in predictive_search.resources.products limit: 6 -%}
+          {% render 'frido-search-card', card_product: product, lazy: true %}
+        {%- endfor -%}
+      </div>
+      <div class="frido-search-results__foot">
+        <a
+          href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
+          class="frido-search-results__view-all"
+        >
+          View All Results
+        </a>
+      </div>
+    {%- else -%}
+      <p class="frido-search-results__empty">No products found. Try another search.</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Frido predictive search",
+  "settings": []
+}
+{% endschema %}

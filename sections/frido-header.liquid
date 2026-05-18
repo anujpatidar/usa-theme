@@ -28,6 +28,19 @@
               <path d="M6 6l12 12M18 6L6 18"/>
             </svg>
           </button>
+          <button
+            type="button"
+            class="frido-header__icon-btn frido-search__mobile-trigger"
+            data-frido-search-mobile-open
+            data-frido-search-trigger="{{ section.id }}"
+            aria-label="{{ 'general.search.search' | t }}"
+            aria-expanded="false"
+            aria-controls="FridoSearchPanel-{{ section.id }}"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>
+            </svg>
+          </button>
         </div>
         {% render 'frido-header-logo',
           url: routes.root_url,
@@ -109,12 +122,7 @@
         {% endif %}
 
         <div class="frido-header__actions">
-          <form class="frido-header__search" action="{{ routes.search_url }}" method="get" role="search">
-            <span class="frido-header__search-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-            </span>
-            <input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" value="{{ search.terms | escape }}">
-          </form>
+          {% render 'frido-search-desktop-form', section: section %}
           <div class="frido-header__desktop-tools">
             <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -155,6 +163,8 @@
       </div>
     {%- endif -%}
   </div>
+
+  {% render 'frido-search-panel', section: section %}
 
   <div id="FridoMenu-{{ section.id }}" class="frido-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'sections.header.menu' | t }}">
     <div class="frido-menu-panel__inner">
@@ -222,6 +232,9 @@
   </div>
 </header>
 
+{{ 'frido-search.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-search.js' | asset_url }}" defer="defer"></script>
+
 {% schema %}
 {
   "name": "Frido header",
@@ -261,6 +274,61 @@
     },
     { "type": "url", "id": "help_url", "label": "Help link" },
     { "type": "url", "id": "track_url", "label": "Track order link" },
+    {
+      "type": "header",
+      "content": "Search overlay"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search"
+    },
+    {
+      "type": "collection",
+      "id": "search_trending_collection",
+      "label": "Trending products collection"
+    },
+    {
+      "type": "text",
+      "id": "search_trending_title",
+      "label": "Trending heading",
+      "default": "Trending Now"
+    },
+    {
+      "type": "text",
+      "id": "search_bestsellers_label",
+      "label": "Trending CTA label",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "search_bestsellers_link",
+      "label": "Trending CTA link"
+    },
+    {
+      "type": "text",
+      "id": "search_popular_title",
+      "label": "Popular searches heading",
+      "default": "Popular Searches"
+    },
+    {
+      "type": "textarea",
+      "id": "search_popular_terms",
+      "label": "Popular search terms (one per line)",
+      "default": "ergonomic\nbarefoot\nsocks\nlorax\ncaspian"
+    },
+    {
+      "type": "text",
+      "id": "search_helpful_title",
+      "label": "Helpful links heading",
+      "default": "Helpful Links"
+    },
+    {
+      "type": "link_list",
+      "id": "search_help_menu",
+      "label": "Helpful links menu"
+    },
     {
       "type": "image_picker",
       "id": "logo_image",
