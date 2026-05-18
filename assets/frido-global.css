@@ -2498,7 +2498,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-trust__heading {
   margin: 0 auto 2rem;
-  max-width: 34rem;
+  max-width: 90rem;
   font-size: clamp(24px, 4.8vw, 2.35rem);
   font-weight: 400;
   line-height: 1.25;
