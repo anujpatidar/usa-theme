@@ -318,7 +318,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   .frido-header__nav-desktop {
     display: flex;
     flex: 1;
-    justify-content: center;
+    justify-content: start;
   }
 
   .frido-header__nav-list {
