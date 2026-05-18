@@ -1925,7 +1925,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-dual__shell {
-  background: #fff;
+  background: rgb(var(--color-background));
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(10, 37, 64, 0.06);
