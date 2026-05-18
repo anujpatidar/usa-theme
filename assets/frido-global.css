@@ -1257,7 +1257,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   gap: 2rem;
   background: rgba(var(--color-button), 0.14);
   border-radius: 8px;
-  padding: 24px;
+  padding: 16px;
 }
 
 .frido-shoe-finder__intro {
@@ -1353,7 +1353,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
     align-items: center;
     justify-content: space-between;
     gap: 2.4rem;
-    padding: 2.8rem 3.2rem;
+    padding: 24px;
   }
 
   .frido-shoe-finder__intro {
