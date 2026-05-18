@@ -285,7 +285,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   border-radius: var(--frido-radius-pill);
   padding: 8px;
   line-height: 100%;
-  font-weight: 200;
+  font-weight: 100;
   font-size: 16px;
   color: rgb(var(--color-foreground));
   text-decoration: none;
