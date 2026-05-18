@@ -1,8 +1,5 @@
 {% comment %}
   Desktop mega menu panel for a top-level menu link.
-  @param link {link}
-  @param section {section}
-  @param panel_id {string}
 {% endcomment %}
 {%- liquid
   assign link_handle = link.title | handleize
@@ -17,78 +14,102 @@
     endif
   endfor
 -%}
-<div
-  id="{{ panel_id }}"
-  class="frido-mega"
-  role="region"
-  aria-label="{{ link.title | escape }}"
-  hidden
->
+<div id="{{ panel_id }}" class="frido-mega" role="region" aria-label="{{ link.title | escape }}" hidden>
   <div class="frido-mega__inner frido-page-width">
     <div class="frido-mega__grid">
       {%- for column in link.links -%}
-        <div class="frido-mega__col">
+        {%- liquid
+          assign col_handle = column.title | handleize
+          assign is_featured_col = false
+          if col_handle contains 'featured'
+            assign is_featured_col = true
+          endif
+        -%}
+        <div class="frido-mega__col{% if is_featured_col %} frido-mega__col--featured{% endif %}">
           <p class="frido-mega__heading">{{ column.title | escape }}</p>
           <hr class="frido-mega__rule" aria-hidden="true">
-          <ul class="frido-mega__links">
-            {%- for item in column.links -%}
-              {%- liquid
-                assign badge_text = ''
-                assign item_handle = item.title | handleize
-                for badge in section.blocks
-                  if badge.type == 'nav_badge' and badge.settings.menu_item != blank
-                    assign bh = badge.settings.menu_item | handleize
-                    assign lh = badge.settings.link_title | handleize
-                    if bh == link_handle and lh == item_handle
-                      assign badge_text = badge.settings.badge_text
-                      break
-                    endif
-                  endif
-                endfor
-              -%}
-              <li>
-                <a href="{{ item.url }}">
-                  <span>{{ item.title | escape }}</span>
-                  {%- if badge_text != blank -%}
-                    <span class="frido-mega__badge">{{ badge_text | escape }}</span>
+
+          {%- if is_featured_col and column.links == blank -%}
+            {%- if link_handle == 'conditions' -%}
+              <div class="frido-mega__product-grid">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'mega_product_card' and block.settings.menu_item != blank -%}
+                    {%- assign mh = block.settings.menu_item | handleize -%}
+                    {%- if mh == link_handle -%}
+                      {%- assign card_product = block.settings.product -%}
+                      {%- assign card_title = block.settings.title -%}
+                      {%- if card_title == blank and card_product != blank -%}
+                        {%- assign card_title = card_product.title -%}
+                      {%- endif -%}
+                      {%- assign card_url = block.settings.url -%}
+                      {%- if card_url == blank and card_product != blank -%}
+                        {%- assign card_url = card_product.url -%}
+                      {%- endif -%}
+                      <a href="{{ card_url | default: '#' }}" class="frido-mega__product-card" {{ block.shopify_attributes }}>
+                        <div class="frido-mega__product-card-media">
+                          {%- if block.settings.image != blank -%}
+                            {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'frido-mega__product-card-img', widths: '100,150,200', sizes: '80px', alt: card_title }}
+                          {%- elsif card_product != blank and card_product.featured_image -%}
+                            {{ card_product.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'frido-mega__product-card-img', widths: '100,150,200', sizes: '80px', alt: card_title }}
+                          {%- else -%}
+                            {{ 'product-1' | placeholder_svg_tag: 'frido-mega__product-card-img frido-mega__product-card-img--ph' }}
+                          {%- endif -%}
+                        </div>
+                        <div class="frido-mega__product-card-body">
+                          {% render 'frido-stars', rating: block.settings.rating, label: block.settings.review_count %}
+                          <span class="frido-mega__product-card-title">{{ card_title | default: 'Product' | escape }}</span>
+                        </div>
+                      </a>
+                    {%- endif -%}
                   {%- endif -%}
-                </a>
-              </li>
-            {%- endfor -%}
-            {%- if column.links == blank and column.url != blank -%}
-              <li>
-                <a href="{{ column.url }}">{{ column.title | escape }}</a>
-              </li>
+                {%- endfor -%}
+              </div>
+            {%- elsif featured_block -%}
+              <a href="{{ featured_block.settings.url | default: column.url | default: '#' }}" class="frido-mega__featured-card" {{ featured_block.shopify_attributes }}>
+                {%- if featured_block.settings.image != blank -%}
+                  {{ featured_block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'frido-mega__featured-img', widths: '300,400,600', sizes: '200px', alt: featured_block.settings.title }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'frido-mega__featured-img frido-mega__featured-img--placeholder' }}
+                {%- endif -%}
+                {%- if featured_block.settings.title != blank -%}
+                  <span class="frido-mega__featured-label">{{ featured_block.settings.title | escape }}</span>
+                {%- endif -%}
+              </a>
+            {%- elsif column.url != blank -%}
+              <ul class="frido-mega__links">
+                <li><a href="{{ column.url }}">{{ column.title | escape }}</a></li>
+              </ul>
             {%- endif -%}
-          </ul>
+          {%- else -%}
+            <ul class="frido-mega__links">
+              {%- for item in column.links -%}
+                {%- liquid
+                  assign badge_text = ''
+                  assign item_handle = item.title | handleize
+                  for badge in section.blocks
+                    if badge.type == 'nav_badge' and badge.settings.menu_item != blank
+                      assign bh = badge.settings.menu_item | handleize
+                      assign lh = badge.settings.link_title | handleize
+                      if bh == link_handle and lh == item_handle
+                        assign badge_text = badge.settings.badge_text
+                        break
+                      endif
+                    endif
+                  endfor
+                -%}
+                <li>
+                  <a href="{{ item.url }}">
+                    <span>{{ item.title | escape }}</span>
+                    {%- if badge_text != blank -%}
+                      <span class="frido-mega__badge">{{ badge_text | escape }}</span>
+                    {%- endif -%}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
         </div>
       {%- endfor -%}
-
-      {%- if featured_block -%}
-        <div class="frido-mega__col frido-mega__col--featured" {{ featured_block.shopify_attributes }}>
-          <p class="frido-mega__heading">{{ featured_block.settings.column_heading | default: 'Featured' | escape }}</p>
-          <hr class="frido-mega__rule" aria-hidden="true">
-          <a href="{{ featured_block.settings.url | default: '#' }}" class="frido-mega__featured-card">
-            {%- if featured_block.settings.image != blank -%}
-              {{
-                featured_block.settings.image
-                | image_url: width: 600
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'frido-mega__featured-img',
-                  widths: '300,400,600',
-                  sizes: '200px',
-                  alt: featured_block.settings.title
-              }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'frido-mega__featured-img frido-mega__featured-img--placeholder' }}
-            {%- endif -%}
-            {%- if featured_block.settings.title != blank -%}
-              <span class="frido-mega__featured-label">{{ featured_block.settings.title | escape }}</span>
-            {%- endif -%}
-          </a>
-        </div>
-      {%- endif -%}
     </div>
   </div>
 </div>

@@ -126,11 +126,17 @@ body.frido-header-sticky .frido-header {
 
 .frido-header__bar--mobile {
   position: relative;
+  z-index: 53;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 5.6rem;
   padding: 0.6rem 0;
+  background: var(--frido-header-bg);
+}
+
+body.frido-menu-open .frido-header__bar--mobile {
+  border-bottom: 1px solid #e2e4dc;
 }
 
 .frido-header__bar--desktop {
@@ -477,13 +483,86 @@ body.frido-menu-open .frido-header__menu-icon--close {
     font-size: 1.4rem;
     font-weight: 500;
   }
+
+  .frido-mega__col--featured {
+    min-width: 18rem;
+  }
+
+  .frido-mega__product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .frido-mega__product-card {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    background: #ebece4;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #000;
+    transition: background 0.15s ease;
+  }
+
+  .frido-mega__product-card:hover {
+    background: #e2e4dc;
+  }
+
+  .frido-mega__product-card-media {
+    flex-shrink: 0;
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .frido-mega__product-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .frido-mega__product-card-img--ph {
+    background: #f5f6f2;
+  }
+
+  .frido-mega__product-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .frido-mega__product-card-body .frido-stars {
+    color: #c9a227;
+    font-size: 1rem;
+  }
+
+  .frido-mega__product-card-body .frido-stars__label {
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-left: 0.2rem;
+  }
+
+  .frido-mega__product-card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
 }
 
 /* Mobile menu drawer */
 .frido-menu-panel {
   position: fixed;
-  inset: 0;
-  z-index: 50;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--frido-menu-panel-top, 9.2rem);
+  z-index: 48;
   background: #fff;
   opacity: 0;
   visibility: hidden;
@@ -502,19 +581,62 @@ body.frido-menu-open .frido-header__menu-icon--close {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding-top: 10.8rem;
   box-sizing: border-box;
 }
 
 .frido-menu-panel__view--root {
   flex: 1;
-  overflow-y: auto;
-  padding: 0 1.5rem 2rem;
+  min-height: 0;
   display: none;
 }
 
 .frido-menu-panel__view--root.is-active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+.frido-menu-panel__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.2rem 1.5rem 2.4rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.frido-menu-panel__search {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.frido-menu-panel__search input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d8dbd2;
+  border-radius: var(--frido-radius-pill);
+  background: #fff;
+  padding: 1rem 1.2rem 1rem 3.6rem;
+  font-family: inherit;
+  font-size: 1.5rem;
+  outline: none;
+}
+
+.frido-menu-panel__search input:focus {
+  border-color: var(--frido-header-green);
+}
+
+.frido-menu-panel__search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+  pointer-events: none;
+  display: flex;
+}
+
+.frido-header__sale-pill--menu {
+  display: inline-flex;
+  margin: 0 0 1.6rem;
+  font-size: 1.4rem;
 }
 
 .frido-menu-panel__list {
@@ -523,29 +645,39 @@ body.frido-menu-open .frido-header__menu-icon--close {
   padding: 0;
 }
 
+.frido-menu-panel__list > li {
+  border-bottom: 1px solid #eceee8;
+}
+
 .frido-menu-panel__link,
 .frido-menu-panel__trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 1.4rem 0;
+  padding: 1.5rem 0;
   border: 0;
-  border-bottom: 1px solid #eceee8;
   background: none;
   color: #000;
   font-family: inherit;
-  font-size: 1.6rem;
-  font-weight: 500;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.2;
   text-align: left;
   text-decoration: none;
   cursor: pointer;
 }
 
+.frido-menu-panel__chevron {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
 .frido-mobile-sub {
   display: none;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 

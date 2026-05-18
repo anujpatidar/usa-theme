@@ -12,8 +12,17 @@
     return (root || document).querySelector(sel);
   }
 
+  function updateMenuPanelTop() {
+    var ann = document.querySelector('.frido-announcement');
+    var bar = document.querySelector('.frido-header__bar--mobile');
+    if (!ann || !bar) return;
+    var top = ann.getBoundingClientRect().height + bar.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--frido-menu-panel-top', top + 'px');
+  }
+
   function setMenuOpen(panel, open) {
     if (!panel) return;
+    if (open) updateMenuPanelTop();
     panel.classList.toggle('is-open', open);
     var toggle = document.querySelector('[data-frido-menu-toggle][aria-controls="' + panel.id + '"]');
     if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -113,6 +122,7 @@
     var header = qs('.frido-header');
     if (!header) return;
 
+    updateMenuPanelTop();
     initDesktopMega(header);
 
     document.addEventListener('click', function (e) {
@@ -180,4 +190,7 @@
   } else {
     init();
   }
+
+  window.addEventListener('resize', updateMenuPanelTop);
+  window.addEventListener('orientationchange', updateMenuPanelTop);
 })();

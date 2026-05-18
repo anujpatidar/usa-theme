@@ -37,7 +37,7 @@
           text: section.settings.logo_text,
           subtitle: section.settings.logo_subtitle,
           max_width: section.settings.logo_max_width,
-          show_subtitle: false,
+          show_subtitle: true,
           mobile_center: true
         %}
         <div class="frido-header__mobile-tools">
@@ -161,31 +161,55 @@
   <div id="FridoMenu-{{ section.id }}" class="frido-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'sections.header.menu' | t }}">
     <div class="frido-menu-panel__inner">
       <div class="frido-menu-panel__view frido-menu-panel__view--root is-active" data-menu-view="root">
-        <ul class="frido-menu-panel__list">
-          <li>
-            <a class="frido-header__sale-pill frido-header__sale-pill--menu" href="{{ sale_url }}">{{ section.settings.sale_label | escape }}</a>
-          </li>
-          {% if menu != blank %}
-            {% for link in menu.links %}
-              <li>
-                {% if link.links != blank %}
-                  <button
-                    type="button"
-                    class="frido-menu-panel__trigger"
-                    data-mobile-open-sub="{{ link.title | handleize }}"
-                  >
-                    <span>{{ link.title | escape }}</span>
-                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
-                      <path d="M2 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                {% else %}
-                  <a href="{{ link.url }}" class="frido-menu-panel__link">{{ link.title | escape }}</a>
-                {% endif %}
-              </li>
-            {% endfor %}
-          {% endif %}
-        </ul>
+        <div class="frido-menu-panel__scroll">
+          <form class="frido-menu-panel__search" action="{{ routes.search_url }}" method="get" role="search">
+            <span class="frido-menu-panel__search-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>
+              </svg>
+            </span>
+            <input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" value="{{ search.terms | escape }}">
+          </form>
+
+          <a class="frido-header__sale-pill frido-header__sale-pill--menu" href="{{ sale_url }}">
+            {{ section.settings.sale_label | escape }}
+          </a>
+
+          <ul class="frido-menu-panel__list">
+            {% if menu != blank %}
+              {% for link in menu.links %}
+                {%- liquid
+                  assign skip_link = false
+                  if section.settings.mobile_hide_home
+                    if link.title == 'Home' or link.url == routes.root_url
+                      assign skip_link = true
+                    endif
+                  endif
+                -%}
+                {% unless skip_link %}
+                  <li>
+                    {% if link.links != blank %}
+                      <button
+                        type="button"
+                        class="frido-menu-panel__trigger"
+                        data-mobile-open-sub="{{ link.title | handleize }}"
+                      >
+                        <span>{{ link.title | escape }}</span>
+                        <svg class="frido-menu-panel__chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                          <path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                    {% else %}
+                      <a href="{{ link.url }}" class="frido-menu-panel__link">
+                        <span>{{ link.title | escape }}</span>
+                      </a>
+                    {% endif %}
+                  </li>
+                {% endunless %}
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
       {% if menu != blank %}
@@ -243,7 +267,14 @@
     },
   { "type": "link_list", "id": "menu", "label": "Menu", "info": "Use 3 levels: top link → column heading → links. Column titles containing 'Category' or 'Activity' enable image tiles from blocks below." },
     { "type": "text", "id": "sale_label", "label": "Sale pill label", "default": "Spring Sale" },
-    { "type": "url", "id": "sale_link", "label": "Sale pill link" }
+    { "type": "url", "id": "sale_link", "label": "Sale pill link" },
+    {
+      "type": "checkbox",
+      "id": "mobile_hide_home",
+      "label": "Hide Home in mobile menu",
+      "default": true,
+      "info": "Matches HIKE-style drawer (logo links home via header)."
+    }
   ],
   "blocks": [
     {
@@ -284,6 +315,19 @@
         { "type": "text", "id": "menu_item", "label": "Top menu item", "default": "Women" },
         { "type": "text", "id": "link_title", "label": "Link title", "default": "Bestsellers" },
         { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Up to 50% OFF" }
+      ]
+    },
+    {
+      "type": "mega_product_card",
+      "name": "Mega menu product card",
+      "settings": [
+        { "type": "text", "id": "menu_item", "label": "Top menu item", "default": "Conditions", "info": "Shows in Featured column when that column has no links (Conditions mega menu)." },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "url", "id": "url", "label": "Link override" },
+        { "type": "text", "id": "review_count", "label": "Review count label", "default": "(6,432)", "info": "Shown after stars, e.g. (6,432)" },
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Star rating", "default": 5 }
       ]
     }
   ],
