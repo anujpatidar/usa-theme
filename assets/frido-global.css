@@ -1470,8 +1470,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-cat-card__label {
   margin: 0.75rem 0 0;
   padding: 0;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.25;
   text-align: left;
   color: rgb(var(--color-foreground));
@@ -1501,7 +1501,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
   .frido-cat-card__label {
     margin-top: 0.85rem;
-    font-size: 1.45rem;
   }
 }
 
