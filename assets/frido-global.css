@@ -1403,7 +1403,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 /* ---------- Category grid ---------- */
 .frido-cat-grid {
   padding: 2.4rem 0 3.2rem;
-  background: #f8f8f8;
+  background:  rgb(var(--color-background));
 }
 
 .frido-cat-grid .frido-page-width {
