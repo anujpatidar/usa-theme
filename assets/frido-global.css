@@ -373,7 +373,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
     background: rgb(var(--color-background));
     border-radius: 6px;
     padding: 8px 16px 8px 40px;
-    font-size: 1.35rem;
+    font-size: 14px;
     color: rgb(var(--color-foreground));
     outline: none;
   }
