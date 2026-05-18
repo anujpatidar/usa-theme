@@ -13,9 +13,35 @@
   "sections": {
     "frido-header": {
       "type": "frido-header",
+      "blocks": {
+        "ann_1": {
+          "type": "announcement_message",
+          "settings": {
+            "text": "<p>30-day money-back guarantee</p>",
+            "link": ""
+          }
+        },
+        "ann_2": {
+          "type": "announcement_message",
+          "settings": {
+            "text": "<p>Free shipping on orders over $75</p>",
+            "link": ""
+          }
+        },
+        "ann_3": {
+          "type": "announcement_message",
+          "settings": {
+            "text": "<p>Spring Sale — up to 50% off bestsellers</p>",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["ann_1", "ann_2", "ann_3"],
       "settings": {
         "color_scheme": "",
         "announcement": "<p>30-day money-back guarantee</p>",
+        "announcement_interval": 4,
+        "announcement_fade_duration": 500,
         "help_url": "",
         "track_url": "",
         "logo_image": "shopify://shop_images/Frido_logo_small_70bf7fbe-ba9d-489b-bc72-7c7ff230d476.png",
