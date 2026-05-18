@@ -735,56 +735,166 @@ body.frido-header-sticky .frido-header {
 
 /* ---------- Shoe finder ---------- */
 .frido-shoe-finder {
-  background: var(--frido-blue-pale);
-  padding: 2.8rem 0;
+  --frido-shoe-finder-bg: #e9ede1;
+  --frido-shoe-finder-btn: #3b4427;
+  padding: 1.6rem 0;
 }
 
-.frido-shoe-finder__grid {
-  display: grid;
+.frido-shoe-finder .frido-page-width {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.frido-shoe-finder__card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 2rem;
+  background: var(--frido-shoe-finder-bg);
+  border-radius: 1.6rem;
+  padding: 2.4rem 2rem;
+}
+
+.frido-shoe-finder__intro {
+  text-align: center;
+}
+
+.frido-shoe-finder__title {
+  margin: 0 0 0.6rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #000;
+}
+
+.frido-shoe-finder__text {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #000;
+}
+
+.frido-shoe-finder__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.frido-shoe-finder__select {
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 4.8rem;
+  padding: 1.2rem 3.6rem 1.2rem 1.6rem;
+  border: 1px solid #000;
+  border-radius: 0.8rem;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.2' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+    no-repeat right 1.4rem center;
+  color: #000;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  text-align-last: center;
+  cursor: pointer;
+}
+
+.frido-shoe-finder__select:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+.frido-shoe-finder__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 4.8rem;
+  margin: 0.4rem 0 0;
+  padding: 1.2rem 2rem;
+  border: none;
+  border-radius: 0.8rem;
+  background: var(--frido-shoe-finder-btn);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: none;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.frido-shoe-finder__btn:hover {
+  filter: brightness(1.08);
+}
+
+.frido-shoe-finder__btn:active {
+  filter: brightness(0.95);
 }
 
 @media (min-width: 990px) {
-  .frido-shoe-finder__grid {
-    grid-template-columns: 1fr 2fr;
-    align-items: end;
+  .frido-shoe-finder {
+    padding: 2rem 0;
   }
-}
 
-.frido-shoe-finder__filters {
-  display: grid;
-  gap: 0.8rem;
-}
-
-@media (min-width: 750px) {
-  .frido-shoe-finder__filters {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .frido-shoe-finder__card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.4rem;
+    padding: 2.8rem 3.2rem;
   }
-}
 
-.frido-shoe-finder__submit {
-  grid-column: 1 / -1;
-  margin-top: 0.8rem;
-}
+  .frido-shoe-finder__intro {
+    flex: 0 0 auto;
+    max-width: 22rem;
+    text-align: left;
+  }
 
-.frido-shoe-finder__submit .frido-btn {
-  width: 100%;
-  max-width: 28rem;
-}
+  .frido-shoe-finder__title {
+    font-size: 2.2rem;
+    margin-bottom: 0.4rem;
+  }
 
-.frido-select {
-  appearance: none;
-  border: 1px solid var(--frido-line);
-  border-radius: 6px;
-  padding: 1rem 3rem 1rem 1rem;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23061f33' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
-    no-repeat right 1.2rem center;
-  color: #000;
-  width: 100%;
+  .frido-shoe-finder__text {
+    font-size: 1.3rem;
+  }
+
+  .frido-shoe-finder__form {
+    flex: 1 1 auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    min-width: 0;
+  }
+
+  .frido-shoe-finder__select {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 4.4rem;
+    padding: 1rem 2.8rem 1rem 0.8rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  .frido-shoe-finder__btn {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 14rem;
+    min-height: 4.4rem;
+    margin: 0;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
 }
 
 /* ---------- Category grid ---------- */

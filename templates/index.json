@@ -331,11 +331,10 @@
         "sf_a_work"
       ],
       "settings": {
-        "color_scheme": "",
-        "heading": "Shoe Finder",
-        "text": "Find the barefoot shoe that fits your lifestyle.",
         "collection": "all",
         "results_link": "shopify://collections/all",
+        "heading": "Shoe Finder",
+        "text": "Find the barefoot shoe that fits your lifestyle.",
         "opt_gender": "SELECT GENDER",
         "opt_condition": "SELECT CONDITION",
         "opt_category": "SELECT CATEGORY",

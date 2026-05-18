@@ -9,26 +9,27 @@
   endif
 -%}
 
-<div class="frido-shoe-finder color-{{ section.settings.color_scheme }} gradient">
-  <div class="frido-page-width frido-shoe-finder__grid">
-    <div>
-      {% if section.settings.heading != blank %}
-        <h2 class="frido-title-block frido-title-block--finder">{{ section.settings.heading | escape }}</h2>
-      {% endif %}
-      {% if section.settings.text != blank %}
-        <p class="frido-lede">{{ section.settings.text | escape }}</p>
-      {% endif %}
-    </div>
-    <div>
+<div class="frido-shoe-finder">
+  <div class="frido-page-width">
+    <div class="frido-shoe-finder__card">
+      <div class="frido-shoe-finder__intro">
+        {% if section.settings.heading != blank %}
+          <h2 class="frido-shoe-finder__title">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <p class="frido-shoe-finder__text">{{ section.settings.text | escape }}</p>
+        {% endif %}
+      </div>
+
       <form
-        class="frido-shoe-finder__filters"
+        class="frido-shoe-finder__form frido-shoe-finder__filters"
         action="{{ form_action }}"
         method="get"
         data-shoe-finder
       >
         <label class="visually-hidden" for="frido-g-{{ section.id }}">Gender</label>
         <select
-          class="frido-select frido-shoe-finder__select"
+          class="frido-shoe-finder__select"
           id="frido-g-{{ section.id }}"
           data-filter="gender"
         >
@@ -44,7 +45,7 @@
 
         <label class="visually-hidden" for="frido-c-{{ section.id }}">Condition</label>
         <select
-          class="frido-select frido-shoe-finder__select"
+          class="frido-shoe-finder__select"
           id="frido-c-{{ section.id }}"
           data-filter="condition"
         >
@@ -60,7 +61,7 @@
 
         <label class="visually-hidden" for="frido-cat-{{ section.id }}">Category</label>
         <select
-          class="frido-select frido-shoe-finder__select"
+          class="frido-shoe-finder__select"
           id="frido-cat-{{ section.id }}"
           data-filter="category"
         >
@@ -76,7 +77,7 @@
 
         <label class="visually-hidden" for="frido-a-{{ section.id }}">Activity</label>
         <select
-          class="frido-select frido-shoe-finder__select"
+          class="frido-shoe-finder__select"
           id="frido-a-{{ section.id }}"
           data-filter="activity"
         >
@@ -90,11 +91,9 @@
           {%- endfor -%}
         </select>
 
-        <div class="frido-shoe-finder__submit">
-          <button type="submit" class="frido-btn frido-btn--yellow">
-            {{ section.settings.button_label | escape }}
-          </button>
-        </div>
+        <button type="submit" class="frido-shoe-finder__btn">
+          {{ section.settings.button_label | escape }}
+        </button>
       </form>
     </div>
   </div>
@@ -109,19 +108,6 @@
   "class": "section-frido-shoe-finder",
   "settings": [
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Shoe Finder" },
-    {
-      "type": "text",
-      "id": "text",
-      "label": "Subtext",
-      "default": "Find the barefoot shoe that fits your lifestyle."
-    },
-    {
       "type": "collection",
       "id": "collection",
       "label": "Results collection",
@@ -132,6 +118,13 @@
       "id": "results_link",
       "label": "Fallback results URL",
       "info": "Used only if no collection is selected above."
+    },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shoe Finder" },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subtext",
+      "default": "Find the barefoot shoe that fits your lifestyle."
     },
     { "type": "text", "id": "opt_gender", "label": "Gender placeholder", "default": "SELECT GENDER" },
     { "type": "text", "id": "opt_condition", "label": "Condition placeholder", "default": "SELECT CONDITION" },
