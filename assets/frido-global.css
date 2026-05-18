@@ -1997,7 +1997,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 @media (min-width: 990px) {
   .frido-dual {
     padding: 4.8rem 0;
-    background: #fff;
+    background: rgb(var(--color-background));
   }
 
   .frido-dual__shell {
