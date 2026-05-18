@@ -9,7 +9,7 @@
   endif
 -%}
 
-<div class="frido-shoe-finder">
+<div class="frido-shoe-finder color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     <div class="frido-shoe-finder__card">
       <div class="frido-shoe-finder__intro">
@@ -107,6 +107,12 @@
   "tag": "section",
   "class": "section-frido-shoe-finder",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "collection",
       "id": "collection",

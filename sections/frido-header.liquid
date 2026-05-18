@@ -4,11 +4,13 @@
   assign sale_url = section.settings.sale_link | default: routes.all_products_collection_url
 %}
 
-{% render 'frido-announcement-bar',
-  message: section.settings.announcement,
-  help_url: section.settings.help_url,
-  track_url: section.settings.track_url
-%}
+<div class="frido-announcement-wrap color-{{ section.settings.color_scheme }} gradient">
+  {% render 'frido-announcement-bar',
+    message: section.settings.announcement,
+    help_url: section.settings.help_url,
+    track_url: section.settings.track_url
+  %}
+</div>
 
 <header class="frido-header color-{{ section.settings.color_scheme }} gradient" data-section-id="{{ section.id }}">
   <div class="frido-header__shell">
