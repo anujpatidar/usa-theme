@@ -2499,7 +2499,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-trust__heading {
   margin: 0 auto 2rem;
   max-width: 34rem;
-  font-size: clamp(1.85rem, 4.8vw, 2.35rem);
+  font-size: clamp(24px, 4.8vw, 2.35rem);
   font-weight: 800;
   line-height: 1.25;
   text-align: center;
@@ -2592,7 +2592,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   .frido-trust__heading {
     max-width: 52rem;
     margin-bottom: 2.4rem;
-    font-size: clamp(2rem, 2.4vw, 2.6rem);
+    font-size: clamp(36px, 2.4vw, 2.6rem);
   }
 
   .frido-trust__cards {
