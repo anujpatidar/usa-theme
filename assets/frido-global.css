@@ -1326,8 +1326,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
   font-family: inherit;
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.2;
   text-transform: none;
   cursor: pointer;
