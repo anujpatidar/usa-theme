@@ -1,24 +1,57 @@
 {% comment %}
-  @param message {String} HTML allowed if caller uses | newline - prefer escape in section
-  @param help_url
-  @param track_url
+  Rotating announcement messages (fade) + Help / Track links
+  @param section {Section} Frido header section
 {% endcomment %}
+{%- liquid
+  assign message_blocks = section.blocks | where: 'type', 'announcement_message'
+  assign slide_count = message_blocks.size
+  if slide_count == 0 and section.settings.announcement != blank
+    assign slide_count = 1
+  endif
+  assign interval_ms = section.settings.announcement_interval | default: 4 | times: 1000
+  assign fade_ms = section.settings.announcement_fade_duration | default: 500
+-%}
 <div class="frido-announcement">
   <div class="frido-announcement__inner frido-page-width">
-    <div class="frido-announcement__center">
-      {% if message != blank %}
-        {{ message }}
+    <div
+      class="frido-announcement__center{% if slide_count > 1 %} frido-announcement__center--rotate{% endif %}"
+      {% if slide_count > 1 %}
+        data-frido-announcement-rotate
+        data-interval="{{ interval_ms }}"
+        data-fade="{{ fade_ms }}"
       {% endif %}
+    >
+      <div class="frido-announcement__rotator" aria-live="polite" aria-atomic="true">
+        {%- if message_blocks.size > 0 -%}
+          {%- for block in message_blocks -%}
+            <div
+              class="frido-announcement__slide{% if forloop.first %} is-active{% endif %}"
+              data-frido-announcement-slide
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+              {% else %}
+                {{ block.settings.text }}
+              {% endif %}
+            </div>
+          {%- endfor -%}
+        {%- elsif section.settings.announcement != blank -%}
+          <div class="frido-announcement__slide is-active" data-frido-announcement-slide>
+            {{ section.settings.announcement }}
+          </div>
+        {%- endif -%}
+      </div>
     </div>
     <div class="frido-announcement__right">
-      {% if help_url != blank %}
-        <a href="{{ help_url }}">Help</a>
+      {% if section.settings.help_url != blank %}
+        <a href="{{ section.settings.help_url }}">Help</a>
       {% else %}
         <a href="{{ pages.contact.url | default: routes.root_url }}">Help</a>
       {% endif %}
       <span class="frido-announcement__sep">|</span>
-      {% if track_url != blank %}
-        <a href="{{ track_url }}">Track Your Order</a>
+      {% if section.settings.track_url != blank %}
+        <a href="{{ section.settings.track_url }}">Track Your Order</a>
       {% else %}
         <a href="{{ routes.root_url }}/pages/track-order">Track Your Order</a>
       {% endif %}

@@ -331,10 +331,11 @@
         "sf_a_work"
       ],
       "settings": {
-        "collection": "all",
-        "results_link": "shopify://collections/all",
+        "color_scheme": "",
         "heading": "Shoe Finder",
         "text": "Find the barefoot shoe that fits your lifestyle.",
+        "collection": "all",
+        "results_link": "shopify://collections/all",
         "opt_gender": "SELECT GENDER",
         "opt_condition": "SELECT CONDITION",
         "opt_category": "SELECT CATEGORY",
@@ -362,14 +363,14 @@
         "c3": {
           "type": "category",
           "settings": {
-            "title": "Sandals",
+            "title": "Barefoot Hiking Shoes",
             "link": ""
           }
         },
         "c4": {
           "type": "category",
           "settings": {
-            "title": "Insoles",
+            "title": "Barefoot Shoes for Kids",
             "link": ""
           }
         }
@@ -383,49 +384,6 @@
       "settings": {
         "color_scheme": "",
         "title": "Explore Your Path to Healthy Freedom"
-      }
-    },
-    "frido_compare": {
-      "type": "frido-comparison-table",
-      "blocks": {
-        "r1": {
-          "type": "row",
-          "settings": {
-            "label": "Wide Toe Box",
-            "brand_text": "Roomy toe box",
-            "competitor_text": "Cramped toe area",
-            "show_x": true
-          }
-        },
-        "r2": {
-          "type": "row",
-          "settings": {
-            "label": "Lightweight",
-            "brand_text": "Featherlight feel",
-            "competitor_text": "Often heavy",
-            "show_x": true
-          }
-        },
-        "r3": {
-          "type": "row",
-          "settings": {
-            "label": "Flexible Materials",
-            "brand_text": "Natural flex",
-            "competitor_text": "Rigid soles",
-            "show_x": true
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
-      "settings": {
-        "color_scheme": "",
-        "heading": "Podiatrists-Tested & Recommended",
-        "brand_column_title": "Frido",
-        "competitor_title": "Modern Brands"
       }
     },
     "frido_reviews": {
@@ -468,6 +426,102 @@
         "color_scheme": "",
         "heading": "See why our customers are so satisfied.."
       }
+    },
+    "frido_trust": {
+      "type": "frido-trust-ratings",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "Improving over 2M+ lives by prioritising foot health with Frido Footwear!",
+        "facebook_rating_label": "Rated 4.6",
+        "facebook_stars": 5,
+        "google_rating_label": "Rated 4.8",
+        "google_stars": 5
+      }
+    },
+    "frido_lifestyle": {
+      "type": "frido-lifestyle-banner",
+      "settings": {
+        "image": "shopify://shop_images/Desktop_1_99f454df-336b-416b-b012-8c3ea9c49182.jpg",
+        "heading": "We Prioritize Healthier Foot Environment",
+        "button_label": "SHOP BESTSELLERS",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "frido_compare": {
+      "type": "frido-comparison-table",
+      "blocks": {
+        "fit_f1": {
+          "type": "feature",
+          "settings": { "label": "Walking Comfort" }
+        },
+        "fit_f2": {
+          "type": "feature",
+          "settings": { "label": "Outdoor Adventures" }
+        },
+        "fit_f3": {
+          "type": "feature",
+          "settings": { "label": "Sport Activities" }
+        },
+        "fit_f4": {
+          "type": "feature",
+          "settings": { "label": "Everyday Use" }
+        },
+        "fit_f5": {
+          "type": "feature",
+          "settings": { "label": "Weather Resistance" }
+        },
+        "fit_p1": {
+          "type": "product",
+          "settings": {
+            "title": "HF Flow",
+            "link_label": "Learn More",
+            "rating_1": 5,
+            "rating_2": 3,
+            "rating_3": 3,
+            "rating_4": 5,
+            "rating_5": 3
+          }
+        },
+        "fit_p2": {
+          "type": "product",
+          "settings": {
+            "title": "HF Stride",
+            "link_label": "Learn More",
+            "rating_1": 5,
+            "rating_2": 4,
+            "rating_3": 4,
+            "rating_4": 5,
+            "rating_5": 3
+          }
+        },
+        "fit_p3": {
+          "type": "product",
+          "settings": {
+            "title": "Ridge Plus",
+            "link_label": "Learn More",
+            "rating_1": 5,
+            "rating_2": 5,
+            "rating_3": 4,
+            "rating_4": 5,
+            "rating_5": 4
+          }
+        }
+      },
+      "block_order": [
+        "fit_f1",
+        "fit_f2",
+        "fit_f3",
+        "fit_f4",
+        "fit_f5",
+        "fit_p1",
+        "fit_p2",
+        "fit_p3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "Find Your Perfect Fit",
+        "subheading": "Discover which Barefoot Shoes are best for you."
+      }
     }
   },
   "order": [
@@ -477,7 +531,9 @@
     "frido_dual_images_mHzjtk",
     "frido_shoe_finder",
     "frido_categories",
-    "frido_compare",
-    "frido_reviews"
+    "frido_reviews",
+    "frido_trust",
+    "frido_lifestyle",
+    "frido_compare"
   ]
 }

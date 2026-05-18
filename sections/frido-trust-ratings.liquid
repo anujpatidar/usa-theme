@@ -1,0 +1,114 @@
+<div class="frido-trust color-{{ section.settings.color_scheme }} gradient">
+  <div class="frido-page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="frido-trust__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+
+    <div class="frido-trust__cards">
+      <div class="frido-trust__card">
+        {% if section.settings.facebook_logo != blank %}
+          {{
+            section.settings.facebook_logo
+            | image_url: width: 240
+            | image_tag: loading: 'lazy', class: 'frido-trust__logo frido-trust__logo--img', widths: '120,180,240', sizes: '140px', alt: 'Facebook'
+          }}
+        {% else %}
+          <span class="frido-trust__logo frido-trust__logo--facebook" aria-hidden="true">facebook</span>
+        {% endif %}
+        <p class="frido-trust__rating">
+          <span class="frido-trust__rating-text">{{ section.settings.facebook_rating_label | escape }}</span>
+          {% render 'frido-stars', rating: section.settings.facebook_stars, label: '' %}
+        </p>
+      </div>
+
+      <div class="frido-trust__card">
+        {% if section.settings.google_logo != blank %}
+          {{
+            section.settings.google_logo
+            | image_url: width: 240
+            | image_tag: loading: 'lazy', class: 'frido-trust__logo frido-trust__logo--img', widths: '120,180,240', sizes: '140px', alt: 'Google'
+          }}
+        {% else %}
+          <span class="frido-trust__logo frido-trust__logo--google" aria-hidden="true">
+            <span class="frido-trust__g frido-trust__g--b">G</span><span class="frido-trust__g frido-trust__g--r">o</span><span class="frido-trust__g frido-trust__g--y">o</span><span class="frido-trust__g frido-trust__g--b">g</span><span class="frido-trust__g frido-trust__g--g">l</span><span class="frido-trust__g frido-trust__g--r">e</span>
+          </span>
+        {% endif %}
+        <p class="frido-trust__rating">
+          <span class="frido-trust__rating-text">{{ section.settings.google_rating_label | escape }}</span>
+          {% render 'frido-stars', rating: section.settings.google_stars, label: '' %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — trust ratings",
+  "tag": "section",
+  "class": "section-frido-trust",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Improving over 2M+ lives by prioritising foot health with Frido Footwear!"
+    },
+    {
+      "type": "header",
+      "content": "Facebook"
+    },
+    {
+      "type": "image_picker",
+      "id": "facebook_logo",
+      "label": "Facebook logo (optional)"
+    },
+    {
+      "type": "text",
+      "id": "facebook_rating_label",
+      "label": "Facebook rating text",
+      "default": "Rated 4.6"
+    },
+    {
+      "type": "range",
+      "id": "facebook_stars",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Facebook stars",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Google"
+    },
+    {
+      "type": "image_picker",
+      "id": "google_logo",
+      "label": "Google logo (optional)"
+    },
+    {
+      "type": "text",
+      "id": "google_rating_label",
+      "label": "Google rating text",
+      "default": "Rated 4.8"
+    },
+    {
+      "type": "range",
+      "id": "google_stars",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Google stars",
+      "default": 5
+    }
+  ],
+  "presets": [{ "name": "Frido — trust ratings" }]
+}
+{% endschema %}

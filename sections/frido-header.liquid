@@ -5,11 +5,7 @@
 %}
 
 <div class="frido-announcement-wrap color-{{ section.settings.color_scheme }} gradient">
-  {% render 'frido-announcement-bar',
-    message: section.settings.announcement,
-    help_url: section.settings.help_url,
-    track_url: section.settings.track_url
-  %}
+  {% render 'frido-announcement-bar', section: section %}
 </div>
 
 <header class="frido-header color-{{ section.settings.color_scheme }} gradient" data-section-id="{{ section.id }}">
@@ -240,8 +236,29 @@
     {
       "type": "richtext",
       "id": "announcement",
-      "label": "Announcement",
+      "label": "Announcement (fallback)",
+      "info": "Used only when no announcement message blocks are added below.",
       "default": "<p>30-day money-back guarantee</p>"
+    },
+    {
+      "type": "range",
+      "id": "announcement_interval",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "unit": "s",
+      "label": "Seconds between messages",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "announcement_fade_duration",
+      "min": 300,
+      "max": 800,
+      "step": 100,
+      "unit": "ms",
+      "label": "Fade animation duration",
+      "default": 500
     },
     { "type": "url", "id": "help_url", "label": "Help link" },
     { "type": "url", "id": "track_url", "label": "Track order link" },
@@ -279,6 +296,23 @@
     }
   ],
   "blocks": [
+    {
+      "type": "announcement_message",
+      "name": "Announcement message",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Message",
+          "default": "<p>30-day money-back guarantee</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    },
     {
       "type": "mega_featured",
       "name": "Mega menu featured",

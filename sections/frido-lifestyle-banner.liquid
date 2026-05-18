@@ -1,0 +1,71 @@
+{%- liquid
+  assign banner_alt = section.settings.image.alt | default: section.settings.heading | escape
+-%}
+<div
+  class="frido-lifestyle{% if section.settings.image == blank %} frido-lifestyle--placeholder{% endif %}"
+  role="region"
+  aria-label="{{ section.settings.heading | default: 'Promotional banner' | escape }}"
+>
+  <div class="frido-lifestyle__media" aria-hidden="true">
+    {% if section.settings.image != blank %}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'lazy',
+          class: 'frido-lifestyle__img',
+          widths: '750,1100,1500,1800,2400',
+          sizes: '100vw',
+          alt: banner_alt
+      }}
+    {% endif %}
+    <div class="frido-lifestyle__scrim"></div>
+  </div>
+
+  <div class="frido-lifestyle__content frido-page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="frido-lifestyle__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    {% if section.settings.button_label != blank %}
+      <a
+        href="{{ section.settings.button_link | default: routes.root_url }}"
+        class="frido-lifestyle__btn"
+      >
+        {{ section.settings.button_label | escape }}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frido — lifestyle banner",
+  "tag": "section",
+  "class": "section-frido-lifestyle",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We Prioritize Healthier Foot Environment"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "SHOP BESTSELLERS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [{ "name": "Frido — lifestyle banner" }]
+}
+{% endschema %}

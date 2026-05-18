@@ -1,41 +1,157 @@
-<div class="frido-compare color-{{ section.settings.color_scheme }} gradient">
-  <div class="frido-page-width">
-    {% if section.settings.heading != blank %}
-      <h2 class="frido-title-block frido-title-block--compare">{{ section.settings.heading | escape }}</h2>
-    {% endif %}
-    <div class="frido-compare__shell">
-      <div class="frido-compare__scroll">
-        <div class="frido-compare__grid">
-          <div class="frido-compare__head"></div>
-          <div class="frido-compare__head frido-compare__head--brand">{{ section.settings.brand_column_title | escape }}</div>
-          <div class="frido-compare__head">{{ section.settings.competitor_title | escape }}</div>
+{%- liquid
+  assign feature_blocks = section.blocks | where: 'type', 'feature'
+  assign product_blocks = section.blocks | where: 'type', 'product'
+  assign product_count = product_blocks.size
+-%}
 
-          {% for block in section.blocks %}
-            {% if block.type == 'row' %}
-              <div class="frido-compare__cell frido-compare__cell--muted" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</div>
-              <div class="frido-compare__cell frido-compare__head--brand frido-compare__ok">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l4 4L19 7"/></svg>
-                {{ block.settings.brand_text | escape }}
-              </div>
-              <div class="frido-compare__cell frido-compare__bad">
-                {% if block.settings.show_x %}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+<div
+  class="frido-fit-compare color-{{ section.settings.color_scheme }} gradient"
+  id="frido-fit-compare-{{ section.id }}"
+  data-frido-fit-compare
+  data-product-count="{{ product_count }}"
+>
+  <div class="frido-page-width frido-fit-compare__inner">
+    <header class="frido-fit-compare__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="frido-fit-compare__title">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="frido-fit-compare__subtitle">{{ section.settings.subheading | escape }}</p>
+      {% endif %}
+    </header>
+
+    {%- if product_count > 0 and feature_blocks.size > 0 -%}
+      {%- comment -%} Desktop table {%- endcomment -%}
+      <div
+        class="frido-fit-compare__desktop"
+        style="--frido-fit-cols: {{ product_count }}"
+      >
+        <div class="frido-fit-compare__table">
+          <div class="frido-fit-compare__row frido-fit-compare__row--products">
+            <div class="frido-fit-compare__corner" aria-hidden="true"></div>
+            {%- for product in product_blocks -%}
+              <div class="frido-fit-compare__product-head" {{ product.shopify_attributes }}>
+                {% if product.settings.image != blank %}
+                  <div class="frido-fit-compare__product-img">
+                    {{
+                      product.settings.image
+                      | image_url: width: 560
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '200,280,400,560',
+                        sizes: '(min-width: 990px) 180px, 40vw',
+                        alt: product.settings.title | escape
+                    }}
+                  </div>
                 {% endif %}
-                {{ block.settings.competitor_text | escape }}
+                {% if product.settings.title != blank %}
+                  <p class="frido-fit-compare__product-name">{{ product.settings.title | escape }}</p>
+                {% endif %}
               </div>
-            {% endif %}
-          {% endfor %}
+            {%- endfor -%}
+          </div>
+
+          {%- for feature in feature_blocks -%}
+            <div class="frido-fit-compare__row" {{ feature.shopify_attributes }}>
+              <div class="frido-fit-compare__feature-label">{{ feature.settings.label | escape }}</div>
+              {%- for product in product_blocks -%}
+                <div class="frido-fit-compare__feature-score">
+                  {% render 'frido-fit-product-score', product: product, index: forloop.parentloop.index %}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+
+          <div class="frido-fit-compare__row frido-fit-compare__row--cta">
+            <div class="frido-fit-compare__corner" aria-hidden="true"></div>
+            {%- for product in product_blocks -%}
+              <div class="frido-fit-compare__cta-cell">
+                {% if product.settings.link_label != blank %}
+                  <a
+                    class="frido-fit-compare__learn"
+                    href="{{ product.settings.link | default: '#' }}"
+                  >
+                    {{ product.settings.link_label | escape }}
+                  </a>
+                {% endif %}
+              </div>
+            {%- endfor -%}
+          </div>
         </div>
       </div>
-    </div>
+
+      {%- comment -%} Mobile carousel {%- endcomment -%}
+      <div class="frido-fit-compare__mobile">
+        <div class="frido-fit-compare__track" data-frido-fit-track tabindex="0">
+          {%- for product in product_blocks -%}
+            <article
+              class="frido-fit-compare__panel"
+              data-frido-fit-panel
+              {{ product.shopify_attributes }}
+            >
+              <div class="frido-fit-compare__panel-hero">
+                {% if product.settings.image != blank %}
+                  <div class="frido-fit-compare__panel-img">
+                    {{
+                      product.settings.image
+                      | image_url: width: 520
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '260,360,520',
+                        sizes: '55vw',
+                        alt: product.settings.title | escape
+                    }}
+                  </div>
+                {% endif %}
+                {% if product.settings.title != blank %}
+                  <p class="frido-fit-compare__panel-name">{{ product.settings.title | escape }}</p>
+                {% endif %}
+              </div>
+
+              <div class="frido-fit-compare__panel-rows">
+                {%- for feature in feature_blocks -%}
+                  <div class="frido-fit-compare__panel-row" {{ feature.shopify_attributes }}>
+                    <span class="frido-fit-compare__panel-label">{{ feature.settings.label | escape }}</span>
+                    <span class="frido-fit-compare__panel-bars">
+                      {% render 'frido-fit-product-score', product: product, index: forloop.index %}
+                    </span>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              {% if product.settings.link_label != blank %}
+                <footer class="frido-fit-compare__panel-foot">
+                  <a
+                    class="frido-fit-compare__learn frido-fit-compare__learn--panel"
+                    href="{{ product.settings.link | default: '#' }}"
+                  >
+                    {{ product.settings.link_label | escape }}
+                  </a>
+                </footer>
+              {% endif %}
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {% if product_count > 1 %}
+          <div class="frido-fit-compare__mobile-bar" aria-hidden="true">
+            <div class="frido-fit-compare__progress" data-frido-fit-progress>
+              <span class="frido-fit-compare__progress-fill" data-frido-fit-progress-fill></span>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
+<script src="{{ 'frido-fit-compare.js' | asset_url }}" defer="defer"></script>
+
 {% schema %}
 {
-  "name": "Frido — comparison",
+  "name": "Frido — perfect fit",
   "tag": "section",
-  "class": "section-frido-compare",
+  "class": "section-frido-fit-compare",
   "settings": [
     {
       "type": "color_scheme",
@@ -47,53 +163,174 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Podiatrists-Tested & Recommended"
+      "default": "Find Your Perfect Fit"
     },
-    { "type": "text", "id": "brand_column_title", "label": "Your brand column", "default": "Frido" },
-    { "type": "text", "id": "competitor_title", "label": "Competitor column", "default": "Modern Brands" }
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover which Barefoot Shoes are best for you."
+    }
   ],
   "blocks": [
     {
-      "type": "row",
-      "name": "Row",
+      "type": "feature",
+      "name": "Feature row",
       "settings": [
-        { "type": "text", "id": "label", "label": "Feature", "default": "Wide Toe Box" },
-        { "type": "text", "id": "brand_text", "label": "Frido column", "default": "Yes" },
-        { "type": "text", "id": "competitor_text", "label": "Other brands", "default": "Often narrow" },
-        { "type": "checkbox", "id": "show_x", "label": "Show X icon", "default": true }
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Feature label",
+          "default": "Walking Comfort"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product name",
+          "default": "HF Flow"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Learn more link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Learn More"
+        },
+        {
+          "type": "header",
+          "content": "Ratings (1–5 per feature row, top to bottom)"
+        },
+        {
+          "type": "range",
+          "id": "rating_1",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 1",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "rating_2",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 2",
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "rating_3",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 3",
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "rating_4",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 4",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "rating_5",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 5",
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "rating_6",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 6",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "rating_7",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 7",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "rating_8",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Row 8",
+          "default": 5
+        }
       ]
     }
   ],
-  "max_blocks": 12,
+  "max_blocks": 14,
   "presets": [
     {
-      "name": "Frido — comparison",
+      "name": "Frido — perfect fit",
       "blocks": [
+        { "type": "feature", "settings": { "label": "Walking Comfort" } },
+        { "type": "feature", "settings": { "label": "Outdoor Adventures" } },
+        { "type": "feature", "settings": { "label": "Sport Activities" } },
+        { "type": "feature", "settings": { "label": "Everyday Use" } },
+        { "type": "feature", "settings": { "label": "Weather Resistance" } },
         {
-          "type": "row",
+          "type": "product",
           "settings": {
-            "label": "Wide Toe Box",
-            "brand_text": "Roomy toe box",
-            "competitor_text": "Cramped toe area",
-            "show_x": true
+            "title": "HF Flow",
+            "rating_1": 5,
+            "rating_2": 3,
+            "rating_3": 3,
+            "rating_4": 5,
+            "rating_5": 3
           }
         },
         {
-          "type": "row",
+          "type": "product",
           "settings": {
-            "label": "Lightweight",
-            "brand_text": "Featherlight feel",
-            "competitor_text": "Often heavy",
-            "show_x": true
+            "title": "HF Stride",
+            "rating_1": 5,
+            "rating_2": 4,
+            "rating_3": 4,
+            "rating_4": 5,
+            "rating_5": 3
           }
         },
         {
-          "type": "row",
+          "type": "product",
           "settings": {
-            "label": "Flexible Materials",
-            "brand_text": "Natural flex",
-            "competitor_text": "Rigid soles",
-            "show_x": true
+            "title": "Ridge Plus",
+            "rating_1": 5,
+            "rating_2": 5,
+            "rating_3": 4,
+            "rating_4": 5,
+            "rating_5": 4
           }
         }
       ]

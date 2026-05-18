@@ -12,6 +12,54 @@
     return (root || document).querySelector(sel);
   }
 
+  function initAnnouncementRotate() {
+    qsa('[data-frido-announcement-rotate]').forEach(function (root) {
+      if (root._fridoAnnTimer) {
+        clearInterval(root._fridoAnnTimer);
+        root._fridoAnnTimer = null;
+      }
+
+      var slides = qsa('[data-frido-announcement-slide]', root);
+      if (slides.length < 2) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var interval = parseInt(root.getAttribute('data-interval'), 10) || 4000;
+      var fade = parseInt(root.getAttribute('data-fade'), 10) || 500;
+      root.style.setProperty('--frido-ann-fade', fade + 'ms');
+
+      var index = 0;
+
+      function goTo(nextIndex) {
+        if (nextIndex === index) return;
+        var next = slides[nextIndex];
+        slides[index].classList.remove('is-active');
+        setTimeout(function () {
+          index = nextIndex;
+          next.classList.add('is-active');
+        }, fade);
+      }
+
+      function tick() {
+        goTo((index + 1) % slides.length);
+      }
+
+      root._fridoAnnTimer = setInterval(tick, interval);
+
+      if (!root._fridoAnnVisBound) {
+        root._fridoAnnVisBound = true;
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            clearInterval(root._fridoAnnTimer);
+            root._fridoAnnTimer = null;
+          } else if (!root._fridoAnnTimer) {
+            root._fridoAnnTimer = setInterval(tick, interval);
+          }
+        });
+      }
+    });
+  }
+
   function updateMenuPanelTop() {
     var ann = document.querySelector('.frido-announcement');
     var bar = document.querySelector('.frido-header__bar--mobile');
@@ -122,6 +170,7 @@
     var header = qs('.frido-header');
     if (!header) return;
 
+    initAnnouncementRotate();
     updateMenuPanelTop();
     initDesktopMega(header);
 
@@ -190,6 +239,11 @@
   } else {
     init();
   }
+
+  document.addEventListener('shopify:section:load', function () {
+    initAnnouncementRotate();
+    updateMenuPanelTop();
+  });
 
   window.addEventListener('resize', updateMenuPanelTop);
   window.addEventListener('orientationchange', updateMenuPanelTop);

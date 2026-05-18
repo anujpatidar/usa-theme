@@ -1,0 +1,27 @@
+{% comment %}
+  @param product {Block} product block
+  @param index {Number} feature row index (1-based)
+{% endcomment %}
+{%- liquid
+  case index
+    when 1
+      assign score = product.settings.rating_1
+    when 2
+      assign score = product.settings.rating_2
+    when 3
+      assign score = product.settings.rating_3
+    when 4
+      assign score = product.settings.rating_4
+    when 5
+      assign score = product.settings.rating_5
+    when 6
+      assign score = product.settings.rating_6
+    when 7
+      assign score = product.settings.rating_7
+    when 8
+      assign score = product.settings.rating_8
+    else
+      assign score = 0
+  endcase
+-%}
+{% render 'frido-fit-bars', score: score %}

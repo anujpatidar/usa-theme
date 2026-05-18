@@ -10,9 +10,18 @@
             <div class="frido-cat-card__media">
               {% if block.settings.image != blank %}
                 {%- assign cat_alt = block.settings.title | default: 'Category' | escape -%}
-                {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: cat_alt }}
+                {{
+                  block.settings.image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'frido-cat-card__img',
+                    widths: '300,400,600,800',
+                    sizes: '(min-width: 990px) 22vw, 44vw',
+                    alt: cat_alt
+                }}
               {% else %}
-                {{ 'product-apparel-1' | placeholder_svg_tag: 'class="placeholder-svg"' }}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'frido-cat-card__img frido-cat-card__img--placeholder' }}
               {% endif %}
             </div>
             <div class="frido-cat-card__label">{{ block.settings.title | escape }}</div>
@@ -60,8 +69,8 @@
       "blocks": [
         { "type": "category", "settings": { "title": "Barefoot Shoes" } },
         { "type": "category", "settings": { "title": "Barefoot Boots" } },
-        { "type": "category", "settings": { "title": "Sandals" } },
-        { "type": "category", "settings": { "title": "Insoles" } }
+        { "type": "category", "settings": { "title": "Barefoot Hiking Shoes" } },
+        { "type": "category", "settings": { "title": "Barefoot Shoes for Kids" } }
       ]
     }
   ]

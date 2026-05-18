@@ -1,0 +1,13 @@
+{% comment %}
+  Segmented 1–5 rating bar
+  @param score {Number}
+{% endcomment %}
+{%- liquid
+  assign s = score | default: 0 | plus: 0
+  assign s = s | at_most: 5 | at_least: 0
+-%}
+<span class="frido-fit-bars" role="img" aria-label="{{ s }} out of 5">
+  {%- for i in (1..5) -%}
+    <span class="frido-fit-bars__seg{% if i <= s %} is-on{% endif %}"></span>
+  {%- endfor -%}
+</span>
