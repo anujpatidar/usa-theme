@@ -1293,7 +1293,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
   width: 100%;
   min-height: 4.8rem;
   padding: 1.2rem 3.6rem 1.2rem 1.6rem;
-  border: 1px solid rgba(var(--color-foreground), 0.85);
   border-radius: 0.8rem;
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.2' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
