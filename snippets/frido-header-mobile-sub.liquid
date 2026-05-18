@@ -1,0 +1,156 @@
+{% comment %}
+  Mobile sub-panel for a menu item with children.
+  @param link {link}
+  @param section {section}
+  @param panel_id {string}
+{% endcomment %}
+{%- liquid
+  assign link_handle = link.title | handleize
+  assign category_tiles = ''
+  assign activity_tiles = ''
+-%}
+
+<div
+  id="{{ panel_id }}"
+  class="frido-mobile-sub"
+  data-mobile-sub="{{ link_handle }}"
+  hidden
+>
+  <div class="frido-mobile-sub__bar">
+    <button type="button" class="frido-mobile-sub__back" data-mobile-back aria-label="Back">
+      <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
+        <path d="M8 2L2 8l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>{{ link.title | escape }}</span>
+    </button>
+  </div>
+
+  <div class="frido-mobile-sub__body">
+    {%- for column in link.links -%}
+      {%- assign col_handle = column.title | handleize -%}
+      {%- assign is_category = false -%}
+      {%- assign is_activity = false -%}
+      {%- if col_handle contains 'categor' -%}
+        {%- assign is_category = true -%}
+      {%- elsif col_handle contains 'activit' -%}
+        {%- assign is_activity = true -%}
+      {%- endif -%}
+
+      {%- capture tile_markup -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'nav_tile' and block.settings.menu_item != blank -%}
+            {%- assign mh = block.settings.menu_item | handleize -%}
+            {%- assign gh = block.settings.group | handleize -%}
+            {%- if mh == link_handle -%}
+              {%- if is_category and gh == 'category' -%}
+                <a href="{{ block.settings.url | default: '#' }}" class="frido-mobile-tile" {{ block.shopify_attributes }}>
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 400
+                      | image_tag: loading: 'lazy', class: 'frido-mobile-tile__img', widths: '200,300,400', sizes: '28vw', alt: block.settings.title
+                    }}
+                  {%- else -%}
+                    {{ 'collection-1' | placeholder_svg_tag: 'frido-mobile-tile__img frido-mobile-tile__img--ph' }}
+                  {%- endif -%}
+                  <span class="frido-mobile-tile__label">{{ block.settings.title | escape }}</span>
+                </a>
+              {%- elsif is_activity and gh == 'activity' -%}
+                <a href="{{ block.settings.url | default: '#' }}" class="frido-mobile-tile" {{ block.shopify_attributes }}>
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 400
+                      | image_tag: loading: 'lazy', class: 'frido-mobile-tile__img', widths: '200,300,400', sizes: '28vw', alt: block.settings.title
+                    }}
+                  {%- else -%}
+                    {{ 'collection-1' | placeholder_svg_tag: 'frido-mobile-tile__img frido-mobile-tile__img--ph' }}
+                  {%- endif -%}
+                  <span class="frido-mobile-tile__label">{{ block.settings.title | escape }}</span>
+                </a>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+
+      {%- assign has_tiles = false -%}
+      {%- if tile_markup != blank -%}
+        {%- assign has_tiles = true -%}
+      {%- endif -%}
+
+      <details class="frido-mobile-accordion" {% if forloop.first %}open{% endif %}>
+        <summary class="frido-mobile-accordion__summary">
+          <span>{{ column.title | escape }}</span>
+          <span class="frido-mobile-accordion__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="frido-mobile-accordion__content">
+          {%- if has_tiles -%}
+            <div class="frido-mobile-tile-grid{% if is_activity %} frido-mobile-tile-grid--activity{% endif %}">
+              {{ tile_markup }}
+            </div>
+          {%- elsif column.links != blank -%}
+            <ul class="frido-mobile-link-list">
+              {%- for item in column.links -%}
+                {%- liquid
+                  assign badge_text = ''
+                  assign item_handle = item.title | handleize
+                  for badge in section.blocks
+                    if badge.type == 'nav_badge' and badge.settings.menu_item != blank
+                      assign bh = badge.settings.menu_item | handleize
+                      assign lh = badge.settings.link_title | handleize
+                      if bh == link_handle and lh == item_handle
+                        assign badge_text = badge.settings.badge_text
+                        break
+                      endif
+                    endif
+                  endfor
+                -%}
+                <li>
+                  <a href="{{ item.url }}">
+                    {{ item.title | escape }}
+                    {%- if badge_text != blank -%} <span class="frido-mobile-link-list__badge">[{{ badge_text | escape }}]</span>{%- endif -%}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- elsif column.url != blank -%}
+            <ul class="frido-mobile-link-list">
+              <li><a href="{{ column.url }}">{{ column.title | escape }}</a></li>
+            </ul>
+          {%- endif -%}
+        </div>
+      </details>
+    {%- endfor -%}
+
+    {%- assign featured_col = link.links | first -%}
+    {%- if featured_col != blank and featured_col.links != blank -%}
+      <div class="frido-mobile-sub__footer-links">
+        <ul class="frido-mobile-link-list frido-mobile-link-list--plain">
+          {%- for item in featured_col.links -%}
+            {%- liquid
+              assign badge_text = ''
+              assign item_handle = item.title | handleize
+              for badge in section.blocks
+                if badge.type == 'nav_badge' and badge.settings.menu_item != blank
+                  assign bh = badge.settings.menu_item | handleize
+                  assign lh = badge.settings.link_title | handleize
+                  if bh == link_handle and lh == item_handle
+                    assign badge_text = badge.settings.badge_text
+                    break
+                  endif
+                endif
+              endfor
+            -%}
+            <li>
+              <a href="{{ item.url }}">
+                {{ item.title | escape }}
+                {%- if badge_text != blank -%} <span class="frido-mobile-link-list__badge">[{{ badge_text | escape }}]</span>{%- endif -%}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
