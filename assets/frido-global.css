@@ -1921,7 +1921,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 /* ---------- Dual images (50/50, no text) ---------- */
 .frido-dual {
   padding: 2.4rem 0 3.2rem;
-  background: var(--frido-yellow);
+  background: rgb(var(--color-background));
 }
 
 .frido-dual__shell {
