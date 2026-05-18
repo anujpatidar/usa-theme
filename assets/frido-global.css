@@ -388,7 +388,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
     left: 1.1rem;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0.5;
+    opacity: 1;
+    line-height:100%;
     pointer-events: none;
   }
 
