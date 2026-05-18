@@ -2488,7 +2488,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   --frido-trust-card-bg: #e9ede1;
   --frido-trust-card-text: #1a1a1a;
   padding: 2.8rem 0 3.2rem;
-  background: #faf9f5;
+  background: rgb(var(--color-background));
 }
 
 .frido-trust .frido-page-width {
