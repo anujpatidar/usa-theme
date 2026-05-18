@@ -1300,9 +1300,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
     no-repeat right 1.4rem center;
   color: rgb(var(--color-foreground));
   font-family: inherit;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
-  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
   text-align-last: center;
