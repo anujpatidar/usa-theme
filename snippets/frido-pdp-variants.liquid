@@ -1,0 +1,116 @@
+{% comment %}
+  Gender tabs, color swatches, size grid
+  @param product {Product}
+  @param section {Section}
+{% endcomment %}
+{%- liquid
+  assign gender_option = nil
+  assign color_option = nil
+  assign size_option = nil
+
+  for option in product.options_with_values
+    assign oname = option.name | downcase
+    if gender_option == nil and oname contains 'gender'
+      assign gender_option = option
+    endif
+    if color_option == nil and oname contains 'color'
+      assign color_option = option
+    endif
+    if size_option == nil and oname contains 'size'
+      assign size_option = option
+    endif
+  endfor
+
+  if gender_option == nil and product.options.size > 0
+    assign first_name = product.options[0] | downcase
+    if first_name contains 'gender' or first_name == 'men' or first_name == 'women'
+      assign gender_option = product.options_with_values[0]
+    endif
+  endif
+-%}
+
+<div class="frido-pdp-variants" data-frido-variants>
+  {%- if gender_option -%}
+    <div class="frido-pdp-gender" data-frido-option="{{ gender_option.name | escape }}">
+      <div class="frido-pdp-gender__tabs" role="tablist">
+        {%- for value in gender_option.values -%}
+          <button
+            type="button"
+            class="frido-pdp-gender__tab{% if gender_option.selected_value == value %} is-active{% endif %}"
+            data-frido-option-value="{{ value | escape }}"
+            role="tab"
+          >
+            {{ value | upcase | escape }}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if color_option -%}
+    <div class="frido-pdp-colors" data-frido-option="{{ color_option.name | escape }}">
+      <div class="frido-pdp-colors__swatches">
+        {%- for value in color_option.values -%}
+          {%- liquid
+            assign swatch_img = nil
+            for variant in product.variants
+              if variant.options contains value and variant.featured_image
+                assign swatch_img = variant.featured_image
+                break
+              endif
+            endfor
+          -%}
+          <button
+            type="button"
+            class="frido-pdp-colors__swatch{% if color_option.selected_value == value %} is-active{% endif %}"
+            data-frido-option-value="{{ value | escape }}"
+            title="{{ value | escape }}"
+          >
+            {%- if swatch_img -%}
+              {{ swatch_img | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '56px', alt: value }}
+            {%- else -%}
+              <span class="frido-pdp-colors__label">{{ value | escape }}</span>
+            {%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if size_option -%}
+    <div class="frido-pdp-sizes" data-frido-option="{{ size_option.name | escape }}">
+      <div class="frido-pdp-sizes__grid">
+        {%- for value in size_option.values -%}
+          <button
+            type="button"
+            class="frido-pdp-sizes__btn{% if size_option.selected_value == value %} is-active{% endif %}"
+            data-frido-option-value="{{ value | escape }}"
+          >
+            {{ value | escape }}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="frido-pdp-selection">
+      <p class="frido-pdp-selection__text" data-frido-selection-summary>
+        {%- if color_option -%}Color: <strong data-frido-sel-color>{{ color_option.selected_value | escape }}</strong>{%- endif -%}
+        {%- if size_option -%}{% if color_option %} {% endif %}Size: <strong data-frido-sel-size>{{ size_option.selected_value | escape }}</strong>{%- endif -%}
+      </p>
+      {%- if section.settings.size_chart_url != blank -%}
+        <a href="{{ section.settings.size_chart_url }}" class="frido-pdp-selection__chart">Size &amp; Fit Chart</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Hidden selects for options not shown as custom UI {%- endcomment -%}
+  {%- for option in product.options_with_values -%}
+    {%- unless option == gender_option or option == color_option or option == size_option -%}
+      <label class="visually-hidden" for="Option-{{ section.id }}-{{ forloop.index }}">{{ option.name }}</label>
+      <select id="Option-{{ section.id }}-{{ forloop.index }}" name="options[{{ option.name | escape }}]" data-frido-native-select>
+        {%- for value in option.values -%}
+          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+        {%- endfor -%}
+      </select>
+    {%- endunless -%}
+  {%- endfor -%}
+</div>

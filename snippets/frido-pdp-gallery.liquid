@@ -1,0 +1,74 @@
+{% comment %}
+  @param product {Product}
+  @param section_id {String}
+{% endcomment %}
+{%- liquid
+  assign media_count = product.media.size
+-%}
+<div class="frido-pdp-gallery" data-frido-gallery>
+  <div class="frido-pdp-gallery__main">
+    {%- if product.media.size > 0 -%}
+      {%- for media in product.media -%}
+        <div
+          class="frido-pdp-gallery__slide{% if forloop.first %} is-active{% endif %}"
+          data-frido-gallery-slide
+          data-media-id="{{ media.id }}"
+        >
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              {{
+                media
+                | image_url: width: 1200
+                | image_tag:
+                  loading: forloop.first,
+                  class: 'frido-pdp-gallery__img',
+                  widths: '400,600,800,1000,1200',
+                  sizes: '(min-width: 990px) 50vw, 100vw',
+                  alt: media.alt | default: product.title
+              }}
+            {%- else -%}
+              {{ media | media_tag: image_size: '1200x', class: 'frido-pdp-gallery__img' }}
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="frido-pdp-gallery__slide is-active">
+        {{ 'product-apparel-2' | placeholder_svg_tag: 'frido-pdp-gallery__img placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if media_count > 1 -%}
+    <div class="frido-pdp-gallery__dots" data-frido-gallery-dots>
+      {%- for media in product.media limit: 12 -%}
+        <button
+          type="button"
+          class="frido-pdp-gallery__dot{% if forloop.first %} is-active{% endif %}"
+          data-frido-gallery-dot="{{ forloop.index0 }}"
+          aria-label="Image {{ forloop.index }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+
+    <div class="frido-pdp-gallery__thumbs-wrap">
+      <div class="frido-pdp-gallery__thumbs" data-frido-gallery-thumbs>
+        {%- for media in product.media limit: 8 -%}
+          <button
+            type="button"
+            class="frido-pdp-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+            data-frido-gallery-thumb="{{ forloop.index0 }}"
+          >
+            {{
+              media.preview_image
+              | image_url: width: 160
+              | image_tag: loading: 'lazy', widths: '80,120,160', sizes: '80px', alt: ''
+            }}
+          </button>
+        {%- endfor -%}
+      </div>
+      <div class="frido-pdp-gallery__thumb-track" aria-hidden="true">
+        <span class="frido-pdp-gallery__thumb-fill" data-frido-gallery-thumb-fill></span>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
