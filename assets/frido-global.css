@@ -292,7 +292,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-header__sale-pill:hover {
-  border-color: rgb(var(--color-button));
+  
   box-shadow: 0 0 0 1px rgb(var(--color-button));
   background: rgba(var(--color-button), 0.12);
 }
