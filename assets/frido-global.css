@@ -387,6 +387,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
     position: absolute;
     left: 1.1rem;
     top: 50%;
+    line-height:100%;
     transform: translateY(-50%);
     opacity: 0.5;
     pointer-events: none;
