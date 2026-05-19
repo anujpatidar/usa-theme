@@ -371,9 +371,9 @@ body.frido-menu-open .frido-header__menu-icon--close {
     width: 100%;
     border: 1px solid rgba(var(--color-foreground), 0.18);
     background: rgb(var(--color-background));
-    border-radius: var(--frido-radius-pill);
+    border-radius: 6px;
     padding: 0.75rem 1.2rem 0.75rem 3.4rem;
-    font-size: 1.35rem;
+    font-size: 14px;
     color: rgb(var(--color-foreground));
     outline: none;
   }
@@ -389,7 +389,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
     top: 50%;
     line-height:100%;
     transform: translateY(-50%);
-    opacity: 0.5;
     pointer-events: none;
   }
 
