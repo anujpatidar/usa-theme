@@ -2683,9 +2683,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
   border-radius: 10px;
   background: #e9ede1;
   color: #3b4427;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  font-size: 16px;
+  font-weight: 400;
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
