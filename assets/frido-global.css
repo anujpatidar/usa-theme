@@ -2039,6 +2039,10 @@ body.frido-menu-open .frido-header__menu-icon--close {
   text-align: left;
 }
 
+.frido-fit-compare__header--corner {
+  display: none;
+}
+
 .frido-fit-compare__title {
   margin: 0 0 0.5rem;
   font-size: clamp(30px, 5vw, 2.6rem);
@@ -2219,6 +2223,14 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
   .frido-fit-compare__header {
     margin-bottom: 2.4rem;
+  }
+
+  .frido-fit-compare__header--mobile {
+    display: none;
+  }
+
+  .frido-fit-compare__header--corner {
+    display: block;
   }
 
   .frido-fit-compare__title {
