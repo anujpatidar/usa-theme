@@ -2037,6 +2037,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-fit-compare__header {
   margin-bottom: 2rem;
   text-align: left;
+  width: 192px;
 }
 
 .frido-fit-compare__header--corner {
