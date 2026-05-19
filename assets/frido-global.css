@@ -2146,8 +2146,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-fit-compare__product-name {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
   color: #000;
 }
 
