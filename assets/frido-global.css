@@ -2037,7 +2037,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-fit-compare__header {
   margin-bottom: 2rem;
   text-align: left;
-  width: 192px;
+  
 }
 
 .frido-fit-compare__header--corner {
@@ -2054,9 +2054,10 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-fit-compare__subtitle {
   margin: 0;
-  font-size: 1.45rem;
+  font-size: 16px;
   line-height: 1.45;
   color: #000;
+  font-weight: 300;
   max-width: 36rem;
 }
 
@@ -2224,6 +2225,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
   .frido-fit-compare__header {
     margin-bottom: 2.4rem;
+    width: 192px;
   }
 
   .frido-fit-compare__header--mobile {
@@ -2236,10 +2238,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
   .frido-fit-compare__title {
     font-size: clamp(2.2rem, 2.5vw, 2.8rem);
-  }
-
-  .frido-fit-compare__subtitle {
-    font-size: 1.5rem;
   }
 
   .frido-fit-bars__seg {
