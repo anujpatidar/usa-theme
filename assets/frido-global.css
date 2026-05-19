@@ -2854,8 +2854,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-footer__heading {
   margin: 0 0 1.2rem;
-  font-size: 1.55rem;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 400;
   color: #fff;
 }
 
