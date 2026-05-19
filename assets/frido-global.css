@@ -2899,7 +2899,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-footer__newsletter-text {
   margin: 0 0 1.2rem;
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.2;
   color: rgba(255, 255, 255, 0.88);
   font-weight: 400;
 }
