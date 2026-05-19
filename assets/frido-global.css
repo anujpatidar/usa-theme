@@ -2095,7 +2095,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   min-height: 0;
 }
 .frido-fit-compare__corner{
-  display:block;
+  display:block !important;
 }
 .frido-fit-compare__product-head {
   display: flex;
