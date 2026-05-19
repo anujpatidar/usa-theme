@@ -2042,8 +2042,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-fit-compare__title {
   margin: 0 0 0.5rem;
-  font-size: clamp(2rem, 5vw, 2.6rem);
-  font-weight: 800;
+  font-size: clamp(30px, 5vw, 2.6rem);
+  font-weight: 500;
   line-height: 1.2;
   color: #000;
 }
