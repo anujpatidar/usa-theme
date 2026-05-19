@@ -2101,8 +2101,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-fit-compare__table {
   display: grid;
   grid-template-columns: minmax(13rem, 1.45fr) repeat(var(--frido-fit-cols, 3), minmax(0, 1fr));
-  column-gap: 1.2rem;
-  align-items: center;
   width: 100%;
 }
 
@@ -2198,7 +2196,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
   .frido-fit-compare__table {
     width: max-content;
     min-width: 52rem;
-    column-gap: 1rem;
   }
 }
 
