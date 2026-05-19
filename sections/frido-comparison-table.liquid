@@ -21,9 +21,8 @@
     </header>
 
     {%- if product_count > 0 and feature_blocks.size > 0 -%}
-      {%- comment -%} Desktop table {%- endcomment -%}
       <div
-        class="frido-fit-compare__desktop"
+        class="frido-fit-compare__table-scroll"
         style="--frido-fit-cols: {{ product_count }}"
       >
         <div class="frido-fit-compare__table">
@@ -80,72 +79,9 @@
         </div>
       </div>
 
-      {%- comment -%} Mobile carousel {%- endcomment -%}
-      <div class="frido-fit-compare__mobile">
-        <div class="frido-fit-compare__track" data-frido-fit-track tabindex="0">
-          {%- for product in product_blocks -%}
-            <article
-              class="frido-fit-compare__panel"
-              data-frido-fit-panel
-              {{ product.shopify_attributes }}
-            >
-              <div class="frido-fit-compare__panel-hero">
-                {% if product.settings.image != blank %}
-                  <div class="frido-fit-compare__panel-img">
-                    {{
-                      product.settings.image
-                      | image_url: width: 520
-                      | image_tag:
-                        loading: 'lazy',
-                        widths: '260,360,520',
-                        sizes: '55vw',
-                        alt: product.settings.title | escape
-                    }}
-                  </div>
-                {% endif %}
-                {% if product.settings.title != blank %}
-                  <p class="frido-fit-compare__panel-name">{{ product.settings.title | escape }}</p>
-                {% endif %}
-              </div>
-
-              <div class="frido-fit-compare__panel-rows">
-                {%- for feature in feature_blocks -%}
-                  <div class="frido-fit-compare__panel-row" {{ feature.shopify_attributes }}>
-                    <span class="frido-fit-compare__panel-label">{{ feature.settings.label | escape }}</span>
-                    <span class="frido-fit-compare__panel-bars">
-                      {% render 'frido-fit-product-score', product: product, index: forloop.index %}
-                    </span>
-                  </div>
-                {%- endfor -%}
-              </div>
-
-              {% if product.settings.link_label != blank %}
-                <footer class="frido-fit-compare__panel-foot">
-                  <a
-                    class="frido-fit-compare__learn frido-fit-compare__learn--panel"
-                    href="{{ product.settings.link | default: '#' }}"
-                  >
-                    {{ product.settings.link_label | escape }}
-                  </a>
-                </footer>
-              {% endif %}
-            </article>
-          {%- endfor -%}
-        </div>
-
-        {% if product_count > 1 %}
-          <div class="frido-fit-compare__mobile-bar" aria-hidden="true">
-            <div class="frido-fit-compare__progress" data-frido-fit-progress>
-              <span class="frido-fit-compare__progress-fill" data-frido-fit-progress-fill></span>
-            </div>
-          </div>
-        {% endif %}
-      </div>
     {%- endif -%}
   </div>
 </div>
-
-<script src="{{ 'frido-fit-compare.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
