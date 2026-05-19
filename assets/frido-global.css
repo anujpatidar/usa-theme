@@ -2740,7 +2740,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 /* Main footer */
 .frido-footer__main {
   background: #797269;
-  padding: 3.6rem 0 0;
+  padding: 48px 0 0;
 }
 
 .frido-footer__grid {
