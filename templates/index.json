@@ -54,6 +54,7 @@
       "settings": {
         "color_scheme": "scheme-1",
         "image": "shopify://shop_images/homepage_banner.png",
+        "image_mobile": "shopify://shop_images/mobile_2_1_2.png",
         "badge_1": "",
         "badge_2": "",
         "overlay_prefix": "",
