@@ -2035,7 +2035,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-fit-compare__header {
-  margin-bottom: 2rem;
+
   text-align: left;
   
 }
@@ -2224,7 +2224,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   }
 
   .frido-fit-compare__header {
-
+    margin-bottom: 2.4rem;
     width: 192px;
   }
 
