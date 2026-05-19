@@ -2181,8 +2181,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-fit-compare__learn {
-  font-size: 1.35rem;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 300;
   color: #000;
   text-decoration: underline;
   text-underline-offset: 0.2em;
