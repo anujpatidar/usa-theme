@@ -1255,7 +1255,6 @@ body.frido-menu-open .frido-header__menu-icon--close {
   align-items: stretch;
   gap: 2rem;
   background: rgba(var(--color-button), 0.14);
-  border: 1px solid rgba(var(--color-foreground), 0.1);
   border-radius: 1.6rem;
   padding: 2.4rem 2rem;
 }
