@@ -2773,8 +2773,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-footer__contact-text {
   margin: 0.5rem 0 0;
-  font-size: 1.45rem;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.3;
   color: #1a1a1a;
   max-width: 52rem;
 }
@@ -2789,8 +2789,8 @@ body.frido-menu-open .frido-header__menu-icon--close {
   border-radius: 6px;
   background: transparent;
   color: #000;
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
