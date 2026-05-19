@@ -332,10 +332,10 @@
       ],
       "settings": {
         "color_scheme": "",
-        "heading": "Shoe Finder",
-        "text": "Find the barefoot shoe that fits your lifestyle.",
         "collection": "all",
         "results_link": "shopify://collections/all",
+        "heading": "Shoe Finder",
+        "text": "Find the barefoot shoe that fits your lifestyle.",
         "opt_gender": "SELECT GENDER",
         "opt_condition": "SELECT CONDITION",
         "opt_category": "SELECT CATEGORY",
@@ -441,7 +441,7 @@
     "frido_lifestyle": {
       "type": "frido-lifestyle-banner",
       "settings": {
-        "image": "shopify://shop_images/Desktop_1_99f454df-336b-416b-b012-8c3ea9c49182.jpg",
+        "image": "shopify://shop_images/Shoe_Banner.png",
         "heading": "We Prioritize Healthier Foot Environment",
         "button_label": "SHOP BESTSELLERS",
         "button_link": "shopify://collections/all"
@@ -452,58 +452,83 @@
       "blocks": {
         "fit_f1": {
           "type": "feature",
-          "settings": { "label": "Walking Comfort" }
+          "settings": {
+            "label": "Walking Comfort"
+          }
         },
         "fit_f2": {
           "type": "feature",
-          "settings": { "label": "Outdoor Adventures" }
+          "settings": {
+            "label": "Outdoor Adventures"
+          }
         },
         "fit_f3": {
           "type": "feature",
-          "settings": { "label": "Sport Activities" }
+          "settings": {
+            "label": "Sport Activities"
+          }
         },
         "fit_f4": {
           "type": "feature",
-          "settings": { "label": "Everyday Use" }
+          "settings": {
+            "label": "Everyday Use"
+          }
         },
         "fit_f5": {
           "type": "feature",
-          "settings": { "label": "Weather Resistance" }
+          "settings": {
+            "label": "Weather Resistance"
+          }
         },
         "fit_p1": {
           "type": "product",
           "settings": {
-            "title": "HF Flow",
+            "image": "shopify://shop_images/casual.png",
+            "title": "Active Casual Sneakers",
+            "link": "",
             "link_label": "Learn More",
             "rating_1": 5,
             "rating_2": 3,
             "rating_3": 3,
             "rating_4": 5,
-            "rating_5": 3
+            "rating_5": 3,
+            "rating_6": 5,
+            "rating_7": 5,
+            "rating_8": 5
           }
         },
         "fit_p2": {
           "type": "product",
           "settings": {
-            "title": "HF Stride",
+            "image": "shopify://shop_images/black_shoe.png",
+            "title": "Active Walking Shoes",
+            "link": "",
             "link_label": "Learn More",
             "rating_1": 5,
             "rating_2": 4,
             "rating_3": 4,
             "rating_4": 5,
-            "rating_5": 3
+            "rating_5": 3,
+            "rating_6": 5,
+            "rating_7": 5,
+            "rating_8": 5
           }
         },
         "fit_p3": {
           "type": "product",
           "settings": {
-            "title": "Ridge Plus",
+            "image": "shopify://shop_images/broad.png",
+            "title": "Cloud Comfort Shoes",
+            "link": "",
             "link_label": "Learn More",
             "rating_1": 5,
             "rating_2": 5,
             "rating_3": 4,
             "rating_4": 5,
-            "rating_5": 4
+            "rating_5": 4,
+            "rating_6": 5,
+            "rating_7": 5,
+            "rating_8": 5
           }
         }
       },
