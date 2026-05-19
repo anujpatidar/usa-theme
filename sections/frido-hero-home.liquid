@@ -4,13 +4,31 @@
   <div class="frido-page-width">
     <div class="frido-hero__grid">
       <div class="frido-hero__media">
-        {% if section.settings.image != blank %}
-          {%- assign hero_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
-          {{
-            section.settings.image
-            | image_url: width: 1600
-            | image_tag: loading: 'eager', widths: '750,1100,1400,1600', sizes: '(min-width: 990px) 50vw, 100vw', alt: hero_alt
-          }}
+        {%- liquid
+          assign hero_desktop = section.settings.image
+          if hero_desktop == blank and section.settings.image_mobile != blank
+            assign hero_desktop = section.settings.image_mobile
+          endif
+        -%}
+        {% if hero_desktop != blank %}
+          {%- assign hero_alt = hero_desktop.alt | default: section.settings.heading | escape -%}
+          <picture>
+            {%- if section.settings.image_mobile != blank and section.settings.image != blank -%}
+              <source
+                media="(max-width: 989px)"
+                srcset="
+                  {{ section.settings.image_mobile | image_url: width: 750 }} 750w,
+                  {{ section.settings.image_mobile | image_url: width: 1100 }} 1100w
+                "
+                sizes="100vw"
+              >
+            {%- endif -%}
+            {{
+              hero_desktop
+              | image_url: width: 1600
+              | image_tag: loading: 'eager', widths: '750,1100,1400,1600', sizes: '(min-width: 990px) 50vw, 100vw', alt: hero_alt
+            }}
+          </picture>
         {% else %}
           {{ 'lifestyle-2' | placeholder_svg_tag: 'class="placeholder-svg"' }}
         {% endif %}
@@ -118,7 +136,17 @@
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
     },
-    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Hero image (mobile)",
+      "info": "Shown below 990px. Uses desktop image if empty."
+    },
     { "type": "text", "id": "badge_1", "label": "Badge 1 text", "default": "FREE SHIPPING" },
     {
       "type": "image_picker",
