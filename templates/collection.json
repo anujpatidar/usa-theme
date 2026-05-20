@@ -12,30 +12,88 @@
     "frido_col_hero": {
       "type": "frido-collection-hero",
       "blocks": {
-        "feat_1": { "type": "feature", "settings": { "title": "Breathable Material", "icon": "flex" } },
-        "feat_2": { "type": "feature", "settings": { "title": "Wide Toe Box", "icon": "foot" } },
-        "feat_3": { "type": "feature", "settings": { "title": "Natural Gait", "icon": "align" } },
-        "feat_4": { "type": "feature", "settings": { "title": "Zero Drop Sole", "icon": "sole" } }
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Breathable Material",
+            "icon": "flex"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Wide Toe Box",
+            "icon": "foot"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Natural Gait",
+            "icon": "align"
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Zero Drop Sole",
+            "icon": "sole"
+          }
+        }
       },
-      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"],
+      "block_order": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
-        "overlay_prefix": "UP TO",
-        "overlay_highlight": "50%",
-        "overlay_suffix": "OFF ON BESTSELLERS",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "description_lines_mobile": 4,
         "show_more_label": "SHOW MORE",
-        "show_less_label": "SHOW LESS"
+        "show_less_label": "SHOW LESS",
+        "overlay_prefix": "",
+        "overlay_highlight": "",
+        "overlay_suffix": ""
       }
     },
     "frido_col_trust": {
       "type": "frido-collection-trust-bar",
       "blocks": {
-        "t1": { "type": "item", "settings": { "label": "30-Day Guarantee" } },
-        "t2": { "type": "item", "settings": { "label": "Free Shipping" } },
-        "t3": { "type": "item", "settings": { "label": "Podiatrist Recommended" } },
-        "t4": { "type": "item", "settings": { "label": "HSA/FSA Eligible" } }
+        "t1": {
+          "type": "item",
+          "settings": {
+            "label": "30-Day Guarantee"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "label": "Free Shipping"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "label": "Podiatrist Recommended"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "label": "HSA/FSA Eligible"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
       "settings": {
         "color_scheme": "scheme-1"
       }
@@ -53,7 +111,9 @@
           }
         }
       },
-      "block_order": ["promo_1"],
+      "block_order": [
+        "promo_1"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "products_per_page": 32,
@@ -67,5 +127,9 @@
       }
     }
   },
-  "order": ["frido_col_hero", "frido_col_trust", "product-grid"]
+  "order": [
+    "frido_col_hero",
+    "frido_col_trust",
+    "product-grid"
+  ]
 }
