@@ -9,28 +9,64 @@
  */
 {
   "sections": {
-    "banner": {
-      "type": "main-collection-banner",
-      "disabled": true,
+    "frido_col_hero": {
+      "type": "frido-collection-hero",
+      "blocks": {
+        "feat_1": { "type": "feature", "settings": { "title": "Breathable Material", "icon": "flex" } },
+        "feat_2": { "type": "feature", "settings": { "title": "Wide Toe Box", "icon": "foot" } },
+        "feat_3": { "type": "feature", "settings": { "title": "Natural Gait", "icon": "align" } },
+        "feat_4": { "type": "feature", "settings": { "title": "Zero Drop Sole", "icon": "sole" } }
+      },
+      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"],
       "settings": {
-        "show_collection_description": false,
-        "show_collection_image": false,
+        "color_scheme": "scheme-1",
+        "subtitle": "Our Most-Loved Barefoot Shoes",
+        "overlay_prefix": "UP TO",
+        "overlay_highlight": "50%",
+        "overlay_suffix": "OFF ON BESTSELLERS",
+        "show_more_label": "SHOW MORE",
+        "show_less_label": "SHOW LESS"
+      }
+    },
+    "frido_col_trust": {
+      "type": "frido-collection-trust-bar",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "label": "30-Day Guarantee" } },
+        "t2": { "type": "item", "settings": { "label": "Free Shipping" } },
+        "t3": { "type": "item", "settings": { "label": "Podiatrist Recommended" } },
+        "t4": { "type": "item", "settings": { "label": "HSA/FSA Eligible" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {
         "color_scheme": "scheme-1"
       }
     },
     "product-grid": {
       "type": "frido-collection-grid",
+      "blocks": {
+        "promo_1": {
+          "type": "promo",
+          "settings": {
+            "logo_text": "Frido",
+            "heading_prefix": "Your Path To",
+            "heading": "HEALTHY FREEDOM",
+            "badges": "30-DAY MONEY-BACK GUARANTEE\nFREE SHIPPING WORLDWIDE\nHSA/FSA ELIGIBLE\n2,000,000 HAPPY CUSTOMERS"
+          }
+        }
+      },
+      "block_order": ["promo_1"],
       "settings": {
         "color_scheme": "scheme-1",
         "products_per_page": 32,
         "columns_desktop": 4,
         "columns_mobile": "2",
+        "promo_position": 4,
         "enable_filtering": true,
         "enable_sorting": true,
-        "padding_top": 24,
+        "padding_top": 16,
         "padding_bottom": 48
       }
     }
   },
-  "order": ["banner", "product-grid"]
+  "order": ["frido_col_hero", "frido_col_trust", "product-grid"]
 }

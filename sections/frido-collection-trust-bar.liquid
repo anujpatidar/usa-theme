@@ -1,0 +1,98 @@
+{{ 'frido-collection.css' | asset_url | stylesheet_tag }}
+
+<section class="frido-col-trust color-{{ section.settings.color_scheme }} gradient" id="frido-col-trust-{{ section.id }}" data-frido-col-trust>
+  <div class="frido-page-width">
+    <div class="frido-col-trust__track" data-frido-col-trust-track>
+      {% for block in section.blocks %}
+        {% if block.type == 'item' %}
+          <div class="frido-col-trust__item" {{ block.shopify_attributes }}>
+            {% if block.settings.icon != blank %}
+              {{
+                block.settings.icon
+                | image_url: width: 80
+                | image_tag: loading: 'lazy', class: 'frido-col-trust__icon', widths: '40,56,80', sizes: '40px', alt: ''
+              }}
+            {% else %}
+              <span class="frido-col-trust__icon frido-col-trust__icon--placeholder" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 3v18M3 12h18"/>
+                </svg>
+              </span>
+            {% endif %}
+            <span class="frido-col-trust__label">{{ block.settings.label | escape }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 1 %}
+      <div class="frido-col-trust__dots" data-frido-col-trust-dots aria-hidden="true"></div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('frido-col-trust-{{ section.id }}');
+    if (!root || window.matchMedia('(min-width: 990px)').matches) return;
+    var track = root.querySelector('[data-frido-col-trust-track]');
+    var dotsWrap = root.querySelector('[data-frido-col-trust-dots]');
+    if (!track || !dotsWrap) return;
+    var items = track.querySelectorAll('.frido-col-trust__item');
+    if (items.length < 2) return;
+    items.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'frido-col-trust__dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dot.addEventListener('click', function () {
+        items[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      dotsWrap.appendChild(dot);
+    });
+    track.addEventListener('scroll', function () {
+      var w = track.clientWidth || 1;
+      var idx = Math.round(track.scrollLeft / w);
+      dotsWrap.querySelectorAll('.frido-col-trust__dot').forEach(function (d, i) {
+        d.classList.toggle('is-active', i === idx);
+      });
+    }, { passive: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Frido collection trust",
+  "tag": "section",
+  "class": "section-frido-col-trust",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "label", "label": "Label", "default": "30-Day Guarantee" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Frido collection trust",
+      "blocks": [
+        { "type": "item", "settings": { "label": "30-Day Guarantee" } },
+        { "type": "item", "settings": { "label": "Free Shipping" } },
+        { "type": "item", "settings": { "label": "Podiatrist Recommended" } },
+        { "type": "item", "settings": { "label": "HSA/FSA Eligible" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
