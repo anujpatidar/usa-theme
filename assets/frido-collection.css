@@ -78,7 +78,8 @@
   display: none;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.6rem 2rem;
-  margin-top: 0.4rem;
+  margin-top: 16px;
+  padding: 0 16px;
 }
 
 .frido-col-hero__media {
