@@ -20,7 +20,6 @@
       "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"],
       "settings": {
         "color_scheme": "scheme-1",
-        "subtitle": "Our Most-Loved Barefoot Shoes",
         "overlay_prefix": "UP TO",
         "overlay_highlight": "50%",
         "overlay_suffix": "OFF ON BESTSELLERS",

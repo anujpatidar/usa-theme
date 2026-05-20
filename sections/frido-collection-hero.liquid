@@ -5,7 +5,19 @@
   if hero_title == blank
     assign hero_title = collection.title
   endif
-  assign hero_subtitle = section.settings.subtitle
+
+  assign mf_subtitle = collection.metafields.custom.subheading
+  assign hero_subtitle = mf_subtitle.value | default: mf_subtitle
+  if hero_subtitle == blank
+    assign hero_subtitle = section.settings.subtitle
+  endif
+
+  assign mf_description = collection.metafields.custom.hero_description
+  assign has_mf_description = false
+  if mf_description != blank
+    assign has_mf_description = true
+  endif
+
   assign hero_image = section.settings.image | default: collection.image
   assign hero_mobile = section.settings.image_mobile
   if hero_mobile == blank
@@ -22,7 +34,11 @@
       {% endif %}
 
       <div class="frido-col-hero__desc" data-frido-col-desc>
-        {% if section.settings.description != blank %}
+        {% if has_mf_description %}
+          <div class="frido-col-hero__richtext rte">
+            {{ mf_description | metafield_tag }}
+          </div>
+        {% elsif section.settings.description != blank %}
           <div class="frido-col-hero__richtext rte">
             {{ section.settings.description }}
           </div>
@@ -132,22 +148,26 @@
       "default": "scheme-1"
     },
     {
+      "type": "paragraph",
+      "content": "Subheading and description are read from collection metafields: custom.subheading (Single line text) and custom.hero_description (Rich text). Theme settings below are fallbacks only."
+    },
+    {
       "type": "text",
       "id": "title",
-      "label": "Title",
+      "label": "Title (fallback)",
       "info": "Leave blank to use collection title."
     },
     {
       "type": "text",
       "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Our Most-Loved Barefoot Shoes"
+      "label": "Subtitle (fallback)",
+      "info": "Used only when custom.subheading metafield is empty."
     },
     {
       "type": "richtext",
       "id": "description",
-      "label": "Description",
-      "default": "<p>Discover HIKE®'s best-selling barefoot shoes—trusted by <strong>2M+ customers</strong> for wider toe space, natural alignment, and all-day comfort.</p><p>Built with <strong>zero-drop platform and lightweight flexible soles</strong>, our best sellers help improve balance, posture, and mobility.</p>"
+      "label": "Description (fallback)",
+      "info": "Used only when custom.hero_description metafield is empty."
     },
     {
       "type": "range",
