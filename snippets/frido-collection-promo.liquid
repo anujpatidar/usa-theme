@@ -1,0 +1,23 @@
+{% comment %} Promotional grid card @param block {Block} {% endcomment %}
+<div class="frido-col-promo" {{ block.shopify_attributes }}>
+  {% if block.settings.logo_text != blank %}
+    <p class="frido-col-promo__logo">{{ block.settings.logo_text | escape }}</p>
+  {% endif %}
+  {% if block.settings.heading_prefix != blank %}
+    <p class="frido-col-promo__prefix">{{ block.settings.heading_prefix | escape }}</p>
+  {% endif %}
+  {% if block.settings.heading != blank %}
+    <p class="frido-col-promo__heading">{{ block.settings.heading | escape }}</p>
+  {% endif %}
+  {%- assign promo_badges = block.settings.badges | newline_to_br | split: '<br />' -%}
+  {%- if promo_badges.size > 0 -%}
+    <ul class="frido-col-promo__badges">
+      {%- for line in promo_badges -%}
+        {%- assign t = line | strip -%}
+        {%- if t != blank -%}
+          <li>{{ t | escape }}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>

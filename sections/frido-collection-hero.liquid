@@ -1,0 +1,238 @@
+{{ 'frido-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_title = section.settings.title
+  if hero_title == blank
+    assign hero_title = collection.title
+  endif
+  assign hero_subtitle = section.settings.subtitle
+  assign hero_image = section.settings.image | default: collection.image
+  assign hero_mobile = section.settings.image_mobile
+  if hero_mobile == blank
+    assign hero_mobile = hero_image
+  endif
+-%}
+
+<section class="frido-col-hero color-{{ section.settings.color_scheme }} gradient" id="frido-col-hero-{{ section.id }}">
+  <div class="frido-page-width frido-col-hero__grid">
+    <div class="frido-col-hero__content">
+      <h1 class="frido-col-hero__title">{{ hero_title | escape }}</h1>
+      {% if hero_subtitle != blank %}
+        <p class="frido-col-hero__subtitle">{{ hero_subtitle | escape }}</p>
+      {% endif %}
+
+      <div class="frido-col-hero__desc" data-frido-col-desc>
+        {% if section.settings.description != blank %}
+          <div class="frido-col-hero__richtext rte">
+            {{ section.settings.description }}
+          </div>
+        {% elsif collection.description != blank %}
+          <div class="frido-col-hero__richtext rte">
+            {{ collection.description }}
+          </div>
+        {% endif %}
+      </div>
+
+      <button
+        type="button"
+        class="frido-col-hero__more"
+        data-frido-col-more
+        aria-expanded="false"
+        hidden
+      >
+        {{ section.settings.show_more_label | default: 'SHOW MORE' | escape }}
+      </button>
+
+      {% if section.blocks.size > 0 %}
+        <div class="frido-col-hero__features">
+          {% for block in section.blocks %}
+            {% if block.type == 'feature' %}
+              <div {{ block.shopify_attributes }}>
+                {% render 'frido-feature-circle',
+                  title: block.settings.title,
+                  icon: block.settings.icon,
+                  icon_image: block.settings.icon_image
+                %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="frido-col-hero__media">
+      {% if hero_image != blank %}
+        {%- assign hero_alt = hero_image.alt | default: hero_title | escape -%}
+        <picture>
+          {%- if section.settings.image_mobile != blank and section.settings.image != blank -%}
+            <source
+              media="(max-width: 989px)"
+              srcset="
+                {{ section.settings.image_mobile | image_url: width: 750 }} 750w,
+                {{ section.settings.image_mobile | image_url: width: 1100 }} 1100w
+              "
+              sizes="100vw"
+            >
+          {%- endif -%}
+          {{
+            hero_image
+            | image_url: width: 1400
+            | image_tag: loading: 'eager', widths: '750,1100,1400', sizes: '(min-width: 990px) 50vw, 100vw', alt: hero_alt, class: 'frido-col-hero__img'
+          }}
+        </picture>
+      {% else %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'frido-col-hero__img placeholder-svg' }}
+      {% endif %}
+
+      {% if section.settings.overlay_highlight != blank or section.settings.overlay_prefix != blank %}
+        <div class="frido-col-hero__overlay">
+          {{ section.settings.overlay_prefix | escape }}
+          {% if section.settings.overlay_highlight != blank %}
+            <em>{{ section.settings.overlay_highlight | escape }}</em>
+          {% endif %}
+          {{ section.settings.overlay_suffix | escape }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('frido-col-hero-{{ section.id }}');
+    if (!root) return;
+    var desc = root.querySelector('[data-frido-col-desc]');
+    var btn = root.querySelector('[data-frido-col-more]');
+    if (!desc || !btn) return;
+    var richtext = desc.querySelector('.frido-col-hero__richtext');
+    if (!richtext) return;
+    var collapsed = {{ section.settings.description_lines_mobile | default: 4 }};
+    if (richtext.scrollHeight > collapsed * 28) {
+      desc.classList.add('is-collapsed');
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        var open = desc.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.textContent = open ? {{ section.settings.show_less_label | default: 'SHOW LESS' | json }} : {{ section.settings.show_more_label | default: 'SHOW MORE' | json }};
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Frido — collection hero",
+  "tag": "section",
+  "class": "section-frido-col-hero",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "info": "Leave blank to use collection title."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Our Most-Loved Barefoot Shoes"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover HIKE®'s best-selling barefoot shoes—trusted by <strong>2M+ customers</strong> for wider toe space, natural alignment, and all-day comfort.</p><p>Built with <strong>zero-drop platform and lightweight flexible soles</strong>, our best sellers help improve balance, posture, and mobility.</p>"
+    },
+    {
+      "type": "range",
+      "id": "description_lines_mobile",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Description lines before Show more (mobile)",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "show_more_label",
+      "label": "Show more label",
+      "default": "SHOW MORE"
+    },
+    {
+      "type": "text",
+      "id": "show_less_label",
+      "label": "Show less label",
+      "default": "SHOW LESS"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Banner image (mobile)",
+      "info": "Optional. Uses desktop image if empty."
+    },
+    {
+      "type": "text",
+      "id": "overlay_prefix",
+      "label": "Image overlay — before highlight",
+      "default": "UP TO"
+    },
+    {
+      "type": "text",
+      "id": "overlay_highlight",
+      "label": "Image overlay — highlight",
+      "default": "50%"
+    },
+    {
+      "type": "text",
+      "id": "overlay_suffix",
+      "label": "Image overlay — after highlight",
+      "default": "OFF ON BESTSELLERS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature icon",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Label", "default": "Wide Toe Box" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "foot", "label": "Foot" },
+            { "value": "align", "label": "Alignment" },
+            { "value": "flex", "label": "Flexible" },
+            { "value": "sole", "label": "Sole" }
+          ],
+          "default": "foot"
+        },
+        { "type": "image_picker", "id": "icon_image", "label": "Icon image (optional)" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Frido — collection hero",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Breathable Material", "icon": "flex" } },
+        { "type": "feature", "settings": { "title": "Wide Toe Box", "icon": "foot" } },
+        { "type": "feature", "settings": { "title": "Natural Gait", "icon": "align" } },
+        { "type": "feature", "settings": { "title": "Zero Drop Sole", "icon": "sole" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

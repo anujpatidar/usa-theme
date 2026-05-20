@@ -1,0 +1,142 @@
+{% comment %}
+  Mobile filter drawer — requires facets.js + global.js (menu-drawer)
+  @param results, enable_filtering, enable_sorting, section, results_url, sort_by
+{% endcomment %}
+
+<menu-drawer class="frido-col-facets-drawer" data-breakpoint="mobile">
+  <details class="frido-col-facets-drawer__disclosure disclosure-has-popup">
+    <summary class="frido-col-facets-drawer__open">
+      <span class="frido-col-facets-drawer__open-label">
+        <span class="frido-col-facets-drawer__open-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M6 12h12M8 18h8"/>
+          </svg>
+        </span>
+        <span>Filters</span>
+      </span>
+      <span tabindex="0" class="frido-col-facets-drawer__close-trigger" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </span>
+    </summary>
+    <facet-filters-form>
+      <form id="FacetFiltersFormMobile" class="frido-col-facets-drawer__form">
+        <div class="frido-col-facets-drawer__inner">
+          <div class="frido-col-facets-drawer__head">
+            <h2 class="frido-col-facets-drawer__title">
+              <span aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 6h16M6 12h12M8 18h8"/>
+                </svg>
+              </span>
+              Filters
+            </h2>
+            <button
+              type="button"
+              class="frido-col-facets-drawer__close"
+              aria-label="{{ 'accessibility.close' | t }}"
+              onclick="this.closest('.frido-col-facets-drawer').querySelector('summary').click()"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 6l12 12M18 6L6 18"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="frido-col-facets-drawer__body" id="FacetsWrapperMobile">
+            {%- if enable_sorting -%}
+              <details class="frido-col-facets-drawer__group js-filter" open id="Details-Mobile-SortBy-{{ section.id }}">
+                <summary class="frido-col-facets-drawer__group-head">
+                  <span>{{ 'products.facets.sort_by_label' | t }}</span>
+                  <span class="frido-col-facets-drawer__chev" aria-hidden="true"></span>
+                </summary>
+                <div class="frido-col-facets-drawer__group-body">
+                  <ul class="frido-col-facets-drawer__list" role="list">
+                    {%- for option in results.sort_options -%}
+                      <li>
+                        <label class="frido-col-facets-drawer__radio{% if option.value == sort_by %} is-active{% endif %}">
+                          <input
+                            type="radio"
+                            name="sort_by"
+                            value="{{ option.value | escape }}"
+                            {% if option.value == sort_by %}checked{% endif %}
+                          >
+                          <span>{{ option.name | escape }}</span>
+                        </label>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </details>
+            {%- endif -%}
+
+            {%- if enable_filtering -%}
+              {%- for filter in results.filters -%}
+                <details class="frido-col-facets-drawer__group js-filter" id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}">
+                  <summary class="frido-col-facets-drawer__group-head">
+                    <span>{{ filter.label | escape }}</span>
+                    <span class="frido-col-facets-drawer__chev" aria-hidden="true"></span>
+                  </summary>
+                  <div class="frido-col-facets-drawer__group-body">
+                    {%- case filter.type -%}
+                      {%- when 'boolean', 'list' -%}
+                        <ul class="frido-col-facets-drawer__list" role="list">
+                          {%- for value in filter.values -%}
+                            {%- liquid
+                              assign input_id = 'Filter-mobile-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                              assign is_disabled = false
+                              if value.count == 0 and value.active == false
+                                assign is_disabled = true
+                              endif
+                            -%}
+                            <li>
+                              <label for="{{ input_id }}" class="frido-col-facets-drawer__check{% if value.active %} is-active{% endif %}{% if is_disabled %} is-disabled{% endif %}">
+                                <input
+                                  type="checkbox"
+                                  class="mobile-facets__checkbox"
+                                  name="{{ value.param_name }}"
+                                  value="{{ value.value }}"
+                                  id="{{ input_id }}"
+                                  {% if value.active %}checked{% endif %}
+                                  {% if is_disabled %}disabled{% endif %}
+                                >
+                                <span class="frido-col-facets-drawer__box" aria-hidden="true"></span>
+                                <span>{{ value.label | escape }}</span>
+                              </label>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- when 'price_range' -%}
+                        <price-range class="facets__price">
+                          {% render 'price-facet', filter: filter, id_prefix: 'Mobile-Filter-' %}
+                        </price-range>
+                    {%- endcase -%}
+                  </div>
+                </details>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          <div class="frido-col-facets-drawer__foot">
+            <facet-remove>
+              <a href="{{ results_url }}" class="frido-col-facets-drawer__clear">{{ 'products.facets.clear_all' | t }}</a>
+            </facet-remove>
+            <button
+              type="button"
+              class="frido-col-facets-drawer__apply"
+              onclick="this.closest('.frido-col-facets-drawer').querySelector('summary').click()"
+            >
+              VIEW PRODUCTS ({{ results.products_count }})
+            </button>
+          </div>
+
+          {%- if results.terms -%}
+            <input type="hidden" name="q" value="{{ results.terms | escape }}">
+            <input name="options[prefix]" type="hidden" value="last">
+          {%- endif -%}
+        </div>
+      </form>
+    </facet-filters-form>
+  </details>
+</menu-drawer>

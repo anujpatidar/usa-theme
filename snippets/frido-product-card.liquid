@@ -1,5 +1,6 @@
 {% comment %}
   @param card_product {Product}
+  @param show_swatches {Boolean}
 {% endcomment %}
 {%- if card_product != blank -%}
 {%- liquid
@@ -46,12 +47,50 @@
         <span class="frido-stars__label">({{ rc }})</span>
       </div>
       <h3 class="frido-pcard__title">{{ card_product.title | escape }}</h3>
-      <div class="frido-pcard__row" style="margin-top:0.6rem">
+      <div class="frido-pcard__row frido-pcard__prices">
         <span class="frido-pcard__price">{{ price | money }}</span>
         {%- if compare != blank and compare > price -%}
           <span class="frido-pcard__compare">{{ compare | money }}</span>
         {%- endif -%}
       </div>
+
+      {%- if show_swatches -%}
+        {%- for option in card_product.options_with_values -%}
+          {%- assign opt_down = option.name | downcase -%}
+          {%- if opt_down == 'color' or opt_down == 'colour' -%}
+            <div class="frido-pcard__swatches" aria-label="{{ option.name | escape }}">
+              {%- assign swatch_limit = 4 -%}
+              {%- assign extra = option.values.size | minus: swatch_limit -%}
+              {%- for value in option.values limit: swatch_limit -%}
+                {%- liquid
+                  assign swatch_variant = card_product.variants | where: 'option1', value | first
+                  if swatch_variant == blank
+                    assign swatch_variant = card_product.variants | where: 'option2', value | first
+                  endif
+                  if swatch_variant == blank
+                    assign swatch_variant = card_product.variants | where: 'option3', value | first
+                  endif
+                -%}
+                <span class="frido-pcard__swatch" title="{{ value | escape }}">
+                  {%- if swatch_variant != nil and swatch_variant.featured_media -%}
+                    {{
+                      swatch_variant.featured_media
+                      | image_url: width: 80
+                      | image_tag: loading: 'lazy', widths: '40,80', sizes: '32px', alt: value
+                    }}
+                  {%- else -%}
+                    <span class="frido-pcard__swatch-fallback">{{ value | escape | slice: 0, 1 }}</span>
+                  {%- endif -%}
+                </span>
+              {%- endfor -%}
+              {%- if extra > 0 -%}
+                <span class="frido-pcard__swatch-more">+{{ extra }}</span>
+              {%- endif -%}
+            </div>
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </a>
 </article>

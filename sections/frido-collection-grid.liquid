@@ -19,6 +19,12 @@
 
 <div class="frido-collection-page section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
+    {%- liquid
+      assign promo_blocks = section.blocks | where: 'type', 'promo'
+      assign promo_block = promo_blocks | first
+      assign promo_position = section.settings.promo_position | default: 4
+    -%}
+
     {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
       <div class="frido-page-width frido-collection-page__filters" id="main-collection-filters" data-id="{{ section.id }}">
         {% render 'frido-facets',
@@ -55,8 +61,13 @@
               style="--frido-cols: {{ section.settings.columns_desktop }}; --frido-cols-m: {{ section.settings.columns_mobile }};"
             >
               {%- for product in collection.products -%}
+                {%- if promo_block != blank and forloop.index == promo_position -%}
+                  <li class="frido-collection-page__item frido-collection-page__item--promo">
+                    {% render 'frido-collection-promo', block: promo_block %}
+                  </li>
+                {%- endif -%}
                 <li class="frido-collection-page__item">
-                  {% render 'frido-product-card', card_product: product %}
+                  {% render 'frido-product-card', card_product: product, show_swatches: true %}
                 </li>
               {%- endfor -%}
             </ul>
@@ -121,11 +132,21 @@
       "label": "Columns on mobile"
     },
     {
+      "type": "range",
+      "id": "promo_position",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "label": "Promo card position in grid",
+      "default": 4,
+      "info": "Inserts the promo block at this slot (e.g. 4 = first row, last column on desktop)."
+    },
+    {
       "type": "checkbox",
       "id": "enable_filtering",
       "default": true,
       "label": "Enable filtering",
-      "info": "Configure filters in Settings → Search & Discovery (Product tag, Color, Size, etc.)."
+      "info": "Configure filters in Settings → Search & Discovery."
     },
     {
       "type": "checkbox",
@@ -152,6 +173,39 @@
       "unit": "px",
       "label": "Padding bottom",
       "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promo",
+      "name": "Promo card",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "logo_text", "label": "Logo text", "default": "HIKE" },
+        { "type": "text", "id": "heading_prefix", "label": "Heading prefix", "default": "Your Path To" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "HEALTHY FREEDOM" },
+        {
+          "type": "textarea",
+          "id": "badges",
+          "label": "Trust badges (one per line)",
+          "default": "30-DAY MONEY-BACK GUARANTEE\nFREE SHIPPING WORLDWIDE\nHSA/FSA ELIGIBLE\n2,000,000 HAPPY CUSTOMERS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Frido — collection grid",
+      "blocks": [
+        {
+          "type": "promo",
+          "settings": {
+            "logo_text": "Frido",
+            "heading_prefix": "Your Path To",
+            "heading": "HEALTHY FREEDOM"
+          }
+        }
+      ]
     }
   ]
 }
