@@ -34,8 +34,9 @@
 }
 
 .frido-col-hero__richtext {
-  font-size: 1.4rem;
+  font-size: 16px;
   line-height: 1.55;
+  font-weight: 400;
   color: #000;
 }
 
