@@ -17,6 +17,9 @@
   flex-direction: column;
   gap: 2rem;
 }
+.frido-col-hero__content{
+  padding: 48px;
+}
 
 .frido-col-hero__title {
   margin: 0 0 8px;
