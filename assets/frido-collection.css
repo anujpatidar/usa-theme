@@ -842,23 +842,42 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  margin-top: 0.8rem;
+  margin: 0 1.6rem 1.4rem;
   padding-top: 0.2rem;
 }
 
 .frido-pcard__swatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 2.8rem;
   height: 2.8rem;
+  padding: 0;
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
   flex-shrink: 0;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.frido-pcard__swatch:hover,
+.frido-pcard__swatch.is-active {
+  border-color: #000;
+  box-shadow: 0 0 0 1px #000;
 }
 
 .frido-pcard__swatch img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.frido-pcard__img-el {
+  transition: opacity 0.2s ease;
 }
 
 .frido-pcard__swatch-fallback {
