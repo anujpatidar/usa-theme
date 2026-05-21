@@ -1529,7 +1529,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   box-shadow: 0 4px 10px rgba(10, 37, 64, 0.05);
   overflow: hidden;
   position: relative;
-  
+  height: 100%
   display: flex;
   flex-direction: column;
 }
