@@ -18,11 +18,6 @@
     assign has_mf_description = true
   endif
 
-  assign hero_image = section.settings.image | default: collection.image
-  assign hero_mobile = section.settings.image_mobile
-  if hero_mobile == blank
-    assign hero_mobile = hero_image
-  endif
 -%}
 
 <section class="frido-col-hero color-{{ section.settings.color_scheme }} gradient" id="frido-col-hero-{{ section.id }}">
@@ -60,7 +55,7 @@
       </button>
 
       {% if section.blocks.size > 0 %}
-        <div class="frido-col-hero__features">
+        <div class="frido-col-hero__features" data-frido-col-features>
           {% for block in section.blocks %}
             {% if block.type == 'feature' %}
               <div {{ block.shopify_attributes }}>
@@ -77,23 +72,35 @@
     </div>
 
     <div class="frido-col-hero__media">
-      {% if hero_image != blank %}
-        {%- assign hero_alt = hero_image.alt | default: hero_title | escape -%}
+      {%- liquid
+        assign banner_desktop = section.settings.image | default: collection.image
+        assign banner_mobile = section.settings.image_mobile
+        if banner_desktop == blank and banner_mobile != blank
+          assign banner_desktop = banner_mobile
+        endif
+      -%}
+      {% if banner_desktop != blank or banner_mobile != blank %}
+        {%- assign hero_alt = banner_desktop.alt | default: banner_mobile.alt | default: hero_title | escape -%}
         <picture>
-          {%- if section.settings.image_mobile != blank and section.settings.image != blank -%}
+          {%- if banner_mobile != blank -%}
             <source
               media="(max-width: 989px)"
               srcset="
-                {{ section.settings.image_mobile | image_url: width: 750 }} 750w,
-                {{ section.settings.image_mobile | image_url: width: 1100 }} 1100w
+                {{ banner_mobile | image_url: width: 750 }} 750w,
+                {{ banner_mobile | image_url: width: 1100 }} 1100w
               "
               sizes="100vw"
             >
           {%- endif -%}
           {{
-            hero_image
+            banner_desktop
             | image_url: width: 1400
-            | image_tag: loading: 'eager', widths: '750,1100,1400', sizes: '(min-width: 990px) 50vw, 100vw', alt: hero_alt, class: 'frido-col-hero__img'
+            | image_tag:
+              loading: 'eager',
+              widths: '750,1100,1400',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              alt: hero_alt,
+              class: 'frido-col-hero__img'
           }}
         </picture>
       {% else %}
@@ -124,10 +131,12 @@
     if (!richtext) return;
     var collapsed = {{ section.settings.description_lines_mobile | default: 4 }};
     if (richtext.scrollHeight > collapsed * 28) {
+      root.classList.add('has-show-more');
       desc.classList.add('is-collapsed');
       btn.hidden = false;
       btn.addEventListener('click', function () {
         var open = desc.classList.toggle('is-open');
+        root.classList.toggle('is-expanded', open);
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
         btn.textContent = open ? {{ section.settings.show_less_label | default: 'SHOW LESS' | json }} : {{ section.settings.show_more_label | default: 'SHOW MORE' | json }};
       });
@@ -199,7 +208,7 @@
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Banner image (mobile)",
-      "info": "Optional. Uses desktop image if empty."
+      "info": "Shown below 990px. Uses desktop/collection image if empty."
     },
     {
       "type": "text",

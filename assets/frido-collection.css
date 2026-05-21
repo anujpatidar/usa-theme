@@ -114,19 +114,26 @@
 }
 
 @media (max-width: 989px) {
+  .frido-col-hero__content {
+    padding: 24px;
+  }
+
   .frido-col-hero__features {
     gap: 8px;
     margin-top: 1.2rem;
     padding-top: 1.2rem;
   }
 
-.frido-col-hero__content{
-  padding: 24px;
-}
-.frido-col-feature__label {
-  margin: 0;
-  font-size: 12px;
-}
+  /* Icon grid only after Show more when description is collapsed */
+  .frido-col-hero.has-show-more:not(.is-expanded) .frido-col-hero__features {
+    display: none;
+  }
+
+  .frido-col-feature__label {
+    margin: 0;
+    font-size: 12px;
+  }
+
   .frido-col-feature {
     gap: 0.8rem;
   }
