@@ -122,6 +122,10 @@
 .frido-col-hero__content{
   padding: 24px;
 }
+.frido-col-feature__label {
+  margin: 0;
+  font-size: 12px;
+}
   .frido-col-feature {
     gap: 0.8rem;
   }
