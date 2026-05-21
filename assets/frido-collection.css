@@ -15,7 +15,7 @@
 .frido-col-hero__grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 16px;
 }
 .frido-col-hero__content{
   padding: 48px 0;
