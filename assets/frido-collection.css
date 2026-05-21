@@ -441,13 +441,6 @@
   font-weight: 700;
 }
 
-.frido-collection-page .frido-pcard__title {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-weight: 600;
-}
 
 .frido-pcard__swatches {
   display: flex;
