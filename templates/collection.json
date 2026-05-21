@@ -16,28 +16,32 @@
           "type": "feature",
           "settings": {
             "title": "Breathable Material",
-            "icon": "flex"
+            "icon": "flex",
+            "icon_image": "shopify://shop_images/bs1.svg"
           }
         },
         "feat_2": {
           "type": "feature",
           "settings": {
             "title": "Wide Toe Box",
-            "icon": "foot"
+            "icon": "foot",
+            "icon_image": "shopify://shop_images/bs3.svg"
           }
         },
         "feat_3": {
           "type": "feature",
           "settings": {
             "title": "Natural Gait",
-            "icon": "align"
+            "icon": "align",
+            "icon_image": "shopify://shop_images/bs4.svg"
           }
         },
         "feat_4": {
           "type": "feature",
           "settings": {
             "title": "Zero Drop Sole",
-            "icon": "sole"
+            "icon": "sole",
+            "icon_image": "shopify://shop_images/s2.svg"
           }
         }
       },
