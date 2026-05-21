@@ -1600,7 +1600,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-pcard__price {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 18px;
   color: lab(47.6086% 60.7129 50.0921);
 }
