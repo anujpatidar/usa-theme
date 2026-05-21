@@ -64,7 +64,7 @@
           {% for block in section.blocks %}
             {% if block.type == 'feature' %}
               <div {{ block.shopify_attributes }}>
-                {% render 'frido-feature-circle',
+                {% render 'frido-col-feature',
                   title: block.settings.title,
                   icon: block.settings.icon,
                   icon_image: block.settings.icon_image

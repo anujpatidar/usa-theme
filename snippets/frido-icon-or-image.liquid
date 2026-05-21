@@ -2,7 +2,7 @@
   @param image {Image} optional
   @param icon {String} foot | align | flex | sole
   @param size {Number} display size for raster (default 56)
-  @param layout {String} circle (28) | item (24) | bar (22) | split (28)
+  @param layout {String} circle (28) | item (24) | bar (22) | split (28) | collection (32)
 {% endcomment %}
 {%- liquid
   assign sz = size | default: 56
@@ -14,6 +14,8 @@
       assign dim = 22
     when 'split'
       assign dim = 28
+    when 'collection'
+      assign dim = 32
     else
       assign dim = 28
   endcase
@@ -30,6 +32,17 @@
     | image_url: width: img_w
     | image_tag: loading: 'lazy', class: 'frido-icon-or-image__img', widths: '64,128,200', sizes: sizes_attr, alt: icon_alt
   }}
+{%- elsif layout == 'collection' -%}
+  {% case icon %}
+    {% when 'flex' %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18c2-8 4-12 6-14 2 2 3 5 4 8"/><path d="M10 8c1 2 2 4 2 6"/><path d="M14 6c-1 2-2 4-2 6"/></svg>
+    {% when 'align' %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16c2-6 4-9 6-11"/><path d="M10 14l2 4"/><path d="M14 8c2 2 3 5 4 8"/></svg>
+    {% when 'sole' %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 14h14"/><path d="M7 14c1-3 3-5 5-5s4 2 5 5"/><path d="M9 14v2M15 14v2"/></svg>
+    {% else %}
+      <svg width="{{ dim }}" height="{{ dim }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="11" rx="5" ry="3"/><path d="M7 11h10"/><path d="M8 8h8M8 14h8"/></svg>
+  {% endcase %}
 {%- else -%}
   {% case icon %}
     {% when 'align' %}

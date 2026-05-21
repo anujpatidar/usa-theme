@@ -1,0 +1,12 @@
+{% comment %}
+  Collection hero feature — icon left, label right (not homepage circle layout).
+  @param title {String}
+  @param icon {String} foot | align | flex | sole
+  @param icon_image {Image} optional
+{% endcomment %}
+<div class="frido-col-feature">
+  <div class="frido-col-feature__icon" aria-hidden="true">
+    {% render 'frido-icon-or-image', image: icon_image, icon: icon, size: 48, layout: 'collection' %}
+  </div>
+  <p class="frido-col-feature__label">{{ title | escape }}</p>
+</div>

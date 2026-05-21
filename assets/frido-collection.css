@@ -75,11 +75,64 @@
 }
 
 .frido-col-hero__features {
-  display: none;
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.6rem 2rem;
-  margin-top: 16px;
-  padding:16px 0;
+  gap: 1.6rem 2.4rem;
+  margin-top: 1.6rem;
+  padding: 1.6rem 0 0;
+}
+
+.frido-col-feature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.frido-col-feature__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  color: #1a2e1a;
+}
+
+.frido-col-feature__icon .frido-icon-or-image__img {
+  width: 4.8rem;
+  height: 4.8rem;
+  object-fit: contain;
+}
+
+.frido-col-feature__label {
+  margin: 0;
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000;
+}
+
+@media (max-width: 989px) {
+  .frido-col-hero__features {
+    gap: 1.2rem 1.6rem;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+  }
+
+  .frido-col-feature {
+    gap: 0.8rem;
+  }
+
+  .frido-col-feature__icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .frido-col-feature__icon .frido-icon-or-image__img {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 .frido-col-hero__media {
@@ -137,7 +190,9 @@
   }
 
   .frido-col-hero__features {
-    display: grid;
+    gap: 2rem 3.2rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
   }
 
   .frido-col-hero__media {
