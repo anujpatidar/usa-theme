@@ -1,8 +1,6 @@
-{{ 'component-facets.css' | asset_url | stylesheet_tag }}
 {{ 'frido-collection.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'frido-collection-redirect.js' | asset_url }}"></script>
 <script src="{{ 'frido-collection-card.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -26,17 +24,15 @@
       assign promo_position = section.settings.promo_position | default: 4
     -%}
 
-    {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-      <div class="frido-page-width frido-collection-page__filters" id="main-collection-filters" data-id="{{ section.id }}">
-        {% render 'frido-facets',
-          results: collection,
-          enable_filtering: section.settings.enable_filtering,
-          enable_sorting: section.settings.enable_sorting,
-          paginate: paginate,
-          section: section
-        %}
-      </div>
-    {%- endif -%}
+    {% render 'frido-facets-bar',
+      results: collection,
+      section: section,
+      enable_filtering: section.settings.enable_filtering,
+      enable_sorting: section.settings.enable_sorting,
+      paginate: paginate,
+      bar_id: 'main-collection-filters',
+      wrapper_class: 'frido-collection-page__filters'
+    %}
 
     <div
       class="product-grid-container frido-collection-page__grid"

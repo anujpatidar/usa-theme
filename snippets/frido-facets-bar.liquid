@@ -1,0 +1,41 @@
+{% comment %}
+  Shared Frido filter bar — white card, dropdown pills, mobile drawer.
+  Use on collection pages, search, or any filterable results.
+
+  {% render 'frido-facets-bar',
+    results: collection,
+    section: section,
+    enable_filtering: true,
+    enable_sorting: true,
+    paginate: paginate,
+    bar_id: 'main-collection-filters'
+  %}
+{% endcomment %}
+
+{%- unless skip_assets -%}
+  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+  {{ 'frido-facets.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
+
+{%- if enable_filtering or enable_sorting -%}
+  <div
+    class="frido-facets-bar{% if wrapper_class != blank %} {{ wrapper_class }}{% endif %}"
+    {% if bar_id != blank %}
+      id="{{ bar_id }}"
+    {% endif %}
+    {% if section %}
+      data-id="{{ section.id }}"
+    {% endif %}
+  >
+    <div class="frido-facets-bar__inner frido-page-width">
+      {% render 'frido-facets',
+        results: results,
+        enable_filtering: enable_filtering,
+        enable_sorting: enable_sorting,
+        paginate: paginate,
+        section: section
+      %}
+    </div>
+  </div>
+{%- endif -%}

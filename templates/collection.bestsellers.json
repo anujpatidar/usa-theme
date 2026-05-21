@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "frido_col_hero": {
+      "type": "frido-collection-hero",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "frido_col_trust": {
+      "type": "frido-collection-trust-bar",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "frido-collection-grid",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "products_per_page": 32,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "promo_position": 4,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "padding_top": 16,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": ["frido_col_hero", "frido_col_trust", "product-grid"]
+}

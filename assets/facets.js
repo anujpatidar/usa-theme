@@ -38,7 +38,8 @@ class FacetFiltersForm extends HTMLElement {
       '.facets-container .loading__spinner, facet-filters-form .loading__spinner'
     );
     loadingSpinners.forEach((spinner) => spinner.classList.remove('hidden'));
-    document.getElementById('ProductGridContainer').querySelector('.collection').classList.add('loading');
+    const productGrid = document.getElementById('ProductGridContainer')?.querySelector('.collection');
+    if (productGrid) productGrid.classList.add('loading');
     if (countContainer) {
       countContainer.classList.add('loading');
     }
@@ -101,6 +102,10 @@ class FacetFiltersForm extends HTMLElement {
     if (containerDesktop) {
       containerDesktop.innerHTML = count;
       containerDesktop.classList.remove('loading');
+    }
+    const containerMobile = document.getElementById('ProductCountMobile');
+    if (containerMobile) {
+      containerMobile.innerHTML = count;
     }
     const loadingSpinners = document.querySelectorAll(
       '.facets-container .loading__spinner, facet-filters-form .loading__spinner'
@@ -196,7 +201,9 @@ class FacetFiltersForm extends HTMLElement {
       document.querySelector(selector).innerHTML = html.querySelector(selector).innerHTML;
     });
 
-    document.getElementById('FacetFiltersFormMobile').closest('menu-drawer').bindEvents();
+    const mobileFacetForm = document.getElementById('FacetFiltersFormMobile');
+    const mobileDrawer = mobileFacetForm?.closest('menu-drawer');
+    if (mobileDrawer?.bindEvents) mobileDrawer.bindEvents();
   }
 
   static renderCounts(source, target) {

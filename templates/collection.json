@@ -59,8 +59,6 @@
         "description_lines_mobile": 4,
         "show_more_label": "SHOW MORE",
         "show_less_label": "SHOW LESS",
-        "image": "{{ collection.image }}",
-        "image_mobile": "{{ collection.metafields.custom.mobile_img.value }}",
         "overlay_prefix": "",
         "overlay_highlight": "",
         "overlay_suffix": ""
