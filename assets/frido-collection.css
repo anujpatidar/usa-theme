@@ -9,7 +9,7 @@
 /* ---------- Collection hero ---------- */
 .frido-col-hero {
   background: var(--frido-col-beige);
-  padding: 2.4rem 0 0;
+  padding: 16px 12px;
 }
 
 .frido-col-hero__grid {
