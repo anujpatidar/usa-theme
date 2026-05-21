@@ -51,9 +51,8 @@
 
   .frido-facets__form {
     padding: 1.6rem 1.8rem;
-    border-radius: 10px;
+    border-radius: 6px;
     background: #fff;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 }
 
