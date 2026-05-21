@@ -430,16 +430,7 @@
   line-height: 1.2;
 }
 
-/* ---------- Collection product cards ---------- */
-.frido-collection-page .frido-pcard__badge {
-  background: var(--frido-col-sage-dark);
-  color: #fff;
-}
 
-.frido-collection-page .frido-pcard__price {
-  color: #c0392b;
-  font-weight: 700;
-}
 
 
 .frido-pcard__swatches {
