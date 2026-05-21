@@ -119,7 +119,9 @@
     margin-top: 1.2rem;
     padding-top: 1.2rem;
   }
-
+.frido-col-hero__content{
+  padding: 24px;
+}
   .frido-col-feature {
     gap: 0.8rem;
   }
