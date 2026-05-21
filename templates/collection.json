@@ -59,6 +59,8 @@
         "description_lines_mobile": 4,
         "show_more_label": "SHOW MORE",
         "show_less_label": "SHOW LESS",
+        "image": "shopify://shop_images/New_Project_-_Arcads_image_asset_2_1.png",
+        "image_mobile": "shopify://shop_images/ChatGPT_Image_May_20_2026_06_42_17_PM_1.png",
         "overlay_prefix": "",
         "overlay_highlight": "",
         "overlay_suffix": ""
