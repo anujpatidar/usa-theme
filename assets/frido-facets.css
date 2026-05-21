@@ -88,9 +88,9 @@
 
 .frido-facets__count {
   margin: 0;
-  font-size: 1.35rem;
-  color: var(--frido-gray-600, #6b7280);
-  font-weight: 500;
+  font-size: 16px;
+  color: #5c5c5c;
+  font-weight: 400;
 }
 
 .frido-facets__active {
