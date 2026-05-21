@@ -115,7 +115,7 @@
 
 @media (max-width: 989px) {
   .frido-col-hero__features {
-    gap: 1.2rem 1.6rem;
+    gap: 16px;
     margin-top: 1.2rem;
     padding-top: 1.2rem;
   }
@@ -190,7 +190,7 @@
   }
 
   .frido-col-hero__features {
-    gap: 2rem 3.2rem;
+    gap: 16px;
     margin-top: 2rem;
     padding-top: 2rem;
   }
