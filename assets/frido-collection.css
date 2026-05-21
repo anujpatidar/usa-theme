@@ -309,7 +309,7 @@
 }
 
 .frido-collection-page {
-  background: #fff;
+  background: var(--color-background);
 }
 
 /* ---------- Product grid ---------- */
