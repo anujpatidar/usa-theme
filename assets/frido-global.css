@@ -580,6 +580,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   .frido-mega__product-card-body .frido-stars {
     color: #c9a227;
     font-size: 1rem;
+    margin-bottom: 4px;
   }
 
   .frido-mega__product-card-body .frido-stars__label {
@@ -587,7 +588,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
     font-size: 1.1rem;
     font-weight: 400;
     line-height:100%;
-    margin-left: 0.2rem;
+    margin-left: 4px;
   }
 
   .frido-mega__product-card-title {
