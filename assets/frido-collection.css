@@ -433,12 +433,12 @@
 
 
 
-.frido-pcard__swatches {
+.frido-collection-page .frido-pcard__swatches {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  margin: 0 1.6rem 1.4rem;
-  padding-top: 0.2rem;
+  margin: 0.8rem 0 0;
+  padding-top: 0;
 }
 
 .frido-pcard__swatch {

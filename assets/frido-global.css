@@ -1555,9 +1555,13 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-pcard__link {
   text-decoration: none;
   color: inherit;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: block;
+}
+
+.frido-pcard__body-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .frido-pcard__img {

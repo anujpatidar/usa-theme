@@ -44,7 +44,10 @@
           {{ 'product-apparel-2' | placeholder_svg_tag: 'class="placeholder-svg"' }}
         {%- endif -%}
       </div>
-      <div class="frido-pcard__body">
+    </a>
+
+    <div class="frido-pcard__body">
+      <a class="frido-pcard__body-link" href="{{ card_product.url }}">
         <div class="frido-pcard__cat">
           {%- if card_product.type != blank -%}
             {{ card_product.type | upcase }}
@@ -69,68 +72,68 @@
             <span class="frido-pcard__compare">{{ compare | money }}</span>
           {%- endif -%}
         </div>
-      </div>
-    </a>
+      </a>
 
-    {%- if show_swatches -%}
-      {%- for option in card_product.options_with_values -%}
-        {%- assign opt_down = option.name | downcase -%}
-        {%- if opt_down == 'color' or opt_down == 'colour' -%}
-          <div class="frido-pcard__swatches" aria-label="{{ option.name | escape }}">
-            {%- assign swatch_limit = 4 -%}
-            {%- assign extra = option.values.size | minus: swatch_limit -%}
-            {%- for value in option.values limit: swatch_limit -%}
-              {%- liquid
-                assign swatch_variant = nil
-                case option.position
-                  when 1
-                    assign swatch_variant = card_product.variants | where: 'option1', value | first
-                  when 2
-                    assign swatch_variant = card_product.variants | where: 'option2', value | first
-                  when 3
-                    assign swatch_variant = card_product.variants | where: 'option3', value | first
-                endcase
-                assign swatch_media = nil
-                if swatch_variant != nil
-                  if swatch_variant.featured_media != nil
-                    assign swatch_media = swatch_variant.featured_media
-                  elsif swatch_variant.image != nil
-                    assign swatch_media = swatch_variant.image
+      {%- if show_swatches -%}
+        {%- for option in card_product.options_with_values -%}
+          {%- assign opt_down = option.name | downcase -%}
+          {%- if opt_down == 'color' or opt_down == 'colour' -%}
+            <div class="frido-pcard__swatches" aria-label="{{ option.name | escape }}">
+              {%- assign swatch_limit = 4 -%}
+              {%- assign extra = option.values.size | minus: swatch_limit -%}
+              {%- for value in option.values limit: swatch_limit -%}
+                {%- liquid
+                  assign swatch_variant = nil
+                  case option.position
+                    when 1
+                      assign swatch_variant = card_product.variants | where: 'option1', value | first
+                    when 2
+                      assign swatch_variant = card_product.variants | where: 'option2', value | first
+                    when 3
+                      assign swatch_variant = card_product.variants | where: 'option3', value | first
+                  endcase
+                  assign swatch_media = nil
+                  if swatch_variant != nil
+                    if swatch_variant.featured_media != nil
+                      assign swatch_media = swatch_variant.featured_media
+                    elsif swatch_variant.image != nil
+                      assign swatch_media = swatch_variant.image
+                    endif
                   endif
-                endif
-                assign swatch_image_url = ''
-                if swatch_media
-                  assign swatch_image_url = swatch_media | image_url: width: 800
-                endif
-              -%}
-              <button
-                type="button"
-                class="frido-pcard__swatch{% if swatch_image_url == blank %} frido-pcard__swatch--no-img{% endif %}"
-                title="{{ value | escape }}"
-                aria-label="{{ value | escape }}"
-                {% if swatch_image_url != blank %}
-                  data-frido-pcard-swatch
-                  data-image="{{ swatch_image_url }}"
-                {% endif %}
-              >
-                {%- if swatch_media -%}
-                  {{
-                    swatch_media
-                    | image_url: width: 80
-                    | image_tag: loading: 'lazy', widths: '40,80', sizes: '32px', alt: ''
-                  }}
-                {%- else -%}
-                  <span class="frido-pcard__swatch-fallback">{{ value | escape | slice: 0, 1 }}</span>
-                {%- endif -%}
-              </button>
-            {%- endfor -%}
-            {%- if extra > 0 -%}
-              <span class="frido-pcard__swatch-more">+{{ extra }}</span>
-            {%- endif -%}
-          </div>
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+                  assign swatch_image_url = ''
+                  if swatch_media
+                    assign swatch_image_url = swatch_media | image_url: width: 800
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="frido-pcard__swatch{% if swatch_image_url == blank %} frido-pcard__swatch--no-img{% endif %}"
+                  title="{{ value | escape }}"
+                  aria-label="{{ value | escape }}"
+                  {% if swatch_image_url != blank %}
+                    data-frido-pcard-swatch
+                    data-image="{{ swatch_image_url }}"
+                  {% endif %}
+                >
+                  {%- if swatch_media -%}
+                    {{
+                      swatch_media
+                      | image_url: width: 80
+                      | image_tag: loading: 'lazy', widths: '40,80', sizes: '32px', alt: ''
+                    }}
+                  {%- else -%}
+                    <span class="frido-pcard__swatch-fallback">{{ value | escape | slice: 0, 1 }}</span>
+                  {%- endif -%}
+                </button>
+              {%- endfor -%}
+              {%- if extra > 0 -%}
+                <span class="frido-pcard__swatch-more">+{{ extra }}</span>
+              {%- endif -%}
+            </div>
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
   </article>
 {%- endif -%}
