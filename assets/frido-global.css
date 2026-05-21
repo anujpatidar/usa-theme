@@ -934,6 +934,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   align-items: center;
   gap: 0.2rem;
   color: #fcd00b;
+  margin-bottom: 4px;
 }
 
 .frido-stars__label {
@@ -941,6 +942,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   color: #000;
   font-weight: 400;
   font-size: 14px;
+  line-height: 100%;
 }
 
 /* ---------- Hero ---------- */
