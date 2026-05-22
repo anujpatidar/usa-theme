@@ -247,11 +247,17 @@
   display: flex;
 }
 
-.frido-pdp-gallery__img {
+.frido-pdp-gallery__img,
+.frido-pdp-gallery__video {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+.frido-pdp-gallery__hero .frido-pdp-gallery__video,
+.frido-pdp-gallery__sub .frido-pdp-gallery__video {
+  object-fit: cover;
 }
 
 .frido-pdp-gallery__dots {
@@ -298,9 +304,15 @@
 
 .frido-pdp-gallery__pair {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.2rem;
   margin-top: 1.2rem;
+}
+
+@media (max-width: 989px) {
+  .frido-pdp-gallery__pair {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .frido-pdp-gallery__sub {

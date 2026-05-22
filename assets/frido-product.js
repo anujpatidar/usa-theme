@@ -36,11 +36,13 @@
       (m.featured_image && m.featured_image.src) ||
       '';
     if (!src && m.id) return null;
+    var type = m.media_type || 'image';
+    if (/\.mp4(\?|$)/i.test(src)) type = 'video';
     return {
       id: m.id,
       src: src,
       alt: m.alt || '',
-      type: m.media_type || 'image',
+      type: type,
     };
   }
 
@@ -51,11 +53,42 @@
     return normalizeMedia(found);
   }
 
+  var GALLERY_MAX = 7;
+
+  function mediaAltMatchesColor(media, color) {
+    var alt = (media.alt || '').toLowerCase();
+    var c = String(color).toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp('[\\s—–\\-]+' + c + '[\\s—–\\-]+').test(alt);
+  }
+
+  function mediaMatchesColorOnly(media, color, allColors) {
+    if (!mediaAltMatchesColor(media, color)) return false;
+    for (var i = 0; i < allColors.length; i++) {
+      if (allColors[i] !== color && mediaAltMatchesColor(media, allColors[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function sortColorMedia(list) {
+    return list.slice().sort(function (a, b) {
+      var ma = (a.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
+      var mb = (b.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
+      var na = ma ? parseInt(ma[1], 10) : 999;
+      var nb = mb ? parseInt(mb[1], 10) : 999;
+      if (na !== nb) return na - nb;
+      if (a.type === 'video' && b.type !== 'video') return -1;
+      if (b.type === 'video' && a.type !== 'video') return 1;
+      return 0;
+    });
+  }
+
   function buildGalleryGroups(product) {
     var all = (product.media || []).map(normalizeMedia).filter(Boolean);
     var colorKey = getColorOptionKey(product);
     if (!colorKey || !product.variants.length) {
-      return { _default: all };
+      return { _default: all.slice(0, GALLERY_MAX) };
     }
 
     var colors = [];
@@ -64,52 +97,23 @@
       if (c && colors.indexOf(c) === -1) colors.push(c);
     });
 
-    var groups = { _default: all };
+    var groups = {};
 
     colors.forEach(function (color) {
       var seen = {};
       var list = [];
-      var variantIds = product.variants
-        .filter(function (v) {
-          return v[colorKey] === color;
-        })
-        .map(function (v) {
-          return v.id;
-        });
-
-      product.variants.forEach(function (v) {
-        if (v[colorKey] !== color) return;
-        var fm = v.featured_media || v.featured_image;
-        if (!fm) return;
-        var item = mediaFromProductList(product, fm.id) || normalizeMedia(fm);
+      (product.media || []).forEach(function (m) {
+        if (!mediaMatchesColorOnly(m, color, colors)) return;
+        var item = normalizeMedia(m);
         if (item && !seen[item.id]) {
           seen[item.id] = true;
           list.push(item);
         }
       });
-
-      (product.media || []).forEach(function (m) {
-        var linked = m.variant_ids && m.variant_ids.length;
-        var include = false;
-        if (linked) {
-          include = m.variant_ids.some(function (vid) {
-            return variantIds.indexOf(vid) !== -1;
-          });
-        } else {
-          include = true;
-        }
-        if (include) {
-          var item = normalizeMedia(m);
-          if (item && !seen[item.id]) {
-            seen[item.id] = true;
-            list.push(item);
-          }
-        }
-      });
-
-      groups[color] = list.length ? list : all.slice();
+      groups[color] = sortColorMedia(list).slice(0, GALLERY_MAX);
     });
 
+    groups._default = groups[colors[0]] || [];
     return groups;
   }
 
@@ -129,15 +133,23 @@
     var colorKey = getColorOptionKey(product);
     var productTitle = (product.title || '').replace(/"/g, '&quot;');
 
-    function imgHtml(item, opts) {
+    function mediaHtml(item, opts) {
       opts = opts || {};
+      if (item.type === 'video') {
+        return (
+          '<video class="frido-pdp-gallery__video" src="' +
+          item.src +
+          '" autoplay muted loop playsinline preload="metadata" aria-label="' +
+          (item.alt || productTitle).replace(/"/g, '&quot;') +
+          '"></video>'
+        );
+      }
       var loading = opts.loading || 'lazy';
       var sizes = opts.sizes || '100vw';
-      var src = item.src;
       var alt = (item.alt || productTitle).replace(/"/g, '&quot;');
       return (
         '<img src="' +
-        src +
+        item.src +
         '" alt="' +
         alt +
         '" class="frido-pdp-gallery__img" loading="' +
@@ -150,31 +162,24 @@
 
     function renderDesktop(mediaList) {
       if (!desktop || !heroEl) return;
-      var list = mediaList.length ? mediaList : groups._default || [];
+      var list = (mediaList.length ? mediaList : groups._default || []).slice(0, GALLERY_MAX);
       if (!list.length) return;
 
       var hero = list[0];
-      heroEl.innerHTML = imgHtml(hero, {
+      heroEl.innerHTML = mediaHtml(hero, {
         loading: 'eager',
         sizes: '(min-width: 990px) 50vw, 100vw',
         widths: '600,900,1200,1400',
       });
 
       if (!pairEl) return;
-      var subs = list.slice(1, 3);
-      while (subs.length < 2 && list.length > 1) {
-        subs.push(list[Math.min(subs.length + 1, list.length - 1)]);
-      }
-      if (subs.length === 1) {
-        subs.push(list[0]);
-      }
-
+      var subs = list.slice(1, GALLERY_MAX);
       pairEl.innerHTML = subs
         .map(function (item) {
           return (
             '<div class="frido-pdp-gallery__sub" data-frido-gallery-sub>' +
-            imgHtml(item, {
-              sizes: '(min-width: 990px) 25vw, 50vw',
+            mediaHtml(item, {
+              sizes: '(min-width: 990px) 16vw, 33vw',
               widths: '400,600,800',
             }) +
             '</div>'
@@ -185,7 +190,7 @@
 
     function renderMobile(mediaList) {
       if (!track) return;
-      var list = mediaList.length ? mediaList : groups._default || [];
+      var list = (mediaList.length ? mediaList : groups._default || []).slice(0, GALLERY_MAX);
       if (!list.length) return;
 
       track.innerHTML = list
@@ -196,7 +201,7 @@
             '" data-frido-gallery-slide data-media-id="' +
             item.id +
             '">' +
-            imgHtml(item, { loading: i === 0 ? 'eager' : 'lazy', sizes: '100vw' }) +
+            mediaHtml(item, { loading: i === 0 ? 'eager' : 'lazy', sizes: '100vw' }) +
             '</div>'
           );
         })
@@ -270,8 +275,6 @@
       renderDesktop(list);
       renderMobile(list);
     }
-
-    setForColor(null);
 
     return {
       setForColor: setForColor,

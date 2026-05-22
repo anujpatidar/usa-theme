@@ -113,6 +113,7 @@
       "settings": {
         "color_scheme": "scheme-1",
         "social_proof": "Purchased more than 2,437,825+ times.",
+        "rating_line": "Excellent 4.9 | 7,295+ Reviews",
         "selling_fast": "Selling Out Fast",
         "find_size_label": "Find my Perfect Size",
         "bundle_heading": "Bundle promotion is valid till 11:59 PM",
@@ -132,7 +133,5 @@
       }
     }
   },
-  "order": [
-    "frido_product"
-  ]
+  "order": ["frido_product"]
 }

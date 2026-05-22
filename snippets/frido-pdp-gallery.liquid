@@ -1,12 +1,11 @@
 {% comment %}
-  PDP gallery — desktop: hero + 2-up grid. Mobile: carousel.
-  Media groups per color are built in JS from product JSON.
+  PDP gallery — desktop: 1 hero + up to 6 grid tiles (7 total). Mobile: carousel.
+  Populated per color in frido-product.js from product JSON + media alt tags.
   @param product {Product}
   @param section_id {String}
 {% endcomment %}
 {%- liquid
   assign gallery_alt = product.title | escape
-  assign initial_media = product.media
   if product.selected_or_first_available_variant.featured_media
     assign hero_media = product.selected_or_first_available_variant.featured_media
   elsif product.media.size > 0
@@ -15,7 +14,6 @@
 -%}
 
 <div class="frido-pdp-gallery" data-frido-gallery>
-  {%- comment -%} Desktop: stacked hero + two-up row (no carousel) {%- endcomment -%}
   <div class="frido-pdp-gallery__desktop" data-frido-gallery-desktop>
     <div class="frido-pdp-gallery__hero" data-frido-gallery-hero>
       {%- if hero_media -%}
@@ -34,95 +32,11 @@
         {{ 'product-apparel-2' | placeholder_svg_tag: 'frido-pdp-gallery__img placeholder-svg' }}
       {%- endif -%}
     </div>
-    <div class="frido-pdp-gallery__pair" data-frido-gallery-pair>
-      {%- assign sub_count = 0 -%}
-      {%- for media in product.media -%}
-        {%- if sub_count >= 2 -%}
-          {%- break -%}
-        {%- endif -%}
-        {%- if hero_media and media.id == hero_media.id -%}
-          {%- continue -%}
-        {%- endif -%}
-        <div class="frido-pdp-gallery__sub" data-frido-gallery-sub>
-          {{
-            media
-            | image_url: width: 800
-            | image_tag:
-              loading: 'lazy',
-              class: 'frido-pdp-gallery__img',
-              widths: '400,600,800',
-              sizes: '(min-width: 990px) 25vw, 50vw',
-              alt: media.alt | default: gallery_alt,
-              data-frido-gallery-img: ''
-          }}
-        </div>
-        {%- assign sub_count = sub_count | plus: 1 -%}
-      {%- endfor -%}
-      {%- if sub_count == 0 and product.media.size > 1 -%}
-        {%- for media in product.media limit: 2 offset: 1 -%}
-          <div class="frido-pdp-gallery__sub" data-frido-gallery-sub>
-            {{
-              media
-              | image_url: width: 800
-              | image_tag:
-                loading: 'lazy',
-                class: 'frido-pdp-gallery__img',
-                widths: '400,600,800',
-                sizes: '(min-width: 990px) 25vw, 50vw',
-                alt: media.alt | default: gallery_alt,
-                data-frido-gallery-img: ''
-            }}
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
-    </div>
+    <div class="frido-pdp-gallery__pair" data-frido-gallery-pair></div>
   </div>
 
-  {%- comment -%} Mobile: swipeable carousel {%- endcomment -%}
   <div class="frido-pdp-gallery__mobile" data-frido-gallery-mobile>
-    <div class="frido-pdp-gallery__track" data-frido-gallery-track>
-      {%- if product.media.size > 0 -%}
-        {%- for media in product.media -%}
-          <div
-            class="frido-pdp-gallery__slide{% if forloop.first %} is-active{% endif %}"
-            data-frido-gallery-slide
-            data-media-id="{{ media.id }}"
-          >
-            {%- case media.media_type -%}
-              {%- when 'image' -%}
-                {{
-                  media
-                  | image_url: width: 1200
-                  | image_tag:
-                    loading: forloop.first,
-                    class: 'frido-pdp-gallery__img',
-                    widths: '400,600,800,1000,1200',
-                    sizes: '100vw',
-                    alt: media.alt | default: gallery_alt,
-                    data-frido-gallery-img: ''
-                }}
-              {%- else -%}
-                {{ media | media_tag: image_size: '1200x', class: 'frido-pdp-gallery__img' }}
-            {%- endcase -%}
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        <div class="frido-pdp-gallery__slide is-active" data-frido-gallery-slide>
-          {{ 'product-apparel-2' | placeholder_svg_tag: 'frido-pdp-gallery__img placeholder-svg' }}
-        </div>
-      {%- endif -%}
-    </div>
-    {%- if product.media.size > 1 -%}
-      <div class="frido-pdp-gallery__dots" data-frido-gallery-dots>
-        {%- for media in product.media limit: 12 -%}
-          <button
-            type="button"
-            class="frido-pdp-gallery__dot{% if forloop.first %} is-active{% endif %}"
-            data-frido-gallery-dot="{{ forloop.index0 }}"
-            aria-label="Image {{ forloop.index }}"
-          ></button>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+    <div class="frido-pdp-gallery__track" data-frido-gallery-track></div>
+    <div class="frido-pdp-gallery__dots" data-frido-gallery-dots hidden></div>
   </div>
 </div>
