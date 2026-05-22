@@ -67,19 +67,28 @@
         {%- if section.settings.social_proof != blank -%}
           <p class="frido-pdp__social">{{ section.settings.social_proof | escape }}</p>
         {%- endif -%}
-        <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
-        <div class="frido-pdp__price-row">
-          <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
-          {%- if compare_at > price -%}
-            <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
-          {%- endif -%}
-          {%- if save_pct > 0 -%}
-            <span class="frido-pdp__save-badge" data-frido-save-badge>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3.5-7.1L12 12V3l8.5 9z"/></svg>
-              Save {{ save_pct }}%
-            </span>
-          {%- endif -%}
+        <div class="frido-pdp__title-row">
+          <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
+          <div class="frido-pdp__price-row">
+            <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
+            {%- if compare_at > price -%}
+              <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
+            {%- endif -%}
+            {%- if save_pct > 0 -%}
+              <span class="frido-pdp__save-badge" data-frido-save-badge>Save {{ save_pct }}%</span>
+            {%- endif -%}
+          </div>
         </div>
+        {%- if section.settings.rating_line != blank -%}
+          <p class="frido-pdp__rating">
+            {% render 'frido-stars', rating: 5 %}
+            {%- if section.settings.reviews_url != blank -%}
+              <a href="{{ section.settings.reviews_url }}">{{ section.settings.rating_line | escape }}</a>
+            {%- else -%}
+              <span>{{ section.settings.rating_line | escape }}</span>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
       </div>
 
       <div class="frido-pdp__gallery-col">
@@ -102,15 +111,38 @@
           {%- if section.settings.social_proof != blank -%}
             <p class="frido-pdp__social">{{ section.settings.social_proof | escape }}</p>
           {%- endif -%}
-          <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
-          <div class="frido-pdp__price-row">
-            <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
-            {%- if compare_at > price -%}
-              <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
-            {%- endif -%}
-            {%- if save_pct > 0 -%}
-              <span class="frido-pdp__save-badge" data-frido-save-badge>Save {{ save_pct }}%</span>
-            {%- endif -%}
+          <div class="frido-pdp__title-row">
+            <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
+            <div class="frido-pdp__price-row">
+              <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
+              {%- if compare_at > price -%}
+                <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
+              {%- endif -%}
+              {%- if save_pct > 0 -%}
+                <span class="frido-pdp__save-badge" data-frido-save-badge>Save {{ save_pct }}%</span>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- if section.settings.rating_line != blank -%}
+            <p class="frido-pdp__rating">
+              {% render 'frido-stars', rating: 5 %}
+              {%- if section.settings.reviews_url != blank -%}
+                <a href="{{ section.settings.reviews_url }}">{{ section.settings.rating_line | escape }}</a>
+              {%- else -%}
+                <span>{{ section.settings.rating_line | escape }}</span>
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+          {%- if section.settings.selling_fast != blank -%}
+            <button type="button" class="frido-pdp__selling-fast">{{ section.settings.selling_fast | escape }}</button>
+          {%- endif -%}
+          <div class="frido-pdp__benefits-desktop">
+            {%- for block in benefit_blocks -%}
+              <p class="frido-pdp__benefit" {{ block.shopify_attributes }}>
+                <span class="frido-pdp__benefit-icon frido-pdp__benefit-icon--{{ block.settings.icon }}" aria-hidden="true"></span>
+                {{ block.settings.text | escape }}
+              </p>
+            {%- endfor -%}
           </div>
         </div>
 
@@ -281,15 +313,6 @@
       </section>
     {%- endif -%}
 
-    {%- if section.settings.show_desktop_gallery_grid and product.media.size > 1 -%}
-      <div class="frido-pdp-media-grid">
-        {%- for media in product.media limit: 6 -%}
-          <div class="frido-pdp-media-grid__cell">
-            {{ media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,400,600', sizes: '(min-width: 990px) 33vw, 50vw', alt: media.alt }}
-          </div>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
   </div>
 </div>
 
@@ -311,6 +334,13 @@
       "label": "Social proof line",
       "default": "Purchased more than 2,437,825+ times."
     },
+    {
+      "type": "text",
+      "id": "rating_line",
+      "label": "Rating line",
+      "default": "Excellent 4.9 | 7,295+ Reviews"
+    },
+    { "type": "url", "id": "reviews_url", "label": "Reviews link" },
     {
       "type": "text",
       "id": "selling_fast",
@@ -412,13 +442,7 @@
       "label": "Features accordion heading",
       "default": "Why HF Flow works?"
     },
-    { "type": "image_picker", "id": "features_image", "label": "Features section image" },
-    {
-      "type": "checkbox",
-      "id": "show_desktop_gallery_grid",
-      "label": "Show extra media grid (desktop)",
-      "default": false
-    }
+    { "type": "image_picker", "id": "features_image", "label": "Features section image" }
   ],
   "blocks": [
     {
