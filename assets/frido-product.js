@@ -29,21 +29,54 @@
 
   function normalizeMedia(m) {
     if (!m) return null;
-    var src =
-      m.preview_image?.src ||
-      m.preview_image ||
-      m.src ||
-      (m.featured_image && m.featured_image.src) ||
-      '';
-    if (!src && m.id) return null;
     var type = m.media_type || 'image';
+    var src = m.src || '';
+
+    if (type === 'video' || (m.sources && m.sources.length)) {
+      type = 'video';
+      if (!src && m.sources && m.sources.length) {
+        var mp4 = m.sources.find(function (s) {
+          return s.url && (/\.mp4(\?|$)/i.test(s.url) || (s.mime_type && s.mime_type.indexOf('video') !== -1));
+        });
+        src = (mp4 && mp4.url) || m.sources[0].url || '';
+      }
+      if (!src && m.preview_image) {
+        src =
+          typeof m.preview_image === 'string'
+            ? m.preview_image
+            : m.preview_image.src || '';
+      }
+    }
+
+    if (!src) {
+      src =
+        m.preview_image?.src ||
+        (typeof m.preview_image === 'string' ? m.preview_image : '') ||
+        (m.featured_image && m.featured_image.src) ||
+        '';
+    }
+
+    if (!src) return null;
     if (/\.mp4(\?|$)/i.test(src)) type = 'video';
+
     return {
       id: m.id,
       src: src,
       alt: m.alt || '',
       type: type,
+      variant_ids: m.variant_ids || [],
     };
+  }
+
+  function mergeProductMedia(product, root) {
+    var mediaEl = qs('[data-frido-product-media-json]', root);
+    if (!mediaEl) return product;
+    try {
+      product.media = JSON.parse(mediaEl.textContent);
+    } catch (e) {
+      /* keep product | json media */
+    }
+    return product;
   }
 
   function mediaFromProductList(product, id) {
@@ -62,26 +95,75 @@
   }
 
   function mediaMatchesColorOnly(media, color, allColors) {
-    if (!mediaAltMatchesColor(media, color)) return false;
-    for (var i = 0; i < allColors.length; i++) {
-      if (allColors[i] !== color && mediaAltMatchesColor(media, allColors[i])) {
-        return false;
+    if (mediaAltMatchesColor(media, color)) {
+      for (var i = 0; i < allColors.length; i++) {
+        if (allColors[i] !== color && mediaAltMatchesColor(media, allColors[i])) {
+          return false;
+        }
       }
+      return true;
     }
-    return true;
+    return false;
+  }
+
+  function normId(id) {
+    return id == null ? '' : String(id);
+  }
+
+  function mediaLinkedToColorVariants(media, variantIds) {
+    if (!media.variant_ids || !media.variant_ids.length) return false;
+    return media.variant_ids.some(function (vid) {
+      return variantIds.indexOf(normId(vid)) !== -1;
+    });
+  }
+
+  function heroFromVariant(variant) {
+    if (!variant) return null;
+    var fm = variant.featured_media || variant.featured_image;
+    if (!fm) return null;
+    return normalizeMedia({
+      id: fm.id,
+      src: fm.src || (fm.preview_image && fm.preview_image.src),
+      alt: fm.alt || '',
+      media_type: 'image',
+    });
+  }
+
+  function mediaBelongsToColor(media, color, allColors, variantIds) {
+    if (mediaMatchesColorOnly(media, color, allColors)) return true;
+    if (mediaLinkedToColorVariants(media, variantIds)) {
+      for (var i = 0; i < allColors.length; i++) {
+        if (allColors[i] !== color && mediaAltMatchesColor(media, allColors[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  function desktopGalleryList(list) {
+    var items = list.filter(function (item) {
+      return item && item.src && item.type !== 'video';
+    });
+    return items.slice(0, GALLERY_MAX);
   }
 
   function sortColorMedia(list) {
-    return list.slice().sort(function (a, b) {
+    var sorted = list.slice().sort(function (a, b) {
       var ma = (a.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
       var mb = (b.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
       var na = ma ? parseInt(ma[1], 10) : 999;
       var nb = mb ? parseInt(mb[1], 10) : 999;
-      if (na !== nb) return na - nb;
-      if (a.type === 'video' && b.type !== 'video') return -1;
-      if (b.type === 'video' && a.type !== 'video') return 1;
-      return 0;
+      return na - nb;
     });
+    var images = sorted.filter(function (i) {
+      return i.type !== 'video';
+    });
+    var videos = sorted.filter(function (i) {
+      return i.type === 'video';
+    });
+    return images.concat(videos);
   }
 
   function buildGalleryGroups(product) {
@@ -102,8 +184,16 @@
     colors.forEach(function (color) {
       var seen = {};
       var list = [];
+      var variantIds = product.variants
+        .filter(function (v) {
+          return v[colorKey] === color;
+        })
+        .map(function (v) {
+          return normId(v.id);
+        });
+
       (product.media || []).forEach(function (m) {
-        if (!mediaMatchesColorOnly(m, color, colors)) return;
+        if (!mediaBelongsToColor(m, color, colors, variantIds)) return;
         var item = normalizeMedia(m);
         if (item && !seen[item.id]) {
           seen[item.id] = true;
@@ -160,16 +250,21 @@
       );
     }
 
-    function renderDesktop(mediaList) {
+    function renderDesktop(mediaList, variant) {
       if (!desktop || !heroEl) return;
-      var list = (mediaList.length ? mediaList : groups._default || []).slice(0, GALLERY_MAX);
+      var raw = mediaList.length ? mediaList : groups._default || [];
+      var list = desktopGalleryList(raw);
+      if (!list.length && variant) {
+        var fallback = heroFromVariant(variant);
+        if (fallback) list = [fallback];
+      }
       if (!list.length) return;
 
       var hero = list[0];
+      heroEl.classList.add('frido-pdp-gallery__hero--has-media');
       heroEl.innerHTML = mediaHtml(hero, {
         loading: 'eager',
         sizes: '(min-width: 990px) 50vw, 100vw',
-        widths: '600,900,1200,1400',
       });
 
       if (!pairEl) return;
@@ -282,28 +377,37 @@
       };
     }
 
-    function setForColor(color) {
+    function setForColor(color, variant) {
       var list = (color && groups[color]) || groups._default || [];
-      renderDesktop(list);
+      renderDesktop(list, variant);
       renderMobile(list);
+    }
+
+    function colorThumbSrc(color) {
+      var list = groups[color] || [];
+      var item = list.find(function (i) {
+        return i.src && i.type !== 'video';
+      });
+      return item ? item.src : null;
     }
 
     return {
       setForColor: setForColor,
       setForVariant: function (variant) {
         if (!variant || !colorKey) {
-          setForColor(null);
+          setForColor(null, variant);
           return;
         }
-        setForColor(variant[colorKey]);
+        setForColor(variant[colorKey], variant);
       },
+      colorThumbSrc: colorThumbSrc,
     };
   }
 
   function initPdp(root) {
     var jsonEl = qs('[data-frido-product-json]', root);
     if (!jsonEl) return;
-    var product = JSON.parse(jsonEl.textContent);
+    var product = mergeProductMedia(JSON.parse(jsonEl.textContent), root);
     var form = qs('[data-frido-product-form]', root);
     var variantInput = qs('[data-frido-variant-id]', root);
     var qtyInput = qs('[data-frido-quantity]', root);
@@ -370,6 +474,15 @@
       }
 
       if (galleryApi) galleryApi.setForVariant(variant);
+
+      if (galleryApi && colorKey) {
+        var thumbSrc = galleryApi.colorThumbSrc(variant[colorKey]);
+        if (thumbSrc) {
+          qsa('[data-frido-bundle-img]', root).forEach(function (img) {
+            img.src = thumbSrc;
+          });
+        }
+      }
 
       var colorEl = qs('[data-frido-sel-color]', root);
       var sizeEl = qs('[data-frido-sel-size]', root);

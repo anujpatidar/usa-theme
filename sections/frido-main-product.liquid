@@ -26,6 +26,9 @@
   <script type="application/json" data-frido-product-json>
     {{ product | json }}
   </script>
+  <script type="application/json" data-frido-product-media-json>
+    {% render 'frido-product-media-json', product: product %}
+  </script>
 
   {%- comment -%} Sticky quick-buy bar {%- endcomment -%}
   <div class="frido-pdp-sticky" data-frido-pdp-sticky>
@@ -176,9 +179,41 @@
                       <span class="frido-pdp-bundle__badge frido-pdp-bundle__badge--{{ block.settings.badge_style }}">{{ block.settings.badge | escape }}</span>
                     {%- endif -%}
                     {%- if block.settings.image != blank -%}
-                      {{ block.settings.image | image_url: width: 120 | image_tag: loading: 'lazy', class: 'frido-pdp-bundle__img', widths: '80,120', sizes: '64px', alt: '' }}
+                      {{
+                        block.settings.image
+                        | image_url: width: 120
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'frido-pdp-bundle__img',
+                          widths: '80,120',
+                          sizes: '64px',
+                          alt: '',
+                          data-frido-bundle-img: ''
+                      }}
+                    {%- elsif current_variant.featured_image -%}
+                      {{
+                        current_variant.featured_image
+                        | image_url: width: 120
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'frido-pdp-bundle__img',
+                          widths: '80,120',
+                          sizes: '64px',
+                          alt: '',
+                          data-frido-bundle-img: ''
+                      }}
                     {%- elsif product.featured_image -%}
-                      {{ product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', class: 'frido-pdp-bundle__img', widths: '80,120', sizes: '64px', alt: '' }}
+                      {{
+                        product.featured_image
+                        | image_url: width: 120
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'frido-pdp-bundle__img',
+                          widths: '80,120',
+                          sizes: '64px',
+                          alt: '',
+                          data-frido-bundle-img: ''
+                      }}
                     {%- endif -%}
                     <span class="frido-pdp-bundle__title">{{ block.settings.title | escape }}</span>
                     <span class="frido-pdp-bundle__price">{{ block.settings.price_text | escape }}</span>

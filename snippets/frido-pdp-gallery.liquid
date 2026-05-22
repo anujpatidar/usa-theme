@@ -1,6 +1,6 @@
 {% comment %}
-  PDP gallery — desktop: 1 hero + up to 6 grid tiles (7 total). Mobile: carousel.
-  Populated per color in frido-product.js from product JSON + media alt tags.
+  PDP gallery — desktop: HIKE-style 1 hero + 2-up rows (7 max). Mobile: carousel.
+  Populated per color in frido-product.js (replaces SSR hero on load).
   @param product {Product}
   @param section_id {String}
 {% endcomment %}
@@ -8,6 +8,8 @@
   assign gallery_alt = product.title | escape
   if product.selected_or_first_available_variant.featured_media
     assign hero_media = product.selected_or_first_available_variant.featured_media
+  elsif product.selected_or_first_available_variant.featured_image
+    assign hero_media = product.selected_or_first_available_variant.featured_image
   elsif product.media.size > 0
     assign hero_media = product.media.first
   endif
@@ -15,7 +17,7 @@
 
 <div class="frido-pdp-gallery" data-frido-gallery>
   <div class="frido-pdp-gallery__desktop" data-frido-gallery-desktop>
-    <div class="frido-pdp-gallery__hero" data-frido-gallery-hero>
+    <div class="frido-pdp-gallery__hero frido-pdp-gallery__hero--has-media" data-frido-gallery-hero>
       {%- if hero_media -%}
         {{
           hero_media
@@ -28,8 +30,6 @@
             alt: hero_media.alt | default: gallery_alt,
             data-frido-gallery-img: ''
         }}
-      {%- else -%}
-        {{ 'product-apparel-2' | placeholder_svg_tag: 'frido-pdp-gallery__img placeholder-svg' }}
       {%- endif -%}
     </div>
     <div class="frido-pdp-gallery__pair" data-frido-gallery-pair></div>

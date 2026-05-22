@@ -1,0 +1,36 @@
+{% comment %}
+  Reliable product media payload for frido-product.js (src, alt, variant links).
+  @param product {Product}
+{% endcomment %}
+[
+{%- for media in product.media -%}
+  {%- liquid
+    assign media_src = media.preview_image | image_url: width: 1400
+    if media.media_type == 'video'
+      for source in media.sources
+        if source.mime_type contains 'video' or source.format == 'mp4'
+          assign media_src = source.url
+          break
+        endif
+      endfor
+    else
+      assign media_src = media | image_url: width: 1400
+    endif
+  -%}
+  {
+    "id": {{ media.id | json }},
+    "alt": {{ media.alt | default: '' | json }},
+    "media_type": {{ media.media_type | json }},
+    "src": {{ media_src | json }},
+    "variant_ids": [
+      {%- assign vid_first = true -%}
+      {%- for variant in product.variants -%}
+        {%- if variant.featured_media and variant.featured_media.id == media.id -%}
+          {%- unless vid_first -%},{%- endunless -%}{{ variant.id | json }}
+          {%- assign vid_first = false -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  }{%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}
+]

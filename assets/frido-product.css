@@ -302,7 +302,9 @@
 .frido-pdp-gallery__hero .frido-pdp-gallery__video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  min-height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .frido-pdp-gallery__pair {
