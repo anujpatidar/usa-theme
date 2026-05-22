@@ -174,14 +174,26 @@
 
       if (!pairEl) return;
       var subs = list.slice(1, GALLERY_MAX);
-      pairEl.innerHTML = subs
-        .map(function (item) {
+      var rows = [];
+      for (var i = 0; i < subs.length; i += 2) {
+        rows.push(subs.slice(i, i + 2));
+      }
+      pairEl.innerHTML = rows
+        .map(function (row) {
           return (
-            '<div class="frido-pdp-gallery__sub" data-frido-gallery-sub>' +
-            mediaHtml(item, {
-              sizes: '(min-width: 990px) 16vw, 33vw',
-              widths: '400,600,800',
-            }) +
+            '<div class="frido-pdp-gallery__row">' +
+            row
+              .map(function (item) {
+                return (
+                  '<div class="frido-pdp-gallery__sub" data-frido-gallery-sub>' +
+                  mediaHtml(item, {
+                    sizes: '(min-width: 990px) 25vw, 50vw',
+                    widths: '400,600,800',
+                  }) +
+                  '</div>'
+                );
+              })
+              .join('') +
             '</div>'
           );
         })
