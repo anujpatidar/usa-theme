@@ -425,7 +425,7 @@
 /* Selling fast — collapsible pill + detail panel */
 .frido-pdp__selling-fast {
   display: block;
-  margin: 0 0 1rem;
+  margin: 8px 0 0 16px;
   max-width: 100%;
 }
 
@@ -433,7 +433,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
   border: none;
   border-radius: 16px;
   background: var(--frido-pdp-urgency-bg, #fdf8f7);
