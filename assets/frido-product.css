@@ -547,8 +547,8 @@
 }
 
 .frido-pdp__benefit-icon-img {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
   display: block;
 }
