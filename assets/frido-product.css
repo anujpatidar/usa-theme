@@ -214,7 +214,7 @@
 }
 
 .frido-pdp__social-text {
-  margin: 0;
+  margin-bottom: 16px;
   font-size: 13px;
   line-height: 1.2;
   color: #444c31f2;
