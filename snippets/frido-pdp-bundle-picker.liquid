@@ -33,7 +33,7 @@
   assign choose_heading = section.settings.bundle_choose_heading | default: 'Choose your colors'
   assign add_pair_label = section.settings.bundle_add_pair_label | default: '+ Add Another Pair'
   assign add_pair_sub = section.settings.bundle_add_pair_subtext | default: ''
-  assign max_pairs = section.settings.bundle_max_pairs | default: 6
+  assign max_pairs = section.settings.bundle_max_pairs | default: 3
 -%}
 
 {%- if bundle_blocks.size > 0 -%}
@@ -61,33 +61,12 @@
           {%- if block.settings.badge != blank -%}
             <span class="frido-pdp-bundle__badge frido-pdp-bundle__badge--{{ block.settings.badge_style }}">{{ block.settings.badge | escape }}</span>
           {%- endif -%}
-          {%- if block.settings.image != blank -%}
+          {%- liquid
+            assign bundle_card_img = current_variant.featured_image | default: product.featured_image
+          -%}
+          {%- if bundle_card_img -%}
             {{
-              block.settings.image
-              | image_url: width: 120
-              | image_tag:
-                loading: 'lazy',
-                class: 'frido-pdp-bundle__img',
-                widths: '80,120',
-                sizes: '64px',
-                alt: '',
-                data-frido-bundle-img: ''
-            }}
-          {%- elsif current_variant.featured_image -%}
-            {{
-              current_variant.featured_image
-              | image_url: width: 120
-              | image_tag:
-                loading: 'lazy',
-                class: 'frido-pdp-bundle__img',
-                widths: '80,120',
-                sizes: '64px',
-                alt: '',
-                data-frido-bundle-img: ''
-            }}
-          {%- elsif product.featured_image -%}
-            {{
-              product.featured_image
+              bundle_card_img
               | image_url: width: 120
               | image_tag:
                 loading: 'lazy',
@@ -110,7 +89,7 @@
       {%- endfor -%}
     </div>
 
-    <div class="frido-pdp-bundle-config" data-frido-bundle-config hidden>
+    <div class="frido-pdp-bundle-config" data-frido-bundle-config>
       <p class="frido-pdp-bundle-config__heading">{{ choose_heading | escape }}</p>
       <div class="frido-pdp-bundle-config__box" data-frido-bundle-pairs></div>
       <button type="button" class="frido-pdp-bundle-config__add" data-frido-bundle-add-pair hidden>

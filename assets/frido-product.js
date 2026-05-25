@@ -412,7 +412,7 @@
     var pairsWrap = qs('[data-frido-bundle-pairs]', bundleRoot);
     var addPairBtn = qs('[data-frido-bundle-add-pair]', bundleRoot);
     var tpl = document.getElementById('FridoBundlePairTpl-' + root.getAttribute('data-section'));
-    var maxPairs = parseInt(bundleRoot.getAttribute('data-bundle-max-pairs'), 10) || 6;
+    var maxPairs = Math.min(parseInt(bundleRoot.getAttribute('data-bundle-max-pairs'), 10) || 3, 3);
     var colorKey = ctx.colorKey || getColorOptionKey(product);
     var syncingFromPair = false;
 
@@ -423,6 +423,46 @@
       discountCode: '',
       bundleTitle: '',
     };
+
+    function showConfig(open) {
+      if (!config) return;
+      if (open) {
+        config.classList.add('is-open');
+        config.removeAttribute('hidden');
+      } else {
+        config.classList.remove('is-open');
+        config.setAttribute('hidden', '');
+      }
+    }
+
+    function getCardByQuantity(qty) {
+      return (
+        qsa('[data-frido-bundle]', bundleRoot).find(function (c) {
+          return parseInt(c.getAttribute('data-quantity'), 10) === qty;
+        }) || null
+      );
+    }
+
+    function highlightCard(card) {
+      qsa('[data-frido-bundle]', bundleRoot).forEach(function (c) {
+        var on = card && c === card;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    function updateBundleCardImages(v) {
+      if (!v) v = ctx.getCurrent();
+      if (!v) return;
+      var src = variantThumbSrc(v);
+      if (!src) return;
+      qsa('[data-frido-bundle-img]', bundleRoot).forEach(function (img) {
+        img.src = src;
+        img.alt = v.title || product.title || '';
+      });
+    }
+
+    root._fridoUpdateBundleCardImages = updateBundleCardImages;
 
     function pairVariant(row) {
       var opts = {};
@@ -526,6 +566,7 @@
         syncingFromPair = true;
         ctx.setCurrent(v);
         ctx.updateUI(v);
+        updateBundleCardImages(v);
         syncingFromPair = false;
       }
     }
@@ -542,6 +583,7 @@
         if (sel) sel.value = v['option' + (idx + 1)];
       });
       updatePairRow(first);
+      updateBundleCardImages(v);
     }
 
     root._fridoSyncMainToFirstPair = syncMainToFirstPair;
@@ -552,14 +594,13 @@
 
       var removeBtn = qs('[data-frido-pair-remove]', row);
       if (removeBtn) {
-        removeBtn.hidden = index <= state.baseQty;
+        removeBtn.hidden = state.pairCount <= 1;
         removeBtn.addEventListener('click', function () {
-          if (state.pairCount <= state.baseQty) return;
+          if (state.pairCount <= 1) return;
           row.remove();
           state.pairCount -= 1;
           reindexPairs();
-          updateAddPairVisibility();
-          updateBundleAtcPrices();
+          onPairCountChanged();
         });
       }
 
@@ -580,7 +621,7 @@
         var label = qs('[data-frido-pair-label]', row);
         if (label) label.textContent = 'Pair #' + idx;
         var removeBtn = qs('[data-frido-pair-remove]', row);
-        if (removeBtn) removeBtn.hidden = idx <= state.baseQty;
+        if (removeBtn) removeBtn.hidden = state.pairCount <= 1;
       });
     }
 
@@ -630,26 +671,63 @@
 
     function updateAddPairVisibility() {
       if (!addPairBtn) return;
-      var canAdd = state.card && state.pairCount < maxPairs;
+      var canAdd = !!state.card && state.pairCount >= 2 && state.pairCount < maxPairs;
       addPairBtn.hidden = !canAdd;
     }
 
-    function activateBundle(card) {
+    /** Match 2/3-pair card highlight to how many pair rows exist. */
+    function onPairCountChanged() {
+      var count = state.pairCount;
+
+      if (count <= 1) {
+        deactivateBundle();
+        return;
+      }
+
+      var card = getCardByQuantity(count);
+      if (card) {
+        state.card = card;
+        state.baseQty = count;
+        state.discountCode = (card.getAttribute('data-discount-code') || '').trim();
+        state.bundleTitle = card.getAttribute('data-bundle-title') || '';
+        highlightCard(card);
+        root.classList.add('frido-pdp--bundle-active');
+        showConfig(true);
+        if (ctx.qtyInput) ctx.qtyInput.value = count;
+      }
+
+      updateAddPairVisibility();
+      updateBundleAtcPrices();
+      var v = ctx.getCurrent();
+      if (v) updateBundleCardImages(v);
+    }
+
+    function applyCardState(card) {
       state.card = card;
       state.baseQty = parseInt(card.getAttribute('data-quantity'), 10) || 1;
       state.discountCode = (card.getAttribute('data-discount-code') || '').trim();
       state.bundleTitle = card.getAttribute('data-bundle-title') || '';
-
-      qsa('[data-frido-bundle]', bundleRoot).forEach(function (c) {
-        var on = c === card;
-        c.classList.toggle('is-active', on);
-        c.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-
+      highlightCard(card);
       root.classList.add('frido-pdp--bundle-active');
-      if (config) config.hidden = false;
+      root._fridoSyncMainToFirstPair = syncMainToFirstPair;
+      showConfig(true);
       if (ctx.qtyInput) ctx.qtyInput.value = state.baseQty;
-      setPairRows(state.baseQty);
+      root._fridoUpdateBundleCardImages = updateBundleCardImages;
+    }
+
+    function activateBundle(card) {
+      var qty = parseInt(card.getAttribute('data-quantity'), 10) || 1;
+      if (qty < 2) return;
+
+      if (state.card === card && state.pairCount === qty) {
+        deactivateBundle();
+        return;
+      }
+
+      applyCardState(card);
+      setPairRows(qty);
+      var v = ctx.getCurrent();
+      if (v) updateBundleCardImages(v);
     }
 
     function deactivateBundle() {
@@ -658,14 +736,11 @@
       state.discountCode = '';
       state.bundleTitle = '';
 
-      qsa('[data-frido-bundle]', bundleRoot).forEach(function (c) {
-        c.classList.remove('is-active');
-        c.setAttribute('aria-pressed', 'false');
-      });
-
+      highlightCard(null);
       root.classList.remove('frido-pdp--bundle-active');
       root._fridoSyncMainToFirstPair = null;
-      if (config) config.hidden = true;
+      root._fridoUpdateBundleCardImages = null;
+      showConfig(false);
       clearPairs();
       if (addPairBtn) addPairBtn.hidden = true;
       if (ctx.qtyInput) ctx.qtyInput.value = 1;
@@ -676,10 +751,6 @@
 
     qsa('[data-frido-bundle]', bundleRoot).forEach(function (card) {
       card.addEventListener('click', function () {
-        if (state.card === card) {
-          deactivateBundle();
-          return;
-        }
         activateBundle(card);
       });
     });
@@ -690,10 +761,11 @@
         var rows = qsa('[data-frido-bundle-pair]', pairsWrap);
         var last = rows[rows.length - 1];
         createPairRow(last || null);
-        updateAddPairVisibility();
-        updateBundleAtcPrices();
+        onPairCountChanged();
       });
     }
+
+    showConfig(false);
 
     function addBundleToCart() {
       var rows = qsa('[data-frido-bundle-pair]', pairsWrap);
@@ -867,7 +939,9 @@
 
       if (galleryApi) galleryApi.setForVariant(variant);
 
-      if (galleryApi && colorKey) {
+      if (typeof root._fridoUpdateBundleCardImages === 'function') {
+        root._fridoUpdateBundleCardImages(variant);
+      } else if (galleryApi && colorKey) {
         var thumbSrc = galleryApi.colorThumbSrc(variant[colorKey]);
         if (thumbSrc) {
           qsa('[data-frido-bundle-img]', root).forEach(function (img) {

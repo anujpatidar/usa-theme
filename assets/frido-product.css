@@ -751,12 +751,8 @@
   box-shadow: 0 0 0 1px rgb(var(--color-button));
 }
 
-.frido-pdp--bundle-active .frido-pdp-variants {
+.frido-pdp-bundle-config:not(.is-open) {
   display: none;
-}
-
-.frido-pdp-bundle-config[hidden] {
-  display: none !important;
 }
 
 .frido-pdp-bundle-config {
