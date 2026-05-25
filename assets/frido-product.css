@@ -93,10 +93,6 @@
   cursor: pointer;
 }
 
-/* Layout */
-.frido-pdp__layout {
-  padding-top: 1.2rem;
-}
 
 .frido-pdp__top {
   display: flex;
