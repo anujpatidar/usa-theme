@@ -634,7 +634,7 @@
 
 .frido-pdp-sizes__btn.is-active {
   border-color: rgb(var(--color-button));
-  background: var(--color-button, 10%);
+  background: var(--color-button, 20%);
   color: rgb(var(--color-button));
   font-weight: 700;
 }
