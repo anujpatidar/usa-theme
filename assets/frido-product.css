@@ -175,7 +175,7 @@
 .frido-pdp__social {
   display: flex;
   align-items: center;
-  margin: 0 0 1rem;
+  margin-bottom: 16px;
   padding: 0;
 }
 
