@@ -118,7 +118,10 @@
   font-size: 16px;
   color: rgba(0, 0, 0, 0.75);
 }
-
+.frido-pdp__rating svg{
+  width: 16px !important;
+  height: 16px !important;
+}
 .frido-pdp__rating a {
   color: inherit;
   text-decoration: underline;
