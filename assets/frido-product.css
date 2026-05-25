@@ -977,7 +977,7 @@
 
   .frido-pdp__head-desktop .frido-pdp__price-row {
     flex-shrink: 0;
-    align-items: flex-end;
+    align-items: flex-start;
   }
 
   .frido-pdp__buy-col .frido-pdp__benefits-desktop {
