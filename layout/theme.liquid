@@ -284,6 +284,8 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {% render 'frido-tokens' %}
     {{ 'frido-global.css' | asset_url | stylesheet_tag }}
+    {{ 'frido-size-chart.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'frido-size-chart.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'frido-header.js' | asset_url }}" defer="defer"></script>
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 

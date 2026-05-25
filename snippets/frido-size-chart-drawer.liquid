@@ -1,0 +1,148 @@
+{% comment %}
+  Size & Fit Chart — right-side drawer (PDP).
+  @param section {Section}
+  @param product {Product}
+{% endcomment %}
+{%- liquid
+  assign chart_enabled = section.settings.size_chart_enable
+  if chart_enabled == nil
+    assign chart_enabled = true
+  endif
+
+  assign chart_title = section.settings.size_chart_title | default: 'Size & Fit Chart'
+  assign chart_product_title = section.settings.size_chart_product_title | default: product.title
+  assign chart_subtitle = section.settings.size_chart_subtitle
+  assign rec_prefix = section.settings.size_chart_rec_prefix | default: 'Recommended Size:'
+-%}
+{%- unless chart_enabled -%}
+  {%- comment -%} Size chart disabled in section settings {%- endcomment -%}
+{%- else -%}
+
+{%- capture default_chart_table -%}
+<div class="frido-size-chart__scroll">
+  <table class="frido-size-chart__table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">4</th>
+        <th scope="col">4.5</th>
+        <th scope="col">5</th>
+        <th scope="col">5.5</th>
+        <th scope="col">6</th>
+        <th scope="col">6.5</th>
+        <th scope="col">7</th>
+        <th scope="col">7.5</th>
+        <th scope="col">8</th>
+        <th scope="col">8.5</th>
+        <th scope="col">9</th>
+        <th scope="col">9.5</th>
+        <th scope="col">10</th>
+        <th scope="col">10.5</th>
+        <th scope="col">11</th>
+        <th scope="col">11.5</th>
+        <th scope="col">12</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">USA / CA</th>
+        <td>4</td><td>4.5</td><td>5</td><td>5.5</td><td>6</td><td>6.5</td><td>7</td><td>7.5</td><td>8</td><td>8.5</td><td>9</td><td>9.5</td><td>10</td><td>10.5</td><td>11</td><td>11.5</td><td>12</td>
+      </tr>
+      <tr>
+        <th scope="row">EU</th>
+        <td>35</td><td>35.5</td><td>36</td><td>36.5</td><td>37</td><td>37.5</td><td>38</td><td>38.5</td><td>39</td><td>39.5</td><td>40</td><td>40.5</td><td>41</td><td>41.5</td><td>42</td><td>42.5</td><td>43</td>
+      </tr>
+      <tr>
+        <th scope="row">UK</th>
+        <td>3</td><td>3.5</td><td>4</td><td>4.5</td><td>5</td><td>5.5</td><td>6</td><td>6.5</td><td>7</td><td>7.5</td><td>8</td><td>8.5</td><td>9</td><td>9.5</td><td>10</td><td>10.5</td><td>11</td>
+      </tr>
+      <tr>
+        <th scope="row">Inches</th>
+        <td>8.7</td><td>8.9</td><td>9.0</td><td>9.2</td><td>9.4</td><td>9.5</td><td>9.7</td><td>9.9</td><td>10.0</td><td>10.2</td><td>10.4</td><td>10.5</td><td>10.7</td><td>10.9</td><td>11.0</td><td>11.2</td><td>11.4</td>
+      </tr>
+      <tr>
+        <th scope="row">Centimeters</th>
+        <td>22.1</td><td>22.5</td><td>22.9</td><td>23.2</td><td>23.6</td><td>24.0</td><td>24.4</td><td>24.8</td><td>25.2</td><td>25.6</td><td>26.0</td><td>26.4</td><td>26.8</td><td>27.2</td><td>27.6</td><td>28.0</td><td>28.4</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{%- endcapture -%}
+
+<div
+  id="frido-size-chart-{{ section.id }}"
+  class="frido-size-chart"
+  data-frido-size-chart
+  hidden
+  aria-hidden="true"
+>
+  <div class="frido-size-chart__overlay" data-frido-size-chart-close tabindex="-1"></div>
+
+  <div
+    class="frido-size-chart__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="FridoSizeChartTitle-{{ section.id }}"
+    tabindex="-1"
+  >
+    <header class="frido-size-chart__header">
+      <h2 id="FridoSizeChartTitle-{{ section.id }}" class="frido-size-chart__title">
+        {{ chart_title | escape }}
+      </h2>
+      <button
+        type="button"
+        class="frido-size-chart__close"
+        data-frido-size-chart-close
+        aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </header>
+
+    <div class="frido-size-chart__body">
+      <p class="frido-size-chart__recommended" data-frido-size-chart-recommended>
+        <span class="frido-size-chart__recommended-label">{{ rec_prefix | escape }}</span>
+        <span data-frido-size-chart-rec-value></span>
+      </p>
+
+      <div class="frido-size-chart__find-mobile">
+        {% render 'frido-find-size-button', class: 'frido-find-size-btn--drawer' %}
+      </div>
+
+      {%- if section.settings.size_chart_recommendations != blank -%}
+        <div class="frido-size-chart__rec-block">
+          <h3 class="frido-size-chart__rec-heading">Sizing Recommendations</h3>
+          <div class="frido-size-chart__rec-text rte">
+            {{ section.settings.size_chart_recommendations }}
+          </div>
+        </div>
+      {%- else -%}
+        <div class="frido-size-chart__rec-block">
+          <h3 class="frido-size-chart__rec-heading">Sizing Recommendations</h3>
+          <p class="frido-size-chart__rec-text">
+            Runs small — we recommend ordering <strong>one size up</strong> if you have high-instep feet, prefer a roomier fit, or plan to wear thicker socks.
+          </p>
+          <p class="frido-size-chart__rec-note">
+            <em>Fit preference can vary from person to person, so the final choice depends on your comfort preference.</em>
+          </p>
+        </div>
+      {%- endif -%}
+
+      <div class="frido-size-chart__product">
+        <h3 class="frido-size-chart__product-title">{{ chart_product_title | escape }}</h3>
+        {%- if chart_subtitle != blank -%}
+          <p class="frido-size-chart__product-sub">{{ chart_subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="frido-size-chart__table-wrap rte">
+        {%- if section.settings.size_chart_table != blank -%}
+          {{ section.settings.size_chart_table }}
+        {%- else -%}
+          {{ default_chart_table }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endunless -%}

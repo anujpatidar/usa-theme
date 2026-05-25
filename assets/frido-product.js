@@ -491,11 +491,26 @@
 
       var colorEl = qs('[data-frido-sel-color]', root);
       var sizeEl = qs('[data-frido-sel-size]', root);
+      var sizeVal = '';
       product.options.forEach(function (opt, idx) {
         var val = variant['option' + (idx + 1)];
         if (colorEl && /colou?r/i.test(opt)) colorEl.textContent = val;
-        if (sizeEl && /size/i.test(opt)) sizeEl.textContent = val;
+        if (sizeEl && /size/i.test(opt)) {
+          sizeEl.textContent = val;
+          sizeVal = val;
+        }
       });
+
+      var sectionId = root.getAttribute('data-section');
+      if (sectionId) {
+        var chartDrawer = document.getElementById('frido-size-chart-' + sectionId);
+        if (chartDrawer) {
+          var recBox = qs('[data-frido-size-chart-recommended]', chartDrawer);
+          var recVal = qs('[data-frido-size-chart-rec-value]', chartDrawer);
+          if (recVal) recVal.textContent = sizeVal;
+          if (recBox) recBox.classList.toggle('is-visible', !!sizeVal);
+        }
+      }
     }
 
     qsa('[data-frido-option-value]', root).forEach(function (btn) {

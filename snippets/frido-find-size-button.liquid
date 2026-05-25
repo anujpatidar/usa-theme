@@ -1,0 +1,38 @@
+{% comment %}
+  Reusable "Find my Perfect Size" control — theme settings → Theme settings → Frido brand.
+  @param label {String} optional override
+  @param url {String} optional override
+  @param behavior {String} link | scroll — optional override
+  @param class {String} extra classes
+  @param full_width {Boolean} default true
+  @param tag {String} button | submit — for forms (default button)
+{% endcomment %}
+{%- liquid
+  assign btn_label = label | default: settings.frido_find_size_label | default: 'Find my Perfect Size'
+  assign btn_url = url | default: settings.frido_find_size_url
+  assign btn_behavior = behavior | default: settings.frido_find_size_behavior | default: 'scroll'
+  assign btn_class = class | default: ''
+  assign btn_tag = tag | default: 'button'
+  assign is_full = true
+  if full_width == false
+    assign is_full = false
+  endif
+-%}
+{%- if btn_label != blank -%}
+  {%- capture btn_classes -%}
+    frido-find-size-btn{% if is_full %} frido-find-size-btn--full{% endif %}{% if btn_class != blank %} {{ btn_class }}{% endif %}
+  {%- endcapture -%}
+  {%- if btn_behavior == 'link' and btn_url != blank -%}
+    <a href="{{ btn_url }}" class="{{ btn_classes | strip }}">
+      {{ btn_label | escape }}
+    </a>
+  {%- else -%}
+    <button
+      type="{{ btn_tag }}"
+      class="{{ btn_classes | strip }}"
+      data-frido-find-size-scroll="#frido-shoe-finder"
+    >
+      {{ btn_label | escape }}
+    </button>
+  {%- endif -%}
+{%- endif -%}

@@ -131,11 +131,9 @@
 
           {% render 'frido-pdp-variants', product: product, section: section %}
 
-          {%- if section.settings.find_size_label != blank -%}
-            <a href="{{ section.settings.find_size_url | default: section.settings.size_chart_url | default: '#' }}" class="frido-pdp__find-size">
-              {{ section.settings.find_size_label | escape }}
-            </a>
-          {%- endif -%}
+          <div class="frido-pdp__find-size-wrap">
+            {% render 'frido-find-size-button' %}
+          </div>
 
           {%- if bundle_blocks.size > 0 -%}
             <div class="frido-pdp-bundles">
@@ -327,6 +325,8 @@
   </div>
 </div>
 
+{% render 'frido-size-chart-drawer', section: section, product: product %}
+
 {% schema %}
 {
   "name": "Frido product",
@@ -409,13 +409,51 @@
       "default": "this product is likely to sell out today."
     },
     {
-      "type": "text",
-      "id": "find_size_label",
-      "label": "Find size button",
-      "default": "Find my Perfect Size"
+      "type": "header",
+      "content": "Size & fit chart"
     },
-    { "type": "url", "id": "find_size_url", "label": "Find size link" },
-    { "type": "url", "id": "size_chart_url", "label": "Size chart link" },
+    {
+      "type": "checkbox",
+      "id": "size_chart_enable",
+      "label": "Enable size chart drawer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "size_chart_title",
+      "label": "Drawer title",
+      "default": "Size & Fit Chart"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_rec_prefix",
+      "label": "Recommended size label",
+      "default": "Recommended Size:"
+    },
+    {
+      "type": "richtext",
+      "id": "size_chart_recommendations",
+      "label": "Sizing recommendations (leave blank for default copy)"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_product_title",
+      "label": "Chart product title",
+      "info": "Defaults to product title when blank."
+    },
+    {
+      "type": "text",
+      "id": "size_chart_subtitle",
+      "label": "Chart subtitle",
+      "default": "Men's Size Chart",
+      "info": "Shown in italics under the product title, e.g. Men's Size Chart"
+    },
+    {
+      "type": "html",
+      "id": "size_chart_table",
+      "label": "Size chart table HTML",
+      "info": "Paste a full table. Leave blank to use the default men's shoe chart."
+    },
     {
       "type": "text",
       "id": "bundle_heading",

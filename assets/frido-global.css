@@ -7,6 +7,7 @@
   --frido-radius: 12px;
   --frido-radius-pill: 999px;
   --frido-page: min(1320px, calc(100vw - 3rem));
+  --frido-chart-accent: #8b9a7e;
 }
 
 body.frido-menu-open {
@@ -3025,4 +3026,38 @@ body.frido-menu-open .frido-header__menu-icon--close {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+}
+
+/* ---------- Find my Perfect Size (site-wide) ---------- */
+.frido-find-size-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4.8rem;
+  padding: 0 1.6rem;
+  border: 1px solid var(--frido-chart-accent);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--frido-chart-accent);
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.frido-find-size-btn--full,
+.frido-find-size-btn.frido-find-size-btn--full {
+  width: 100%;
+}
+
+.frido-find-size-btn:hover {
+  background: #e9ede1;
+  color: var(--frido-chart-accent);
+}
+
+.frido-find-size-btn--drawer {
+  width: 100%;
 }

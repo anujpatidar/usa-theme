@@ -1472,6 +1472,37 @@
         "label": "Use Outfit across the entire site",
         "default": true,
         "info": "Loads Google Font Outfit and applies it to all theme typography (headings + body)."
+      },
+      {
+        "type": "header",
+        "content": "Find my Perfect Size"
+      },
+      {
+        "type": "text",
+        "id": "frido_find_size_label",
+        "label": "Button label",
+        "default": "Find my Perfect Size"
+      },
+      {
+        "type": "url",
+        "id": "frido_find_size_url",
+        "label": "Custom link (when behavior is Custom URL)"
+      },
+      {
+        "type": "select",
+        "id": "frido_find_size_behavior",
+        "label": "Button behavior",
+        "default": "scroll",
+        "options": [
+          {
+            "value": "scroll",
+            "label": "Scroll to Shoe Finder section"
+          },
+          {
+            "value": "link",
+            "label": "Open custom URL"
+          }
+        ]
       }
     ]
   }

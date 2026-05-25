@@ -27,6 +27,11 @@
       assign gender_option = product.options_with_values[0]
     endif
   endif
+
+  assign chart_enabled = section.settings.size_chart_enable
+  if chart_enabled == nil
+    assign chart_enabled = true
+  endif
 -%}
 
 <div class="frido-pdp-variants" data-frido-variants>
@@ -91,13 +96,24 @@
         {%- endfor -%}
       </div>
     </div>
+  {%- endif -%}
+
+  {%- if color_option or size_option -%}
     <div class="frido-pdp-selection">
       <p class="frido-pdp-selection__text" data-frido-selection-summary>
         {%- if color_option -%}Color: <strong data-frido-sel-color>{{ color_option.selected_value | escape }}</strong>{%- endif -%}
         {%- if size_option -%}{% if color_option %} {% endif %}Size: <strong data-frido-sel-size>{{ size_option.selected_value | escape }}</strong>{%- endif -%}
       </p>
-      {%- if section.settings.size_chart_url != blank -%}
-        <a href="{{ section.settings.size_chart_url }}" class="frido-pdp-selection__chart">Size &amp; Fit Chart</a>
+      {%- if chart_enabled -%}
+        <button
+          type="button"
+          class="frido-pdp-selection__chart"
+          data-frido-size-chart-open="{{ section.id }}"
+          aria-controls="frido-size-chart-{{ section.id }}"
+          aria-expanded="false"
+        >
+          Size &amp; Fit Chart
+        </button>
       {%- endif -%}
     </div>
   {%- endif -%}
