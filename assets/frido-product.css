@@ -269,7 +269,7 @@
 .frido-pdp__save-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 4px;
   padding: 4px;
   border-radius: 6px;
   background: rgb(var(--color-button));
