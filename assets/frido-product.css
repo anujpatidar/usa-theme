@@ -435,11 +435,11 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: var(--frido-pdp-pill, 999px);
+  border-radius: 16px;
   background: var(--frido-pdp-urgency-bg, #fdf8f7);
   color: var(--frido-pdp-urgency-text, #b35a52);
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
@@ -467,8 +467,8 @@
 
 .frido-pdp__selling-fast-dot {
   flex-shrink: 0;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--frido-pdp-urgency-dot, #e53935);
 }
