@@ -933,7 +933,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1.6rem;
+    gap: 32px;
   }
 
   .frido-pdp__head-desktop .frido-pdp__title {
