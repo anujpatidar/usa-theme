@@ -516,9 +516,10 @@
 .frido-pdp__benefit {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin: 0.5rem 0 0;
-  font-size: 1.35rem;
+  gap: 4px;
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  line-height: 1;
 }
 
 .frido-pdp__benefit-icon {
@@ -535,8 +536,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 24px;
+  height: 24px;
 }
 
 .frido-pdp__benefit-icon-svg svg {
