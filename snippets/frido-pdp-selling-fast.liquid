@@ -1,0 +1,29 @@
+{% comment %}
+  Collapsible "Selling Out Fast" urgency block (HIKE-style).
+  @param section {section}
+{% endcomment %}
+{%- if section.settings.selling_fast != blank -%}
+  <details class="frido-pdp__selling-fast">
+    <summary class="frido-pdp__selling-fast-trigger">
+      <span class="frido-pdp__selling-fast-dot" aria-hidden="true"></span>
+      <span class="frido-pdp__selling-fast-label">{{ section.settings.selling_fast | escape }}</span>
+      <span class="frido-pdp__selling-fast-chevron" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 7.75L9.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </summary>
+    {%- if section.settings.selling_fast_body_lead != blank or section.settings.selling_fast_body_bold != blank -%}
+      <div class="frido-pdp__selling-fast-panel">
+        <p class="frido-pdp__selling-fast-copy">
+          {%- if section.settings.selling_fast_body_lead != blank -%}
+            <span>{{ section.settings.selling_fast_body_lead | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.selling_fast_body_bold != blank -%}
+            <strong>{{ section.settings.selling_fast_body_bold | escape }}</strong>
+          {%- endif -%}
+        </p>
+      </div>
+    {%- endif -%}
+  </details>
+{%- endif -%}

@@ -87,9 +87,7 @@
       <div class="frido-pdp__gallery-col">
         {% render 'frido-pdp-gallery', product: product, section_id: section.id %}
         <div class="frido-pdp__badges-mobile">
-          {%- if section.settings.selling_fast != blank -%}
-            <button type="button" class="frido-pdp__selling-fast">{{ section.settings.selling_fast | escape }}</button>
-          {%- endif -%}
+          {% render 'frido-pdp-selling-fast', section: section %}
           {%- for block in benefit_blocks -%}
             <p class="frido-pdp__benefit" {{ block.shopify_attributes }}>
               <span class="frido-pdp__benefit-icon frido-pdp__benefit-icon--{{ block.settings.icon }}" aria-hidden="true"></span>
@@ -116,9 +114,7 @@
               {%- endif -%}
             </p>
           {%- endif -%}
-          {%- if section.settings.selling_fast != blank -%}
-            <button type="button" class="frido-pdp__selling-fast">{{ section.settings.selling_fast | escape }}</button>
-          {%- endif -%}
+          {% render 'frido-pdp-selling-fast', section: section %}
           <div class="frido-pdp__benefits-desktop">
             {%- for block in benefit_blocks -%}
               <p class="frido-pdp__benefit" {{ block.shopify_attributes }}>
@@ -397,8 +393,20 @@
     {
       "type": "text",
       "id": "selling_fast",
-      "label": "Urgency badge",
+      "label": "Selling fast — pill label",
       "default": "Selling Out Fast"
+    },
+    {
+      "type": "text",
+      "id": "selling_fast_body_lead",
+      "label": "Selling fast — detail (before bold)",
+      "default": "This product is in high demand. Based on the sales volume in the past 3 hours, "
+    },
+    {
+      "type": "text",
+      "id": "selling_fast_body_bold",
+      "label": "Selling fast — detail (bold)",
+      "default": "this product is likely to sell out today."
     },
     {
       "type": "text",
