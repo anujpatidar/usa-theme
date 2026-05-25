@@ -623,7 +623,7 @@
 
 .frido-pdp-sizes__btn {
   min-width: 4.8rem;
-  padding: 0.85rem 1rem;
+  padding: 8px 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background: #fff;
@@ -634,7 +634,7 @@
 
 .frido-pdp-sizes__btn.is-active {
   border-color: rgb(var(--color-button));
-  background: var(--frido-pdp-sage);
+  background: var(--color-button, 10%);
   color: rgb(var(--color-button));
   font-weight: 700;
 }
