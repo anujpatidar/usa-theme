@@ -271,7 +271,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 4px;
-  border-radius: var(--frido-pdp-pill, 999px);
+  border-radius: 6px;
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
   font-size: 13px;
