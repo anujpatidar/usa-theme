@@ -133,5 +133,7 @@
       }
     }
   },
-  "order": ["frido_product"]
+  "order": [
+    "frido_product"
+  ]
 }

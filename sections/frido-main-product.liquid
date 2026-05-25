@@ -67,9 +67,7 @@
   <div class="frido-page-width frido-pdp__layout">
     <div class="frido-pdp__top">
       <div class="frido-pdp__head-mobile">
-        {%- if section.settings.social_proof != blank -%}
-          <p class="frido-pdp__social">{{ section.settings.social_proof | escape }}</p>
-        {%- endif -%}
+        {% render 'frido-pdp-social-proof', section: section %}
         <div class="frido-pdp__title-row">
           <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
           <div class="frido-pdp__price-row">
@@ -111,9 +109,7 @@
 
       <div class="frido-pdp__buy-col">
         <div class="frido-pdp__head-desktop">
-          {%- if section.settings.social_proof != blank -%}
-            <p class="frido-pdp__social">{{ section.settings.social_proof | escape }}</p>
-          {%- endif -%}
+          {% render 'frido-pdp-social-proof', section: section %}
           <div class="frido-pdp__title-row">
             <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
             <div class="frido-pdp__price-row">
@@ -364,9 +360,47 @@
       "default": "scheme-1"
     },
     {
+      "type": "header",
+      "content": "Social proof"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_avatar_1",
+      "label": "Avatar 1 (left)"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_avatar_2",
+      "label": "Avatar 2 (center)"
+    },
+    {
+      "type": "image_picker",
+      "id": "social_avatar_3",
+      "label": "Avatar 3 (right)"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_lead",
+      "label": "Social proof — text before count",
+      "default": "Purchased more than "
+    },
+    {
+      "type": "text",
+      "id": "social_proof_stat",
+      "label": "Social proof — count (bold)",
+      "default": "2,437,825+"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_tail",
+      "label": "Social proof — text after count",
+      "default": " times."
+    },
+    {
       "type": "text",
       "id": "social_proof",
-      "label": "Social proof line",
+      "label": "Social proof (legacy single line)",
+      "info": "Used only if count field above is empty. Prefer the three text fields.",
       "default": "Purchased more than 2,437,825+ times."
     },
     {

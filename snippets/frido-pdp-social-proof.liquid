@@ -1,0 +1,73 @@
+{% comment %}
+  PDP social proof — overlapping avatars + purchased count line.
+  @param section {section}
+{% endcomment %}
+{%- liquid
+  assign lead = section.settings.social_proof_lead
+  assign stat = section.settings.social_proof_stat
+  assign tail = section.settings.social_proof_tail
+
+  if stat == blank and section.settings.social_proof != blank
+    assign proof = section.settings.social_proof
+    assign chunks = proof | split: 'more than '
+    if chunks.size > 1
+      assign lead = 'Purchased more than '
+      assign after_more = chunks[1]
+      assign stat_chunks = after_more | split: ' times'
+      assign stat = stat_chunks[0] | strip
+      assign tail = ' times.'
+    endif
+  endif
+
+  if lead == blank
+    assign lead = 'Purchased more than '
+  endif
+  if stat == blank
+    assign stat = '2,437,825+'
+  endif
+  if tail == blank
+    assign tail = ' times.'
+  endif
+
+  assign avatars = section.settings.social_avatar_1 | append: ',' | append: section.settings.social_avatar_2 | append: ',' | append: section.settings.social_avatar_3
+  assign show_social = true
+  if lead == blank and stat == blank and tail == blank and avatars == ',,'
+    assign show_social = false
+  endif
+-%}
+
+{%- if show_social -%}
+  <div class="frido-pdp__social">
+    <div class="frido-pdp__social-avatars" aria-hidden="true">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          case i
+            when 1
+              assign avatar = section.settings.social_avatar_1
+            when 2
+              assign avatar = section.settings.social_avatar_2
+            when 3
+              assign avatar = section.settings.social_avatar_3
+          endcase
+        -%}
+        {%- if avatar != blank -%}
+          {{
+            avatar
+            | image_url: width: 96
+            | image_tag:
+              loading: 'lazy',
+              class: 'frido-pdp__social-avatar',
+              widths: '48,64,96',
+              sizes: '40px',
+              alt: ''
+          }}
+        {%- else -%}
+          <span class="frido-pdp__social-avatar frido-pdp__social-avatar--placeholder frido-pdp__social-avatar--{{ i }}"></span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <p class="frido-pdp__social-text">
+      <span class="frido-pdp__social-lead">{{ lead | escape }}</span><strong class="frido-pdp__social-stat">{{ stat | escape }}</strong><span class="frido-pdp__social-tail">{{ tail | escape }}</span>
+    </p>
+  </div>
+{%- endif -%}
