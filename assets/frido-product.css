@@ -270,12 +270,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.45rem 0.85rem;
+  padding: 4px;
   border-radius: var(--frido-pdp-pill, 999px);
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1;
 }
 
