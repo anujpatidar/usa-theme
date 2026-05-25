@@ -499,7 +499,7 @@
   border-radius: 16px;
   background: var(--frido-pdp-urgency-bg, #fdf8f7);
   color: var(--frido-pdp-urgency-text, #b35a52);
-  max-width: 28rem;
+
 }
 
 .frido-pdp__selling-fast-copy {
