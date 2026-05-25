@@ -1,0 +1,196 @@
+{% comment %}
+  Bundle cards + per-pair variant configurator (discount code per bundle block).
+  @param product {Product}
+  @param section {Section}
+  @param bundle_blocks {Array}
+{% endcomment %}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign gender_option = nil
+  assign color_option = nil
+  assign size_option = nil
+
+  for option in product.options_with_values
+    assign oname = option.name | downcase
+    if gender_option == nil and oname contains 'gender'
+      assign gender_option = option
+    endif
+    if color_option == nil and oname contains 'color'
+      assign color_option = option
+    endif
+    if size_option == nil and oname contains 'size'
+      assign size_option = option
+    endif
+  endfor
+
+  if gender_option == nil and product.options.size > 0
+    assign first_name = product.options[0] | downcase
+    if first_name contains 'gender' or first_name == 'men' or first_name == 'women'
+      assign gender_option = product.options_with_values[0]
+    endif
+  endif
+
+  assign choose_heading = section.settings.bundle_choose_heading | default: 'Choose your colors'
+  assign add_pair_label = section.settings.bundle_add_pair_label | default: '+ Add Another Pair'
+  assign add_pair_sub = section.settings.bundle_add_pair_subtext | default: ''
+  assign max_pairs = section.settings.bundle_max_pairs | default: 6
+-%}
+
+{%- if bundle_blocks.size > 0 -%}
+  <div
+    class="frido-pdp-bundles"
+    data-frido-bundle-root
+    data-bundle-max-pairs="{{ max_pairs }}"
+  >
+    {%- if section.settings.bundle_heading != blank -%}
+      <p class="frido-pdp-bundles__heading">{{ section.settings.bundle_heading | escape }}</p>
+    {%- endif -%}
+
+    <div class="frido-pdp-bundles__grid">
+      {%- for block in bundle_blocks -%}
+        <button
+          type="button"
+          class="frido-pdp-bundle"
+          data-frido-bundle
+          data-quantity="{{ block.settings.quantity | default: 1 }}"
+          data-discount-code="{{ block.settings.discount_code | escape }}"
+          data-bundle-title="{{ block.settings.title | escape }}"
+          aria-pressed="false"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.badge != blank -%}
+            <span class="frido-pdp-bundle__badge frido-pdp-bundle__badge--{{ block.settings.badge_style }}">{{ block.settings.badge | escape }}</span>
+          {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 120
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-pdp-bundle__img',
+                widths: '80,120',
+                sizes: '64px',
+                alt: '',
+                data-frido-bundle-img: ''
+            }}
+          {%- elsif current_variant.featured_image -%}
+            {{
+              current_variant.featured_image
+              | image_url: width: 120
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-pdp-bundle__img',
+                widths: '80,120',
+                sizes: '64px',
+                alt: '',
+                data-frido-bundle-img: ''
+            }}
+          {%- elsif product.featured_image -%}
+            {{
+              product.featured_image
+              | image_url: width: 120
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-pdp-bundle__img',
+                widths: '80,120',
+                sizes: '64px',
+                alt: '',
+                data-frido-bundle-img: ''
+            }}
+          {%- endif -%}
+          <span class="frido-pdp-bundle__title">{{ block.settings.title | escape }}</span>
+          <span class="frido-pdp-bundle__price">{{ block.settings.price_text | escape }}</span>
+          {%- if block.settings.compare_text != blank -%}
+            <span class="frido-pdp-bundle__compare">{{ block.settings.compare_text | escape }}</span>
+          {%- endif -%}
+          {%- if block.settings.save_label != blank -%}
+            <span class="frido-pdp-bundle__save">{{ block.settings.save_label | escape }}</span>
+          {%- endif -%}
+        </button>
+      {%- endfor -%}
+    </div>
+
+    <div class="frido-pdp-bundle-config" data-frido-bundle-config hidden>
+      <p class="frido-pdp-bundle-config__heading">{{ choose_heading | escape }}</p>
+      <div class="frido-pdp-bundle-config__box" data-frido-bundle-pairs></div>
+      <button type="button" class="frido-pdp-bundle-config__add" data-frido-bundle-add-pair hidden>
+        <span class="frido-pdp-bundle-config__add-label">{{ add_pair_label | escape }}</span>
+        {%- if add_pair_sub != blank -%}
+          <span class="frido-pdp-bundle-config__add-sub">{{ add_pair_sub | escape }}</span>
+        {%- endif -%}
+      </button>
+    </div>
+  </div>
+
+  <template id="FridoBundlePairTpl-{{ section.id }}">
+    <div class="frido-pdp-bundle-pair" data-frido-bundle-pair>
+      <div class="frido-pdp-bundle-pair__head">
+        <span class="frido-pdp-bundle-pair__label" data-frido-pair-label>Pair #1</span>
+        <span class="frido-pdp-bundle-pair__stock is-in-stock" data-frido-pair-stock>
+          <span class="frido-pdp-bundle-pair__stock-icon" aria-hidden="true"></span>
+          <span data-frido-pair-stock-text>In Stock</span>
+        </span>
+        <button type="button" class="frido-pdp-bundle-pair__remove" data-frido-pair-remove aria-label="Remove pair" hidden>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="frido-pdp-bundle-pair__body">
+        <div class="frido-pdp-bundle-pair__thumb-wrap">
+          <img
+            class="frido-pdp-bundle-pair__thumb"
+            data-frido-pair-img
+            src=""
+            alt=""
+            width="72"
+            height="72"
+            loading="lazy"
+          >
+        </div>
+        <div class="frido-pdp-bundle-pair__fields">
+          {%- if gender_option -%}
+            <div class="frido-pdp-bundle-pair__field">
+              <label class="frido-pdp-bundle-pair__field-label">{{ gender_option.name | escape }}</label>
+              <select class="frido-pdp-bundle-pair__select" data-frido-pair-option="{{ gender_option.name | escape }}">
+                {%- for value in gender_option.values -%}
+                  <option value="{{ value | escape }}"{% if gender_option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+          {%- if color_option -%}
+            <div class="frido-pdp-bundle-pair__field">
+              <label class="frido-pdp-bundle-pair__field-label">{{ color_option.name | escape }}</label>
+              <select class="frido-pdp-bundle-pair__select" data-frido-pair-option="{{ color_option.name | escape }}">
+                {%- for value in color_option.values -%}
+                  <option value="{{ value | escape }}"{% if color_option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+          {%- if size_option -%}
+            <div class="frido-pdp-bundle-pair__field">
+              <label class="frido-pdp-bundle-pair__field-label">{{ size_option.name | escape }}</label>
+              <select class="frido-pdp-bundle-pair__select" data-frido-pair-option="{{ size_option.name | escape }}">
+                {%- for value in size_option.values -%}
+                  <option value="{{ value | escape }}"{% if size_option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+          {%- for option in product.options_with_values -%}
+            {%- unless option == gender_option or option == color_option or option == size_option -%}
+              <div class="frido-pdp-bundle-pair__field">
+                <label class="frido-pdp-bundle-pair__field-label">{{ option.name | escape }}</label>
+                <select class="frido-pdp-bundle-pair__select" data-frido-pair-option="{{ option.name | escape }}">
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </template>
+{%- endif -%}

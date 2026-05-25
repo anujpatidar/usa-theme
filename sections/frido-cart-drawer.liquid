@@ -1,0 +1,254 @@
+{% comment %}
+  Frido cart drawer — fast JSON cart + variant modal. Enable via Theme settings → Frido brand.
+{% endcomment %}
+{%- liquid
+  assign upsell_blocks = section.blocks | where: 'type', 'cart_upsell'
+-%}
+
+<div
+  id="FridoCartDrawer"
+  class="frido-cart-drawer color-{{ section.settings.color_scheme }} gradient"
+  data-frido-cart-drawer
+  data-money-format="{{ shop.money_format | escape }}"
+  data-label-edit="{{ section.settings.modal_submit_label | escape }}"
+  data-label-add="{{ section.settings.modal_submit_add_label | escape }}"
+  hidden
+  aria-hidden="true"
+>
+  <div class="frido-cart-drawer__overlay" data-frido-cart-close tabindex="-1"></div>
+
+  <aside
+    class="frido-cart-drawer__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="FridoCartDrawerTitle"
+    tabindex="-1"
+  >
+    <header class="frido-cart-drawer__header">
+      <div class="frido-cart-drawer__header-main">
+        <span class="frido-cart-drawer__cart-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
+          </svg>
+          <span class="frido-cart-drawer__count" data-frido-cart-drawer-count hidden>0</span>
+        </span>
+        <div>
+          <h2 id="FridoCartDrawerTitle" class="frido-cart-drawer__title">{{ section.settings.drawer_title | default: 'Your Cart' | escape }}</h2>
+          <p class="frido-cart-drawer__subtitle" data-frido-cart-subtitle>{{ 'sections.cart.title' | t }}</p>
+        </div>
+      </div>
+      <button type="button" class="frido-cart-drawer__close" data-frido-cart-close aria-label="{{ 'accessibility.close' | t }}">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </header>
+
+    <div class="frido-cart-drawer__scroll" data-frido-cart-scroll>
+      <div class="frido-cart-drawer__empty" data-frido-cart-empty{% unless cart == empty %} hidden{% endunless %}>
+        <p>{{ section.settings.empty_text | default: 'Your cart is empty' | escape }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="frido-cart-drawer__shop-link">
+          {{ section.settings.empty_cta | default: 'Continue shopping' | escape }}
+        </a>
+      </div>
+
+      <div class="frido-cart-drawer__items" data-frido-cart-items{% if cart == empty %} hidden{% endif %}></div>
+
+      {%- if upsell_blocks.size > 0 -%}
+        <div class="frido-cart-drawer__upsell" data-frido-cart-upsell-wrap{% if cart == empty %} hidden{% endif %}>
+          <h3 class="frido-cart-drawer__upsell-heading">
+            <span class="frido-cart-drawer__upsell-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </span>
+            {{ section.settings.upsell_heading | default: 'The perfect combination:' | escape }}
+          </h3>
+          <div class="frido-cart-drawer__upsell-list" data-frido-cart-upsell-list></div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <footer class="frido-cart-drawer__footer" data-frido-cart-footer{% if cart == empty %} hidden{% endif %}>
+      <div class="frido-cart-drawer__row">
+        <span data-frido-cart-subtotal-label>{{ section.settings.subtotal_label | default: 'Subtotal' | escape }}</span>
+        <span data-frido-cart-subtotal></span>
+      </div>
+      <div class="frido-cart-drawer__row frido-cart-drawer__row--discount" data-frido-cart-discount-row hidden>
+        <span>
+          <span class="frido-cart-drawer__tag-icon" aria-hidden="true">🏷</span>
+          {{ section.settings.discounts_label | default: 'Item Discounts' | escape }}
+        </span>
+        <span data-frido-cart-discount></span>
+      </div>
+      <div class="frido-cart-drawer__row frido-cart-drawer__row--total">
+        <span>{{ section.settings.total_label | default: 'Total' | escape }}</span>
+        <span data-frido-cart-total></span>
+      </div>
+      <a href="/checkout" class="frido-cart-drawer__checkout" data-frido-cart-checkout>
+        <span class="frido-cart-drawer__checkout-lock" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V11a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 1 1 6 0v3H9z"/></svg>
+        </span>
+        <span>{{ section.settings.checkout_label | default: 'CHECKOUT' | escape }}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      {%- if section.settings.show_payment_icons -%}
+        <p class="frido-cart-drawer__payments" aria-hidden="true">
+          <span>Amex</span><span>Apple Pay</span><span>G Pay</span><span>Visa</span><span>MC</span><span>PayPal</span>
+        </p>
+      {%- endif -%}
+    </footer>
+  </aside>
+</div>
+
+<div id="FridoCartVariantModal" class="frido-cart-modal" data-frido-cart-modal hidden aria-hidden="true">
+  <div class="frido-cart-modal__overlay" data-frido-cart-modal-close></div>
+  <div class="frido-cart-modal__dialog color-{{ section.settings.color_scheme }} gradient" role="dialog" aria-modal="true" tabindex="-1">
+    <button type="button" class="frido-cart-modal__close" data-frido-cart-modal-close aria-label="{{ 'accessibility.close' | t }}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="frido-cart-modal__product" data-frido-cart-modal-product hidden></div>
+    <div class="frido-cart-modal__body" data-frido-cart-modal-options></div>
+    <div class="frido-cart-modal__actions">
+      <button type="button" class="frido-cart-modal__submit" data-frido-cart-modal-submit>
+        {{ section.settings.modal_submit_label | default: 'Update Item' | escape }}
+      </button>
+      <button type="button" class="frido-cart-modal__cancel" data-frido-cart-modal-close>
+        {{ section.settings.modal_cancel_label | default: 'Cancel' | escape }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" data-frido-cart-upsells>
+  [
+    {%- for block in upsell_blocks -%}
+      {%- assign p = block.settings.product -%}
+      {%- if p != blank -%}
+        {
+          "id": {{ block.id | json }},
+          "handle": {{ p.handle | json }},
+          "title": {{ block.settings.title | default: p.title | json }},
+          "rating": {{ block.settings.rating | default: 5 }},
+          "review_count": {{ block.settings.review_count | default: '' | json }},
+          "image": {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 160 | json }}{% else %}{{ p.featured_image | image_url: width: 160 | json }}{% endif %}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+</script>
+
+{{ 'frido-cart-drawer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-cart-drawer.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Frido cart drawer",
+  "class": "section-frido-cart-drawer",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "drawer_title",
+      "label": "Drawer title",
+      "default": "Your Cart"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty cart text",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "text",
+      "id": "empty_cta",
+      "label": "Empty cart button",
+      "default": "Continue shopping"
+    },
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "Upsell heading",
+      "default": "The perfect combination:"
+    },
+    {
+      "type": "text",
+      "id": "subtotal_label",
+      "label": "Subtotal label",
+      "default": "Subtotal"
+    },
+    {
+      "type": "text",
+      "id": "discounts_label",
+      "label": "Discounts label",
+      "default": "Item Discounts"
+    },
+    {
+      "type": "text",
+      "id": "total_label",
+      "label": "Total label",
+      "default": "Total"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button",
+      "default": "CHECKOUT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment labels",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "modal_submit_label",
+      "label": "Variant modal — submit (edit line)",
+      "default": "Update Item"
+    },
+    {
+      "type": "text",
+      "id": "modal_submit_add_label",
+      "label": "Variant modal — submit (new item)",
+      "default": "ADD TO CART"
+    },
+    {
+      "type": "text",
+      "id": "modal_cancel_label",
+      "label": "Variant modal — cancel",
+      "default": "Cancel"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cart_upsell",
+      "name": "Upsell product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "review_count",
+          "label": "Review count label",
+          "default": "(6,432)"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Frido cart drawer" }]
+}
+{% endschema %}

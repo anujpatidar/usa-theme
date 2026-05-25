@@ -1475,6 +1475,17 @@
       },
       {
         "type": "header",
+        "content": "Cart drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "frido_use_cart_drawer",
+        "label": "Use Frido cart drawer",
+        "default": true,
+        "info": "Replaces Dawn cart drawer and SlideCart-style apps. Configure upsells in the Frido cart drawer section (Theme editor → Cart drawer group or customize via section in layout)."
+      },
+      {
+        "type": "header",
         "content": "Find my Perfect Size"
       },
       {

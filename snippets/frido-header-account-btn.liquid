@@ -1,0 +1,26 @@
+{% comment %}
+  Profile icon — opens account drawer for guests, links to account when logged in.
+  @param section {Section}
+{% endcomment %}
+{%- if shop.customer_accounts_enabled -%}
+  {%- if customer -%}
+    <a href="{{ routes.account_url }}" class="frido-header__icon-btn" aria-label="{{ 'customer.account.title' | t | default: 'Account' }}">
+      <svg width="{{ icon_size | default: 22 }}" height="{{ icon_size | default: 22 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
+      </svg>
+    </a>
+  {%- else -%}
+    <button
+      type="button"
+      class="frido-header__icon-btn"
+      data-frido-account-drawer-open="{{ section.id }}"
+      aria-controls="frido-account-{{ section.id }}"
+      aria-expanded="false"
+      aria-label="{{ 'customer.account.title' | t | default: 'Account' }}"
+    >
+      <svg width="{{ icon_size | default: 22 }}" height="{{ icon_size | default: 22 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
+      </svg>
+    </button>
+  {%- endif -%}
+{%- endif -%}

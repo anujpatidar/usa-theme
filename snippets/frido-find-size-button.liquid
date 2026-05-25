@@ -6,9 +6,11 @@
   @param class {String} extra classes
   @param full_width {Boolean} default true
   @param tag {String} button | submit — for forms (default button)
+  @param color_scheme {String} Shopify color scheme id (e.g. scheme-1) for button colors
 {% endcomment %}
 {%- liquid
   assign btn_label = label | default: settings.frido_find_size_label | default: 'Find my Perfect Size'
+  assign btn_scheme = color_scheme | default: 'scheme-1'
   assign btn_url = url | default: settings.frido_find_size_url
   assign btn_behavior = behavior | default: settings.frido_find_size_behavior | default: 'scroll'
   assign btn_class = class | default: ''
@@ -22,17 +24,19 @@
   {%- capture btn_classes -%}
     frido-find-size-btn{% if is_full %} frido-find-size-btn--full{% endif %}{% if btn_class != blank %} {{ btn_class }}{% endif %}
   {%- endcapture -%}
-  {%- if btn_behavior == 'link' and btn_url != blank -%}
-    <a href="{{ btn_url }}" class="{{ btn_classes | strip }}">
-      {{ btn_label | escape }}
-    </a>
-  {%- else -%}
-    <button
-      type="{{ btn_tag }}"
-      class="{{ btn_classes | strip }}"
-      data-frido-find-size-scroll="#frido-shoe-finder"
-    >
-      {{ btn_label | escape }}
-    </button>
-  {%- endif -%}
+  <div class="frido-find-size-btn-wrap color-{{ btn_scheme }} gradient">
+    {%- if btn_behavior == 'link' and btn_url != blank -%}
+      <a href="{{ btn_url }}" class="{{ btn_classes | strip }}">
+        {{ btn_label | escape }}
+      </a>
+    {%- else -%}
+      <button
+        type="{{ btn_tag }}"
+        class="{{ btn_classes | strip }}"
+        data-frido-find-size-scroll="#frido-shoe-finder"
+      >
+        {{ btn_label | escape }}
+      </button>
+    {%- endif -%}
+  </div>
 {%- endif -%}

@@ -124,6 +124,7 @@
     "cart_drawer_collection": "",
     "frido_header_sticky": true,
     "frido_use_outfit_font": true,
+    "frido_use_cart_drawer": true,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",

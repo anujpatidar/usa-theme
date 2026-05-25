@@ -1,0 +1,26 @@
+{% comment %}
+  Cart icon — opens Frido cart drawer when enabled.
+  @param section {Section}
+  @param icon_size {Number}
+{% endcomment %}
+{%- if settings.frido_use_cart_drawer != false -%}
+  <button
+    type="button"
+    class="frido-header__icon-btn frido-header__icon-btn--cart"
+    data-frido-cart-open
+    aria-haspopup="dialog"
+    aria-controls="FridoCartDrawer"
+    aria-label="{{ 'templates.cart.cart' | t }}"
+  >
+    <svg width="{{ icon_size | default: 22 }}" height="{{ icon_size | default: 22 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
+    </svg>
+    <span class="frido-header__cart-count" data-frido-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+  </button>
+{%- else -%}
+  <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
+    <svg width="{{ icon_size | default: 22 }}" height="{{ icon_size | default: 22 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
+    </svg>
+  </a>
+{%- endif -%}

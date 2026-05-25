@@ -132,76 +132,10 @@
           {% render 'frido-pdp-variants', product: product, section: section %}
 
           <div class="frido-pdp__find-size-wrap">
-            {% render 'frido-find-size-button' %}
+            {% render 'frido-find-size-button', color_scheme: section.settings.color_scheme %}
           </div>
 
-          {%- if bundle_blocks.size > 0 -%}
-            <div class="frido-pdp-bundles">
-              {%- if section.settings.bundle_heading != blank -%}
-                <p class="frido-pdp-bundles__heading">{{ section.settings.bundle_heading | escape }}</p>
-              {%- endif -%}
-              <div class="frido-pdp-bundles__grid">
-                {%- for block in bundle_blocks -%}
-                  <button
-                    type="button"
-                    class="frido-pdp-bundle{% if forloop.first %} is-active{% endif %}"
-                    data-frido-bundle
-                    data-quantity="{{ block.settings.quantity | default: 1 }}"
-                    {{ block.shopify_attributes }}
-                  >
-                    {%- if block.settings.badge != blank -%}
-                      <span class="frido-pdp-bundle__badge frido-pdp-bundle__badge--{{ block.settings.badge_style }}">{{ block.settings.badge | escape }}</span>
-                    {%- endif -%}
-                    {%- if block.settings.image != blank -%}
-                      {{
-                        block.settings.image
-                        | image_url: width: 120
-                        | image_tag:
-                          loading: 'lazy',
-                          class: 'frido-pdp-bundle__img',
-                          widths: '80,120',
-                          sizes: '64px',
-                          alt: '',
-                          data-frido-bundle-img: ''
-                      }}
-                    {%- elsif current_variant.featured_image -%}
-                      {{
-                        current_variant.featured_image
-                        | image_url: width: 120
-                        | image_tag:
-                          loading: 'lazy',
-                          class: 'frido-pdp-bundle__img',
-                          widths: '80,120',
-                          sizes: '64px',
-                          alt: '',
-                          data-frido-bundle-img: ''
-                      }}
-                    {%- elsif product.featured_image -%}
-                      {{
-                        product.featured_image
-                        | image_url: width: 120
-                        | image_tag:
-                          loading: 'lazy',
-                          class: 'frido-pdp-bundle__img',
-                          widths: '80,120',
-                          sizes: '64px',
-                          alt: '',
-                          data-frido-bundle-img: ''
-                      }}
-                    {%- endif -%}
-                    <span class="frido-pdp-bundle__title">{{ block.settings.title | escape }}</span>
-                    <span class="frido-pdp-bundle__price">{{ block.settings.price_text | escape }}</span>
-                    {%- if block.settings.compare_text != blank -%}
-                      <span class="frido-pdp-bundle__compare">{{ block.settings.compare_text | escape }}</span>
-                    {%- endif -%}
-                    {%- if block.settings.save_label != blank -%}
-                      <span class="frido-pdp-bundle__save">{{ block.settings.save_label | escape }}</span>
-                    {%- endif -%}
-                  </button>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endif -%}
+          {% render 'frido-pdp-bundle-picker', product: product, section: section, bundle_blocks: bundle_blocks %}
 
           <button type="submit" class="frido-pdp-atc" data-frido-atc{% unless current_variant.available %} disabled{% endunless %}>
             <span class="frido-pdp-atc__label">{{ section.settings.atc_label | default: 'ADD TO CART' | escape }}</span>
@@ -462,6 +396,33 @@
     },
     {
       "type": "text",
+      "id": "bundle_choose_heading",
+      "label": "Configurator heading",
+      "default": "Choose your colors"
+    },
+    {
+      "type": "text",
+      "id": "bundle_add_pair_label",
+      "label": "Add another pair — button",
+      "default": "+ Add Another Pair"
+    },
+    {
+      "type": "text",
+      "id": "bundle_add_pair_subtext",
+      "label": "Add another pair — subtext",
+      "default": "Save more on your entire order"
+    },
+    {
+      "type": "range",
+      "id": "bundle_max_pairs",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Maximum pairs in configurator",
+      "default": 6
+    },
+    {
+      "type": "text",
       "id": "atc_label",
       "label": "Add to cart label",
       "default": "ADD TO CART"
@@ -607,7 +568,13 @@
         },
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "title", "label": "Title", "default": "2 Pairs" },
-        { "type": "range", "id": "quantity", "min": 1, "max": 6, "step": 1, "label": "Quantity", "default": 2 },
+        { "type": "range", "id": "quantity", "min": 1, "max": 6, "step": 1, "label": "Pair count (rows shown)", "default": 2 },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount code",
+          "info": "Shopify discount code applied after add to cart (e.g. BUNDLE2, BUNDLE3). Create matching automatic discounts in Shopify admin."
+        },
         { "type": "text", "id": "price_text", "label": "Price display", "default": "$63" },
         { "type": "text", "id": "compare_text", "label": "Compare text", "default": "$140 Per Pair" },
         { "type": "text", "id": "save_label", "label": "Save badge", "default": "Save 55%" }

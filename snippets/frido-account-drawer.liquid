@@ -1,0 +1,261 @@
+{% comment %}
+  Account login / register drawer (guests).
+  @param section {Section}
+{% endcomment %}
+{%- unless shop.customer_accounts_enabled and customer == nil -%}
+  {%- comment -%} Logged-in shoppers use account page link only. {%- endcomment -%}
+{%- else -%}
+  {%- liquid
+    assign drawer_id = 'frido-account-' | append: section.id
+    assign welcome_heading = section.settings.account_welcome_heading | default: 'Welcome to Frido'
+    assign welcome_text = section.settings.account_welcome_text | default: 'Log in or register to track orders, checkout faster, receive all our latest news and more.'
+    assign login_tab = section.settings.account_login_tab | default: 'Login'
+    assign register_tab = section.settings.account_register_tab | default: 'Create Account'
+    assign sign_in_label = section.settings.account_sign_in_label | default: 'SIGN IN'
+    assign create_label = section.settings.account_create_label | default: 'CREATE ACCOUNT'
+    assign return_to = request.path
+    if request.query_string != blank
+      assign return_to = return_to | append: '?' | append: request.query_string
+    endif
+    assign login_form_id = 'FridoCustomerLogin-' | append: section.id
+    assign register_form_id = 'FridoCustomerRegister-' | append: section.id
+    assign recover_form_id = 'FridoCustomerRecover-' | append: section.id
+  -%}
+
+  <div
+    id="{{ drawer_id }}"
+    class="frido-account-drawer"
+    data-frido-account-drawer
+    hidden
+    aria-hidden="true"
+  >
+    <div class="frido-account-drawer__overlay" data-frido-account-drawer-close tabindex="-1"></div>
+
+    <div
+      class="frido-account-drawer__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="FridoAccountTitle-{{ section.id }}"
+      tabindex="-1"
+    >
+      <header class="frido-account-drawer__header">
+        <div class="frido-account-drawer__header-title">
+          <svg class="frido-account-drawer__header-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
+          </svg>
+          <span id="FridoAccountTitle-{{ section.id }}">{{ 'customer.account.title' | t | default: 'Account' }}</span>
+        </div>
+        <button
+          type="button"
+          class="frido-account-drawer__close"
+          data-frido-account-drawer-close
+          aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+
+      <div class="frido-account-drawer__body">
+        <div class="frido-account-drawer__view" data-frido-account-view="auth">
+          <h2 class="frido-account-drawer__welcome">{{ welcome_heading | escape }}</h2>
+          <p class="frido-account-drawer__intro">{{ welcome_text | escape }}</p>
+
+          <div class="frido-account-drawer__tabs" role="tablist" aria-label="Account">
+            <button
+              type="button"
+              class="frido-account-drawer__tab is-active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="FridoAccountLogin-{{ section.id }}"
+              id="FridoAccountTabLogin-{{ section.id }}"
+              data-frido-account-tab="login"
+            >
+              {{ login_tab | escape }}
+            </button>
+            <button
+              type="button"
+              class="frido-account-drawer__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="FridoAccountRegister-{{ section.id }}"
+              id="FridoAccountTabRegister-{{ section.id }}"
+              data-frido-account-tab="register"
+            >
+              {{ register_tab | escape }}
+            </button>
+          </div>
+
+          <div
+            id="FridoAccountLogin-{{ section.id }}"
+            class="frido-account-drawer__panel-content is-active"
+            role="tabpanel"
+            aria-labelledby="FridoAccountTabLogin-{{ section.id }}"
+            data-frido-account-panel="login"
+          >
+            {%- form 'customer_login', id: login_form_id, novalidate: 'novalidate', class: 'frido-account-drawer__form' -%}
+              <input type="hidden" name="return_to" value="{{ return_to | escape }}">
+
+              {%- if form.errors -%}
+                <div class="frido-account-drawer__errors" role="alert">
+                  {{ form.errors | default_errors }}
+                </div>
+              {%- endif -%}
+
+              <div class="frido-account-drawer__field">
+                <input
+                  type="email"
+                  name="customer[email]"
+                  id="FridoLoginEmail-{{ section.id }}"
+                  autocomplete="email"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  placeholder="{{ 'customer.login_page.email' | t }}"
+                  required
+                >
+              </div>
+
+              <div class="frido-account-drawer__field">
+                <input
+                  type="password"
+                  name="customer[password]"
+                  id="FridoLoginPassword-{{ section.id }}"
+                  autocomplete="current-password"
+                  placeholder="{{ 'customer.login_page.password' | t }}"
+                  required
+                >
+              </div>
+
+              <button type="button" class="frido-account-drawer__forgot" data-frido-account-show="recover">
+                {{ 'customer.login_page.forgot_password' | t }}
+              </button>
+
+              <button type="submit" class="frido-account-drawer__submit">
+                {{ sign_in_label | escape }}
+              </button>
+            {%- endform -%}
+          </div>
+
+          <div
+            id="FridoAccountRegister-{{ section.id }}"
+            class="frido-account-drawer__panel-content"
+            role="tabpanel"
+            aria-labelledby="FridoAccountTabRegister-{{ section.id }}"
+            data-frido-account-panel="register"
+            hidden
+          >
+            {%- form 'create_customer', id: register_form_id, novalidate: 'novalidate', class: 'frido-account-drawer__form' -%}
+              <input type="hidden" name="return_to" value="{{ return_to | escape }}">
+
+              {%- if form.errors -%}
+                <div class="frido-account-drawer__errors" role="alert">
+                  <ul class="frido-account-drawer__error-list">
+                    {%- for field in form.errors -%}
+                      <li>
+                        {%- if field == 'form' -%}
+                          {{ form.errors.messages[field] }}
+                        {%- else -%}
+                          {{ form.errors.translated_fields[field] | capitalize }}
+                          {{ form.errors.messages[field] }}
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+
+              <div class="frido-account-drawer__field">
+                <input
+                  type="text"
+                  name="customer[first_name]"
+                  id="FridoRegisterFirst-{{ section.id }}"
+                  autocomplete="given-name"
+                  placeholder="{{ 'customer.register.first_name' | t }}"
+                  value="{{ form.first_name | escape }}"
+                >
+              </div>
+
+              <div class="frido-account-drawer__field">
+                <input
+                  type="text"
+                  name="customer[last_name]"
+                  id="FridoRegisterLast-{{ section.id }}"
+                  autocomplete="family-name"
+                  placeholder="{{ 'customer.register.last_name' | t }}"
+                  value="{{ form.last_name | escape }}"
+                >
+              </div>
+
+              <div class="frido-account-drawer__field">
+                <input
+                  type="email"
+                  name="customer[email]"
+                  id="FridoRegisterEmail-{{ section.id }}"
+                  autocomplete="email"
+                  autocapitalize="off"
+                  placeholder="{{ 'customer.register.email' | t }}"
+                  value="{{ form.email | escape }}"
+                  required
+                >
+              </div>
+
+              <div class="frido-account-drawer__field">
+                <input
+                  type="password"
+                  name="customer[password]"
+                  id="FridoRegisterPassword-{{ section.id }}"
+                  autocomplete="new-password"
+                  placeholder="{{ 'customer.register.password' | t }}"
+                  required
+                >
+              </div>
+
+              <button type="submit" class="frido-account-drawer__submit">
+                {{ create_label | escape }}
+              </button>
+            {%- endform -%}
+          </div>
+        </div>
+
+        <div class="frido-account-drawer__view" data-frido-account-view="recover" hidden>
+          <h2 class="frido-account-drawer__welcome">{{ 'customer.recover_password.title' | t }}</h2>
+          <p class="frido-account-drawer__intro">{{ 'customer.recover_password.subtext' | t }}</p>
+
+          {%- form 'recover_customer_password', id: recover_form_id, class: 'frido-account-drawer__form' -%}
+            {%- if form.posted_successfully? -%}
+              <p class="frido-account-drawer__success" role="status">
+                {{ 'customer.recover_password.success' | t }}
+              </p>
+            {%- endif -%}
+
+            {%- if form.errors -%}
+              <div class="frido-account-drawer__errors" role="alert">
+                {{ form.errors.messages.form }}
+              </div>
+            {%- endif -%}
+
+            <div class="frido-account-drawer__field">
+              <input
+                type="email"
+                name="email"
+                id="FridoRecoverEmail-{{ section.id }}"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                placeholder="{{ 'customer.login_page.email' | t }}"
+                required
+              >
+            </div>
+
+            <button type="submit" class="frido-account-drawer__submit">
+              {{ 'customer.login_page.submit' | t }}
+            </button>
+
+            <button type="button" class="frido-account-drawer__back" data-frido-account-show="auth">
+              {{ 'customer.login_page.cancel' | t }}
+            </button>
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endunless -%}

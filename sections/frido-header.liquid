@@ -52,11 +52,7 @@
           mobile_center: true
         %}
         <div class="frido-header__mobile-tools">
-          <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
-            </svg>
-          </a>
+          {% render 'frido-header-cart-btn', section: section, icon_size: 22 %}
           <span class="frido-header__icon-btn frido-header__region" aria-hidden="true">
             {% if section.settings.region_icon != blank %}
               {{
@@ -68,13 +64,7 @@
               <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/><rect width="9" height="8" fill="#3C3B6E"/></svg>
             {% endif %}
           </span>
-          {% if shop.customer_accounts_enabled %}
-            <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="frido-header__icon-btn" aria-label="{{ 'customer.account_fallback' | t }}">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
-              </svg>
-            </a>
-          {% endif %}
+          {% render 'frido-header-account-btn', section: section, icon_size: 22 %}
         </div>
       </div>
 
@@ -124,11 +114,7 @@
         <div class="frido-header__actions">
           {% render 'frido-search-desktop-form', section: section %}
           <div class="frido-header__desktop-tools">
-            <a href="{{ routes.cart_url }}" class="frido-header__icon-btn" aria-label="{{ 'templates.cart.cart' | t }}">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
-              </svg>
-            </a>
+            {% render 'frido-header-cart-btn', section: section, icon_size: 24 %}
             <span class="frido-header__icon-btn frido-header__region" aria-hidden="true">
               {% if section.settings.region_icon != blank %}
                 {{
@@ -140,13 +126,7 @@
                 <svg width="24" height="17" viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" fill="#B22234"/><path stroke="#fff" stroke-width="1.2" d="M0 2h22M0 4h22M0 6h22M0 8h22M0 10h22M0 12h22M0 14h22"/><rect width="9" height="8" fill="#3C3B6E"/></svg>
               {% endif %}
             </span>
-            {% if shop.customer_accounts_enabled %}
-              <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="frido-header__icon-btn" aria-label="{{ 'customer.account_fallback' | t }}">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                  <circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/>
-                </svg>
-              </a>
-            {% endif %}
+            {% render 'frido-header-account-btn', section: section, icon_size: 24 %}
           </div>
         </div>
       </div>
@@ -232,8 +212,12 @@
   </div>
 </header>
 
+{% render 'frido-account-drawer', section: section %}
+
 {{ 'frido-search.css' | asset_url | stylesheet_tag }}
+{{ 'frido-account-drawer.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'frido-search.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'frido-account-drawer.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -360,6 +344,46 @@
       "label": "Hide Home in mobile menu",
       "default": true,
       "info": "Matches HIKE-style drawer (logo links home via header)."
+    },
+    {
+      "type": "header",
+      "content": "Account drawer"
+    },
+    {
+      "type": "text",
+      "id": "account_welcome_heading",
+      "label": "Welcome heading",
+      "default": "Welcome to Frido"
+    },
+    {
+      "type": "textarea",
+      "id": "account_welcome_text",
+      "label": "Welcome description",
+      "default": "Log in or register to track orders, checkout faster, receive all our latest news and more."
+    },
+    {
+      "type": "text",
+      "id": "account_login_tab",
+      "label": "Login tab label",
+      "default": "Login"
+    },
+    {
+      "type": "text",
+      "id": "account_register_tab",
+      "label": "Create account tab label",
+      "default": "Create Account"
+    },
+    {
+      "type": "text",
+      "id": "account_sign_in_label",
+      "label": "Sign in button",
+      "default": "SIGN IN"
+    },
+    {
+      "type": "text",
+      "id": "account_create_label",
+      "label": "Create account button",
+      "default": "CREATE ACCOUNT"
     }
   ],
   "blocks": [
