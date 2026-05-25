@@ -116,6 +116,7 @@
   gap: 0.5rem;
   line-height: 1;
   font-size: 16px;
+  font-weight:500;
   color: rgba(0, 0, 0, 0.75);
 }
 .frido-pdp__rating svg{
