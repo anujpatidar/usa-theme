@@ -413,6 +413,8 @@
     var addPairBtn = qs('[data-frido-bundle-add-pair]', bundleRoot);
     var tpl = document.getElementById('FridoBundlePairTpl-' + root.getAttribute('data-section'));
     var maxPairs = parseInt(bundleRoot.getAttribute('data-bundle-max-pairs'), 10) || 6;
+    var colorKey = ctx.colorKey || getColorOptionKey(product);
+    var syncingFromPair = false;
 
     var state = {
       card: null,
@@ -434,6 +436,18 @@
       });
     }
 
+    function variantThumbSrc(v) {
+      if (!v) return '';
+      var src = (v.featured_image && v.featured_image.src) || '';
+      if (!src && v.featured_media && v.featured_media.preview_image) {
+        src = v.featured_media.preview_image.src || '';
+      }
+      if (!src && ctx.galleryApi && colorKey && v[colorKey]) {
+        src = ctx.galleryApi.colorThumbSrc(v[colorKey]) || '';
+      }
+      return src;
+    }
+
     function updatePairRow(row) {
       var v = pairVariant(row);
       var stockEl = qs('[data-frido-pair-stock]', row);
@@ -451,11 +465,11 @@
         }
       }
       if (img && v) {
-        var src =
-          (v.featured_image && v.featured_image.src) ||
-          (v.featured_media && v.featured_media.preview_image && v.featured_media.preview_image.src) ||
-          '';
-        if (src) img.src = src;
+        var src = variantThumbSrc(v);
+        if (src) {
+          img.src = src;
+          img.alt = v.title || product.title || '';
+        }
       }
       return v;
     }
@@ -493,7 +507,8 @@
       if (atc) atc.disabled = !allAvailable;
     }
 
-    function syncRowToMainOptions(row) {
+    /** Sync main gallery, selection row, and bundle card thumbs to this pair's variant. */
+    function applyRowToMainPreview(row) {
       qsa('[data-frido-pair-option]', row).forEach(function (sel) {
         var name = sel.getAttribute('data-frido-pair-option');
         ctx.selectedOptions[name] = sel.value;
@@ -506,9 +521,30 @@
         var native = qs('[data-frido-native-select][name="options[' + name + ']"]', root);
         if (native) native.value = sel.value;
       });
-      var v = ctx.findVariant();
-      if (v) ctx.updateUI(v);
+      var v = pairVariant(row);
+      if (v) {
+        syncingFromPair = true;
+        ctx.setCurrent(v);
+        ctx.updateUI(v);
+        syncingFromPair = false;
+      }
     }
+
+    /** When main swatches change, mirror variant into Pair #1 only. */
+    function syncMainToFirstPair() {
+      if (syncingFromPair || !root.classList.contains('frido-pdp--bundle-active')) return;
+      var first = qs('[data-frido-bundle-pair]', pairsWrap);
+      if (!first) return;
+      var v = ctx.getCurrent();
+      if (!v) return;
+      product.options.forEach(function (opt, idx) {
+        var sel = qs('[data-frido-pair-option="' + opt + '"]', first);
+        if (sel) sel.value = v['option' + (idx + 1)];
+      });
+      updatePairRow(first);
+    }
+
+    root._fridoSyncMainToFirstPair = syncMainToFirstPair;
 
     function bindPairRow(row, index) {
       var label = qs('[data-frido-pair-label]', row);
@@ -529,7 +565,8 @@
 
       qsa('[data-frido-pair-option]', row).forEach(function (sel) {
         sel.addEventListener('change', function () {
-          if (index === 1) syncRowToMainOptions(row);
+          updatePairRow(row);
+          applyRowToMainPreview(row);
           updateBundleAtcPrices();
         });
       });
@@ -586,7 +623,7 @@
       for (var i = 0; i < count; i++) {
         first = createPairRow(i > 0 ? first : null);
       }
-      if (first) syncRowToMainOptions(first);
+      if (first) applyRowToMainPreview(first);
       updateAddPairVisibility();
       updateBundleAtcPrices();
     }
@@ -627,6 +664,7 @@
       });
 
       root.classList.remove('frido-pdp--bundle-active');
+      root._fridoSyncMainToFirstPair = null;
       if (config) config.hidden = true;
       clearPairs();
       if (addPairBtn) addPairBtn.hidden = true;
@@ -757,6 +795,7 @@
     var variantInput = qs('[data-frido-variant-id]', root);
     var qtyInput = qs('[data-frido-quantity]', root);
     var selectedOptions = {};
+    var colorKey = getColorOptionKey(product);
     var galleryApi = initGallery(root, product);
 
     var current =
@@ -819,8 +858,11 @@
       if (atc) atc.disabled = !variant.available;
 
       var stickyThumb = qs('.frido-pdp-sticky__thumb', root);
-      if (stickyThumb && variant.featured_image) {
-        stickyThumb.src = variant.featured_image.src;
+      if (stickyThumb) {
+        var stickySrc =
+          (variant.featured_image && variant.featured_image.src) ||
+          (galleryApi && colorKey ? galleryApi.colorThumbSrc(variant[colorKey]) : '');
+        if (stickySrc) stickyThumb.src = stickySrc;
       }
 
       if (galleryApi) galleryApi.setForVariant(variant);
@@ -832,6 +874,10 @@
             img.src = thumbSrc;
           });
         }
+      }
+
+      if (typeof root._fridoSyncMainToFirstPair === 'function') {
+        root._fridoSyncMainToFirstPair();
       }
 
       var colorEl = qs('[data-frido-sel-color]', root);
@@ -897,6 +943,7 @@
         current = v;
       },
       galleryApi: galleryApi,
+      colorKey: colorKey,
     });
 
     var stickyAtc = qs('[data-frido-sticky-atc]', root);
