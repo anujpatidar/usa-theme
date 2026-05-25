@@ -284,7 +284,9 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {% render 'frido-tokens' %}
     {{ 'frido-global.css' | asset_url | stylesheet_tag }}
+    {{ 'frido-overlay.css' | asset_url | stylesheet_tag }}
     {{ 'frido-size-chart.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'frido-overlay.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'frido-size-chart.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'frido-header.js' | asset_url }}" defer="defer"></script>
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -329,7 +331,7 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% unless settings.frido_header_sticky == false %} frido-header-sticky{% endunless %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} frido-header-sticky">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

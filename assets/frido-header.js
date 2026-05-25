@@ -61,23 +61,55 @@
   }
 
   function updateMenuPanelTop() {
-    var ann = document.querySelector('.frido-announcement');
-    var bar = document.querySelector('.frido-header__bar--mobile');
-    if (!ann || !bar) return;
-    var top = ann.getBoundingClientRect().height + bar.getBoundingClientRect().height;
+    var siteHeader = document.querySelector('.frido-site-header');
+    var top = 0;
+    if (siteHeader) {
+      top = siteHeader.offsetHeight;
+    } else {
+      var ann = document.querySelector('.frido-announcement');
+      var bar = document.querySelector('.frido-header__bar--mobile');
+      if (ann && bar) {
+        top = ann.getBoundingClientRect().height + bar.getBoundingClientRect().height;
+      }
+    }
     document.documentElement.style.setProperty('--frido-menu-panel-top', top + 'px');
   }
 
   function setMenuOpen(panel, open) {
     if (!panel) return;
-    if (open) updateMenuPanelTop();
-    panel.classList.toggle('is-open', open);
     var toggle = document.querySelector('[data-frido-menu-toggle][aria-controls="' + panel.id + '"]');
-    if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.body.classList.toggle('frido-menu-open', open);
-    if (!open) {
+    if (open) {
+      updateMenuPanelTop();
+      if (window.FridoOverlay) {
+        FridoOverlay.open(panel, { setHidden: false, bodyClass: 'frido-menu-open' });
+      } else {
+        panel.classList.add('is-open');
+        document.body.classList.add('frido-menu-open');
+      }
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    if (!panel.classList.contains('is-open') && !panel.classList.contains('is-closing')) {
+      closeMobileSub(panel);
+      return;
+    }
+
+    if (window.FridoOverlay) {
+      FridoOverlay.close(panel, {
+        setHidden: false,
+        bodyClass: 'frido-menu-open',
+        keepBodyClassIf: '.frido-menu-panel.is-open, .frido-menu-panel.is-closing',
+        onClosed: function () {
+          closeMobileSub(panel);
+        },
+      });
+    } else {
+      panel.classList.remove('is-open');
+      document.body.classList.remove('frido-menu-open');
       closeMobileSub(panel);
     }
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
   }
 
   function closeMobileSub(panel) {

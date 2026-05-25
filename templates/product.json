@@ -62,6 +62,42 @@
             "save_label": "Save 60%"
           }
         },
+        "comfort_1": {
+          "type": "comfort_feature",
+          "settings": {
+            "title": "Wide Toe Box",
+            "stat_percent": 94,
+            "stat_label": "FREER",
+            "description": "Our extra-wide toe box lets your toes spread naturally, reducing pressure and boosting stability for all-day comfort."
+          }
+        },
+        "comfort_2": {
+          "type": "comfort_feature",
+          "settings": {
+            "title": "Natural Alignment",
+            "stat_percent": 98,
+            "stat_label": "ALIGNED",
+            "description": "Built to mimic barefoot movement, easing joint strain and helping your body stay aligned with every step."
+          }
+        },
+        "comfort_3": {
+          "type": "comfort_feature",
+          "settings": {
+            "title": "Thin Soles",
+            "stat_percent": 81,
+            "stat_label": "LIGHTER",
+            "description": "Flexible, minimalist soles improve balance, stability, and natural foot strength by keeping you connected to the ground."
+          }
+        },
+        "comfort_4": {
+          "type": "comfort_feature",
+          "settings": {
+            "title": "Zero-Drop Base",
+            "stat_percent": 89,
+            "stat_label": "BALANCED",
+            "description": "A flat, zero-drop platform aligns your feet, knees, and hips for smoother movement and long-lasting comfort."
+          }
+        },
         "acc_1": {
           "type": "accordion",
           "settings": {
@@ -109,6 +145,10 @@
         "b3",
         "bundle_1",
         "bundle_2",
+        "comfort_1",
+        "comfort_2",
+        "comfort_3",
+        "comfort_4",
         "acc_1",
         "acc_2",
         "acc_3",
@@ -145,7 +185,10 @@
         "ugc_heading": "2 million customers love our shoes!",
         "story_heading": "Discover Natural Freedom of Movement",
         "story_body": "<p>Your feet weren't designed for stiff, narrow shoes.</p><p><strong>HF Flow</strong> restores your natural gait, improve posture, and keep you comfortable from city walks to all-day wear.</p><p><strong>Why thousands switch to barefoot:</strong></p><ul><li>Zero-drop sole for natural posture</li><li>Extra-roomy toe box to reduce foot pain</li><li>Lightweight, flexible design that moves with you</li></ul><p>Walk naturally. Feel stronger. Move freely.</p>",
-        "features_heading": "Why HF Flow works?"
+        "features_heading": "Why HF Flow works?",
+        "comfort_eyebrow": "TESTED & RECOMMENDED BY PODIATRISTS",
+        "comfort_heading_lead": "Engineered for All-Day ",
+        "comfort_heading_highlight": "Pain-Free Comfort"
       }
     }
   },

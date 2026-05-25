@@ -6,17 +6,24 @@
   padding-bottom: 4rem;
 }
 
-/* Sticky bar */
+/* Sticky bar — HIKE-style quick buy */
+.frido-pdp-sticky[hidden] {
+  display: none !important;
+}
+
 .frido-pdp-sticky {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: #f5f5f3;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  transform: translateY(-100%);
+  position: fixed;
+  top: var(--frido-site-header-h, 0px);
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: rgb(var(--color-background));
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-110%);
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
 }
 
 .frido-pdp-sticky.is-visible {
@@ -26,71 +33,162 @@
 }
 
 .frido-pdp-sticky__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0.8rem 1rem;
   align-items: center;
-  gap: 1rem;
-  min-height: 5.6rem;
-  padding: 0.6rem 0;
+  padding: 0.85rem 0;
 }
 
 .frido-pdp-sticky__product {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  flex: 1;
+  gap: 0.75rem;
   min-width: 0;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .frido-pdp-sticky__thumb {
-  width: 4.4rem;
-  height: 4.4rem;
+  flex-shrink: 0;
+  width: 4.8rem;
+  height: 4.8rem;
   object-fit: contain;
   border-radius: 6px;
   background: #fff;
+  border: 1px solid rgba(var(--color-foreground), 0.06);
+}
+
+.frido-pdp-sticky__meta {
+  min-width: 0;
 }
 
 .frido-pdp-sticky__title {
   display: block;
+  margin: 0 0 0.2rem;
   font-weight: 700;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: rgb(var(--color-foreground));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.frido-pdp-sticky__prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.55rem;
+}
+
 .frido-pdp-sticky__price {
-  color: var(--frido-pdp-sale);
+  font-size: 1.35rem;
   font-weight: 700;
+  color: var(--frido-pdp-sale, rgb(var(--color-button)));
+  line-height: 1.2;
 }
 
 .frido-pdp-sticky__badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  margin-left: 0.5rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--frido-pdp-pill);
-  background: var(--frido-pdp-sage);
-  font-size: 1.1rem;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--frido-pdp-pill, 999px);
+  background: rgba(var(--color-button), 0.12);
+  font-size: 1.05rem;
   font-weight: 600;
-  color: #2d5016;
+  color: rgb(var(--color-button));
+  white-space: nowrap;
+}
+
+.frido-pdp-sticky__badge[hidden] {
+  display: none !important;
+}
+
+.frido-pdp-sticky__badge-icon {
+  display: flex;
+  line-height: 0;
 }
 
 .frido-pdp-sticky__selects {
-  display: none;
+  display: grid;
+  grid-template-columns: repeat(var(--frido-sticky-cols, 3), minmax(0, 1fr));
+  gap: 0.55rem;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+}
+
+.frido-pdp-sticky__field {
+  min-width: 0;
+}
+
+.frido-pdp-sticky__select-wrap {
+  position: relative;
+  display: block;
+}
+
+.frido-pdp-sticky__select {
+  width: 100%;
+  min-height: 4rem;
+  padding: 0 2.4rem 0 0.85rem;
+  border: 1px solid rgba(var(--color-foreground), 0.18);
+  border-radius: 8px;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  appearance: none;
+  cursor: pointer;
+}
+
+.frido-pdp-sticky__select:focus-visible {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 2px;
+}
+
+.frido-pdp-sticky__select-chev {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  display: flex;
+  pointer-events: none;
+  color: rgba(var(--color-foreground), 0.55);
 }
 
 .frido-pdp-sticky__atc {
   flex-shrink: 0;
-  min-height: 4.2rem;
-  padding: 0 1.8rem;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  min-height: 4.4rem;
+  padding: 0 1.6rem;
   border: none;
   border-radius: 8px;
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
+  white-space: nowrap;
   cursor: pointer;
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+
+.frido-pdp-sticky__atc:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.frido-pdp-sticky__atc:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.frido-pdp.frido-pdp--bundle-active .frido-pdp-sticky {
+  display: none !important;
 }
 
 
@@ -1123,6 +1221,156 @@
   display: block;
 }
 
+/* Comfort features — podiatrist stats (HIKE-style) */
+.frido-pdp-comfort {
+  margin: 3.5rem 0 0;
+  padding: 3.2rem 1.5rem 3.6rem;
+  background: rgba(var(--color-foreground), 0.04);
+  text-align: center;
+}
+
+.frido-pdp-comfort__head {
+  max-width: 52rem;
+  margin: 0 auto 2.8rem;
+}
+
+.frido-pdp-comfort__eyebrow {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.45);
+}
+
+.frido-pdp-comfort__title {
+  margin: 0;
+  font-size: clamp(2rem, 5.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: rgb(var(--color-foreground));
+}
+
+.frido-pdp-comfort__title-accent {
+  color: rgb(var(--color-button));
+}
+
+.frido-pdp-comfort__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3.6rem;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.frido-pdp-comfort__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.frido-pdp-comfort__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11rem;
+  height: 11rem;
+  margin-bottom: 1.2rem;
+}
+
+.frido-pdp-comfort__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.frido-pdp-comfort__icon--placeholder {
+  display: block;
+  border-radius: 50%;
+  background: rgba(var(--color-foreground), 0.06);
+}
+
+.frido-pdp-comfort__card-title {
+  margin: 0 0 1rem;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: rgb(var(--color-foreground));
+}
+
+.frido-pdp-comfort__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  margin-bottom: 1rem;
+}
+
+.frido-pdp-comfort__stat-value {
+  font-size: clamp(3.2rem, 10vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgb(var(--color-foreground));
+}
+
+.frido-pdp-comfort__stat-label {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.frido-pdp-comfort__bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.35rem;
+  width: 100%;
+  max-width: 22rem;
+  margin: 0 auto 1.25rem;
+}
+
+.frido-pdp-comfort__bar-seg {
+  position: relative;
+  height: 0.55rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(var(--color-foreground), 0.12);
+}
+
+.frido-pdp-comfort__bar-seg.is-full:nth-child(1) {
+  background: color-mix(in srgb, rgb(var(--color-button)) 25%, #d4922a);
+}
+
+.frido-pdp-comfort__bar-seg.is-full:nth-child(2) {
+  background: color-mix(in srgb, rgb(var(--color-button)) 15%, #e8b833);
+}
+
+.frido-pdp-comfort__bar-seg.is-full:nth-child(3) {
+  background: color-mix(in srgb, rgb(var(--color-button)) 35%, #c97b2e);
+}
+
+.frido-pdp-comfort__bar-seg.is-full:nth-child(4),
+.frido-pdp-comfort__bar-seg.is-full:nth-child(5) {
+  background: rgb(var(--color-button));
+}
+
+.frido-pdp-comfort__bar-seg.is-partial .frido-pdp-comfort__bar-seg-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgb(var(--color-button));
+}
+
+.frido-pdp-comfort__desc {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 1.35rem;
+  line-height: 1.55;
+  color: rgb(var(--color-foreground));
+}
+
 /* Accordion */
 .frido-pdp-features {
   margin-top: 3rem;
@@ -1189,15 +1437,76 @@
   line-height: 1.5;
 }
 
-/* Desktop */
+/* Desktop sticky bar — single row */
 @media (min-width: 990px) {
-  .frido-pdp-sticky {
-    top: 0;
+  .frido-pdp-sticky__inner {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1.2rem 1.4rem;
+    min-height: 6.4rem;
+    padding: 0.75rem 0;
+  }
+
+  .frido-pdp-sticky__product {
+    flex: 0 1 auto;
+    max-width: 28rem;
+    grid-column: unset;
+    grid-row: unset;
+  }
+
+  .frido-pdp-sticky__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .frido-pdp-sticky__title {
+    display: inline;
+    margin: 0;
+    font-size: 1.5rem;
+    white-space: nowrap;
+  }
+
+  .frido-pdp-sticky__prices {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .frido-pdp-sticky__price {
+    font-size: 1.45rem;
   }
 
   .frido-pdp-sticky__selects {
     display: flex;
-    gap: 0.6rem;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    gap: 0.65rem;
+    grid-column: unset;
+    grid-row: unset;
+    max-width: 42rem;
+  }
+
+  .frido-pdp-sticky__field {
+    flex: 1 1 0;
+    min-width: 9rem;
+    max-width: 14rem;
+  }
+
+  .frido-pdp-sticky__select {
+    min-height: 4.2rem;
+    font-size: 1.25rem;
+  }
+
+  .frido-pdp-sticky__atc {
+    grid-column: unset;
+    grid-row: unset;
+    margin-left: auto;
+    min-height: 4.4rem;
+    padding: 0 2.2rem;
+    font-size: 1.35rem;
   }
 
   .frido-pdp__head-mobile {
@@ -1295,16 +1604,57 @@
     align-items: start;
   }
 
+  .frido-pdp-comfort {
+    padding: 4.5rem 0 5rem;
+  }
+
+  .frido-pdp-comfort__head {
+    margin-bottom: 3.5rem;
+  }
+
+  .frido-pdp-comfort__title {
+    font-size: 3rem;
+  }
+
+  .frido-pdp-comfort__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem 2.4rem;
+    max-width: none;
+    margin: 0;
+    align-items: start;
+  }
+
+  .frido-pdp-comfort__icon-wrap {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 1rem;
+  }
+
+  .frido-pdp-comfort__card-title {
+    font-size: 1.5rem;
+    min-height: 2.5em;
+  }
+
+  .frido-pdp-comfort__stat-value {
+    font-size: 3.6rem;
+  }
+
+  .frido-pdp-comfort__bar {
+    max-width: 100%;
+  }
+
+  .frido-pdp-comfort__desc {
+    font-size: 1.25rem;
+    max-width: none;
+  }
+
   .frido-pdp-ugc__item {
     flex: 1;
   }
 }
 
 @media (max-width: 989px) {
-  .frido-pdp-sticky {
-    display: none;
-  }
-
   .frido-pdp__buy-col .frido-pdp__benefit {
     display: none;
   }

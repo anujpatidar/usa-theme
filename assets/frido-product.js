@@ -887,10 +887,43 @@
       });
     }
 
+    function syncStickySelects() {
+      qsa('[data-frido-sticky-select]', root).forEach(function (sel) {
+        var name = sel.getAttribute('data-frido-sticky-select');
+        if (selectedOptions[name] !== undefined && sel.value !== selectedOptions[name]) {
+          sel.value = selectedOptions[name];
+        }
+      });
+    }
+
+    function applyOptionChange(optName, value) {
+      selectedOptions[optName] = value;
+
+      var wrap = qs('[data-frido-option="' + optName + '"]', root);
+      if (wrap) {
+        qsa('[data-frido-option-value]', wrap).forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-frido-option-value') === value);
+        });
+      }
+
+      var native = qs('[data-frido-native-select][name="options[' + optName + ']"]', root);
+      if (native) native.value = value;
+
+      syncStickySelects();
+
+      var v = findVariant();
+      if (v) updateUI(v);
+    }
+
     function updateUI(variant) {
       if (!variant) return;
       current = variant;
       variantInput.value = variant.id;
+
+      product.options.forEach(function (opt, idx) {
+        selectedOptions[opt] = variant['option' + (idx + 1)];
+      });
+      syncStickySelects();
 
       var money = formatMoney(variant.price);
       qsa('[data-frido-price]', root).forEach(function (el) {
@@ -925,9 +958,15 @@
           el.hidden = true;
         }
       });
+      var stickyBadgeText = qs('[data-frido-sticky-badge-text]', root);
+      var stickyBadge = qs('[data-frido-sticky-badge]', root);
+      if (stickyBadgeText) stickyBadgeText.textContent = pct > 0 ? 'Save ' + pct + '%' : '';
+      if (stickyBadge) stickyBadge.hidden = pct <= 0;
 
       var atc = qs('[data-frido-atc]', root);
       if (atc) atc.disabled = !variant.available;
+      var stickyAtcBtn = qs('[data-frido-sticky-atc]', root);
+      if (stickyAtcBtn) stickyAtcBtn.disabled = !variant.available;
 
       var stickyThumb = qs('.frido-pdp-sticky__thumb', root);
       if (stickyThumb) {
@@ -982,24 +1021,20 @@
       btn.addEventListener('click', function () {
         var wrap = btn.closest('[data-frido-option]');
         if (!wrap) return;
-        var optName = wrap.getAttribute('data-frido-option');
-        selectedOptions[optName] = btn.getAttribute('data-frido-option-value');
-
-        qsa('[data-frido-option-value]', wrap).forEach(function (b) {
-          b.classList.toggle('is-active', b === btn);
-        });
-
-        var v = findVariant();
-        if (v) updateUI(v);
+        applyOptionChange(wrap.getAttribute('data-frido-option'), btn.getAttribute('data-frido-option-value'));
       });
     });
 
     qsa('[data-frido-native-select]', root).forEach(function (sel) {
       sel.addEventListener('change', function () {
         var name = sel.name.replace('options[', '').replace(']', '');
-        selectedOptions[name] = sel.value;
-        var v = findVariant();
-        if (v) updateUI(v);
+        applyOptionChange(name, sel.value);
+      });
+    });
+
+    qsa('[data-frido-sticky-select]', root).forEach(function (sel) {
+      sel.addEventListener('change', function () {
+        applyOptionChange(sel.getAttribute('data-frido-sticky-select'), sel.value);
       });
     });
 
@@ -1043,13 +1078,29 @@
 
     var sticky = qs('[data-frido-pdp-sticky]', root);
     if (sticky) {
+      function updateStickyHeaderOffset() {
+        var siteHeader = document.querySelector('.frido-site-header');
+        var h = siteHeader ? siteHeader.getBoundingClientRect().height : 0;
+        document.documentElement.style.setProperty('--frido-site-header-h', h + 'px');
+      }
+
+      updateStickyHeaderOffset();
+      window.addEventListener('resize', updateStickyHeaderOffset);
+
       var buyCol = qs('.frido-pdp__buy-col', root);
       if (buyCol && 'IntersectionObserver' in window) {
         var io = new IntersectionObserver(
           function (entries) {
-            sticky.classList.toggle('is-visible', !entries[0].isIntersecting);
+            var show = !entries[0].isIntersecting && !root.classList.contains('frido-pdp--bundle-active');
+            sticky.classList.toggle('is-visible', show);
+            if (show) {
+              sticky.removeAttribute('hidden');
+              updateStickyHeaderOffset();
+            } else {
+              sticky.setAttribute('hidden', '');
+            }
           },
-          { rootMargin: '-80px 0px 0px 0px', threshold: 0 }
+          { rootMargin: '0px 0px 0px 0px', threshold: 0 }
         );
         io.observe(buyCol);
       }

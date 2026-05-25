@@ -1,0 +1,422 @@
+/* Frido header search — HIKE-style overlay + dropdown */
+
+.frido-search__mobile-trigger {
+  display: inline-flex;
+}
+
+.frido-search__form {
+  display: none;
+}
+
+/* Panel — portaled to body via JS */
+.frido-search-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.frido-search-panel[hidden] {
+  display: none !important;
+}
+
+.frido-search-panel.is-open,
+.frido-search-panel.is-closing {
+  pointer-events: auto;
+}
+
+@media (min-width: 990px) {
+  .frido-search-panel.is-open {
+    pointer-events: none;
+  }
+
+  .frido-search-panel.is-open .frido-search-panel__sheet {
+    pointer-events: auto;
+  }
+}
+
+.frido-search-panel__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.frido-search-panel.is-open .frido-search-panel__backdrop {
+  opacity: 1;
+}
+
+.frido-search-panel__sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  max-height: 92vh;
+  overflow: hidden;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+
+/* Mobile full-screen */
+.frido-search-panel__mobile-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+  padding: 0.75rem 1.2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgb(var(--color-background));
+}
+
+.frido-search-panel__mobile-form {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.frido-search-panel__mobile-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.45;
+  display: flex;
+  pointer-events: none;
+}
+
+.frido-search-panel__mobile-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgb(var(--color-button));
+  border-radius: var(--frido-radius-pill, 999px);
+  background: #fff;
+  color: rgb(var(--color-foreground));
+  padding: 0.9rem 1.2rem 0.9rem 3.2rem;
+  font-family: inherit;
+  font-size: 1.45rem;
+  outline: none;
+}
+
+.frido-search-panel__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.frido-search-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.6rem 1.5rem 2.4rem;
+  background: #e9ede1;
+}
+
+.frido-search-panel__loading {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.frido-search-panel__loading[hidden] {
+  display: none !important;
+}
+
+.frido-search-panel__spinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-top-color: rgb(var(--color-button));
+  border-radius: 50%;
+  animation: frido-search-spin 0.7s linear infinite;
+}
+
+@keyframes frido-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.frido-search-panel__idle[hidden],
+.frido-search-panel__results[hidden] {
+  display: none !important;
+}
+
+.frido-search-panel__heading {
+  margin: 0 0 1.2rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #000;
+}
+
+.frido-search-panel__subheading {
+  margin: 0 0 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.frido-search-panel__subheading--spaced {
+  margin-top: 2rem;
+}
+
+.frido-search-panel__rule {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0 0 1rem;
+}
+
+.frido-search-panel__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.frido-search-panel__links a {
+  display: block;
+  padding: 0.35rem 0;
+  font-size: 1.45rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.frido-search-panel__links a:hover {
+  opacity: 0.7;
+}
+
+.frido-search-panel__cta,
+.frido-search-results__view-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4.2rem;
+  padding: 0 2rem;
+  margin-top: 1.6rem;
+  border-radius: var(--frido-radius-pill, 999px);
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.frido-search-panel__cta:hover,
+.frido-search-results__view-all:hover {
+  opacity: 0.92;
+  color: rgb(var(--color-button-text));
+}
+
+.frido-search-results__count {
+  margin: 0 0 1.2rem;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.frido-search-results__empty {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.frido-search-results__foot {
+  margin-top: 1.6rem;
+}
+
+.frido-search-results__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* Search product card */
+.frido-scard {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.frido-scard__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.frido-scard__img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 9rem;
+  padding: 0.8rem;
+  background: #f5f5f5;
+}
+
+.frido-scard__img img {
+  max-width: 100%;
+  max-height: 8rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.frido-scard__body {
+  padding: 0.8rem 1rem 1.2rem;
+}
+
+.frido-scard__cat {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.45);
+  text-transform: uppercase;
+}
+
+.frido-scard__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.frido-scard__meta .frido-stars {
+  color: #f5b800;
+}
+
+.frido-scard__meta .frido-stars svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.frido-scard__reviews {
+  font-size: 1.15rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.frido-scard__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.frido-scard__prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.frido-scard__price {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #c0392b;
+}
+
+.frido-scard__compare {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.45);
+  text-decoration: line-through;
+}
+
+body.frido-search-open {
+  overflow: hidden;
+}
+
+/* Mobile defaults */
+@media (max-width: 989px) {
+  .frido-search-panel__sheet {
+    top: 0;
+    bottom: 0;
+    max-height: none;
+    transform: translateY(-4%);
+    opacity: 0;
+  }
+
+  .frido-search-panel.is-open .frido-search-panel__sheet {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .frido-search-panel__aside {
+    display: none;
+  }
+
+  .frido-menu-panel__search {
+    display: none;
+  }
+}
+
+/* Desktop */
+@media (min-width: 990px) {
+  .frido-search__mobile-trigger {
+    display: none;
+  }
+
+  .frido-search__form {
+    display: block;
+    position: relative;
+    min-width: 20rem;
+  }
+
+  .frido-search-panel__backdrop {
+    display: none;
+  }
+
+  .frido-search-panel__mobile-bar {
+    display: none;
+  }
+
+  .frido-search-panel__sheet {
+    top: var(--frido-search-panel-top, 7rem);
+    bottom: auto;
+    left: 0;
+    right: 0;
+    max-height: min(75vh, 44rem);
+    transform: translateY(-0.5rem);
+    opacity: 0;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .frido-search-panel.is-open .frido-search-panel__sheet {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .frido-search-panel__body {
+    padding: 2.4rem 3rem 2.8rem;
+    background: #fff;
+  }
+
+  .frido-search-panel__idle {
+    display: grid;
+    grid-template-columns: 1fr minmax(14rem, 22rem);
+    align-items: start;
+    gap: 3rem;
+  }
+
+  .frido-search-results__grid--trending {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .frido-search-panel__results .frido-search-results__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

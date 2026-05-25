@@ -1,0 +1,307 @@
+/**
+ * Account login / register drawer
+ */
+:root {
+  --frido-account-tab-active: #557b2e;
+  --frido-account-btn: #3d4528;
+  --frido-account-tab-inactive: #e8e8e8;
+  --frido-account-input-bg: #ececec;
+}
+
+.frido-account-drawer[hidden] {
+  display: none;
+}
+
+.frido-account-drawer.is-open,
+.frido-account-drawer.is-closing {
+  display: block;
+}
+
+.frido-account-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 125;
+  pointer-events: none;
+}
+
+.frido-account-drawer.is-open,
+.frido-account-drawer.is-closing {
+  pointer-events: auto;
+}
+
+.frido-account-drawer__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  cursor: pointer;
+}
+
+.frido-account-drawer.is-open .frido-account-drawer__overlay {
+  opacity: 1;
+}
+
+.frido-account-drawer__panel {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: #000;
+  overflow: hidden;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media screen and (min-width: 750px) {
+  .frido-account-drawer__overlay {
+    display: block;
+  }
+
+  .frido-account-drawer__panel {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 50vw;
+    max-width: none;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+  }
+
+  .frido-account-drawer.is-open .frido-account-drawer__panel {
+    transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .frido-account-drawer__overlay {
+    display: none;
+  }
+
+  .frido-account-drawer__panel {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    transform: translateX(100%);
+  }
+
+  .frido-account-drawer.is-open .frido-account-drawer__panel {
+    transform: translateX(0);
+  }
+}
+
+.frido-account-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 2rem 2.4rem 1.6rem;
+}
+
+.frido-account-drawer__header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.frido-account-drawer__header-icon {
+  flex-shrink: 0;
+}
+
+.frido-account-drawer__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000;
+  font-size: 2.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.frido-account-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 2.4rem 3rem;
+}
+
+.frido-account-drawer__welcome {
+  margin: 0 0 1rem;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.frido-account-drawer__intro {
+  margin: 0 0 2.4rem;
+  font-size: 1.35rem;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.75);
+  max-width: 36rem;
+}
+
+.frido-account-drawer__tabs {
+  display: flex;
+  gap: 0;
+  margin: 0 0 2rem;
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: var(--frido-account-tab-inactive);
+}
+
+.frido-account-drawer__tab {
+  flex: 1;
+  margin: 0;
+  padding: 1rem 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #000;
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.frido-account-drawer__tab.is-active {
+  background: var(--frido-account-tab-active);
+  color: #fff;
+}
+
+.frido-account-drawer__panel-content {
+  display: none;
+}
+
+.frido-account-drawer__panel-content.is-active {
+  display: block;
+}
+
+.frido-account-drawer__panel-content[hidden] {
+  display: none !important;
+}
+
+.frido-account-drawer__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.frido-account-drawer__field input {
+  width: 100%;
+  min-height: 5rem;
+  padding: 0 1.4rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--frido-account-input-bg);
+  color: #000;
+  font-family: inherit;
+  font-size: 1.35rem;
+  box-sizing: border-box;
+}
+
+.frido-account-drawer__field input::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.frido-account-drawer__field input:focus {
+  outline: 2px solid var(--frido-account-tab-active);
+  outline-offset: 1px;
+}
+
+.frido-account-drawer__forgot {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #000;
+  font-family: inherit;
+  font-size: 1.2rem;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  cursor: pointer;
+}
+
+.frido-account-drawer__submit {
+  width: 100%;
+  min-height: 5.2rem;
+  margin-top: 0.8rem;
+  padding: 0 2rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--frido-account-btn);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.frido-account-drawer__submit:hover {
+  opacity: 0.9;
+}
+
+.frido-account-drawer__back {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.8rem;
+  border: 0;
+  background: none;
+  color: #000;
+  font-family: inherit;
+  font-size: 1.25rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.frido-account-drawer__errors {
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  background: #fde8e8;
+  color: #8b0000;
+  font-size: 1.2rem;
+  line-height: 1.45;
+}
+
+.frido-account-drawer__error-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.frido-account-drawer__success {
+  margin: 0 0 1.2rem;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: var(--frido-account-tab-active);
+}
+
+body.frido-account-drawer-open {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 749px) {
+  .frido-account-drawer__header {
+    padding: max(1.6rem, env(safe-area-inset-top)) 1.6rem 1.2rem;
+  }
+
+  .frido-account-drawer__body {
+    padding: 0 1.6rem max(2rem, env(safe-area-inset-bottom));
+  }
+}

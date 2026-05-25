@@ -1464,7 +1464,7 @@
         "id": "frido_header_sticky",
         "label": "Sticky Frido header",
         "default": true,
-        "info": "When on, the Frido header (announcement + nav) stays at the top while scrolling."
+        "info": "Announcement bar and header are always sticky site-wide. This setting is kept for compatibility."
       },
       {
         "type": "checkbox",

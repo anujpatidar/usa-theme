@@ -18,10 +18,18 @@ body.frido-menu-open {
   max-width: 100%;
 }
 
+/* ---------- Sticky site header (announcement + nav) ---------- */
+.frido-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
 /* ---------- Announcement ---------- */
 .frido-announcement-wrap {
   position: relative;
-  z-index: 52;
+  z-index: 2;
 }
 
 .frido-announcement {
@@ -150,12 +158,7 @@ body.frido-menu-open {
   color: rgb(var(--color-foreground));
   border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
   position: relative;
-  z-index: 51;
-}
-
-body.frido-header-sticky .frido-header {
-  position: sticky;
-  top: 0;
+  z-index: 1;
 }
 
 .frido-header__shell {
@@ -611,13 +614,16 @@ body.frido-menu-open .frido-header__menu-icon--close {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.2s ease, visibility 0.2s;
 }
 
-.frido-menu-panel.is-open {
+.frido-menu-panel.is-open:not(.is-closing),
+.frido-menu-panel.is-closing {
+  pointer-events: auto;
+}
+
+.frido-menu-panel.is-open:not(.is-closing) {
   opacity: 1;
   visibility: visible;
-  pointer-events: auto;
 }
 
 .frido-menu-panel__inner {

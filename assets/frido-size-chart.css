@@ -11,7 +11,8 @@
   display: none;
 }
 
-.frido-size-chart.is-open {
+.frido-size-chart.is-open,
+.frido-size-chart.is-closing {
   display: block;
 }
 
@@ -22,7 +23,8 @@
   pointer-events: none;
 }
 
-.frido-size-chart.is-open {
+.frido-size-chart.is-open,
+.frido-size-chart.is-closing {
   pointer-events: auto;
 }
 

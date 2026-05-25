@@ -1,0 +1,96 @@
+{% comment %}
+  PDP comfort / podiatrist features — HIKE-style stat cards + segmented bar.
+  @param section {Section}
+{% endcomment %}
+{%- liquid
+  assign comfort_blocks = section.blocks | where: 'type', 'comfort_feature'
+  assign eyebrow = section.settings.comfort_eyebrow
+  assign heading_lead = section.settings.comfort_heading_lead
+  assign heading_highlight = section.settings.comfort_heading_highlight
+-%}
+
+{%- if comfort_blocks.size > 0 -%}
+  <section class="frido-pdp-comfort" aria-labelledby="FridoComfortHeading-{{ section.id }}">
+    <header class="frido-pdp-comfort__head">
+      {%- if eyebrow != blank -%}
+        <p class="frido-pdp-comfort__eyebrow">{{ eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 id="FridoComfortHeading-{{ section.id }}" class="frido-pdp-comfort__title">
+        {%- if heading_lead != blank -%}{{ heading_lead | escape }}{%- endif -%}
+        {%- if heading_highlight != blank -%}
+          <span class="frido-pdp-comfort__title-accent">{{ heading_highlight | escape }}</span>
+        {%- endif -%}
+      </h2>
+    </header>
+
+    <div class="frido-pdp-comfort__grid">
+      {%- for block in comfort_blocks -%}
+        {%- liquid
+          assign pct = block.settings.stat_percent | default: 0 | plus: 0
+          if pct > 100
+            assign pct = 100
+          endif
+          if pct < 0
+            assign pct = 0
+          endif
+        -%}
+        <article class="frido-pdp-comfort__card" {{ block.shopify_attributes }}>
+          <div class="frido-pdp-comfort__icon-wrap">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 280
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'frido-pdp-comfort__icon',
+                  widths: '140,200,280',
+                  sizes: '(min-width: 990px) 12vw, 40vw',
+                  alt: block.settings.title
+              }}
+            {%- else -%}
+              <span class="frido-pdp-comfort__icon frido-pdp-comfort__icon--placeholder" aria-hidden="true"></span>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="frido-pdp-comfort__card-title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+
+          <div class="frido-pdp-comfort__stat">
+            <span class="frido-pdp-comfort__stat-value">{{ pct }}%</span>
+            {%- if block.settings.stat_label != blank -%}
+              <span class="frido-pdp-comfort__stat-label">{{ block.settings.stat_label | escape }}</span>
+            {%- endif -%}
+          </div>
+
+          <div class="frido-pdp-comfort__bar" role="img" aria-label="{{ pct }}% {{ block.settings.stat_label | escape }}">
+            {%- for i in (1..5) -%}
+              {%- liquid
+                assign seg_end = i | times: 20
+                assign seg_start = seg_end | minus: 20
+                assign seg_class = 'frido-pdp-comfort__bar-seg'
+                assign partial_w = 0
+
+                if pct >= seg_end
+                  assign seg_class = seg_class | append: ' is-full'
+                elsif pct > seg_start
+                  assign seg_class = seg_class | append: ' is-partial'
+                  assign partial_w = pct | minus: seg_start | times: 100 | divided_by: 20
+                endif
+              -%}
+              <span class="{{ seg_class }}" data-seg="{{ i }}">
+                {%- if seg_class contains 'is-partial' -%}
+                  <span class="frido-pdp-comfort__bar-seg-fill" style="width: {{ partial_w }}%"></span>
+                {%- endif -%}
+              </span>
+            {%- endfor -%}
+          </div>
+
+          {%- if block.settings.description != blank -%}
+            <p class="frido-pdp-comfort__desc">{{ block.settings.description | escape }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
