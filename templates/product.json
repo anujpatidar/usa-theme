@@ -16,6 +16,7 @@
           "type": "benefit",
           "settings": {
             "icon": "check",
+            "icon_image": "shopify://shop_images/19403538203c6c081452ad5aca768cc2e0529e47-250x254_1.avif",
             "text": "Relieves pressure on feet and joints"
           }
         },
@@ -23,6 +24,7 @@
           "type": "benefit",
           "settings": {
             "icon": "check",
+            "icon_image": "shopify://shop_images/19403538203c6c081452ad5aca768cc2e0529e47-250x254_1.avif",
             "text": "Developed with podiatrists"
           }
         },
@@ -30,6 +32,7 @@
           "type": "benefit",
           "settings": {
             "icon": "truck",
+            "icon_image": "shopify://shop_images/0715b1253d179a1411cf0d385761f0534b56512d-686x390.avif",
             "text": "Free shipping"
           }
         },
@@ -112,14 +115,23 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
+        "social_proof_lead": "Purchased more than",
+        "social_proof_stat": "2,437,825+",
+        "social_proof_tail": "times.",
         "social_proof": "Purchased more than 2,437,825+ times.",
         "rating_line": "Excellent 4.9 | 7,295+ Reviews",
+        "reviews_url": "",
         "selling_fast": "Selling Out Fast",
+        "selling_fast_body_lead": "This product is in high demand. Based on the sales volume in the past 3 hours,",
+        "selling_fast_body_bold": "this product is likely to sell out today.",
         "find_size_label": "Find my Perfect Size",
+        "find_size_url": "",
+        "size_chart_url": "",
         "bundle_heading": "Bundle promotion is valid till 11:59 PM",
         "atc_label": "ADD TO CART",
         "sticky_atc_label": "Add to Cart",
         "hsa_text": "HSA/FSA eligible",
+        "hsa_link": "",
         "hsa_learn_label": "Learn more",
         "trust_ship_title": "In Stock Items Ship By",
         "trust_ship_date": "FRI, MAY 22",
@@ -129,6 +141,7 @@
         "trust_shipping_sub": "TO UNITED STATES",
         "ugc_heading": "2 million customers love our shoes!",
         "story_heading": "Discover Natural Freedom of Movement",
+        "story_body": "<p>Your feet weren't designed for stiff, narrow shoes.</p><p><strong>HF Flow</strong> restores your natural gait, improve posture, and keep you comfortable from city walks to all-day wear.</p><p><strong>Why thousands switch to barefoot:</strong></p><ul><li>Zero-drop sole for natural posture</li><li>Extra-roomy toe box to reduce foot pain</li><li>Lightweight, flexible design that moves with you</li></ul><p>Walk naturally. Feel stronger. Move freely.</p>",
         "features_heading": "Why HF Flow works?"
       }
     }
