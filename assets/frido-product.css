@@ -118,6 +118,7 @@
   font-size: 16px;
   font-weight:500;
   color: rgba(0, 0, 0, 0.75);
+  margin:0;
 }
 .frido-pdp__rating svg{
   width: 16px !important;
