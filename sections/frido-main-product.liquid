@@ -90,8 +90,8 @@
           {% render 'frido-pdp-selling-fast', section: section %}
           {%- for block in benefit_blocks -%}
             <p class="frido-pdp__benefit" {{ block.shopify_attributes }}>
-              <span class="frido-pdp__benefit-icon frido-pdp__benefit-icon--{{ block.settings.icon }}" aria-hidden="true"></span>
-              {{ block.settings.text | escape }}
+              {% render 'frido-pdp-benefit-icon', icon: block.settings.icon, image: block.settings.icon_image %}
+              <span class="frido-pdp__benefit-text">{{ block.settings.text | escape }}</span>
             </p>
           {%- endfor -%}
         </div>
@@ -118,8 +118,8 @@
           <div class="frido-pdp__benefits-desktop">
             {%- for block in benefit_blocks -%}
               <p class="frido-pdp__benefit" {{ block.shopify_attributes }}>
-                <span class="frido-pdp__benefit-icon frido-pdp__benefit-icon--{{ block.settings.icon }}" aria-hidden="true"></span>
-                {{ block.settings.text | escape }}
+                {% render 'frido-pdp-benefit-icon', icon: block.settings.icon, image: block.settings.icon_image %}
+                <span class="frido-pdp__benefit-text">{{ block.settings.text | escape }}</span>
               </p>
             {%- endfor -%}
           </div>
@@ -513,12 +513,31 @@
         {
           "type": "select",
           "id": "icon",
-          "label": "Icon",
+          "label": "Theme icon",
           "options": [
-            { "value": "check", "label": "Check" },
-            { "value": "truck", "label": "Truck" }
+            { "value": "check", "label": "Checkmark" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "success", "label": "Success" },
+            { "value": "tick", "label": "Tick" },
+            { "value": "star", "label": "Star" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "lightning", "label": "Lightning" },
+            { "value": "return", "label": "Return" },
+            { "value": "padlock", "label": "Padlock" },
+            { "value": "box", "label": "Box" },
+            { "value": "price-tag", "label": "Price tag" },
+            { "value": "map-pin", "label": "Map pin" },
+            { "value": "stopwatch", "label": "Stopwatch" },
+            { "value": "shoe", "label": "Shoe" },
+            { "value": "discount", "label": "Discount" }
           ],
           "default": "check"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom icon (optional)",
+          "info": "Overrides theme SVG when set."
         },
         {
           "type": "text",

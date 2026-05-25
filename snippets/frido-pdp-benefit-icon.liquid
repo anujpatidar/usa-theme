@@ -1,0 +1,63 @@
+{% comment %}
+  PDP benefit icon — theme SVG asset or optional custom image.
+  @param icon {String} theme icon key (maps to assets/icon-*.svg)
+  @param image {Image} optional override
+{% endcomment %}
+{%- liquid
+  assign icon_key = icon | default: 'check'
+  assign asset_file = 'icon-checkmark.svg'
+
+  case icon_key
+    when 'truck'
+      assign asset_file = 'icon-truck.svg'
+    when 'success'
+      assign asset_file = 'icon-success.svg'
+    when 'tick'
+      assign asset_file = 'icon-tick.svg'
+    when 'star'
+      assign asset_file = 'icon-star.svg'
+    when 'heart'
+      assign asset_file = 'icon-heart.svg'
+    when 'lightning'
+      assign asset_file = 'icon-lightning-bolt.svg'
+    when 'return'
+      assign asset_file = 'icon-return.svg'
+    when 'padlock'
+      assign asset_file = 'icon-padlock.svg'
+    when 'box'
+      assign asset_file = 'icon-box.svg'
+    when 'price-tag'
+      assign asset_file = 'icon-price-tag.svg'
+    when 'map-pin'
+      assign asset_file = 'icon-map-pin.svg'
+    when 'stopwatch'
+      assign asset_file = 'icon-stopwatch.svg'
+    when 'leaf', 'foot'
+      assign asset_file = 'icon-leaf.svg'
+    when 'shoe'
+      assign asset_file = 'icon-shoe.svg'
+    when 'discount'
+      assign asset_file = 'icon-discount.svg'
+    when 'check'
+      assign asset_file = 'icon-checkmark.svg'
+  endcase
+-%}
+
+<span class="frido-pdp__benefit-icon" aria-hidden="true">
+  {%- if image != blank -%}
+    {{
+      image
+      | image_url: width: 96
+      | image_tag:
+        loading: 'lazy',
+        class: 'frido-pdp__benefit-icon-img',
+        widths: '48,64,96',
+        sizes: '24px',
+        alt: ''
+    }}
+  {%- else -%}
+    <span class="frido-pdp__benefit-icon-svg">
+      {{ asset_file | inline_asset_content }}
+    </span>
+  {%- endif -%}
+</span>
