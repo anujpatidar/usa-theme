@@ -103,7 +103,9 @@
 .frido-pdp__head-desktop {
   display: none;
 }
-
+.frido-pdp__buy-col{
+  padding: 24px;
+}
 .frido-pdp__buy-col .frido-pdp__benefits-desktop {
   display: none;
 }
