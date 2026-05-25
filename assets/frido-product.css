@@ -226,8 +226,7 @@
 }
 
 .frido-pdp__title {
-  margin: 0 0 0.8rem;
-  font-size: clamp(1.6rem, 4.5vw, 2rem);
+  font-size: 24px;
   font-weight: 700;
   line-height: 1.25;
 }
