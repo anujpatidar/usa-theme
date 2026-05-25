@@ -627,8 +627,8 @@
   border: 1px solid #ddd;
   border-radius: 6px;
   background: #fff;
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -636,7 +636,7 @@
   border-color: rgb(var(--color-button));
   background: var(--color-button, 20%);
   color: rgb(var(--color-button));
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .frido-pdp-selection {
