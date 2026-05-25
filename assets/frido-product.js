@@ -456,14 +456,19 @@
         if (compare > variant.price) atcCompare.textContent = formatMoney(compare);
       }
 
-      var saveBadge = qs('[data-frido-save-badge]', root);
-      if (saveBadge && compare > variant.price) {
-        var pct = Math.round(((compare - variant.price) * 100) / compare);
-        saveBadge.textContent = 'Save ' + pct + '%';
-        saveBadge.style.display = '';
-      } else if (saveBadge) {
-        saveBadge.style.display = compare > variant.price ? '' : 'none';
-      }
+      var pct =
+        compare > variant.price ? Math.round(((compare - variant.price) * 100) / compare) : 0;
+      qsa('[data-frido-save-badge-text]', root).forEach(function (el) {
+        if (pct > 0) el.textContent = 'Save ' + pct + '%';
+      });
+      qsa('[data-frido-save-badge]', root).forEach(function (el) {
+        if (pct > 0) {
+          el.hidden = false;
+          el.style.display = '';
+        } else {
+          el.hidden = true;
+        }
+      });
 
       var atc = qs('[data-frido-atc]', root);
       if (atc) atc.disabled = !variant.available;

@@ -70,15 +70,7 @@
         {% render 'frido-pdp-social-proof', section: section %}
         <div class="frido-pdp__title-row">
           <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
-          <div class="frido-pdp__price-row">
-            <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
-            {%- if compare_at > price -%}
-              <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
-            {%- endif -%}
-            {%- if save_pct > 0 -%}
-              <span class="frido-pdp__save-badge" data-frido-save-badge>Save {{ save_pct }}%</span>
-            {%- endif -%}
-          </div>
+          {% render 'frido-pdp-price-row', price: price, compare_at: compare_at, save_pct: save_pct %}
         </div>
         {%- if section.settings.rating_line != blank -%}
           <p class="frido-pdp__rating">
@@ -112,15 +104,7 @@
           {% render 'frido-pdp-social-proof', section: section %}
           <div class="frido-pdp__title-row">
             <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
-            <div class="frido-pdp__price-row">
-              <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
-              {%- if compare_at > price -%}
-                <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
-              {%- endif -%}
-              {%- if save_pct > 0 -%}
-                <span class="frido-pdp__save-badge" data-frido-save-badge>Save {{ save_pct }}%</span>
-              {%- endif -%}
-            </div>
+            {% render 'frido-pdp-price-row', price: price, compare_at: compare_at, save_pct: save_pct %}
           </div>
           {%- if section.settings.rating_line != blank -%}
             <p class="frido-pdp__rating">

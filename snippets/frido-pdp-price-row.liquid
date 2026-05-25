@@ -1,0 +1,27 @@
+{% comment %}
+  PDP price row — sale price + compare + save pill.
+  @param price {Money}
+  @param compare_at {Money}
+  @param save_pct {Number}
+{% endcomment %}
+<div class="frido-pdp__price-row">
+  <div class="frido-pdp__price-line">
+    <span class="frido-pdp__price" data-frido-price>{{ price | money }}</span>
+    {%- if compare_at > price -%}
+      <span class="frido-pdp__compare" data-frido-compare>{{ compare_at | money }}</span>
+    {%- else -%}
+      <span class="frido-pdp__compare" data-frido-compare hidden></span>
+    {%- endif -%}
+  </div>
+  <span class="frido-pdp__save-badge" data-frido-save-badge{% if save_pct <= 0 %} hidden{% endif %}>
+    <span class="frido-pdp__save-badge-icon" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.75 1.5H3.25C2.56 1.5 2 2.06 2 2.75V9.25C2 9.94 2.56 10.5 3.25 10.5H7.75L11 12.5V2.5L7.75 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+        <circle cx="4.75" cy="6" r="0.85" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="frido-pdp__save-badge-text" data-frido-save-badge-text>
+      {%- if save_pct > 0 -%}Save {{ save_pct }}%{%- endif -%}
+    </span>
+  </span>
+</div>
