@@ -30,8 +30,8 @@
     {% render 'frido-product-media-json', product: product %}
   </script>
 
-  {%- comment -%} Sticky quick-buy bar {%- endcomment -%}
-  <div class="frido-pdp-sticky" data-frido-pdp-sticky>
+  {%- comment -%} Sticky quick-buy bar (HIKE-style) {%- endcomment -%}
+  <div class="frido-pdp-sticky" data-frido-pdp-sticky hidden>
     <div class="frido-page-width frido-pdp-sticky__inner">
       <div class="frido-pdp-sticky__product">
         {%- if current_variant.featured_image -%}
@@ -49,15 +49,27 @@
         {%- endif -%}
         <div class="frido-pdp-sticky__meta">
           <span class="frido-pdp-sticky__title" data-frido-sticky-title>{{ product.title | escape }}</span>
-          <span class="frido-pdp-sticky__prices">
+          <div class="frido-pdp-sticky__prices">
             <span class="frido-pdp-sticky__price" data-frido-sticky-price>{{ price | money }}</span>
-            {%- if save_pct > 0 -%}
-              <span class="frido-pdp-sticky__badge" data-frido-sticky-badge>Save {{ save_pct }}%</span>
-            {%- endif -%}
-          </span>
+            <span class="frido-pdp-sticky__badge" data-frido-sticky-badge{% if save_pct <= 0 %} hidden{% endif %}>
+              <span class="frido-pdp-sticky__badge-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.75 1.5H3.25C2.56 1.5 2 2.06 2 2.75V9.25C2 9.94 2.56 10.5 3.25 10.5H7.75L11 12.5V2.5L7.75 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                  <circle cx="4.75" cy="6" r="0.85" fill="currentColor"/>
+                </svg>
+              </span>
+              <span data-frido-sticky-badge-text>{%- if save_pct > 0 -%}Save {{ save_pct }}%{%- endif -%}</span>
+            </span>
+          </div>
         </div>
       </div>
-      <div class="frido-pdp-sticky__selects" data-frido-sticky-selects aria-hidden="true"></div>
+      <div
+        class="frido-pdp-sticky__selects"
+        data-frido-sticky-selects
+        style="--frido-sticky-cols: {{ product.options.size | at_least: 1 }}"
+      >
+        {% render 'frido-pdp-sticky-selects', product: product, section: section %}
+      </div>
       <button type="button" class="frido-pdp-sticky__atc" data-frido-sticky-atc>
         {{ section.settings.sticky_atc_label | default: 'Add to Cart' | escape }}
       </button>
@@ -223,6 +235,8 @@
       </section>
     {%- endif -%}
 
+    {% render 'frido-pdp-comfort-features', section: section %}
+
     {%- if accordion_blocks.size > 0 -%}
       <section class="frido-pdp-features">
         <div class="frido-pdp-features__media">
@@ -341,6 +355,14 @@
       "id": "selling_fast_body_bold",
       "label": "Selling fast — detail (bold)",
       "default": "this product is likely to sell out today."
+    },
+    {
+      "type": "header",
+      "content": "Gender toggle (all products)"
+    },
+    {
+      "type": "paragraph",
+      "content": "MEN / WOMEN appears when the product has a Gender variant option, or when linked via metafields: custom.mens_product and custom.womens_product (product references on each product), or custom.gender_pair (alternate product) with custom.gender set to men or women."
     },
     {
       "type": "header",
@@ -503,7 +525,29 @@
       "label": "Features accordion heading",
       "default": "Why HF Flow works?"
     },
-    { "type": "image_picker", "id": "features_image", "label": "Features section image" }
+    { "type": "image_picker", "id": "features_image", "label": "Features section image" },
+    {
+      "type": "header",
+      "content": "Comfort features (podiatrist)"
+    },
+    {
+      "type": "text",
+      "id": "comfort_eyebrow",
+      "label": "Eyebrow",
+      "default": "TESTED & RECOMMENDED BY PODIATRISTS"
+    },
+    {
+      "type": "text",
+      "id": "comfort_heading_lead",
+      "label": "Heading — before highlight",
+      "default": "Engineered for All-Day "
+    },
+    {
+      "type": "text",
+      "id": "comfort_heading_highlight",
+      "label": "Heading — highlighted phrase",
+      "default": "Pain-Free Comfort"
+    }
   ],
   "blocks": [
     {
@@ -579,6 +623,31 @@
         { "type": "text", "id": "price_text", "label": "Price display", "default": "$63" },
         { "type": "text", "id": "compare_text", "label": "Compare text", "default": "$140 Per Pair" },
         { "type": "text", "id": "save_label", "label": "Save badge", "default": "Save 55%" }
+      ]
+    },
+    {
+      "type": "comfort_feature",
+      "name": "Comfort feature",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Illustration" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Wide Toe Box" },
+        {
+          "type": "range",
+          "id": "stat_percent",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Statistic",
+          "default": 94
+        },
+        { "type": "text", "id": "stat_label", "label": "Stat label", "default": "FREER" },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Our extra-wide toe box lets your toes spread naturally, reducing pressure and boosting stability for all-day comfort."
+        }
       ]
     },
     {

@@ -5,14 +5,53 @@
 {% endcomment %}
 {%- liquid
   assign gender_option = nil
+  assign gender_nav_mode = false
+  assign active_gender_nav = ''
+  assign men_product = product.metafields.custom.mens_product.value
+  assign women_product = product.metafields.custom.womens_product.value
+
+  if men_product == blank
+    assign men_product = product.metafields.custom.men_product.value
+  endif
+  if women_product == blank
+    assign women_product = product.metafields.custom.women_product.value
+  endif
+
+  assign pair_product = product.metafields.custom.gender_pair.value
+  assign gender_metafield = product.metafields.custom.gender.value | default: product.metafields.custom.gender | downcase | strip
+
+  if men_product == blank and women_product == blank and pair_product != blank
+    if gender_metafield contains 'men' or gender_metafield == 'm' or gender_metafield == 'male'
+      assign men_product = product
+      assign women_product = pair_product
+    else
+      assign women_product = product
+      assign men_product = pair_product
+    endif
+  endif
+
+  if men_product != blank and women_product != blank
+    assign gender_nav_mode = true
+    if product.id == men_product.id
+      assign active_gender_nav = 'men'
+    elsif product.id == women_product.id
+      assign active_gender_nav = 'women'
+    elsif gender_metafield contains 'men' or gender_metafield == 'm' or gender_metafield == 'male'
+      assign active_gender_nav = 'men'
+    elsif gender_metafield contains 'women' or gender_metafield == 'w' or gender_metafield == 'female'
+      assign active_gender_nav = 'women'
+    endif
+    assign men_url = men_product.url
+    assign women_url = women_product.url
+    assign men_handle = men_product.handle
+    assign women_handle = women_product.handle
+  endif
+
   assign color_option = nil
   assign size_option = nil
 
   for option in product.options_with_values
     assign oname = option.name | downcase
-    if gender_option == nil and oname contains 'gender'
-      assign gender_option = option
-    endif
     if color_option == nil and oname contains 'color'
       assign color_option = option
     endif
@@ -21,33 +60,79 @@
     endif
   endfor
 
-  if gender_option == nil and product.options.size > 0
-    assign first_name = product.options[0] | downcase
-    if first_name contains 'gender' or first_name == 'men' or first_name == 'women'
-      assign gender_option = product.options_with_values[0]
-    endif
-  endif
-
   assign chart_enabled = section.settings.size_chart_enable
   if chart_enabled == nil
     assign chart_enabled = true
   endif
+
+  assign show_gender_toggle = false
+  if gender_nav_mode or gender_option
+    assign show_gender_toggle = true
+  endif
 -%}
 
-<div class="frido-pdp-variants" data-frido-variants>
-  {%- if gender_option -%}
-    <div class="frido-pdp-gender" data-frido-option="{{ gender_option.name | escape }}">
-      <div class="frido-pdp-gender__tabs" role="tablist">
-        {%- for value in gender_option.values -%}
+<div
+  class="frido-pdp-variants"
+  data-frido-variants
+  {% if gender_nav_mode %}
+    data-frido-gender-mode="link"
+    data-frido-active-gender="{{ active_gender_nav | escape }}"
+  {% elsif gender_option %}
+    data-frido-gender-mode="variant"
+    data-frido-gender-option="{{ gender_option.name | escape }}"
+  {% endif %}
+>
+  {%- if show_gender_toggle -%}
+    <div
+      class="frido-pdp-gender"
+      {% if gender_option and gender_nav_mode == false %}
+        data-frido-option="{{ gender_option.name | escape }}"
+      {% endif %}
+    >
+      <div class="frido-pdp-gender__tabs" role="tablist" aria-label="Gender">
+        {%- if gender_nav_mode -%}
           <button
             type="button"
-            class="frido-pdp-gender__tab{% if gender_option.selected_value == value %} is-active{% endif %}"
-            data-frido-option-value="{{ value | escape }}"
+            class="frido-pdp-gender__tab{% if active_gender_nav == 'men' %} is-active{% endif %}"
+            data-frido-gender-nav="men"
+            data-frido-gender-url="{{ men_url | escape }}"
+            data-frido-gender-handle="{{ men_handle | escape }}"
             role="tab"
+            aria-selected="{% if active_gender_nav == 'men' %}true{% else %}false{% endif %}"
           >
-            {{ value | upcase | escape }}
+            MEN
           </button>
-        {%- endfor -%}
+          <button
+            type="button"
+            class="frido-pdp-gender__tab{% if active_gender_nav == 'women' %} is-active{% endif %}"
+            data-frido-gender-nav="women"
+            data-frido-gender-url="{{ women_url | escape }}"
+            data-frido-gender-handle="{{ women_handle | escape }}"
+            role="tab"
+            aria-selected="{% if active_gender_nav == 'women' %}true{% else %}false{% endif %}"
+          >
+            WOMEN
+          </button>
+        {%- elsif gender_option -%}
+          {%- for value in gender_option.values -%}
+            {%- liquid
+              assign value_slug = value | downcase
+              assign tab_active = false
+              if gender_option.selected_value == value
+                assign tab_active = true
+              endif
+            -%}
+            <button
+              type="button"
+              class="frido-pdp-gender__tab{% if tab_active %} is-active{% endif %}"
+              data-frido-option-value="{{ value | escape }}"
+              role="tab"
+              aria-selected="{% if tab_active %}true{% else %}false{% endif %}"
+            >
+              {{ value | upcase | escape }}
+            </button>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     </div>
   {%- endif -%}

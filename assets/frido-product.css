@@ -635,31 +635,57 @@
   min-width: 0;
 }
 
-/* Gender */
+/* Gender — segmented MEN / WOMEN control */
+.frido-pdp-gender {
+  margin: 0 0 16px;
+}
+
 .frido-pdp-gender__tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  margin: 1.2rem 0;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #eee;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 4px;
+  border-radius: 10px;
+  background: #e9e9e9;
 }
 
 .frido-pdp-gender__tab {
-  padding: 1.1rem;
+  flex: 1 1 50%;
+  min-height: 44px;
+  padding: 10px 16px;
   border: none;
+  border-radius: 8px;
   background: transparent;
-  font-size: 1.5rem;
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.42);
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.frido-pdp-gender__tab:hover:not(.is-active) {
+  color: rgba(0, 0, 0, 0.62);
 }
 
 .frido-pdp-gender__tab.is-active {
   background: #fff;
   color: rgb(var(--color-button));
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.frido-pdp-gender__tab[hidden],
+.frido-pdp-colors__swatch[hidden],
+.frido-pdp-sizes__btn[hidden] {
+  display: none !important;
+}
+
+.frido-pdp-colors__swatch:disabled,
+.frido-pdp-sizes__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 /* Colors */
@@ -713,9 +739,9 @@
 
 .frido-pdp-sizes__btn.is-active {
   border-color: rgb(var(--color-button));
-  background: var(--color-button, 20%);
+  background: var(--frido-pdp-sage, #e9ede1);
   color: rgb(var(--color-button));
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .frido-pdp-selection {
