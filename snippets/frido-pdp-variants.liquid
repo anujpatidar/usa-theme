@@ -40,6 +40,17 @@
       assign active_gender_nav = 'men'
     elsif gender_metafield contains 'women' or gender_metafield == 'w' or gender_metafield == 'female'
       assign active_gender_nav = 'women'
+    elsif product.tags contains 'gender-men' or product.tags contains 'mens' or product.tags contains "men's"
+      assign active_gender_nav = 'men'
+    elsif product.tags contains 'gender-women' or product.tags contains 'womens' or product.tags contains "women's"
+      assign active_gender_nav = 'women'
+    else
+      assign title_down = product.title | downcase
+      if title_down contains "women's" or title_down contains 'women '
+        assign active_gender_nav = 'women'
+      elsif title_down contains "men's" or title_down contains 'men '
+        assign active_gender_nav = 'men'
+      endif
     endif
     assign men_url = men_product.url
     assign women_url = women_product.url
@@ -49,9 +60,15 @@
 
   assign color_option = nil
   assign size_option = nil
+  assign gender_option = nil
 
   for option in product.options_with_values
     assign oname = option.name | downcase
+    unless gender_nav_mode
+      if gender_option == nil and oname contains 'gender'
+        assign gender_option = option
+      endif
+    endunless
     if color_option == nil and oname contains 'color'
       assign color_option = option
     endif
@@ -60,16 +77,43 @@
     endif
   endfor
 
+  unless gender_nav_mode
+    if gender_option == nil and product.options.size > 0
+      assign first_name = product.options[0] | downcase
+      if first_name contains 'gender' or first_name == 'men' or first_name == 'women'
+        assign gender_option = product.options_with_values[0]
+      endif
+    endif
+  endunless
+
   assign chart_enabled = section.settings.size_chart_enable
   if chart_enabled == nil
     assign chart_enabled = true
   endif
 
-  assign show_gender_toggle = false
-  if gender_nav_mode or gender_option
+  assign show_gender_toggle = gender_nav_mode
+  if show_gender_toggle == false and gender_option
     assign show_gender_toggle = true
   endif
 -%}
+
+{%- if gender_nav_mode -%}
+  <script type="application/json" data-frido-gender-links>
+    {
+      "active": {{ active_gender_nav | json }},
+      "men": {
+        "id": {{ men_product.id | json }},
+        "handle": {{ men_handle | json }},
+        "url": {{ men_url | json }}
+      },
+      "women": {
+        "id": {{ women_product.id | json }},
+        "handle": {{ women_handle | json }},
+        "url": {{ women_url | json }}
+      }
+    }
+  </script>
+{%- endif -%}
 
 <div
   class="frido-pdp-variants"

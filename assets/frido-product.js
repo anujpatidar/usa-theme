@@ -123,8 +123,68 @@
     return opts;
   }
 
+  var GENDER_SELECTION_KEY = 'frido_gender_selection';
+
+  function saveGenderSelection(selectedOptions, fromProduct) {
+    var payload = { color: null, size: null };
+    fromProduct.options.forEach(function (opt) {
+      if (/colou?r/i.test(opt) && selectedOptions[opt]) payload.color = selectedOptions[opt];
+      if (/size/i.test(opt) && selectedOptions[opt]) payload.size = selectedOptions[opt];
+    });
+    try {
+      sessionStorage.setItem(GENDER_SELECTION_KEY, JSON.stringify(payload));
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function readGenderSelection() {
+    try {
+      var raw = sessionStorage.getItem(GENDER_SELECTION_KEY);
+      if (!raw) return null;
+      sessionStorage.removeItem(GENDER_SELECTION_KEY);
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function applySavedGenderSelection(product, selectedOptions) {
+    var saved = readGenderSelection();
+    if (!saved) return false;
+    var changed = false;
+    product.options.forEach(function (opt) {
+      if (/colou?r/i.test(opt) && saved.color) {
+        selectedOptions[opt] = saved.color;
+        changed = true;
+      }
+      if (/size/i.test(opt) && saved.size) {
+        selectedOptions[opt] = saved.size;
+        changed = true;
+      }
+    });
+    return changed;
+  }
+
+  function syncOptionButtonsFromSelection(root, product, selectedOptions) {
+    product.options.forEach(function (opt) {
+      var wrap = qs('[data-frido-option="' + opt + '"]', root);
+      if (wrap) {
+        qsa('[data-frido-option-value]', wrap).forEach(function (btn) {
+          btn.classList.toggle(
+            'is-active',
+            btn.getAttribute('data-frido-option-value') === selectedOptions[opt]
+          );
+        });
+      }
+      var native = qs('[data-frido-native-select][name="options[' + opt + ']"]', root);
+      if (native && selectedOptions[opt]) native.value = selectedOptions[opt];
+    });
+  }
+
   function navigateToGenderProduct(url, handle, fromProduct, selectedOptions) {
     if (!url) return;
+    saveGenderSelection(selectedOptions, fromProduct);
     if (!handle) {
       window.location.href = url;
       return;
@@ -1263,6 +1323,16 @@
           { rootMargin: '0px 0px 0px 0px', threshold: 0 }
         );
         io.observe(buyCol);
+      }
+    }
+
+    var variantsRoot = qs('[data-frido-variants]', root);
+    if (variantsRoot && variantsRoot.getAttribute('data-frido-gender-mode') === 'link') {
+      if (applySavedGenderSelection(product, selectedOptions)) {
+        syncOptionButtonsFromSelection(root, product, selectedOptions);
+        refreshVariantOptionButtons(root, product, selectedOptions);
+        var restored = findVariant();
+        if (restored) current = restored;
       }
     }
 
