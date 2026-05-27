@@ -1,0 +1,55 @@
+{{ 'frido-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign pdp_product = product
+  if section.settings.product != blank
+    assign pdp_product = section.settings.product
+  endif
+-%}
+
+{%- if pdp_product != blank -%}
+  <div
+    class="section-frido-pdp-story color-{{ section.settings.color_scheme }} gradient"
+    id="FridoPdpStory-{{ section.id }}"
+  >
+    <div class="frido-page-width">
+      {% render 'frido-pdp-story', product: pdp_product, section: section %}
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <div class="frido-page-width" style="padding: 2rem 1.5rem; text-align: center; opacity: 0.7;">
+    <p>Add this section on a product template, or choose a product below.</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP story",
+  "tag": "section",
+  "class": "section-frido-pdp-story-wrap",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave blank on product pages to use the current product. Required on other templates."
+    },
+    {
+      "type": "paragraph",
+      "content": "Content comes from the product metafield custom.pdp_story (PDP Story metaobject). Run scripts/setup-pdp-story-metaobject.mjs once, then add entries in Admin → Content → Metaobjects."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP story",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

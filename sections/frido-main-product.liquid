@@ -1,7 +1,5 @@
 {{ 'frido-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'frido-product.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'frido-pdp-recs.js' | asset_url }}" defer="defer"></script>
-
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign compare_at = current_variant.compare_at_price
@@ -13,7 +11,6 @@
   assign form_id = 'frido-product-form-' | append: section.id
   assign benefit_blocks = section.blocks | where: 'type', 'benefit'
   assign bundle_blocks = section.blocks | where: 'type', 'bundle'
-  assign accordion_blocks = section.blocks | where: 'type', 'accordion'
   assign ugc_blocks = section.blocks | where: 'type', 'ugc_image'
 -%}
 
@@ -169,15 +166,6 @@
         {% render 'frido-pdp-ugc', product: product, section: section, ugc_blocks: ugc_blocks %}
       </div>
     </div>
-
-    {% render 'frido-pdp-story', product: product %}
-
-    {% render 'frido-pdp-comfort-features', section: section %}
-
-    {% render 'frido-pdp-features', product: product, section: section, accordion_blocks: accordion_blocks %}
-
-    {% render 'frido-pdp-most-loved', product: product, section: section %}
-    {% render 'frido-pdp-you-may-like', product: product, section: section %}
 
   </div>
 </div>
@@ -424,107 +412,8 @@
       "default": "2 million customers love our shoes!"
     },
     {
-      "type": "header",
-      "content": "Product recommendations"
-    },
-    {
       "type": "paragraph",
-      "content": "Most loved: set custom.most_loved_products on each product, or choose a fallback collection below. You may also like: powered by Shopify Search & Discovery (configure related products in that app)."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_most_loved",
-      "label": "Show “Most loved styles”",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "most_loved_heading",
-      "label": "Most loved — heading",
-      "default": "Most loved styles..."
-    },
-    {
-      "type": "collection",
-      "id": "most_loved_collection",
-      "label": "Most loved — fallback collection",
-      "info": "Used when the product has no most_loved_products metafield."
-    },
-    {
-      "type": "range",
-      "id": "most_loved_limit",
-      "min": 2,
-      "max": 8,
-      "step": 1,
-      "label": "Most loved — max products",
-      "default": 4
-    },
-    {
-      "type": "checkbox",
-      "id": "show_related_products",
-      "label": "Show “You may also like”",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "related_heading",
-      "label": "Related — heading",
-      "default": "You may also like..."
-    },
-    {
-      "type": "range",
-      "id": "related_limit",
-      "min": 2,
-      "max": 8,
-      "step": 1,
-      "label": "Related — max products",
-      "default": 4
-    },
-    {
-      "type": "header",
-      "content": "Features (media + accordion)"
-    },
-    {
-      "type": "paragraph",
-      "content": "Per product: metafield custom.pdp_features → PDP Features metaobject (heading, media, accordion list). Run: node scripts/setup-pdp-features-metaobject.mjs. Accordion blocks below are fallback when no metaobject is set."
-    },
-    {
-      "type": "text",
-      "id": "features_heading",
-      "label": "Features heading (blocks fallback only)",
-      "default": "Why HF Stride Works?"
-    },
-    {
-      "type": "image_picker",
-      "id": "features_image",
-      "label": "Features image (blocks fallback only)"
-    },
-    {
-      "type": "color",
-      "id": "features_media_bg",
-      "label": "Media background color",
-      "default": "#d8dfd0"
-    },
-    {
-      "type": "header",
-      "content": "Comfort features (podiatrist)"
-    },
-    {
-      "type": "text",
-      "id": "comfort_eyebrow",
-      "label": "Eyebrow",
-      "default": "TESTED & RECOMMENDED BY PODIATRISTS"
-    },
-    {
-      "type": "text",
-      "id": "comfort_heading_lead",
-      "label": "Heading — before highlight",
-      "default": "Engineered for All-Day "
-    },
-    {
-      "type": "text",
-      "id": "comfort_heading_highlight",
-      "label": "Heading — highlighted phrase",
-      "default": "Pain-Free Comfort"
+      "content": "Story, comfort, features, and product recommendations are separate theme sections. Add them to this template in the order you want (see default product template)."
     }
   ],
   "blocks": [
@@ -601,52 +490,6 @@
         { "type": "text", "id": "price_text", "label": "Price display", "default": "$63" },
         { "type": "text", "id": "compare_text", "label": "Compare text", "default": "$140 Per Pair" },
         { "type": "text", "id": "save_label", "label": "Save badge", "default": "Save 55%" }
-      ]
-    },
-    {
-      "type": "comfort_feature",
-      "name": "Comfort feature",
-      "settings": [
-        { "type": "image_picker", "id": "image", "label": "Illustration" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Wide Toe Box" },
-        {
-          "type": "range",
-          "id": "stat_percent",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Statistic",
-          "default": 94
-        },
-        { "type": "text", "id": "stat_label", "label": "Stat label", "default": "FREER" },
-        {
-          "type": "textarea",
-          "id": "description",
-          "label": "Description",
-          "default": "Our extra-wide toe box lets your toes spread naturally, reducing pressure and boosting stability for all-day comfort."
-        }
-      ]
-    },
-    {
-      "type": "accordion",
-      "name": "Feature accordion",
-      "settings": [
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "options": [
-            { "value": "feather", "label": "Feather" },
-            { "value": "foot", "label": "Foot" },
-            { "value": "blood", "label": "Blood" },
-            { "value": "toe", "label": "Toe box" },
-            { "value": "gear", "label": "Gear" }
-          ],
-          "default": "feather"
-        },
-        { "type": "text", "id": "title", "label": "Title", "default": "Breathable Material" },
-        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Lightweight mesh keeps feet cool and comfortable all day.</p>" }
       ]
     },
     {

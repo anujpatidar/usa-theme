@@ -2,6 +2,10 @@
   PDP story — one product metafield → PDP Story metaobject.
   Product metafield: custom.pdp_story (metaobject reference, type: pdp_story)
   Metaobject fields: heading, body (rich text), media (image or video)
+
+  Reusable via section: sections/frido-pdp-story.liquid
+  @param product {Product} required
+  @param section {Section} optional — for section.id in markup
 {% endcomment %}
 {%- liquid
   assign story = product.metafields.custom.pdp_story.value

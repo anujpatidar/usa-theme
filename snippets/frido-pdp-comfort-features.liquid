@@ -1,6 +1,7 @@
 {% comment %}
   PDP comfort / podiatrist features — HIKE-style stat cards + segmented bar.
-  @param section {Section}
+  Reusable via section: sections/frido-pdp-comfort.liquid
+  @param section {Section} required — settings + comfort_feature blocks
 {% endcomment %}
 {%- liquid
   assign comfort_blocks = section.blocks | where: 'type', 'comfort_feature'

@@ -1,0 +1,64 @@
+{{ 'frido-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-pdp-recs.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign pdp_product = product
+  if section.settings.product != blank
+    assign pdp_product = section.settings.product
+  endif
+-%}
+
+{%- if pdp_product != blank -%}
+  <div
+    class="section-frido-pdp-you-may-like color-{{ section.settings.color_scheme }} gradient"
+    id="FridoPdpYouMayLike-{{ section.id }}"
+  >
+    <div class="frido-page-width">
+      {% render 'frido-pdp-you-may-like', product: pdp_product, section: section %}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP you may also like",
+  "tag": "section",
+  "class": "section-frido-pdp-you-may-like-wrap",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave blank on product pages to use the current product."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Heading",
+      "default": "You may also like..."
+    },
+    {
+      "type": "range",
+      "id": "related_limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Max products",
+      "default": 4
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [{ "name": "PDP you may also like" }]
+}
+{% endschema %}

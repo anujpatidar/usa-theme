@@ -1611,7 +1611,7 @@
 
 .frido-pdp-comfort__stat-value {
   font-size: 36px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
   color: rgb(var(--color-foreground));
@@ -2023,8 +2023,8 @@
   }
 
   .frido-pdp-comfort__icon-wrap {
-    width: 10rem;
-    height: 10rem;
+    width: 128px;
+    height: 128px;
     margin-bottom: 1rem;
   }
 

@@ -1,11 +1,18 @@
 {% comment %}
   PDP features — one product metafield → PDP Features metaobject.
   Product: custom.pdp_features → type pdp_features
-    - heading, media (image/video), features (list of pdp_feature rows)
-  Child rows: Content → Metaobjects → PDP Feature (pdp_feature)
-  Fallback: theme accordion blocks only (until metaobject is set).
+  Fallback: theme accordion blocks (until metaobject is set).
+
+  Reusable via section: sections/frido-pdp-features.liquid
+  @param product {Product} required
+  @param section {Section} required — settings + accordion blocks fallback
+  @param accordion_blocks {Array} optional — defaults to section accordion blocks
 {% endcomment %}
 {%- liquid
+  if accordion_blocks == blank and section != blank
+    assign accordion_blocks = section.blocks | where: 'type', 'accordion'
+  endif
+
   assign features_block = product.metafields.custom.pdp_features.value
   assign features_heading = ''
   assign features_media = null

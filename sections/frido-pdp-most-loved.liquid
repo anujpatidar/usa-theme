@@ -1,0 +1,69 @@
+{{ 'frido-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign pdp_product = product
+  if section.settings.product != blank
+    assign pdp_product = section.settings.product
+  endif
+-%}
+
+{%- if pdp_product != blank -%}
+  <div
+    class="section-frido-pdp-most-loved color-{{ section.settings.color_scheme }} gradient"
+    id="FridoPdpMostLoved-{{ section.id }}"
+  >
+    <div class="frido-page-width">
+      {% render 'frido-pdp-most-loved', product: pdp_product, section: section %}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP most loved",
+  "tag": "section",
+  "class": "section-frido-pdp-most-loved-wrap",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave blank on product pages to use the current product."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_most_loved",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "most_loved_heading",
+      "label": "Heading",
+      "default": "Most loved styles..."
+    },
+    {
+      "type": "collection",
+      "id": "most_loved_collection",
+      "label": "Fallback collection",
+      "info": "Used when the product has no most_loved_products metafield."
+    },
+    {
+      "type": "range",
+      "id": "most_loved_limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Max products",
+      "default": 4
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [{ "name": "PDP most loved" }]
+}
+{% endschema %}

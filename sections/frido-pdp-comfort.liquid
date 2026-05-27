@@ -1,0 +1,82 @@
+{{ 'frido-product.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section-frido-pdp-comfort color-{{ section.settings.color_scheme }} gradient"
+  id="FridoPdpComfort-{{ section.id }}"
+>
+  <div class="frido-page-width">
+    {% render 'frido-pdp-comfort-features', section: section %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PDP comfort features",
+  "tag": "section",
+  "class": "section-frido-pdp-comfort-wrap",
+  "settings": [
+    {
+      "type": "text",
+      "id": "comfort_eyebrow",
+      "label": "Eyebrow",
+      "default": "TESTED & RECOMMENDED BY PODIATRISTS"
+    },
+    {
+      "type": "text",
+      "id": "comfort_heading_lead",
+      "label": "Heading — before highlight",
+      "default": "Engineered for All-Day "
+    },
+    {
+      "type": "text",
+      "id": "comfort_heading_highlight",
+      "label": "Heading — highlighted phrase",
+      "default": "Pain-Free Comfort"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comfort_feature",
+      "name": "Comfort feature",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Illustration" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Wide Toe Box" },
+        {
+          "type": "range",
+          "id": "stat_percent",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Statistic",
+          "default": 94
+        },
+        { "type": "text", "id": "stat_label", "label": "Stat label", "default": "FREER" },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Our extra-wide toe box lets your toes spread naturally, reducing pressure and boosting stability for all-day comfort."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP comfort features",
+      "blocks": [
+        { "type": "comfort_feature" },
+        { "type": "comfort_feature" },
+        { "type": "comfort_feature" },
+        { "type": "comfort_feature" }
+      ]
+    }
+  ]
+}
+{% endschema %}
