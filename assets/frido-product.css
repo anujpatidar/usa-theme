@@ -855,6 +855,7 @@
 }
 
 .frido-pdp-bundle__price {
+  display: flex;
   font-size: 20px;
   font-weight: 600;
   color: var(--frido-pdp-sale);
