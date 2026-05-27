@@ -229,7 +229,7 @@
 
   {%- if color_option or size_option -%}
     <div class="frido-pdp-selection">
-      <p class="frido-pdp-selection__text" data-frido-selection-summary>
+      <p class="frido-pdp-selection__text" style="margin:0;" data-frido-selection-summary>
         {%- if color_option -%}Color: <strong data-frido-sel-color>{{ color_option.selected_value | escape }}</strong>{%- endif -%}
         {%- if size_option -%}{% if color_option %} {% endif %}Size: <strong data-frido-sel-size>{{ size_option.selected_value | escape }}</strong>{%- endif -%}
       </p>
