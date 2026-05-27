@@ -78,13 +78,13 @@
             }}
           {%- endif -%}
           <span class="frido-pdp-bundle__title">{{ block.settings.title | escape }}</span>
-          <span class="frido-pdp-bundle__price">{{ block.settings.price_text | escape }}</span>
-          {%- if block.settings.compare_text != blank -%}
-            <span class="frido-pdp-bundle__compare">{{ block.settings.compare_text | escape }} {%- if block.settings.save_label != blank -%}
-            <span class="frido-pdp-bundle__save">{{ block.settings.save_label | escape }}</span>
+          <span class="frido-pdp-bundle__price">{{ block.settings.price_text | escape }} {%- if block.settings.compare_text != blank -%}
+            <span class="frido-pdp-bundle__compare">{{ block.settings.compare_text | escape }}</span>
           {%- endif -%}</span>
+        
+          {%- if block.settings.save_label != blank -%}
+            <span class="frido-pdp-bundle__save">{{ block.settings.save_label | escape }}</span>
           {%- endif -%}
-      
         </button>
       {%- endfor -%}
     </div>
