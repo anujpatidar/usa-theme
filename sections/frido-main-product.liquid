@@ -169,27 +169,7 @@
       </div>
     </div>
 
-    {%- if section.settings.story_heading != blank or section.settings.story_image != blank -%}
-      <section class="frido-pdp-story">
-        <div class="frido-pdp-story__text">
-          {%- if section.settings.story_heading != blank -%}
-            <h2>{{ section.settings.story_heading | escape }}</h2>
-          {%- endif -%}
-          {%- if section.settings.story_body != blank -%}
-            <div class="frido-pdp-story__body rte">{{ section.settings.story_body }}</div>
-          {%- endif -%}
-        </div>
-        {%- if section.settings.story_image != blank -%}
-          <div class="frido-pdp-story__media">
-            {{
-              section.settings.story_image
-              | image_url: width: 900
-              | image_tag: loading: 'lazy', widths: '400,600,900', sizes: '(min-width: 990px) 45vw, 100vw', alt: section.settings.story_heading
-            }}
-          </div>
-        {%- endif -%}
-      </section>
-    {%- endif -%}
+    {% render 'frido-pdp-story', product: product, section: section %}
 
     {% render 'frido-pdp-comfort-features', section: section %}
 
@@ -471,18 +451,55 @@
       "default": "2 million customers love our shoes!"
     },
     {
+      "type": "header",
+      "content": "Story (image / video + text)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Optional per product: custom.story_heading, custom.story_body, custom.story_image, custom.story_video. Video overrides image when both are set."
+    },
+    {
       "type": "text",
       "id": "story_heading",
       "label": "Story heading",
-      "default": "Discover Natural Freedom of Movement"
+      "default": "Effortless Wear, Maximum Comfort"
     },
     {
       "type": "richtext",
       "id": "story_body",
       "label": "Story body",
-      "default": "<p>Your feet weren't designed for stiff, narrow shoes.</p><p><strong>HF Flow</strong> restores your natural gait, improve posture, and keep you comfortable from city walks to all-day wear.</p><p><strong>Why thousands switch to barefoot:</strong></p><ul><li>Zero-drop sole for natural posture</li><li>Extra-roomy toe box to reduce foot pain</li><li>Lightweight, flexible design that moves with you</li></ul><p>Walk naturally. Feel stronger. Move freely.</p>"
+      "default": "<p>Most shoes force your feet into <strong>unnatural positions</strong>, creating pressure points and <strong>reducing strain</strong> on your <strong>ankle, knees,</strong> and <strong>lower back</strong>.</p><p>Frido's <strong>ultra-flexible sole</strong> bends with every step, making these the most <strong>easy-to-wear shoes</strong> you'll own—slip on, move freely, and feel the difference from the first wear.</p>"
     },
     { "type": "image_picker", "id": "story_image", "label": "Story image" },
+    { "type": "video", "id": "story_video", "label": "Story video (overrides image)" },
+    {
+      "type": "checkbox",
+      "id": "story_show_overlay",
+      "label": "Show alignment overlay on media",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "story_line_position",
+      "min": 35,
+      "max": 65,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay line — horizontal position",
+      "default": 54
+    },
+    {
+      "type": "text",
+      "id": "story_callout_title",
+      "label": "Media callout — title",
+      "default": "Zero-Drop Sole –"
+    },
+    {
+      "type": "textarea",
+      "id": "story_callout_text",
+      "label": "Media callout — lines",
+      "default": "Keeps the body aligned,\nreduces pressure"
+    },
     {
       "type": "text",
       "id": "features_heading",
