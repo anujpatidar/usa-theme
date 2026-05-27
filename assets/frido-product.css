@@ -1528,7 +1528,7 @@
 }
 
 .frido-pdp-comfort__head {
-  max-width: 52rem;
+
   margin: 0 auto 2.8rem;
 }
 
@@ -1550,7 +1550,11 @@
 }
 
 .frido-pdp-comfort__title-accent {
-  color: rgb(var(--color-button));
+  background: linear-gradient(90deg, #000 0%, rgb(var(--color-button)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .frido-pdp-comfort__grid {
