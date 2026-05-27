@@ -1,10 +1,12 @@
 /**
- * Size & Fit Chart drawer
+ * Size & Fit Chart drawer — uses section color scheme (Dawn --color-* tokens).
  */
-:root {
-  --frido-chart-accent: #8b9a7e;
-  --frido-chart-header-bg: #c8d4c0;
-  --frido-chart-border: #e0e0e0;
+.frido-size-chart {
+  --frido-chart-accent: rgb(var(--color-button));
+  --frido-chart-header-bg: rgba(var(--color-button), 0.14);
+  --frido-chart-border: rgba(var(--color-foreground), 0.12);
+  --frido-chart-surface: rgb(var(--color-background));
+  --frido-chart-text: rgb(var(--color-foreground));
 }
 
 .frido-size-chart[hidden] {
@@ -21,6 +23,7 @@
   inset: 0;
   z-index: 120;
   pointer-events: none;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart.is-open,
@@ -33,7 +36,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(var(--color-foreground), 0.45);
   opacity: 0;
   transition: opacity 0.28s ease;
   cursor: pointer;
@@ -48,8 +51,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  color: #000;
+  background: var(--frido-chart-surface);
+  color: var(--frido-chart-text);
   overflow: hidden;
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -67,7 +70,7 @@
     left: auto;
     width: 50vw;
     max-width: none;
-    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    box-shadow: -4px 0 24px rgba(var(--color-foreground), 0.12);
     transform: translateX(100%);
   }
 
@@ -105,6 +108,7 @@
   gap: 1.6rem;
   flex-shrink: 0;
   padding: 2rem 2rem 1.2rem;
+  border-bottom: 1px solid var(--frido-chart-border);
 }
 
 .frido-size-chart__title {
@@ -113,6 +117,7 @@
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__close {
@@ -124,11 +129,22 @@
   margin: 0;
   padding: 0;
   border: 0;
+  border-radius: 50%;
   background: transparent;
-  color: #000;
+  color: var(--frido-chart-text);
   font-size: 2.8rem;
   line-height: 1;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.frido-size-chart__close:hover {
+  background: rgba(var(--color-foreground), 0.06);
+}
+
+.frido-size-chart__close:focus-visible {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 2px;
 }
 
 .frido-size-chart__body {
@@ -148,7 +164,7 @@
   padding: 1.35rem 2rem;
   border: 1px solid var(--frido-chart-accent);
   border-radius: 999px;
-  background: #fff;
+  background: rgba(var(--color-button), 0.08);
   color: var(--frido-chart-accent);
   font-size: 1.45rem;
   font-weight: 700;
@@ -187,24 +203,26 @@
   margin: 0 0 1rem;
   font-size: 1.5rem;
   font-weight: 700;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__rec-text {
   margin: 0 0 1rem;
   font-size: 1.35rem;
   line-height: 1.55;
-  color: #000;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__rec-text strong {
   font-weight: 700;
+  color: var(--frido-chart-accent);
 }
 
 .frido-size-chart__rec-note {
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.5;
-  color: #000;
+  color: rgba(var(--color-foreground), 0.72);
 }
 
 .frido-size-chart__product {
@@ -216,6 +234,7 @@
   font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.2;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__product-sub {
@@ -223,6 +242,7 @@
   font-size: 1.35rem;
   font-style: italic;
   font-weight: 400;
+  color: rgba(var(--color-foreground), 0.72);
 }
 
 .frido-size-chart__scroll {
@@ -238,6 +258,7 @@
   border-collapse: collapse;
   font-size: 1.25rem;
   line-height: 1.3;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__table th,
@@ -249,8 +270,9 @@
 }
 
 .frido-size-chart__table thead th {
-  background: #fff;
+  background: var(--frido-chart-surface);
   font-weight: 600;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__table tbody th[scope='row'],
@@ -258,10 +280,15 @@
   background: var(--frido-chart-header-bg);
   font-weight: 600;
   text-align: left;
+  color: var(--frido-chart-text);
 }
 
 .frido-size-chart__table-wrap .frido-size-chart__table tbody th[scope='row'] {
   background: var(--frido-chart-header-bg);
+}
+
+.frido-size-chart__table-wrap a {
+  color: var(--frido-chart-accent);
 }
 
 body.frido-size-chart-open {

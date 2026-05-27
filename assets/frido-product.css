@@ -201,9 +201,11 @@
 .frido-pdp__head-desktop {
   display: none;
 }
-.frido-pdp__buy-col{
+
+.frido-pdp__buy-col {
   padding: 24px;
 }
+
 .frido-pdp__buy-col .frido-pdp__benefits-desktop {
   display: none;
 }
@@ -214,14 +216,16 @@
   gap: 0.5rem;
   line-height: 1;
   font-size: 16px;
-  font-weight:500;
+  font-weight: 500;
   color: rgba(0, 0, 0, 0.75);
-  margin:0;
+  margin: 0;
 }
-.frido-pdp__rating svg{
+
+.frido-pdp__rating svg {
   width: 16px !important;
   height: 16px !important;
 }
+
 .frido-pdp__rating a {
   color: inherit;
   text-decoration: underline;
@@ -280,7 +284,7 @@
   box-sizing: border-box;
 }
 
-.frido-pdp__social-avatar + .frido-pdp__social-avatar {
+.frido-pdp__social-avatar+.frido-pdp__social-avatar {
   margin-left: -0.875rem;
 }
 
@@ -450,7 +454,7 @@
 .frido-pdp-gallery__hero {
   border-radius: 16px;
   overflow: hidden;
-  background: #f4f4f2;
+  background: #fff;
   aspect-ratio: 1 / 1;
 }
 
@@ -702,14 +706,14 @@
   height: 72px;
   padding: 0 !important;
   border-radius: 8px;
-  background: #f5f5f5;
+  background: #fff;
   cursor: pointer;
   border: none;
   overflow: hidden;
 }
 
 .frido-pdp-colors__swatch.is-active {
- border: 1px solid rgb(var(--color-button));
+  border: 1px solid rgb(var(--color-button));
 }
 
 .frido-pdp-colors__swatch img {
@@ -739,7 +743,7 @@
 
 .frido-pdp-sizes__btn.is-active {
   border-color: rgb(var(--color-button));
-  background: var(--frido-pdp-sage, #e9ede1);
+  background: var(--color-button, 10%);
   color: rgb(var(--color-button));
   font-weight: 500;
 }
@@ -1028,9 +1032,7 @@
   padding: 0 2.4rem 0 1rem;
   border: 1px solid rgba(var(--color-foreground), 0.85);
   border-radius: 6px;
-  background: rgb(var(--color-background))
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23000' d='M2 2l4 4 4-4'/%3E%3C/svg%3E")
-    no-repeat right 1rem center;
+  background: rgb(var(--color-background)) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23000' d='M2 2l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 1rem center;
   background-size: 10px 6px;
   appearance: none;
   font-family: inherit;
@@ -1601,7 +1603,7 @@
     gap: 1.5rem;
   }
 
-  .frido-pdp-trust__item + .frido-pdp-trust__item {
+  .frido-pdp-trust__item+.frido-pdp-trust__item {
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     padding-left: 1rem;
   }
