@@ -13,6 +13,10 @@ body.frido-menu-open {
   overflow: hidden;
 }
 
+* {
+  font-family: Outfit, sans-serif !important;
+}
+
 .frido-page-width {
 
   max-width: 100%;

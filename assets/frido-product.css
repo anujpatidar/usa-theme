@@ -807,6 +807,10 @@
   font-family: Outfit, sans-serif;
 }
 
+* {
+  font-family: Outfit, sans-serif !important;
+}
+
 .frido-pdp-bundle {
   position: relative;
   display: flex;
