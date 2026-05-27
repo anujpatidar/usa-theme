@@ -385,27 +385,16 @@
     });
   }
 
+  /** Same order as Product → Media in Shopify admin (product.media sequence). */
   function sortColorMedia(list, product) {
-    var sorted = list.slice().sort(function (a, b) {
-      var ma = (a.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
-      var mb = (b.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
-      var na = ma ? parseInt(ma[1], 10) : null;
-      var nb = mb ? parseInt(mb[1], 10) : null;
-      if (na != null && nb != null && na !== nb) return na - nb;
-      if (na != null && nb == null) return -1;
-      if (na == null && nb != null) return 1;
+    return list.slice().sort(function (a, b) {
       var ia = product ? mediaIndexById(product, a.id) : -1;
       var ib = product ? mediaIndexById(product, b.id) : -1;
       if (ia >= 0 && ib >= 0) return ia - ib;
+      if (ia >= 0) return -1;
+      if (ib >= 0) return 1;
       return 0;
     });
-    var images = sorted.filter(function (i) {
-      return i.type !== 'video';
-    });
-    var videos = sorted.filter(function (i) {
-      return i.type === 'video';
-    });
-    return images.concat(videos);
   }
 
   /** All media for a color (alt tags + variant links). Position-based slice is fallback only. */
