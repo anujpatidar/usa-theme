@@ -274,12 +274,61 @@
     return normalizeMedia(found);
   }
 
-  var GALLERY_MAX = 7;
+  function mediaIndexById(product, mediaId) {
+    if (mediaId == null) return -1;
+    var target = normId(mediaId);
+    return (product.media || []).findIndex(function (m) {
+      return normId(m.id) === target;
+    });
+  }
+
+  function variantFeaturedMediaId(variant) {
+    if (!variant) return null;
+    var fm = variant.featured_media || variant.featured_image;
+    return fm ? fm.id : null;
+  }
+
+  function isAnchorForOtherColor(product, mediaId, color, colorKey) {
+    return product.variants.some(function (v) {
+      if (v[colorKey] === color) return false;
+      return normId(variantFeaturedMediaId(v)) === normId(mediaId);
+    });
+  }
+
+  /** Shopify variant-image groups: from this color's anchor through the next color's anchor. */
+  function getColorMediaByPosition(product, color, colorKey) {
+    var mediaList = product.media || [];
+    if (!mediaList.length) return [];
+
+    var anchorIndices = [];
+    product.variants.forEach(function (v) {
+      if (v[colorKey] !== color) return;
+      var mid = variantFeaturedMediaId(v);
+      if (mid == null) return;
+      var idx = mediaIndexById(product, mid);
+      if (idx >= 0) anchorIndices.push(idx);
+    });
+
+    if (!anchorIndices.length) return null;
+
+    var start = Math.min.apply(null, anchorIndices);
+    var end = mediaList.length;
+
+    for (var i = start + 1; i < mediaList.length; i++) {
+      if (isAnchorForOtherColor(product, mediaList[i].id, color, colorKey)) {
+        end = i;
+        break;
+      }
+    }
+
+    return mediaList.slice(start, end).map(normalizeMedia).filter(Boolean);
+  }
 
   function mediaAltMatchesColor(media, color) {
     var alt = (media.alt || '').toLowerCase();
     var c = String(color).toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp('[\\s—–\\-]+' + c + '[\\s—–\\-]+').test(alt);
+    if (new RegExp('[\\s—–\\-]+' + c + '[\\s—–\\-]+').test(alt)) return true;
+    return new RegExp('(^|[\\s—–\\-])' + c + '([\\s—–\\-]|$)').test(alt);
   }
 
   function mediaMatchesColorOnly(media, color, allColors) {
@@ -331,19 +380,24 @@
   }
 
   function desktopGalleryList(list) {
-    var items = list.filter(function (item) {
+    return list.filter(function (item) {
       return item && item.src && item.type !== 'video';
     });
-    return items.slice(0, GALLERY_MAX);
   }
 
-  function sortColorMedia(list) {
+  function sortColorMedia(list, product) {
     var sorted = list.slice().sort(function (a, b) {
       var ma = (a.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
       var mb = (b.alt || '').match(/(\d+)\.(mp4|jpe?g|png|webp)/i);
-      var na = ma ? parseInt(ma[1], 10) : 999;
-      var nb = mb ? parseInt(mb[1], 10) : 999;
-      return na - nb;
+      var na = ma ? parseInt(ma[1], 10) : null;
+      var nb = mb ? parseInt(mb[1], 10) : null;
+      if (na != null && nb != null && na !== nb) return na - nb;
+      if (na != null && nb == null) return -1;
+      if (na == null && nb != null) return 1;
+      var ia = product ? mediaIndexById(product, a.id) : -1;
+      var ib = product ? mediaIndexById(product, b.id) : -1;
+      if (ia >= 0 && ib >= 0) return ia - ib;
+      return 0;
     });
     var images = sorted.filter(function (i) {
       return i.type !== 'video';
@@ -354,11 +408,49 @@
     return images.concat(videos);
   }
 
+  /** All media for a color (alt tags + variant links). Position-based slice is fallback only. */
+  function collectMediaForColor(product, color, colors, colorKey) {
+    var seen = {};
+    var list = [];
+    var variantIds = product.variants
+      .filter(function (v) {
+        return v[colorKey] === color;
+      })
+      .map(function (v) {
+        return normId(v.id);
+      });
+
+    function pushMedia(m) {
+      var item = normalizeMedia(m);
+      if (!item || seen[normId(item.id)]) return;
+      seen[normId(item.id)] = true;
+      list.push(item);
+    }
+
+    (product.media || []).forEach(function (m) {
+      if (mediaBelongsToColor(m, color, colors, variantIds)) pushMedia(m);
+    });
+
+    if (!list.length) {
+      var positional = getColorMediaByPosition(product, color, colorKey);
+      if (positional && positional.length) {
+        positional.forEach(function (item) {
+          if (item) pushMedia(item);
+        });
+      }
+    }
+
+    return sortColorMedia(list, product);
+  }
+
   function buildGalleryGroups(product) {
-    var all = (product.media || []).map(normalizeMedia).filter(Boolean);
+    var all = sortColorMedia(
+      (product.media || []).map(normalizeMedia).filter(Boolean),
+      product
+    );
     var colorKey = getColorOptionKey(product);
     if (!colorKey || !product.variants.length) {
-      return { _default: all.slice(0, GALLERY_MAX) };
+      return { _default: all };
     }
 
     var colors = [];
@@ -370,28 +462,10 @@
     var groups = {};
 
     colors.forEach(function (color) {
-      var seen = {};
-      var list = [];
-      var variantIds = product.variants
-        .filter(function (v) {
-          return v[colorKey] === color;
-        })
-        .map(function (v) {
-          return normId(v.id);
-        });
-
-      (product.media || []).forEach(function (m) {
-        if (!mediaBelongsToColor(m, color, colors, variantIds)) return;
-        var item = normalizeMedia(m);
-        if (item && !seen[item.id]) {
-          seen[item.id] = true;
-          list.push(item);
-        }
-      });
-      groups[color] = sortColorMedia(list).slice(0, GALLERY_MAX);
+      groups[color] = collectMediaForColor(product, color, colors, colorKey);
     });
 
-    groups._default = groups[colors[0]] || [];
+    groups._default = groups[colors[0]] || all;
     return groups;
   }
 
@@ -456,7 +530,7 @@
       });
 
       if (!pairEl) return;
-      var subs = list.slice(1, GALLERY_MAX);
+      var subs = list.slice(1);
       var rows = [];
       for (var i = 0; i < subs.length; i += 2) {
         rows.push(subs.slice(i, i + 2));
@@ -485,7 +559,7 @@
 
     function renderMobile(mediaList) {
       if (!track) return;
-      var list = (mediaList.length ? mediaList : groups._default || []).slice(0, GALLERY_MAX);
+      var list = mediaList.length ? mediaList : groups._default || [];
       if (!list.length) return;
 
       track.innerHTML = list
