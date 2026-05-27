@@ -856,13 +856,16 @@
 
 .frido-pdp-bundle__price {
   display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 20px;
   font-weight: 600;
   color: var(--frido-pdp-sale);
 }
 
 .frido-pdp-bundle__compare {
-  font-size: 1.1rem;
+  font-size: 14px;
+  font-weight: 300;
   color: rgba(0, 0, 0, 0.45);
 }
 
