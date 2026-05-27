@@ -1449,8 +1449,8 @@
 
 .frido-pdp-story__heading {
   margin: 0 0 1.8rem;
-  font-size: clamp(2.4rem, 5.8vw, 3.4rem);
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: rgb(var(--color-foreground));
