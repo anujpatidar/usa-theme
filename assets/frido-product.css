@@ -1148,42 +1148,176 @@
   line-height: 1;
 }
 
-/* Trust */
+/* Trust bar — 3 columns, icon badges, scheme colors */
 .frido-pdp-trust {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 1.6rem;
-  padding: 1.4rem;
-  border-radius: 12px;
-  background: var(--frido-pdp-sage);
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: 14px;
+  background: color-mix(in srgb, rgb(var(--color-button)) 10%, rgb(var(--color-background)) 90%);
+  overflow: hidden;
 }
 
 .frido-pdp-trust__item {
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.85rem;
+  padding: 1.35rem 0.85rem 1.5rem;
+  text-align: center;
+}
+
+.frido-pdp-trust__item + .frido-pdp-trust__item {
+  border-left: 1px solid rgba(var(--color-foreground), 0.12);
+}
+
+.frido-pdp-trust__icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(var(--color-foreground), 0.1);
+}
+
+/* In-stock pulse (blowing rings) */
+.frido-pdp-trust__pulse {
+  position: relative;
+  width: 2.8rem;
+  height: 2.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.frido-pdp-trust__pulse-core {
+  position: relative;
+  z-index: 2;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  background: rgb(var(--color-button));
+}
+
+.frido-pdp-trust__pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(var(--color-button), 0.28);
+  animation: frido-pdp-trust-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.frido-pdp-trust__pulse-ring--delay {
+  animation-delay: 1.2s;
+}
+
+@keyframes frido-pdp-trust-pulse {
+  0% {
+    transform: scale(0.45);
+    opacity: 0.75;
+  }
+  65% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frido-pdp-trust__pulse-ring {
+    animation: none;
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  .frido-pdp-trust__pulse-ring--delay {
+    display: none;
+  }
+}
+
+.frido-pdp-trust__svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.frido-pdp-trust__svg--guarantee {
+  color: rgb(var(--color-foreground));
+}
+
+.frido-pdp-trust__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  max-width: 16rem;
 }
 
 .frido-pdp-trust__title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: rgb(var(--color-button));
 }
 
 .frido-pdp-trust__highlight {
-  margin: 0.2rem 0 0;
-  font-weight: 800;
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
   color: rgb(var(--color-button));
 }
 
 .frido-pdp-trust__sub {
-  margin: 0.2rem 0 0;
-  font-size: 1.1rem;
-  color: rgba(0, 0, 0, 0.55);
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: rgba(var(--color-foreground), 0.72);
 }
 
 .frido-pdp-trust__sub--link {
   text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+@media screen and (max-width: 749px) {
+  .frido-pdp-trust {
+    grid-template-columns: 1fr;
+  }
+
+  .frido-pdp-trust__item + .frido-pdp-trust__item {
+    border-left: 0;
+    border-top: 1px solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .frido-pdp-trust__item {
+    flex-direction: row;
+    text-align: left;
+    padding: 1.1rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .frido-pdp-trust__copy {
+    align-items: flex-start;
+    max-width: none;
+  }
+
+  .frido-pdp-trust__icon-badge {
+    width: 4.8rem;
+    height: 4.8rem;
+  }
 }
 
 /* UGC */
@@ -1599,16 +1733,6 @@
   .frido-pdp__buy-col .frido-pdp__benefits-desktop {
     display: block;
     margin: 0 0 1.2rem;
-  }
-
-  .frido-pdp-trust {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .frido-pdp-trust__item+.frido-pdp-trust__item {
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-left: 1rem;
   }
 
   .frido-pdp-story {

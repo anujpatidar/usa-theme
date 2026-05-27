@@ -1,0 +1,62 @@
+{% comment %}
+  PDP trust bar — ship pulse, guarantee, free shipping.
+  @param section {Section}
+{% endcomment %}
+<div class="frido-pdp-trust">
+  <div class="frido-pdp-trust__item">
+    <span class="frido-pdp-trust__icon-badge" aria-hidden="true">
+      <span class="frido-pdp-trust__pulse">
+        <span class="frido-pdp-trust__pulse-ring"></span>
+        <span class="frido-pdp-trust__pulse-ring frido-pdp-trust__pulse-ring--delay"></span>
+        <span class="frido-pdp-trust__pulse-core"></span>
+      </span>
+    </span>
+    <div class="frido-pdp-trust__copy">
+      <p class="frido-pdp-trust__title">{{ section.settings.trust_ship_title | default: 'In Stock Items Ship By' | escape }}</p>
+      <p class="frido-pdp-trust__highlight">{{ section.settings.trust_ship_date | default: 'FRI, MAY 22' | escape }}</p>
+    </div>
+  </div>
+
+  <div class="frido-pdp-trust__item">
+    <span class="frido-pdp-trust__icon-badge" aria-hidden="true">
+      <svg class="frido-pdp-trust__svg frido-pdp-trust__svg--guarantee" width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.5 7.5a7.25 7.25 0 0 0-10 0L9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.5 24.5a7.25 7.25 0 0 0 10 0l1.5-1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7.5 11V7.5H11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24.5 21v3.5H21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <div class="frido-pdp-trust__copy">
+      <p class="frido-pdp-trust__title">{{ section.settings.trust_guarantee_title | default: '30-Day Guarantee' | escape }}</p>
+      <p class="frido-pdp-trust__sub">{{ section.settings.trust_guarantee_sub | default: 'Try Risk-Free For 30 Days' | escape }}</p>
+    </div>
+  </div>
+
+  <div class="frido-pdp-trust__item">
+    <span class="frido-pdp-trust__icon-badge" aria-hidden="true">
+      <svg class="frido-pdp-trust__svg frido-pdp-trust__svg--flag" width="34" height="24" viewBox="0 0 34 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="34" height="24" rx="2" fill="#B22234"/>
+        <path fill="#fff" d="M0 2.18h34M0 6.55h34M0 10.91h34M0 15.27h34M0 19.64h34"/>
+        <rect width="13.6" height="10.91" fill="#3C3B6E"/>
+        <circle cx="2.8" cy="2.2" r="0.55" fill="#fff"/>
+        <circle cx="5.6" cy="2.2" r="0.55" fill="#fff"/>
+        <circle cx="8.4" cy="2.2" r="0.55" fill="#fff"/>
+        <circle cx="11.2" cy="2.2" r="0.55" fill="#fff"/>
+        <circle cx="4.2" cy="4.4" r="0.55" fill="#fff"/>
+        <circle cx="7" cy="4.4" r="0.55" fill="#fff"/>
+        <circle cx="9.8" cy="4.4" r="0.55" fill="#fff"/>
+        <circle cx="2.8" cy="6.6" r="0.55" fill="#fff"/>
+        <circle cx="5.6" cy="6.6" r="0.55" fill="#fff"/>
+        <circle cx="8.4" cy="6.6" r="0.55" fill="#fff"/>
+        <circle cx="11.2" cy="6.6" r="0.55" fill="#fff"/>
+        <circle cx="4.2" cy="8.8" r="0.55" fill="#fff"/>
+        <circle cx="7" cy="8.8" r="0.55" fill="#fff"/>
+        <circle cx="9.8" cy="8.8" r="0.55" fill="#fff"/>
+      </svg>
+    </span>
+    <div class="frido-pdp-trust__copy">
+      <p class="frido-pdp-trust__title">{{ section.settings.trust_shipping_title | default: 'Free Shipping' | escape }}</p>
+      <p class="frido-pdp-trust__sub frido-pdp-trust__sub--link">{{ section.settings.trust_shipping_sub | default: 'TO UNITED STATES' | escape }}</p>
+    </div>
+  </div>
+</div>

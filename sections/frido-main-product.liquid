@@ -163,29 +163,7 @@
          
         {%- endform -%}
 
-        <div class="frido-pdp-trust">
-          <div class="frido-pdp-trust__item">
-            <span class="frido-pdp-trust__icon frido-pdp-trust__icon--ship" aria-hidden="true"></span>
-            <div>
-              <p class="frido-pdp-trust__title">{{ section.settings.trust_ship_title | default: 'In Stock Items Ship By' | escape }}</p>
-              <p class="frido-pdp-trust__highlight">{{ section.settings.trust_ship_date | default: 'FRI, MAY 22' | escape }}</p>
-            </div>
-          </div>
-          <div class="frido-pdp-trust__item">
-            <span class="frido-pdp-trust__icon frido-pdp-trust__icon--guarantee" aria-hidden="true"></span>
-            <div>
-              <p class="frido-pdp-trust__title"><strong>{{ section.settings.trust_guarantee_title | default: '30-Day Guarantee' | escape }}</strong></p>
-              <p class="frido-pdp-trust__sub">{{ section.settings.trust_guarantee_sub | default: 'Try Risk-Free For 30 Days' | escape }}</p>
-            </div>
-          </div>
-          <div class="frido-pdp-trust__item">
-            <span class="frido-pdp-trust__icon frido-pdp-trust__icon--flag" aria-hidden="true"></span>
-            <div>
-              <p class="frido-pdp-trust__title"><strong>{{ section.settings.trust_shipping_title | default: 'Free Shipping' | escape }}</strong></p>
-              <p class="frido-pdp-trust__sub frido-pdp-trust__sub--link">{{ section.settings.trust_shipping_sub | default: 'TO UNITED STATES' | escape }}</p>
-            </div>
-          </div>
-        </div>
+        {% render 'frido-pdp-trust-bar', section: section %}
 
         {%- if section.settings.ugc_heading != blank -%}
           <div class="frido-pdp-ugc">
