@@ -113,10 +113,10 @@
     return null;
   }
 
-  function buildCrossProductOptions(fromProduct, targetProduct, selectedOptions) {
+  function buildCrossProductColorOptions(fromProduct, targetProduct, selectedOptions) {
     var opts = {};
     fromProduct.options.forEach(function (opt) {
-      if (isGenderOptionName(opt) || !selectedOptions[opt]) return;
+      if (!/colou?r/i.test(opt) || !selectedOptions[opt]) return;
       var targetOpt = correspondingOptionName(targetProduct, opt);
       if (targetOpt) opts[targetOpt] = selectedOptions[opt];
     });
@@ -126,10 +126,9 @@
   var GENDER_SELECTION_KEY = 'frido_gender_selection';
 
   function saveGenderSelection(selectedOptions, fromProduct) {
-    var payload = { color: null, size: null };
+    var payload = { color: null };
     fromProduct.options.forEach(function (opt) {
       if (/colou?r/i.test(opt) && selectedOptions[opt]) payload.color = selectedOptions[opt];
-      if (/size/i.test(opt) && selectedOptions[opt]) payload.size = selectedOptions[opt];
     });
     try {
       sessionStorage.setItem(GENDER_SELECTION_KEY, JSON.stringify(payload));
@@ -149,21 +148,34 @@
     }
   }
 
-  function applySavedGenderSelection(product, selectedOptions) {
-    var saved = readGenderSelection();
-    if (!saved) return false;
-    var changed = false;
+  /** Match variant by all set options, then by color only (M/W sizes differ across products). */
+  function resolveVariantForOptions(product, selectedOptions) {
+    var match = findVariantOnProduct(product, selectedOptions);
+    if (match) return match;
+
+    var colorOnly = {};
     product.options.forEach(function (opt) {
-      if (/colou?r/i.test(opt) && saved.color) {
-        selectedOptions[opt] = saved.color;
-        changed = true;
-      }
-      if (/size/i.test(opt) && saved.size) {
-        selectedOptions[opt] = saved.size;
-        changed = true;
-      }
+      if (/colou?r/i.test(opt) && selectedOptions[opt]) colorOnly[opt] = selectedOptions[opt];
     });
-    return changed;
+    if (!Object.keys(colorOnly).length) return null;
+
+    match =
+      findVariantOnProduct(product, colorOnly) ||
+      product.variants.find(function (v) {
+        return product.options.every(function (opt, idx) {
+          if (!/colou?r/i.test(opt)) return true;
+          return v['option' + (idx + 1)] === colorOnly[opt];
+        });
+      });
+    return match || null;
+  }
+
+  function applyVariantToSelection(product, selectedOptions, variant) {
+    if (!variant) return false;
+    product.options.forEach(function (opt, idx) {
+      selectedOptions[opt] = variant['option' + (idx + 1)];
+    });
+    return true;
   }
 
   function syncOptionButtonsFromSelection(root, product, selectedOptions) {
@@ -194,8 +206,8 @@
         return res.json();
       })
       .then(function (p) {
-        var opts = buildCrossProductOptions(fromProduct, p, selectedOptions);
-        var v = findVariantOnProduct(p, opts);
+        var opts = buildCrossProductColorOptions(fromProduct, p, selectedOptions);
+        var v = resolveVariantForOptions(p, opts);
         window.location.href = v ? url + '?variant=' + v.id : url;
       })
       .catch(function () {
@@ -1219,6 +1231,9 @@
           if (recBox) recBox.classList.toggle('is-visible', !!sizeVal);
         }
       }
+
+      syncOptionButtonsFromSelection(root, product, selectedOptions);
+      refreshVariantOptionButtons(root, product, selectedOptions);
     }
 
     qsa('[data-frido-gender-nav]', root).forEach(function (btn) {
@@ -1242,7 +1257,26 @@
       });
     });
 
+    var variantsRoot = qs('[data-frido-variants]', root);
+    if (variantsRoot && variantsRoot.getAttribute('data-frido-gender-mode') === 'link') {
+      var saved = readGenderSelection();
+      if (saved && saved.color) {
+        var currentColor = colorKey && current ? current[colorKey] : null;
+        if (currentColor !== saved.color) {
+          product.options.forEach(function (opt) {
+            if (/colou?r/i.test(opt)) selectedOptions[opt] = saved.color;
+          });
+          var restoredVariant = resolveVariantForOptions(product, selectedOptions);
+          if (restoredVariant) {
+            current = restoredVariant;
+            applyVariantToSelection(product, selectedOptions, restoredVariant);
+          }
+        }
+      }
+    }
+
     refreshVariantOptionButtons(root, product, selectedOptions);
+    syncOptionButtonsFromSelection(root, product, selectedOptions);
     setGenderTabAria();
 
     qsa('[data-frido-native-select]', root).forEach(function (sel) {
@@ -1323,16 +1357,6 @@
           { rootMargin: '0px 0px 0px 0px', threshold: 0 }
         );
         io.observe(buyCol);
-      }
-    }
-
-    var variantsRoot = qs('[data-frido-variants]', root);
-    if (variantsRoot && variantsRoot.getAttribute('data-frido-gender-mode') === 'link') {
-      if (applySavedGenderSelection(product, selectedOptions)) {
-        syncOptionButtonsFromSelection(root, product, selectedOptions);
-        refreshVariantOptionButtons(root, product, selectedOptions);
-        var restored = findVariant();
-        if (restored) current = restored;
       }
     }
 

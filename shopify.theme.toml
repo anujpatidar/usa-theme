@@ -1,0 +1,12 @@
+# Theme CLI environments — https://shopify.dev/docs/storefronts/themes/tools/cli/environments
+#
+# Default: uses your currently linked Shopify account / store (no section needed).
+#
+# Second store: set `store` to the other shop’s myshopify.com hostname, then run e.g.:
+#   shopify theme push --environment second_store --unpublished
+#   shopify theme push --environment second_store --theme THEME_ID --allow-live --publish
+#
+# Optional: add `password = "shptka_..."` for Theme Access app deploys.
+
+[environments.second_store]
+store = "frido-usa.myshopify.com"

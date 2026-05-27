@@ -1,0 +1,114 @@
+/**
+ * Shared open/close animations for Frido overlays (drawers, modals, panels).
+ */
+:root {
+  --frido-overlay-duration: 0.32s;
+  --frido-overlay-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --frido-overlay-duration: 0.01s;
+  }
+}
+
+/* ---------- Backdrop fade ---------- */
+.frido-size-chart__overlay,
+.frido-account-drawer__overlay,
+.frido-cart-drawer__overlay,
+.frido-cart-modal__overlay,
+.frido-search-panel__backdrop {
+  transition: opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-cart-modal__overlay {
+  opacity: 0;
+}
+
+.frido-cart-modal.is-open:not(.is-closing) .frido-cart-modal__overlay {
+  opacity: 1;
+}
+
+/* ---------- Right-side drawers ---------- */
+.frido-size-chart__panel,
+.frido-account-drawer__panel,
+.frido-cart-drawer__panel {
+  transition: transform var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-size-chart:not(.is-open) .frido-size-chart__panel,
+.frido-size-chart.is-closing .frido-size-chart__panel,
+.frido-account-drawer:not(.is-open) .frido-account-drawer__panel,
+.frido-account-drawer.is-closing .frido-account-drawer__panel,
+.frido-cart-drawer:not(.is-open) .frido-cart-drawer__panel,
+.frido-cart-drawer.is-closing .frido-cart-drawer__panel {
+  transform: translateX(100%);
+}
+
+/* ---------- Center modal (cart variant picker) ---------- */
+.frido-cart-modal__dialog {
+  transition:
+    transform var(--frido-overlay-duration) var(--frido-overlay-ease),
+    opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-cart-modal:not(.is-open) .frido-cart-modal__dialog,
+.frido-cart-modal.is-closing .frido-cart-modal__dialog {
+  transform: scale(0.96) translateY(0.6rem);
+  opacity: 0;
+}
+
+.frido-cart-modal.is-open:not(.is-closing) .frido-cart-modal__dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* ---------- Search panel ---------- */
+.frido-search-panel__sheet {
+  transition:
+    transform var(--frido-overlay-duration) var(--frido-overlay-ease),
+    opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-search-panel.is-closing .frido-search-panel__sheet,
+.frido-search-panel.is-closing .frido-search-panel__backdrop {
+  opacity: 0;
+}
+
+@media (max-width: 989px) {
+  .frido-search-panel:not(.is-open) .frido-search-panel__sheet,
+  .frido-search-panel.is-closing .frido-search-panel__sheet {
+    transform: translateY(-1.25rem);
+  }
+}
+
+@media (min-width: 990px) {
+  .frido-search-panel:not(.is-open) .frido-search-panel__sheet,
+  .frido-search-panel.is-closing .frido-search-panel__sheet {
+    transform: translateY(-0.65rem);
+  }
+}
+
+/* ---------- Mobile nav + collection filters ---------- */
+.frido-menu-panel,
+.frido-col-facets-drawer__inner {
+  transition:
+    transform var(--frido-overlay-duration) var(--frido-overlay-ease),
+    opacity var(--frido-overlay-duration) var(--frido-overlay-ease),
+    visibility var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-menu-panel:not(.is-open),
+.frido-menu-panel.is-closing {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.75rem);
+}
+
+.frido-col-facets-drawer__disclosure:not(.menu-opening) .frido-col-facets-drawer__inner {
+  transform: translateX(100%);
+}
+
+.frido-col-facets-drawer__disclosure.menu-opening .frido-col-facets-drawer__inner {
+  transform: translateX(0);
+}

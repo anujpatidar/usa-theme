@@ -4,11 +4,12 @@
   assign sale_url = section.settings.sale_link | default: routes.all_products_collection_url
 %}
 
-<div class="frido-announcement-wrap color-{{ section.settings.color_scheme }} gradient">
-  {% render 'frido-announcement-bar', section: section %}
-</div>
+<div id="FridoSiteHeader" class="frido-site-header">
+  <div class="frido-announcement-wrap color-{{ section.settings.color_scheme }} gradient">
+    {% render 'frido-announcement-bar', section: section %}
+  </div>
 
-<header class="frido-header color-{{ section.settings.color_scheme }} gradient" data-section-id="{{ section.id }}">
+  <header class="frido-header color-{{ section.settings.color_scheme }} gradient" data-section-id="{{ section.id }}">
   <div class="frido-header__shell">
     <div class="frido-page-width">
       <div class="frido-header__main frido-header__bar frido-header__bar--mobile">
@@ -210,7 +211,8 @@
       {% endif %}
     </div>
   </div>
-</header>
+  </header>
+</div>
 
 {% render 'frido-account-drawer', section: section %}
 

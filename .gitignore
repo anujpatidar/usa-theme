@@ -8,3 +8,6 @@
 ehthumbs.db
 Thumbs.db
 .shopify
+
+# Downloaded product media (large binaries) — use scripts/upload-cloud-comfort-media.mjs
+scripts/product-media/

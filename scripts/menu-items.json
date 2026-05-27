@@ -1,0 +1,167 @@
+[
+  {
+    "title": "Home",
+    "type": "FRONTPAGE",
+    "url": "/",
+    "items": []
+  },
+  {
+    "title": "Women",
+    "type": "HTTP",
+    "url": "/collections/women",
+    "items": [
+      {
+        "title": "Featured",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Bestsellers", "type": "HTTP", "url": "/collections/bestsellers", "items": [] },
+          { "title": "New Arrivals", "type": "HTTP", "url": "/collections/new-arrivals", "items": [] },
+          { "title": "All Women's", "type": "HTTP", "url": "/collections/women", "items": [] }
+        ]
+      },
+      {
+        "title": "Category",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Barefoot Shoes", "type": "HTTP", "url": "/collections/barefoot-shoes", "items": [] },
+          { "title": "Barefoot Boots", "type": "HTTP", "url": "/collections/barefoot-boots", "items": [] },
+          { "title": "Barefoot Sandals", "type": "HTTP", "url": "/collections/barefoot-sandals", "items": [] },
+          { "title": "Casual Barefoot Shoes", "type": "HTTP", "url": "/collections/casual-barefoot-shoes", "items": [] }
+        ]
+      },
+      {
+        "title": "Activity",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Walking", "type": "HTTP", "url": "/collections/walking", "items": [] },
+          { "title": "Hiking", "type": "HTTP", "url": "/collections/hiking", "items": [] },
+          { "title": "Work", "type": "HTTP", "url": "/collections/work", "items": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Men",
+    "type": "HTTP",
+    "url": "/collections/men",
+    "items": [
+      {
+        "title": "Featured",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Bestsellers", "type": "HTTP", "url": "/collections/mens-bestsellers", "items": [] },
+          { "title": "New Arrivals", "type": "HTTP", "url": "/collections/mens-new-arrivals", "items": [] },
+          { "title": "All Men's", "type": "HTTP", "url": "/collections/men", "items": [] }
+        ]
+      },
+      {
+        "title": "Category",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Barefoot Shoes", "type": "HTTP", "url": "/collections/mens-barefoot-shoes", "items": [] },
+          { "title": "Barefoot Boots", "type": "HTTP", "url": "/collections/mens-barefoot-boots", "items": [] },
+          { "title": "Casual Barefoot Shoes", "type": "HTTP", "url": "/collections/mens-casual-barefoot-shoes", "items": [] },
+          { "title": "Hiking Barefoot Shoes", "type": "HTTP", "url": "/collections/mens-hiking-barefoot-shoes", "items": [] }
+        ]
+      },
+      {
+        "title": "Activity",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Walking", "type": "HTTP", "url": "/collections/mens-walking", "items": [] },
+          { "title": "Hiking", "type": "HTTP", "url": "/collections/mens-hiking", "items": [] },
+          { "title": "Work", "type": "HTTP", "url": "/collections/mens-work", "items": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Categories",
+    "type": "HTTP",
+    "url": "/collections/all",
+    "items": [
+      {
+        "title": "By Category",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Barefoot Shoes", "type": "HTTP", "url": "/collections/barefoot-shoes", "items": [] },
+          { "title": "Barefoot Sandals", "type": "HTTP", "url": "/collections/barefoot-sandals", "items": [] },
+          { "title": "Barefoot Boots", "type": "HTTP", "url": "/collections/barefoot-boots", "items": [] },
+          { "title": "Kids Barefoot Shoes", "type": "HTTP", "url": "/collections/kids-barefoot-shoes", "items": [] },
+          { "title": "Accessories", "type": "HTTP", "url": "/collections/accessories", "items": [] },
+          { "title": "Socks", "type": "HTTP", "url": "/collections/socks", "items": [] },
+          { "title": "Insoles", "type": "HTTP", "url": "/collections/insoles", "items": [] }
+        ]
+      },
+      {
+        "title": "By Activity",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Walking", "type": "HTTP", "url": "/collections/walking", "items": [] },
+          { "title": "Hiking", "type": "HTTP", "url": "/collections/hiking", "items": [] },
+          { "title": "Work", "type": "HTTP", "url": "/collections/work", "items": [] }
+        ]
+      },
+      {
+        "title": "Featured",
+        "type": "HTTP",
+        "url": "/collections/new-arrivals",
+        "items": []
+      }
+    ]
+  },
+  {
+    "title": "Conditions",
+    "type": "HTTP",
+    "url": "/collections/all",
+    "items": [
+      {
+        "title": "Common Conditions (A-G)",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Arthritis", "type": "HTTP", "url": "/collections/arthritis", "items": [] },
+          { "title": "Bunions", "type": "HTTP", "url": "/collections/bunions", "items": [] },
+          { "title": "Diabetes", "type": "HTTP", "url": "/collections/diabetes", "items": [] },
+          { "title": "Flat Feet", "type": "HTTP", "url": "/collections/flat-feet", "items": [] },
+          { "title": "Gout", "type": "HTTP", "url": "/collections/gout", "items": [] }
+        ]
+      },
+      {
+        "title": "(H-S)",
+        "type": "HTTP",
+        "url": "#",
+        "items": [
+          { "title": "Hammer Toes", "type": "HTTP", "url": "/collections/hammer-toes", "items": [] },
+          { "title": "Heel Spurs", "type": "HTTP", "url": "/collections/heel-spurs", "items": [] },
+          { "title": "Hip Pain", "type": "HTTP", "url": "/collections/hip-pain", "items": [] },
+          { "title": "Knee Pain", "type": "HTTP", "url": "/collections/knee-pain", "items": [] },
+          { "title": "Neuropathy", "type": "HTTP", "url": "/collections/neuropathy", "items": [] },
+          { "title": "Overpronation", "type": "HTTP", "url": "/collections/overpronation", "items": [] },
+          { "title": "Plantar Fasciitis", "type": "HTTP", "url": "/collections/plantar-fasciitis", "items": [] },
+          { "title": "Swollen Feet", "type": "HTTP", "url": "/collections/swollen-feet", "items": [] }
+        ]
+      },
+      {
+        "title": "Featured",
+        "type": "HTTP",
+        "url": "#",
+        "items": []
+      }
+    ]
+  },
+  {
+    "title": "Help Center",
+    "type": "HTTP",
+    "url": "/pages/help-center",
+    "items": []
+  }
+]

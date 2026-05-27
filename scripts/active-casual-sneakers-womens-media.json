@@ -1,0 +1,81 @@
+{
+  "productHandle": "frido-active-casual-sneakers-womens",
+  "store": "frido-usa.myshopify.com",
+  "colors": {
+    "Charcoal Black": [
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A_cb5df517-6287-4b4b-9a0a-db1fb2688c82.jpg?v=1777539182", "type": "image", "name": "AS-00A.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B_0fb3bd30-b066-4ba9-aea0-29e3c329ba39.jpg?v=1777545523", "type": "image", "name": "AS-00B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00C_49aae5a3-5180-4924-961d-85903c529d66.jpg?v=1777539181", "type": "image", "name": "AS-00C.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00D_f8ea2637-5db9-4773-ac7e-0d8a7495035b.jpg?v=1777539181", "type": "image", "name": "AS-00D.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00E_fc14b5f3-2d2c-4085-8bb4-5b01186488d9.jpg?v=1777539181", "type": "image", "name": "AS-00E.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_8df5ff96-87fb-47a5-944b-b028141f9b39.jpg?v=1777539181", "type": "image", "name": "AS-01.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01B_5560af5d-4dc9-4702-91ef-72a18e4c6085.jpg?v=1777539182", "type": "image", "name": "AS-01B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_9c2d0442-7b2e-4b3a-885d-5ede2b3851c9.jpg?v=1777539181", "type": "image", "name": "AS-02.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_5e655aa4-127c-49fd-888b-40d3056aa5ab.jpg?v=1777539181", "type": "image", "name": "AS-03.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_b0829d61-f96e-49fd-9476-c44815db3ab3.jpg?v=1777539181", "type": "image", "name": "AS-04.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05..jpg?v=1777539181", "type": "image", "name": "AS-05.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_5700bdb6-18de-4f2d-9b3e-4a2e50196a11.jpg?v=1777539181", "type": "image", "name": "AS-06.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078", "type": "image", "name": "AS-07.jpg" }
+    ],
+    "Mustard Yellow": [
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A_13f09437-1b07-4708-b619-ca4cecc3a234.jpg?v=1777539771", "type": "image", "name": "AS-00A.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B_f6f396da-1196-4fc4-8f9c-f87a0ca3dd92.jpg?v=1777539771", "type": "image", "name": "AS-00B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00C_b7da8f88-0af6-4409-93cb-52ceeab4d953.jpg?v=1777539771", "type": "image", "name": "AS-00C.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00D_62cbce77-a5fa-4916-8b63-bfad4356397a.jpg?v=1777539771", "type": "image", "name": "AS-00D.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00E_15c6c98c-ed3e-42fc-a86f-75299ec8cf77.jpg?v=1777539771", "type": "image", "name": "AS-00E.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_287edd8e-3b74-4770-8ec8-e7a3694a3a3f.jpg?v=1777539771", "type": "image", "name": "AS-01.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01B_81c5b80f-b57c-4468-9d7b-d2bf2329ae74.jpg?v=1777539771", "type": "image", "name": "AS-01B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_c61f01a3-01ec-459d-afcb-d9aafd5d8a13.jpg?v=1777539771", "type": "image", "name": "AS-02.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_6444936b-24a9-429f-98f5-e5349b7a6e19.jpg?v=1777539771", "type": "image", "name": "AS-03.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_896ad7bc-4f66-468f-94f3-5ac91f6f7963.jpg?v=1777539771", "type": "image", "name": "AS-04.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05._a64dbb6b-639e-44b1-a20a-6f47313692e6.jpg?v=1777539772", "type": "image", "name": "AS-05.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_2d749b7a-1dd5-4d70-b139-59ba4cacfa17.jpg?v=1777539772", "type": "image", "name": "AS-06.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078", "type": "image", "name": "AS-07.jpg" }
+    ],
+    "Mocha Cream": [
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A_74a4f933-b0f1-4150-b303-e536b102049d.jpg?v=1777540290", "type": "image", "name": "AS-00A.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B_8ab7a9e1-3ca9-4532-9516-079147bea1a9.jpg?v=1778501693", "type": "image", "name": "AS-00B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00C_dcd30bbb-397c-4b47-ad54-19639e35bf81.jpg?v=1777540291", "type": "image", "name": "AS-00C.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00D_a3df2715-4fc1-4dfa-968a-4c904034f350.jpg?v=1777540290", "type": "image", "name": "AS-00D.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00E_4bfe32cd-7d39-4cf6-8f9f-63ea2add78d0.jpg?v=1777540290", "type": "image", "name": "AS-00E.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_f827f97a-5576-4ca5-bf1f-abba52392f37.jpg?v=1778501693", "type": "image", "name": "AS-01.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01B_18f817b1-ea9c-4319-9b3b-38f52d9ea2bd.jpg?v=1777540291", "type": "image", "name": "AS-01B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_75b5c498-f3f3-403c-abbb-c256f4e0c50e.jpg?v=1777540291", "type": "image", "name": "AS-02.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_bb1c52b5-2558-477e-9cd4-f1f3100d6745.jpg?v=1777540291", "type": "image", "name": "AS-03.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_585fd876-c758-4af0-a948-427278e343b2.jpg?v=1777540291", "type": "image", "name": "AS-04.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05._eb952646-077e-4f87-8a2e-9cf97829c91b.jpg?v=1777540291", "type": "image", "name": "AS-05.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_53e92b2a-d52a-4280-b68c-f08cc54ad1a2.jpg?v=1777540291", "type": "image", "name": "AS-06.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078", "type": "image", "name": "AS-07.jpg" }
+    ],
+    "Olive Green": [
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A_e0263561-aa49-478f-a075-ceb3818350d5.jpg?v=1778481779", "type": "image", "name": "AS-00A.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B_2ff87eba-7642-4802-bfd3-25c1813502f7.jpg?v=1778481780", "type": "image", "name": "AS-00B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00C_fb3f93e8-5f47-4e4c-bc5d-0e84519476f9.jpg?v=1778481780", "type": "image", "name": "AS-00C.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00D_46932e36-19e8-4872-bb31-1628e03f368a.jpg?v=1778481779", "type": "image", "name": "AS-00D.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00E_9ba8c81d-499d-48e7-9ef1-799c759584f8.jpg?v=1778481780", "type": "image", "name": "AS-00E.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_fa8dd2bd-7488-4700-a18c-b9657dfb1bd8.jpg?v=1778481779", "type": "image", "name": "AS-01.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01B_35cb7bdd-afd2-4a22-9559-d12bee71e20c.jpg?v=1778481780", "type": "image", "name": "AS-01B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_8eddf3a9-b1ab-4699-bf4e-bc78bf221a62.jpg?v=1778481780", "type": "image", "name": "AS-02.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_11563762-d098-4128-9486-7c6439db8e75.jpg?v=1778481780", "type": "image", "name": "AS-03.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_a776df3b-ac64-4ea7-8944-c2cf39018ae0.jpg?v=1778481780", "type": "image", "name": "AS-04.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05._fbd7ad41-b7ba-498e-a87a-643372be1e30.jpg?v=1778481780", "type": "image", "name": "AS-05.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_d6080308-68ff-4de5-8dbc-3120a5034414.jpg?v=1778481780", "type": "image", "name": "AS-06.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07._147ee4bb-61bb-4747-a25e-c45b3dfe234d.jpg?v=1778481779", "type": "image", "name": "AS-07.jpg" }
+    ],
+    "Aqua Blue": [
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A_70d1204b-4cdb-400e-98e3-9aec3f9816d0.jpg?v=1777540877", "type": "image", "name": "AS-00A.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B_a4ebddd6-4b9d-4940-a63d-a9e424a2a975.jpg?v=1777540878", "type": "image", "name": "AS-00B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00C_7af6f55a-d3a6-45b6-a07e-de836d71bcbb.jpg?v=1777540878", "type": "image", "name": "AS-00C.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00D_46f7ab63-11d8-4683-b0b7-06bffa3e110a.jpg?v=1777540877", "type": "image", "name": "AS-00D.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00E_4c09c5d0-ec0f-4a7f-8ab8-3a0c717701d2.jpg?v=1777540877", "type": "image", "name": "AS-00E.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_2201fccc-ccad-4118-b91d-85380be8db79.jpg?v=1777540878", "type": "image", "name": "AS-01.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01B_074952da-2999-4137-8770-662596c3eff5.jpg?v=1777540878", "type": "image", "name": "AS-01B.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_6a7382b5-a48f-4981-aeb5-dc3dad137c0e.jpg?v=1777540878", "type": "image", "name": "AS-02.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_1ec5720f-22ab-445f-8929-dc20a6130efc.jpg?v=1777540878", "type": "image", "name": "AS-03.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_4283b5b7-1508-4b43-83d6-1ba3ec4058ed.jpg?v=1777540878", "type": "image", "name": "AS-04.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05._9721d5c9-08ca-4251-92e5-32cddeeac75b.jpg?v=1777540878", "type": "image", "name": "AS-05.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_bc2abf85-edbe-4aa2-8bfc-eb3fcfe1d167.jpg?v=1777540877", "type": "image", "name": "AS-06.jpg" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078", "type": "image", "name": "AS-07.jpg" }
+    ]
+  }
+}

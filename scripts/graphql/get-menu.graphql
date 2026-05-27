@@ -1,0 +1,11 @@
+query GetMenu($query: String!) {
+  menus(first: 1, query: $query) {
+    edges {
+      node {
+        id
+        handle
+        title
+      }
+    }
+  }
+}

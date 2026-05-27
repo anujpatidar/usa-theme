@@ -1,0 +1,47 @@
+{
+  "_comment": "Add these blocks in Theme editor → Frido header. Menu links come from ./menu-items.json via setup-main-menu.sh",
+  "badges": [
+    { "type": "nav_badge", "menu_item": "Women", "link_title": "Bestsellers", "badge_text": "Up to 50% OFF" },
+    { "type": "nav_badge", "menu_item": "Men", "link_title": "Bestsellers", "badge_text": "Up to 50% OFF" }
+  ],
+  "mega_featured": [
+    {
+      "type": "mega_featured",
+      "menu_item": "Categories",
+      "column_heading": "Featured",
+      "title": "New Arrivals",
+      "url": "/collections/new-arrivals"
+    }
+  ],
+  "mega_product_cards": [
+    {
+      "type": "mega_product_card",
+      "menu_item": "Conditions",
+      "title": "HF Flow",
+      "review_count": "6,432"
+    },
+    {
+      "type": "mega_product_card",
+      "menu_item": "Conditions",
+      "title": "Flame",
+      "review_count": "5,891"
+    },
+    {
+      "type": "mega_product_card",
+      "menu_item": "Conditions",
+      "title": "HF Stride",
+      "review_count": "4,210"
+    },
+    {
+      "type": "mega_product_card",
+      "menu_item": "Conditions",
+      "title": "Wave",
+      "review_count": "3,987"
+    }
+  ],
+  "header_settings": {
+    "announcement": "<p>30-day money-back guarantee</p>",
+    "sale_label": "Spring Sale",
+    "logo_subtitle": "FOOTWEAR"
+  }
+}

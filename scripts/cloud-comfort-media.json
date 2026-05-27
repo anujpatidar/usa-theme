@@ -1,0 +1,66 @@
+{
+  "productTitle": "Frido Women's Cloud Comfort Shoes - Lace ups",
+  "store": "frido-usa.myshopify.com",
+  "colors": {
+    "White": [
+      { "url": "https://cdn.shopify.com/videos/c/o/v/5c769f7b8cca414bbfc675a9d8338d7d.mp4", "type": "video" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_a0a7569b-51a8-4042-934e-ea222d20f29b.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01B_3.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01C_d16fc0fa-4c96-4c50-b9b4-e83aa454c82a.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01D_fd1eadb7-1236-4144-aa4d-2ed2a6ff5981.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02_fddcff2b-0954-469f-abfe-6d11a4c7b6fd.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_2B_682e0508-8c7a-4317-a01d-d0c76eb3e51d.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_03_12e02aff-e48e-4761-b05a-65c2f54cc024.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_04_baedc234-d345-41bc-b802-1adec0939e9d.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_05_39c5fe27-e3c1-41dd-8ffc-adda40c6dddf.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_06_cb297876-22e0-48f3-9f64-e74fbeaae8ff.jpg?v=1769609677", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_07_3.jpg?v=1769687959", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_08_d937c3d3-dbb1-4942-8926-afeb51a630da.jpg?v=1769609677", "type": "image" }
+    ],
+    "Pink": [
+      { "url": "https://cdn.shopify.com/videos/c/o/v/5c769f7b8cca414bbfc675a9d8338d7d.mp4", "type": "video" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_2455947b-8b47-4235-85c8-ba35496ccbfe.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01B_3_9071d001-bbb7-4f21-9182-987ab6fff517.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01C_e2a3ab93-426e-4422-a48a-546b4c0df2d3.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01D_9664330f-613c-420f-a540-72efc7cccd94.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02_4bcdf39e-3e2d-4704-ae93-0d0be7caa8ef.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02B_d0cd75f4-fd3f-4222-af29-1e45d7b32b48.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_03_65f61753-4222-4b33-93de-992a1ec569a4.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_04_674a6ea1-8eaa-4965-abec-9f8d881f2c8c.jpg?v=1769610001", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_05_48100e13-759a-4020-97e8-bdaf1873eec7.jpg?v=1769610001", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_06_a0a32f7b-abf5-4313-911d-2d011e0237b5.jpg?v=1769610002", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_07_2.jpg?v=1769687960", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_08_1ed1ca7f-1980-41db-befc-b2c68f927d4a.jpg?v=1769610001", "type": "image" }
+    ],
+    "Lavender": [
+      { "url": "https://cdn.shopify.com/videos/c/o/v/5c769f7b8cca414bbfc675a9d8338d7d.mp4", "type": "video" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_2_1.jpg?v=1769610219", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01B_3_32674caf-607d-4e3a-a480-fd3fdaea48f5.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01C_4eacd03e-8d41-49d0-a4fb-219f467ffa57.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01D_2804c200-71a2-4282-8ea6-ae4618ae3ea5.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02_a32ef5b2-3093-46f8-b783-84ddfa44d65d.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02B_9b26d1f6-8963-4515-8f38-6b890c8281e4.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_03_071b154e-c9f4-4c1a-94ac-44e8472d4d12.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_04_5d67c4d4-cb63-42d0-8496-56c7aec06656.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_05_2d160892-6ef6-4d88-ac74-b09259efc02a.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_06_3b0949c5-5b7f-4f11-86df-de43f3e78b78.jpg?v=1769610154", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_07_1.jpg?v=1769687959", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_08_b869bfcf-1974-4b5f-87df-15e79df9eaf7.jpg?v=1769610153", "type": "image" }
+    ],
+    "Black": [
+      { "url": "https://cdn.shopify.com/videos/c/o/v/5c769f7b8cca414bbfc675a9d8338d7d.mp4", "type": "video" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_0a554e80-acc1-4988-bb9d-bbc0878a2f6d.jpg?v=1769610420", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01B_03433621-d699-4947-9ef5-f93dc8f72680.jpg?v=1769610420", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01C_1dbc82cf-ce92-41d9-8135-66c5b4b8d462.jpg?v=1769610421", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01D_af3096ed-6198-47f5-af0a-545c5ae5ac70.jpg?v=1769610421", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02_a2738f88-c6b5-4de5-ac79-a41e61ba74e9.jpg?v=1769610420", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02B_23d3f1c7-efe8-41c1-a8fb-73af370ed07b.jpg?v=1769610421", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_03_08dde241-f98d-4ca4-91e0-f4706bf13dd9.jpg?v=1769610421", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_04_9feb9203-0cc1-4b75-9731-bb41e491423a.jpg?v=1769610420", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_05_f0675b72-bb4f-4ed2-93f4-46539ebcf659.jpg?v=1769610421", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_06_9c552fb0-3ed5-477a-b5c6-8f632f6accaa.jpg?v=1769610421", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_07_6e6f0ca2-5081-4f36-9140-b0a1e019d36f.jpg?v=1769687959", "type": "image" },
+      { "url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_08_5c0cdcfb-1b91-4e35-bb5c-71b995c29772.jpg?v=1769610420", "type": "image" }
+    ]
+  }
+}
