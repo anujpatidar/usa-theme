@@ -824,9 +824,9 @@
   top: -0.65rem;
   left: 50%;
   transform: translateX(-50%);
-  padding: 4px 8px;
+  padding: 4px 16px;
   border-radius: var(--frido-pdp-pill);
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
@@ -850,13 +850,13 @@
 }
 
 .frido-pdp-bundle__title {
-  font-weight: 700;
-  font-size: 1.35rem;
+  font-weight: 400;
+  font-size: 24px;
 }
 
 .frido-pdp-bundle__price {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
   color: var(--frido-pdp-sale);
 }
 
@@ -871,7 +871,7 @@
   border-radius: var(--frido-pdp-pill);
   background: rgba(var(--color-button), 0.12);
   color: rgb(var(--color-button));
-  font-size: 1.05rem;
+  font-size: 14px;
   font-weight: 600;
 }
 
