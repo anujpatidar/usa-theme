@@ -1155,7 +1155,13 @@
   margin-top: 1.6rem;
   border: 1px solid rgba(var(--color-foreground), 0.1);
   border-radius: 14px;
-  background: color-mix(in srgb, rgb(var(--color-button)) 10%, rgb(var(--color-background)) 90%);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(var(--color-button), 0.04) 0%,
+      rgba(var(--color-button), 0.12) 100%
+    ),
+    rgb(var(--color-background));
   overflow: hidden;
 }
 

@@ -1395,15 +1395,6 @@
 
     var sticky = qs('[data-frido-pdp-sticky]', root);
     if (sticky) {
-      function updateStickyHeaderOffset() {
-        var siteHeader = document.querySelector('.frido-site-header');
-        var h = siteHeader ? siteHeader.getBoundingClientRect().height : 0;
-        document.documentElement.style.setProperty('--frido-site-header-h', h + 'px');
-      }
-
-      updateStickyHeaderOffset();
-      window.addEventListener('resize', updateStickyHeaderOffset);
-
       var buyCol = qs('.frido-pdp__buy-col', root);
       if (buyCol && 'IntersectionObserver' in window) {
         var io = new IntersectionObserver(
@@ -1412,7 +1403,6 @@
             sticky.classList.toggle('is-visible', show);
             if (show) {
               sticky.removeAttribute('hidden');
-              updateStickyHeaderOffset();
             } else {
               sticky.setAttribute('hidden', '');
             }

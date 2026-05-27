@@ -22,12 +22,23 @@ body.frido-menu-open {
   max-width: 100%;
 }
 
-/* ---------- Sticky site header (announcement + nav) ---------- */
+/* ---------- Fixed site header (announcement + nav) — sitewide ---------- */
+.shopify-section-group-header-group {
+  position: relative;
+  z-index: 100;
+}
+
 .frido-site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   width: 100%;
+}
+
+body.frido-header-sticky {
+  padding-top: var(--frido-site-header-h, 0px);
 }
 
 /* ---------- Announcement ---------- */

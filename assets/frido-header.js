@@ -60,7 +60,9 @@
     });
   }
 
-  function updateMenuPanelTop() {
+  var siteHeaderResizeObserver = null;
+
+  function updateSiteHeaderLayout() {
     var siteHeader = document.querySelector('.frido-site-header');
     var top = 0;
     if (siteHeader) {
@@ -72,14 +74,28 @@
         top = ann.getBoundingClientRect().height + bar.getBoundingClientRect().height;
       }
     }
+    document.documentElement.style.setProperty('--frido-site-header-h', top + 'px');
     document.documentElement.style.setProperty('--frido-menu-panel-top', top + 'px');
+  }
+
+  function observeSiteHeaderHeight() {
+    var siteHeader = document.querySelector('.frido-site-header');
+    if (!siteHeader || typeof ResizeObserver === 'undefined') return;
+
+    if (siteHeaderResizeObserver) {
+      siteHeaderResizeObserver.disconnect();
+      siteHeaderResizeObserver = null;
+    }
+
+    siteHeaderResizeObserver = new ResizeObserver(updateSiteHeaderLayout);
+    siteHeaderResizeObserver.observe(siteHeader);
   }
 
   function setMenuOpen(panel, open) {
     if (!panel) return;
     var toggle = document.querySelector('[data-frido-menu-toggle][aria-controls="' + panel.id + '"]');
     if (open) {
-      updateMenuPanelTop();
+      updateSiteHeaderLayout();
       if (window.FridoOverlay) {
         FridoOverlay.open(panel, { setHidden: false, bodyClass: 'frido-menu-open' });
       } else {
@@ -203,7 +219,8 @@
     if (!header) return;
 
     initAnnouncementRotate();
-    updateMenuPanelTop();
+    updateSiteHeaderLayout();
+    observeSiteHeaderHeight();
     initDesktopMega(header);
 
     document.addEventListener('click', function (e) {
@@ -274,9 +291,10 @@
 
   document.addEventListener('shopify:section:load', function () {
     initAnnouncementRotate();
-    updateMenuPanelTop();
+    updateSiteHeaderLayout();
+    observeSiteHeaderHeight();
   });
 
-  window.addEventListener('resize', updateMenuPanelTop);
-  window.addEventListener('orientationchange', updateMenuPanelTop);
+  window.addEventListener('resize', updateSiteHeaderLayout);
+  window.addEventListener('orientationchange', updateSiteHeaderLayout);
 })();
