@@ -1555,6 +1555,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  margin-left: 6px;
 }
 
 .frido-pdp-comfort__grid {
@@ -1594,8 +1595,8 @@
 
 .frido-pdp-comfort__card-title {
   margin: 0 0 1rem;
-  font-size: 1.65rem;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 500;
   line-height: 1.25;
   color: rgb(var(--color-foreground));
 }
@@ -1609,16 +1610,16 @@
 }
 
 .frido-pdp-comfort__stat-value {
-  font-size: clamp(3.2rem, 10vw, 4.2rem);
-  font-weight: 800;
+  font-size: 36px;
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
   color: rgb(var(--color-foreground));
 }
 
 .frido-pdp-comfort__stat-label {
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(var(--color-foreground), 0.55);
