@@ -897,6 +897,7 @@
   background: #fff;
   border-radius: 12px;
   border: 1px solid rgba(var(--color-foreground), 0.15);
+  padding: 24px;
 }
 
 .frido-pdp-bundle-config__heading {
@@ -923,7 +924,6 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 24px;
   border-radius: 12px;
   background: #fff;
   overflow: hidden;
@@ -945,16 +945,16 @@
 }
 
 .frido-pdp-bundle-pair__label {
-  font-size: 1.35rem;
+  font-size: 14px;
   font-weight: 700;
-  color: rgb(var(--color-button));
+  color: #000;
 }
 
 .frido-pdp-bundle-pair__stock {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  margin-left: auto;
+  margin-left: 8px;
   padding: 0.25rem 0.6rem;
   border-radius: 4px;
   font-size: 1.05rem;
@@ -984,7 +984,7 @@
   justify-content: center;
   width: 2.4rem;
   height: 2.4rem;
-  margin: 0 0 0 0.4rem;
+  margin-left: auto;
   padding: 0;
   border: 0;
   background: transparent;
