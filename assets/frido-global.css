@@ -3059,7 +3059,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 16px;
+  padding: 16px 30px;
   border: 1px solid rgb(var(--color-button));
   border-radius: 10px;
   background: rgb(var(--color-background));
