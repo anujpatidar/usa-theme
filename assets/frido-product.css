@@ -804,6 +804,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
   margin-bottom: 1.4rem;
+  font-family: Outfit, sans-serif;
 }
 
 .frido-pdp-bundle {
@@ -1141,18 +1142,6 @@
 .frido-pdp-atc__arrow {
   margin-left: 0.8rem;
   font-size: 1.5rem;
-}
-
-.frido-pdp__hsa {
-  margin: 1rem 0 0;
-  text-align: center;
-  font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.55);
-}
-
-.frido-pdp__hsa a {
-  color: inherit;
-  text-decoration: underline;
 }
 
 /* Trust */

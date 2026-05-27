@@ -160,14 +160,7 @@
             <span class="frido-pdp-atc__arrow" aria-hidden="true">→</span>
           </button>
 
-          {%- if section.settings.hsa_text != blank -%}
-            <p class="frido-pdp__hsa">
-              {{ section.settings.hsa_text | escape }}
-              {%- if section.settings.hsa_link != blank -%}
-                <a href="{{ section.settings.hsa_link }}">{{ section.settings.hsa_learn_label | default: 'Learn more' | escape }}</a>
-              {%- endif -%}
-            </p>
-          {%- endif -%}
+         
         {%- endform -%}
 
         <div class="frido-pdp-trust">
