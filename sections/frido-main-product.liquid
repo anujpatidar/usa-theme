@@ -165,22 +165,7 @@
 
         {% render 'frido-pdp-trust-bar', section: section %}
 
-        {%- if section.settings.ugc_heading != blank -%}
-          <div class="frido-pdp-ugc">
-            <h2 class="frido-pdp-ugc__heading">{{ section.settings.ugc_heading | escape }}</h2>
-            {%- if ugc_blocks.size > 0 -%}
-              <div class="frido-pdp-ugc__row">
-                {%- for block in ugc_blocks -%}
-                  <div class="frido-pdp-ugc__item" {{ block.shopify_attributes }}>
-                    {%- if block.settings.image != blank -%}
-                      {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,300,400', sizes: '120px', alt: '' }}
-                    {%- endif -%}
-                  </div>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
+        {% render 'frido-pdp-ugc', product: product, section: section, ugc_blocks: ugc_blocks %}
       </div>
     </div>
 
@@ -472,6 +457,14 @@
       "default": "TO UNITED STATES"
     },
     {
+      "type": "header",
+      "content": "UGC gallery"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add images per product in Shopify admin → Product → Metafields: namespace custom, key ugc_images (type: List of files). Section blocks below are used only when that metafield is empty."
+    },
+    {
       "type": "text",
       "id": "ugc_heading",
       "label": "UGC heading",
@@ -644,8 +637,16 @@
     },
     {
       "type": "ugc_image",
-      "name": "UGC image",
-      "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }]
+      "name": "UGC image (fallback)",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Only on this product",
+          "info": "Leave empty to show on every product that has no UGC metafield."
+        }
+      ]
     }
   ],
   "presets": [{ "name": "Frido product" }]

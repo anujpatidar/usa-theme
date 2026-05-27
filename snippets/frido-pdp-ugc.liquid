@@ -1,0 +1,104 @@
+{% comment %}
+  PDP UGC marquee — per product via metafield custom.ugc_images (list of files).
+  Fallback: section blocks type ugc_image (optional product filter on each block).
+{% endcomment %}
+{%- liquid
+  assign ugc_images = product.metafields.custom.ugc_images.value
+  assign ugc_use_metafield = false
+  if ugc_images != blank and ugc_images.size > 0
+    assign ugc_use_metafield = true
+  endif
+
+  assign ugc_block_count = 0
+  unless ugc_use_metafield
+    for block in ugc_blocks
+      if block.settings.image == blank
+        continue
+      endif
+      assign block_product = block.settings.product
+      if block_product != blank and block_product.id != product.id
+        continue
+      endif
+      assign ugc_block_count = ugc_block_count | plus: 1
+    endfor
+  endunless
+
+  assign ugc_count = 0
+  if ugc_use_metafield
+    assign ugc_count = ugc_images.size
+  else
+    assign ugc_count = ugc_block_count
+  endif
+-%}
+
+{%- if section.settings.ugc_heading != blank and ugc_count > 0 -%}
+  {%- liquid
+    assign ugc_duration = ugc_count | times: 5
+    if ugc_duration < 20
+      assign ugc_duration = 20
+    endif
+    if ugc_duration > 60
+      assign ugc_duration = 60
+    endif
+  -%}
+
+  <div
+    class="frido-pdp-ugc"
+    data-frido-pdp-ugc
+    style="--frido-ugc-duration: {{ ugc_duration }}s;"
+  >
+    <h2 class="frido-pdp-ugc__heading">{{ section.settings.ugc_heading | escape }}</h2>
+
+    <div class="frido-pdp-ugc__viewport">
+      <div class="frido-pdp-ugc__track{% if ugc_count < 2 %} frido-pdp-ugc__track--few{% endif %}">
+        {%- for pass in (1..2) -%}
+          <div
+            class="frido-pdp-ugc__group"
+            {% if pass == 2 %}
+              aria-hidden="true"
+            {% endif %}
+          >
+            {%- if ugc_use_metafield -%}
+              {%- for media in ugc_images -%}
+                <figure class="frido-pdp-ugc__item">
+                  {{
+                    media
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'frido-pdp-ugc__img',
+                      widths: '280,360,440,520,600,800',
+                      sizes: '(max-width: 749px) 30vw, 148px',
+                      alt: media.alt | default: product.title
+                  }}
+                </figure>
+              {%- endfor -%}
+            {%- else -%}
+              {%- for block in ugc_blocks -%}
+                {%- if block.settings.image == blank -%}
+                  {%- continue -%}
+                {%- endif -%}
+                {%- assign block_product = block.settings.product -%}
+                {%- if block_product != blank and block_product.id != product.id -%}
+                  {%- continue -%}
+                {%- endif -%}
+                <figure class="frido-pdp-ugc__item" {{ block.shopify_attributes }}>
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'frido-pdp-ugc__img',
+                      widths: '280,360,440,520,600,800',
+                      sizes: '(max-width: 749px) 30vw, 148px',
+                      alt: block.settings.image.alt | default: product.title
+                  }}
+                </figure>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
