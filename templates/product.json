@@ -65,7 +65,6 @@
         "comfort_1": {
           "type": "comfort_feature",
           "settings": {
-            "image": "shopify://shop_images/svg1.svg",
             "title": "Wide Toe Box",
             "stat_percent": 94,
             "stat_label": "FREER",
@@ -75,7 +74,6 @@
         "comfort_2": {
           "type": "comfort_feature",
           "settings": {
-            "image": "shopify://shop_images/h_svg_5.svg",
             "title": "Natural Alignment",
             "stat_percent": 98,
             "stat_label": "ALIGNED",
@@ -85,7 +83,6 @@
         "comfort_3": {
           "type": "comfort_feature",
           "settings": {
-            "image": "shopify://shop_images/h_svg_6.svg",
             "title": "Thin Soles",
             "stat_percent": 81,
             "stat_label": "LIGHTER",
@@ -95,7 +92,6 @@
         "comfort_4": {
           "type": "comfort_feature",
           "settings": {
-            "image": "shopify://shop_images/s2.svg",
             "title": "Zero-Drop Base",
             "stat_percent": 89,
             "stat_label": "BALANCED",
@@ -170,13 +166,6 @@
         "selling_fast": "Selling Out Fast",
         "selling_fast_body_lead": "This product is in high demand. Based on the sales volume in the past 3 hours,",
         "selling_fast_body_bold": "this product is likely to sell out today.",
-        "size_chart_enable": true,
-        "size_chart_title": "Size & Fit Chart",
-        "size_chart_rec_prefix": "Recommended Size:",
-        "size_chart_recommendations": "",
-        "size_chart_product_title": "",
-        "size_chart_subtitle": "Men's Size Chart",
-        "size_chart_table": "",
         "bundle_heading": "Bundle promotion is valid till 11:59 PM",
         "bundle_choose_heading": "Choose your colors",
         "bundle_add_pair_label": "+ Add Another Pair",
@@ -196,7 +185,6 @@
         "ugc_heading": "2 million customers love our shoes!",
         "show_most_loved": true,
         "most_loved_heading": "Most loved styles...",
-        "most_loved_collection": "",
         "most_loved_limit": 4,
         "show_related_products": true,
         "related_heading": "You may also like...",
@@ -204,7 +192,7 @@
         "features_heading": "Why HF Stride Works?",
         "features_media_bg": "#d8dfd0",
         "comfort_eyebrow": "TESTED & RECOMMENDED BY PODIATRISTS",
-        "comfort_heading_lead": "Engineered for All-Day",
+        "comfort_heading_lead": "Engineered for All-Day ",
         "comfort_heading_highlight": "Pain-Free Comfort"
       }
     }
