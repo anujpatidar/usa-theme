@@ -807,9 +807,7 @@
   font-family: Outfit, sans-serif;
 }
 
-* {
-  font-family: Outfit, sans-serif !important;
-}
+
 
 .frido-pdp-bundle {
   position: relative;
@@ -1114,7 +1112,7 @@
   border-radius: 10px;
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
-  font-weight: 800;
+  font-weight: 600;
   font-size: 18px;
   cursor: pointer;
 }
@@ -1135,17 +1133,19 @@
   padding: 6px 16px;
   border-radius: var(--frido-pdp-pill);
   background: rgba(0, 0, 0, 0.15);
-  font-size: 1.2rem;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .frido-pdp-atc__compare {
   text-decoration: line-through;
   opacity: 0.85;
+  font-weight: 400;
 }
 
 .frido-pdp-atc__arrow {
-  margin-left: 0.8rem;
   font-size: 1.5rem;
+  line-height: 1;
 }
 
 /* Trust */
