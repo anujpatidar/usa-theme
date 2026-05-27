@@ -1495,7 +1495,7 @@
   flex-shrink: 0;
   width: 100%;
   min-width: 0;
-  border-radius: 8px;
+
 }
 
 .frido-pdp-story__media-frame {
@@ -1504,6 +1504,7 @@
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #e8e8e8;
+  border-radius: 8px;
 }
 
 .frido-pdp-story__img,
