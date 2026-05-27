@@ -91,6 +91,7 @@
 
     <div class="frido-pdp-bundle-config" data-frido-bundle-config>
       <p class="frido-pdp-bundle-config__heading">{{ choose_heading | escape }}</p>
+      <div class="frido-pdp-bundle-config-bg">
       <div class="frido-pdp-bundle-config__box" data-frido-bundle-pairs></div>
       <button type="button" class="frido-pdp-bundle-config__add" data-frido-bundle-add-pair hidden>
         <span class="frido-pdp-bundle-config__add-label">{{ add_pair_label | escape }}</span>
@@ -98,6 +99,7 @@
           <span class="frido-pdp-bundle-config__add-sub">{{ add_pair_sub | escape }}</span>
         {%- endif -%}
       </button>
+      </div>
     </div>
   </div>
 

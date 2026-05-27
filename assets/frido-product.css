@@ -784,8 +784,8 @@
   text-align: center;
   margin: 0 0 1.2rem;
   font-size: 16px;
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.55);
+  font-weight: 600;
+  color: #000;
 }
 
 .frido-pdp-bundles__heading::before,
@@ -894,9 +894,12 @@
 }
 
 .frido-pdp-bundle-config.is-open {
+  padding: 1.2rem 1.2rem 1.4rem;
+}
+
+.frido-pdp-bundle-config-bg {
   background: #fff;
   border-radius: 12px;
-  padding: 1.2rem 1.2rem 1.4rem;
 }
 
 .frido-pdp-bundle-config__heading {
