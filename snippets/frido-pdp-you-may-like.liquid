@@ -1,0 +1,22 @@
+{% comment %}
+  You may also like — Shopify related product recommendations (Search & Discovery).
+  Loaded async via sections/frido-pdp-recs-api.liquid
+{% endcomment %}
+{%- if section.settings.show_related_products -%}
+  <section
+    class="frido-pdp-recs frido-pdp-recs--related is-loading"
+    data-frido-pdp-recs-related
+    hidden
+  >
+    {%- if section.settings.related_heading != blank -%}
+      <h2 class="frido-pdp-recs__heading">{{ section.settings.related_heading | escape }}</h2>
+    {%- endif -%}
+    <div class="frido-pdp-recs__scroll" data-frido-pdp-recs-related-body>
+      <frido-pdp-product-recommendations
+        data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.related_limit | default: 4 }}&intent=related"
+        data-section-id="frido-pdp-recs-api"
+        data-product-id="{{ product.id }}"
+      ></frido-pdp-product-recommendations>
+    </div>
+  </section>
+{%- endif -%}

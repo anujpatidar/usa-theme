@@ -1,0 +1,23 @@
+{% comment %}
+  @param products {Array<Product>}
+  @param current_product_id {Number}
+  @param limit {Number}
+{% endcomment %}
+{%- liquid
+  assign rec_limit = limit | default: 4
+  assign rec_count = 0
+-%}
+<div class="frido-pdp-recs__grid" role="list">
+  {%- for card_product in products -%}
+    {%- if rec_count >= rec_limit -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- if card_product.id == current_product_id -%}
+      {%- continue -%}
+    {%- endif -%}
+    <div class="frido-pdp-recs__cell" role="listitem">
+      {% render 'frido-product-card', card_product: card_product, show_swatches: false, pdp_rec: true %}
+    </div>
+    {%- assign rec_count = rec_count | plus: 1 -%}
+  {%- endfor -%}
+</div>

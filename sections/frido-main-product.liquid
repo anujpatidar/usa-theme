@@ -1,5 +1,6 @@
 {{ 'frido-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'frido-product.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'frido-pdp-recs.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -169,42 +170,14 @@
       </div>
     </div>
 
-    {% render 'frido-pdp-story', product: product, section: section %}
+    {% render 'frido-pdp-story', product: product %}
 
     {% render 'frido-pdp-comfort-features', section: section %}
 
-    {%- if accordion_blocks.size > 0 -%}
-      <section class="frido-pdp-features">
-        <div class="frido-pdp-features__media">
-          {%- if section.settings.features_image != blank -%}
-            {{
-              section.settings.features_image
-              | image_url: width: 800
-              | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width: 990px) 45vw, 100vw', alt: section.settings.features_heading
-            }}
-          {%- elsif product.featured_image -%}
-            {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'frido-pdp-features__img', widths: '400,600,800', sizes: '50vw', alt: '' }}
-          {%- endif -%}
-        </div>
-        <div class="frido-pdp-features__content">
-          {%- if section.settings.features_heading != blank -%}
-            <h2>{{ section.settings.features_heading | escape }}</h2>
-          {%- endif -%}
-          <div class="frido-pdp-accordion" data-frido-accordion>
-            {%- for block in accordion_blocks -%}
-              <details class="frido-pdp-accordion__item" {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
-                <summary>
-                  <span class="frido-pdp-accordion__icon frido-pdp-accordion__icon--{{ block.settings.icon }}" aria-hidden="true"></span>
-                  <span>{{ block.settings.title | escape }}</span>
-                  <span class="frido-pdp-accordion__plus" aria-hidden="true"></span>
-                </summary>
-                <div class="frido-pdp-accordion__body rte">{{ block.settings.content }}</div>
-              </details>
-            {%- endfor -%}
-          </div>
-        </div>
-      </section>
-    {%- endif -%}
+    {% render 'frido-pdp-features', product: product, section: section, accordion_blocks: accordion_blocks %}
+
+    {% render 'frido-pdp-most-loved', product: product, section: section %}
+    {% render 'frido-pdp-you-may-like', product: product, section: section %}
 
   </div>
 </div>
@@ -452,61 +425,85 @@
     },
     {
       "type": "header",
-      "content": "Story (image / video + text)"
+      "content": "Product recommendations"
     },
     {
       "type": "paragraph",
-      "content": "Optional per product: custom.story_heading, custom.story_body, custom.story_image, custom.story_video. Video overrides image when both are set."
+      "content": "Most loved: set custom.most_loved_products on each product, or choose a fallback collection below. You may also like: powered by Shopify Search & Discovery (configure related products in that app)."
     },
-    {
-      "type": "text",
-      "id": "story_heading",
-      "label": "Story heading",
-      "default": "Effortless Wear, Maximum Comfort"
-    },
-    {
-      "type": "richtext",
-      "id": "story_body",
-      "label": "Story body",
-      "default": "<p>Most shoes force your feet into <strong>unnatural positions</strong>, creating pressure points and <strong>reducing strain</strong> on your <strong>ankle, knees,</strong> and <strong>lower back</strong>.</p><p>Frido's <strong>ultra-flexible sole</strong> bends with every step, making these the most <strong>easy-to-wear shoes</strong> you'll own—slip on, move freely, and feel the difference from the first wear.</p>"
-    },
-    { "type": "image_picker", "id": "story_image", "label": "Story image" },
-    { "type": "video", "id": "story_video", "label": "Story video (overrides image)" },
     {
       "type": "checkbox",
-      "id": "story_show_overlay",
-      "label": "Show alignment overlay on media",
+      "id": "show_most_loved",
+      "label": "Show “Most loved styles”",
       "default": true
     },
     {
+      "type": "text",
+      "id": "most_loved_heading",
+      "label": "Most loved — heading",
+      "default": "Most loved styles..."
+    },
+    {
+      "type": "collection",
+      "id": "most_loved_collection",
+      "label": "Most loved — fallback collection",
+      "info": "Used when the product has no most_loved_products metafield."
+    },
+    {
       "type": "range",
-      "id": "story_line_position",
-      "min": 35,
-      "max": 65,
+      "id": "most_loved_limit",
+      "min": 2,
+      "max": 8,
       "step": 1,
-      "unit": "%",
-      "label": "Overlay line — horizontal position",
-      "default": 54
+      "label": "Most loved — max products",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show “You may also like”",
+      "default": true
     },
     {
       "type": "text",
-      "id": "story_callout_title",
-      "label": "Media callout — title",
-      "default": "Zero-Drop Sole –"
+      "id": "related_heading",
+      "label": "Related — heading",
+      "default": "You may also like..."
     },
     {
-      "type": "textarea",
-      "id": "story_callout_text",
-      "label": "Media callout — lines",
-      "default": "Keeps the body aligned,\nreduces pressure"
+      "type": "range",
+      "id": "related_limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Related — max products",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Features (media + accordion)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Per product: metafield custom.pdp_features → PDP Features metaobject (heading, media, accordion list). Run: node scripts/setup-pdp-features-metaobject.mjs. Accordion blocks below are fallback when no metaobject is set."
     },
     {
       "type": "text",
       "id": "features_heading",
-      "label": "Features accordion heading",
-      "default": "Why HF Flow works?"
+      "label": "Features heading (blocks fallback only)",
+      "default": "Why HF Stride Works?"
     },
-    { "type": "image_picker", "id": "features_image", "label": "Features section image" },
+    {
+      "type": "image_picker",
+      "id": "features_image",
+      "label": "Features image (blocks fallback only)"
+    },
+    {
+      "type": "color",
+      "id": "features_media_bg",
+      "label": "Media background color",
+      "default": "#d8dfd0"
+    },
     {
       "type": "header",
       "content": "Comfort features (podiatrist)"

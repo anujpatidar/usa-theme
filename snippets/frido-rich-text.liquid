@@ -1,0 +1,18 @@
+{% comment %}
+  Render a rich text metafield as HTML.
+  @param metafield {Metafield} — pass the metafield drop, never .value
+  Usage: {% render 'frido-rich-text', metafield: product.metafields.custom.story_body %}
+{% endcomment %}
+{%- if metafield == blank -%}
+{%- elsif metafield.type == 'rich_text_field' -%}
+  {{ metafield | metafield_tag }}
+{%- else -%}
+  {%- assign rt = metafield.value -%}
+  {%- if rt.type == 'root' and rt.children != blank -%}
+    <div class="frido-rich-text__parsed">
+      {% render 'frido-rich-text-node', node: rt %}
+    </div>
+  {%- else -%}
+    {{ metafield | metafield_tag }}
+  {%- endif -%}
+{%- endif -%}

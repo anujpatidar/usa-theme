@@ -1,60 +1,51 @@
 {% comment %}
-  PDP story — text + image/video with alignment overlay (HIKE-style).
-  Per product (optional): custom.story_heading, custom.story_body, custom.story_image, custom.story_video.
+  PDP story — one product metafield → PDP Story metaobject.
+  Product metafield: custom.pdp_story (metaobject reference, type: pdp_story)
+  Metaobject fields: heading, body (rich text), media (image or video)
 {% endcomment %}
 {%- liquid
-  assign story_heading = section.settings.story_heading
-  assign story_body = section.settings.story_body
-  assign story_image = section.settings.story_image
-  assign story_video = section.settings.story_video
-  assign story_show_overlay = section.settings.story_show_overlay
-  assign story_callout_title = section.settings.story_callout_title
-  assign story_callout_text = section.settings.story_callout_text
-  assign story_line_position = section.settings.story_line_position | default: 54
+  assign story = product.metafields.custom.pdp_story.value
 
-  if product.metafields.custom.story_heading != blank
-    assign story_heading = product.metafields.custom.story_heading.value | default: product.metafields.custom.story_heading
-  endif
-  if product.metafields.custom.story_body != blank
-    assign story_body = product.metafields.custom.story_body.value | default: product.metafields.custom.story_body
-  endif
-  if product.metafields.custom.story_image != blank
-    assign story_image = product.metafields.custom.story_image.value | default: product.metafields.custom.story_image
-  endif
-  if product.metafields.custom.story_video != blank
-    assign story_video = product.metafields.custom.story_video.value | default: product.metafields.custom.story_video
+  assign story_heading = ''
+  assign story_body_mf = null
+  assign story_media = null
+
+  if story != blank
+    assign story_heading = story.heading.value | default: ''
+    assign story_body_mf = story.body
+    assign story_media = story.media.value
   endif
 
-  assign story_has_media = false
-  if story_video != blank or story_image != blank
-    assign story_has_media = true
+  assign story_visible = false
+  if story != blank
+    if story_heading != blank or story_body_mf != blank or story_media != blank
+      assign story_visible = true
+    endif
   endif
 -%}
 
-{%- if story_heading != blank or story_body != blank or story_has_media -%}
-  <section
-    class="frido-pdp-story"
-    aria-labelledby="FridoPdpStory-{{ section.id }}"
-    style="--frido-story-line-x: {{ story_line_position }}%;"
-  >
+{%- if story_visible -%}
+  <section class="frido-pdp-story" data-frido-pdp-story>
     <div class="frido-pdp-story__inner">
-      <div class="frido-pdp-story__text">
-        {%- if story_heading != blank -%}
-          <h2 id="FridoPdpStory-{{ section.id }}" class="frido-pdp-story__heading">
-            {{ story_heading | escape }}
-          </h2>
-        {%- endif -%}
-        {%- if story_body != blank -%}
-          <div class="frido-pdp-story__body rte">{{ story_body }}</div>
-        {%- endif -%}
-      </div>
+      {%- if story_heading != blank or story_body_mf != blank -%}
+        <div class="frido-pdp-story__text">
+          {%- if story_heading != blank -%}
+            <h2 class="frido-pdp-story__heading">{{ story_heading | escape }}</h2>
+          {%- endif -%}
+          {%- if story_body_mf != blank -%}
+            <div class="frido-pdp-story__body rte">
+              {% render 'frido-rich-text', metafield: story_body_mf %}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
 
-      {%- if story_has_media -%}
+      {%- if story_media != blank -%}
         <div class="frido-pdp-story__media">
           <div class="frido-pdp-story__media-frame">
-            {%- if story_video != blank -%}
+            {%- if story_media.media_type == 'video' -%}
               {{
-                story_video
+                story_media
                 | video_tag:
                   image_size: '1200x',
                   autoplay: true,
@@ -65,9 +56,9 @@
                   class: 'frido-pdp-story__video',
                   preload: 'metadata'
               }}
-            {%- elsif story_image != blank -%}
+            {%- else -%}
               {{
-                story_image
+                story_media
                 | image_url: width: 1200
                 | image_tag:
                   loading: 'lazy',
@@ -76,25 +67,6 @@
                   sizes: '(min-width: 990px) 42vw, 100vw',
                   alt: story_heading
               }}
-            {%- endif -%}
-
-            {%- if story_show_overlay -%}
-              <div class="frido-pdp-story__overlay" aria-hidden="true">
-                <span class="frido-pdp-story__align-line"></span>
-                <span class="frido-pdp-story__align-node frido-pdp-story__align-node--hip"></span>
-                <span class="frido-pdp-story__align-node frido-pdp-story__align-node--knee"></span>
-                <span class="frido-pdp-story__align-node frido-pdp-story__align-node--ankle"></span>
-                {%- if story_callout_title != blank or story_callout_text != blank -%}
-                  <div class="frido-pdp-story__callout">
-                    {%- if story_callout_title != blank -%}
-                      <p class="frido-pdp-story__callout-title">{{ story_callout_title | escape }}</p>
-                    {%- endif -%}
-                    {%- if story_callout_text != blank -%}
-                      <p class="frido-pdp-story__callout-text">{{ story_callout_text | escape | newline_to_br }}</p>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
-              </div>
             {%- endif -%}
           </div>
         </div>

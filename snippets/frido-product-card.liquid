@@ -1,6 +1,7 @@
 {% comment %}
   @param card_product {Product}
   @param show_swatches {Boolean}
+  @param pdp_rec {Boolean} — PDP recommendation row styling (green sale badge)
 {% endcomment %}
 {%- if card_product != blank -%}
   {%- liquid
@@ -15,14 +16,18 @@
     if default_media
       assign default_image_url = default_media | image_url: width: 800
     endif
+    assign card_badge_secondary = card_product.metafields.custom.card_badge.value | default: ''
   -%}
   <article
-    class="frido-pcard"
+    class="frido-pcard{% if pdp_rec %} frido-pcard--pdp-rec{% endif %}"
     data-frido-pcard
     {% if default_image_url != blank %}data-default-image="{{ default_image_url }}"{% endif %}
   >
     {%- if discount_pct > 0 -%}
-      <span class="frido-pcard__badge">{{ discount_pct }}% OFF</span>
+      <span class="frido-pcard__badge frido-pcard__badge--sale">{{ discount_pct }}% OFF</span>
+    {%- endif -%}
+    {%- if card_badge_secondary != blank -%}
+      <span class="frido-pcard__badge frido-pcard__badge--secondary">{{ card_badge_secondary | escape }}</span>
     {%- endif -%}
 
     <a class="frido-pcard__link" href="{{ card_product.url }}">

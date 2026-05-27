@@ -1,0 +1,118 @@
+{% comment %}
+  PDP features — one product metafield → PDP Features metaobject.
+  Product: custom.pdp_features → type pdp_features
+    - heading, media (image/video), features (list of pdp_feature rows)
+  Child rows: Content → Metaobjects → PDP Feature (pdp_feature)
+  Fallback: theme accordion blocks only (until metaobject is set).
+{% endcomment %}
+{%- liquid
+  assign features_block = product.metafields.custom.pdp_features.value
+  assign features_heading = ''
+  assign features_media = null
+  assign features_items = null
+  assign features_source = ''
+
+  if features_block != blank
+    assign features_heading = features_block.heading.value | default: ''
+    assign features_media = features_block.media.value
+    if features_block.features.value != blank and features_block.features.value.size > 0
+      assign features_items = features_block.features.value
+      assign features_source = 'metaobject'
+    endif
+  endif
+
+  if features_source == '' and accordion_blocks.size > 0
+    assign features_source = 'blocks'
+    assign features_heading = section.settings.features_heading
+    assign features_media = section.settings.features_image
+  endif
+
+  assign features_visible = false
+  if features_block != blank
+    if features_heading != blank or features_media != blank or features_source == 'metaobject'
+      assign features_visible = true
+    endif
+  elsif features_source == 'blocks'
+    assign features_visible = true
+  endif
+
+  assign media_bg = section.settings.features_media_bg | default: '#d8dfd0'
+-%}
+
+{%- if features_visible -%}
+  <section
+    class="frido-pdp-features{% if features_media != blank %} frido-pdp-features--has-media{% endif %}"
+    data-frido-pdp-features
+    style="--frido-features-media-bg: {{ media_bg }};"
+  >
+    {%- if features_media != blank -%}
+      <div class="frido-pdp-features__media">
+        <div class="frido-pdp-features__media-frame">
+          {%- if features_media.media_type == 'video' -%}
+            {{
+              features_media
+              | video_tag:
+                image_size: '900x',
+                autoplay: true,
+                loop: true,
+                muted: true,
+                playsinline: true,
+                controls: false,
+                class: 'frido-pdp-features__video',
+                preload: 'metadata'
+            }}
+          {%- else -%}
+            {{
+              features_media
+              | image_url: width: 1000
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-pdp-features__img',
+                widths: '400,600,800,1000',
+                sizes: '(min-width: 990px) 46vw, 100vw',
+                alt: features_heading
+            }}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="frido-pdp-features__content">
+      {%- if features_heading != blank -%}
+        <h2 class="frido-pdp-features__heading">{{ features_heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if features_source == 'metaobject' -%}
+        <div class="frido-pdp-accordion" data-frido-accordion>
+          {%- for feature in features_items -%}
+            <details class="frido-pdp-accordion__item"{% if forloop.first %} open{% endif %}>
+              <summary>
+                {% render 'frido-pdp-feature-icon', icon_image: feature.icon.value %}
+                <span class="frido-pdp-accordion__title">{{ feature.title.value | escape }}</span>
+                <span class="frido-pdp-accordion__plus" aria-hidden="true"></span>
+              </summary>
+              {%- if feature.description != blank -%}
+                <div class="frido-pdp-accordion__body rte">
+                  {% render 'frido-rich-text', metafield: feature.description %}
+                </div>
+              {%- endif -%}
+            </details>
+          {%- endfor -%}
+        </div>
+      {%- elsif features_source == 'blocks' -%}
+        <div class="frido-pdp-accordion" data-frido-accordion>
+          {%- for block in accordion_blocks -%}
+            <details class="frido-pdp-accordion__item" {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
+              <summary>
+                {% render 'frido-pdp-feature-icon', icon: block.settings.icon %}
+                <span class="frido-pdp-accordion__title">{{ block.settings.title | escape }}</span>
+                <span class="frido-pdp-accordion__plus" aria-hidden="true"></span>
+              </summary>
+              <div class="frido-pdp-accordion__body rte">{{ block.settings.content }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}

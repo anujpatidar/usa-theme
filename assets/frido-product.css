@@ -1428,10 +1428,8 @@
   }
 }
 
-/* Story — HIKE-style text + media with alignment overlay */
+/* Story — text + image/video (product metafields) */
 .frido-pdp-story {
-  --frido-story-line: #4cd964;
-  --frido-story-line-glow: rgba(76, 217, 100, 0.85);
   width: 100%;
   max-width: 100%;
   margin-top: 3.2rem;
@@ -1478,6 +1476,16 @@
   color: rgb(var(--color-foreground));
 }
 
+.frido-pdp-story__body .metafield-rich_text_field p,
+.frido-pdp-story__body .frido-rich-text__parsed p {
+  margin: 0 0 1.5rem;
+}
+
+.frido-pdp-story__body .metafield-rich_text_field p:last-child,
+.frido-pdp-story__body .frido-rich-text__parsed p:last-child {
+  margin-bottom: 0;
+}
+
 .frido-pdp-story__body ul {
   margin: 0 0 1.5rem;
   padding-left: 1.4rem;
@@ -1508,85 +1516,6 @@
 
 .frido-pdp-story__video {
   border: 0;
-}
-
-/* Alignment overlay — green line, nodes, callout */
-.frido-pdp-story__overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.frido-pdp-story__align-line {
-  position: absolute;
-  left: var(--frido-story-line-x, 54%);
-  top: 10%;
-  bottom: 14%;
-  width: 2px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--frido-story-line) 12%,
-    var(--frido-story-line) 88%,
-    transparent 100%
-  );
-  box-shadow:
-    0 0 6px var(--frido-story-line-glow),
-    0 0 14px var(--frido-story-line-glow);
-}
-
-.frido-pdp-story__align-node {
-  position: absolute;
-  left: var(--frido-story-line-x, 54%);
-  width: 1.6rem;
-  height: 1.6rem;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(76, 217, 100, 0.28);
-  border: 2px solid var(--frido-story-line);
-  box-shadow:
-    0 0 0 4px rgba(76, 217, 100, 0.15),
-    0 0 12px var(--frido-story-line-glow);
-}
-
-.frido-pdp-story__align-node--hip {
-  top: 24%;
-}
-
-.frido-pdp-story__align-node--knee {
-  top: 54%;
-}
-
-.frido-pdp-story__align-node--ankle {
-  top: 80%;
-}
-
-.frido-pdp-story__callout {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 42%;
-  margin: 0;
-  color: #fff;
-  text-align: left;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
-}
-
-.frido-pdp-story__callout-title {
-  margin: 0 0 0.35rem;
-  font-size: clamp(1.35rem, 3.2vw, 1.65rem);
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.frido-pdp-story__callout-text {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.8vw, 1.5rem);
-  font-weight: 400;
-  line-height: 1.35;
 }
 
 /* Comfort features — podiatrist stats (HIKE-style) */
@@ -1738,40 +1667,115 @@
   color: rgb(var(--color-foreground));
 }
 
-/* Accordion */
+/* Features — media + accordion (HIKE-style) */
 .frido-pdp-features {
-  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 4.8rem;
 }
 
-.frido-pdp-features h2 {
-  margin: 0 0 1.2rem;
-  font-size: 1.8rem;
-  font-weight: 800;
+.frido-pdp-features__media {
+  width: 100%;
+  min-width: 0;
+}
+
+.frido-pdp-features__media-frame {
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--frido-features-media-bg, #d8dfd0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.frido-pdp-features__img,
+.frido-pdp-features__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.frido-pdp-features__video {
+  border: 0;
+}
+
+.frido-pdp-features__heading {
+  margin: 0 0 0.4rem;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: rgb(var(--color-foreground));
+}
+
+.frido-pdp-features__content {
+  min-width: 0;
+}
+
+.frido-pdp-accordion {
+  border-top: 1px solid rgba(var(--color-foreground), 0.12);
 }
 
 .frido-pdp-accordion__item {
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
 }
 
 .frido-pdp-accordion__item summary {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.2rem 0;
+  gap: 1rem;
+  padding: 1.35rem 0;
   list-style: none;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 1.4rem;
 }
 
 .frido-pdp-accordion__item summary::-webkit-details-marker {
   display: none;
 }
 
+.frido-pdp-accordion__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.frido-pdp-accordion__icon svg {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.frido-pdp-accordion__icon-img {
+  width: 2.2rem;
+  height: 2.2rem;
+  object-fit: contain;
+}
+
+.frido-pdp-accordion__title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: rgb(var(--color-foreground));
+}
+
 .frido-pdp-accordion__plus {
-  margin-left: auto;
-  width: 1.2rem;
-  height: 1.2rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  width: 1.4rem;
+  height: 1.4rem;
   position: relative;
 }
 
@@ -1779,19 +1783,19 @@
 .frido-pdp-accordion__plus::after {
   content: '';
   position: absolute;
-  background: #000;
+  background: rgb(var(--color-foreground));
 }
 
 .frido-pdp-accordion__plus::before {
   inset: 50% 0 auto;
-  height: 2px;
-  margin-top: -1px;
+  height: 1.5px;
+  margin-top: -0.75px;
 }
 
 .frido-pdp-accordion__plus::after {
   inset: 0 auto 0 50%;
-  width: 2px;
-  margin-left: -1px;
+  width: 1.5px;
+  margin-left: -0.75px;
 }
 
 .frido-pdp-accordion__item[open] .frido-pdp-accordion__plus::after {
@@ -1799,9 +1803,18 @@
 }
 
 .frido-pdp-accordion__body {
-  padding: 0 0 1.2rem 2.8rem;
-  font-size: 1.35rem;
-  line-height: 1.5;
+  padding: 0 0 1.4rem 3.4rem;
+  font-size: 1.4rem;
+  line-height: 1.55;
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+.frido-pdp-accordion__body p {
+  margin: 0 0 0.75rem;
+}
+
+.frido-pdp-accordion__body p:last-child {
+  margin-bottom: 0;
 }
 
 /* Desktop sticky bar — single row */
@@ -1972,24 +1985,20 @@
     justify-self: stretch;
   }
 
-  .frido-pdp-story__callout {
-    right: 6%;
-    max-width: 40%;
-  }
-
-  .frido-pdp-story__callout-title {
-    font-size: 1.65rem;
-  }
-
-  .frido-pdp-story__callout-text {
-    font-size: 1.5rem;
-  }
-
   .frido-pdp-features {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2.4rem, 4vw, 5.6rem);
+    align-items: center;
+  }
+
+  .frido-pdp-features__heading {
+    margin-bottom: 0.8rem;
+    font-size: clamp(2.6rem, 2.5vw, 3.2rem);
+  }
+
+  .frido-pdp-accordion__title {
+    font-size: 1.55rem;
   }
 
   .frido-pdp-comfort {
@@ -2045,5 +2054,121 @@
 @media (max-width: 989px) {
   .frido-pdp__buy-col .frido-pdp__benefit {
     display: none;
+  }
+}
+
+/* PDP product recommendations — Most loved + You may also like */
+.frido-pdp-recs {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 4.8rem;
+  padding: 0;
+}
+
+.frido-pdp-recs.is-loading {
+  display: none;
+}
+
+.frido-pdp-recs__heading {
+  margin: 0 0 2rem;
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: rgb(var(--color-foreground));
+  text-align: left;
+}
+
+.frido-pdp-recs__scroll {
+  width: 100%;
+  overflow: visible;
+}
+
+.frido-pdp-recs__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.frido-pdp-recs__cell {
+  min-width: 0;
+  height: 100%;
+}
+
+.frido-pdp-recs .frido-pcard {
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(10, 37, 64, 0.08);
+  height: 100%;
+}
+
+.frido-pdp-recs .frido-pcard__badge--sale {
+  background: #1a7f4b;
+  color: #fff;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 5px 10px;
+}
+
+.frido-pdp-recs .frido-pcard__badge--secondary {
+  left: auto;
+  right: 1rem;
+  background: #ececec;
+  color: #333;
+  font-weight: 500;
+}
+
+.frido-pdp-recs .frido-pcard__img {
+  background: #f3f3f3;
+}
+
+.frido-pdp-recs .frido-pcard__img img {
+  mix-blend-mode: normal;
+}
+
+.frido-pdp-recs .frido-pcard__title {
+  font-size: 15px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.frido-pdp-recs .frido-pcard__price {
+  color: #c0392b;
+  font-weight: 500;
+}
+
+.frido-pdp-recs + .frido-pdp-recs {
+  margin-top: 5.6rem;
+}
+
+@media (max-width: 989px) {
+  .frido-pdp-recs__scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -0.4rem;
+    padding: 0 0.4rem 0.4rem;
+  }
+
+  .frido-pdp-recs__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .frido-pdp-recs__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .frido-pdp-recs__cell {
+    flex: 0 0 min(72vw, 28rem);
+    max-width: 28rem;
   }
 }

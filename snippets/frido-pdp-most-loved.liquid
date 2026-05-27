@@ -1,0 +1,44 @@
+{% comment %}
+  Most loved styles — curated products per PDP.
+  1) product.metafields.custom.most_loved_products (list of products)
+  2) fallback: section.settings.most_loved_collection
+{% endcomment %}
+{%- if section.settings.show_most_loved -%}
+  {%- liquid
+    assign rec_limit = section.settings.most_loved_limit | default: 4
+    assign loved_products = product.metafields.custom.most_loved_products.value
+  -%}
+
+  {%- capture loved_grid -%}
+    {%- if loved_products != blank -%}
+      {% render 'frido-pdp-recs-grid', products: loved_products, current_product_id: product.id, limit: rec_limit %}
+    {%- elsif section.settings.most_loved_collection != blank -%}
+      {%- assign loved_count = 0 -%}
+      <div class="frido-pdp-recs__grid" role="list">
+        {%- for card_product in section.settings.most_loved_collection.products -%}
+          {%- if loved_count >= rec_limit -%}
+            {%- break -%}
+          {%- endif -%}
+          {%- if card_product.id == product.id -%}
+            {%- continue -%}
+          {%- endif -%}
+          <div class="frido-pdp-recs__cell" role="listitem">
+            {% render 'frido-product-card', card_product: card_product, show_swatches: false, pdp_rec: true %}
+          </div>
+          {%- assign loved_count = loved_count | plus: 1 -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if loved_grid contains 'frido-pcard' -%}
+    <section class="frido-pdp-recs frido-pdp-recs--most-loved">
+      {%- if section.settings.most_loved_heading != blank -%}
+        <h2 class="frido-pdp-recs__heading">{{ section.settings.most_loved_heading | escape }}</h2>
+      {%- endif -%}
+      <div class="frido-pdp-recs__scroll">
+        {{ loved_grid }}
+      </div>
+    </section>
+  {%- endif -%}
+{%- endif -%}

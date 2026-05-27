@@ -1,0 +1,61 @@
+{% comment %}
+  Renders one rich-text AST node (Shopify rich_text_field JSON).
+  @param node {Object}
+{% endcomment %}
+{%- if node == blank -%}
+{%- elsif node.type == 'root' -%}
+  {%- for child in node.children -%}
+    {% render 'frido-rich-text-node', node: child %}
+  {%- endfor -%}
+{%- elsif node.type == 'heading' -%}
+  {%- assign level = node.level | default: 3 -%}
+  {%- if level < 2 -%}{%- assign level = 2 -%}{%- endif -%}
+  {%- if level > 6 -%}{%- assign level = 6 -%}{%- endif -%}
+  <h{{ level }} class="frido-rich-text__heading">
+    {%- for child in node.children -%}
+      {% render 'frido-rich-text-node', node: child %}
+    {%- endfor -%}
+  </h{{ level }}>
+{%- elsif node.type == 'paragraph' -%}
+  <p>
+    {%- for child in node.children -%}
+      {% render 'frido-rich-text-node', node: child %}
+    {%- endfor -%}
+  </p>
+{%- elsif node.type == 'list' -%}
+  {%- if node.listType == 'ordered' -%}
+    <ol>
+  {%- else -%}
+    <ul>
+  {%- endif -%}
+  {%- for child in node.children -%}
+    {% render 'frido-rich-text-node', node: child %}
+  {%- endfor -%}
+  {%- if node.listType == 'ordered' -%}
+    </ol>
+  {%- else -%}
+    </ul>
+  {%- endif -%}
+{%- elsif node.type == 'list-item' -%}
+  <li>
+    {%- for child in node.children -%}
+      {% render 'frido-rich-text-node', node: child %}
+    {%- endfor -%}
+  </li>
+{%- elsif node.type == 'link' -%}
+  <a href="{{ node.url | escape }}"{% if node.title != blank %} title="{{ node.title | escape }}"{% endif %}>
+    {%- for child in node.children -%}
+      {% render 'frido-rich-text-node', node: child %}
+    {%- endfor -%}
+  </a>
+{%- elsif node.type == 'text' -%}
+  {%- if node.bold and node.italic -%}
+    <strong><em>{{ node.value }}</em></strong>
+  {%- elsif node.bold -%}
+    <strong>{{ node.value }}</strong>
+  {%- elsif node.italic -%}
+    <em>{{ node.value }}</em>
+  {%- else -%}
+    {{ node.value }}
+  {%- endif -%}
+{%- endif -%}
