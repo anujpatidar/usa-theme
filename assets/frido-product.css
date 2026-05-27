@@ -1156,11 +1156,9 @@
   border: 1px solid rgba(var(--color-foreground), 0.1);
   border-radius: 14px;
   background:
-    linear-gradient(
-      180deg,
-      rgba(var(--color-button), 0.04) 0%,
-      rgba(var(--color-button), 0.12) 100%
-    ),
+    linear-gradient(180deg,
+      #fff 0%,
+      rgba(var(--color-button), 0.12) 100%),
     rgb(var(--color-background));
   overflow: hidden;
 }
@@ -1175,7 +1173,7 @@
   text-align: center;
 }
 
-.frido-pdp-trust__item + .frido-pdp-trust__item {
+.frido-pdp-trust__item+.frido-pdp-trust__item {
   border-left: 1px solid rgba(var(--color-foreground), 0.12);
 }
 
@@ -1228,9 +1226,11 @@
     transform: scale(0.45);
     opacity: 0.75;
   }
+
   65% {
     opacity: 0.2;
   }
+
   100% {
     transform: scale(1.35);
     opacity: 0;
@@ -1303,7 +1303,7 @@
     grid-template-columns: 1fr;
   }
 
-  .frido-pdp-trust__item + .frido-pdp-trust__item {
+  .frido-pdp-trust__item+.frido-pdp-trust__item {
     border-left: 0;
     border-top: 1px solid rgba(var(--color-foreground), 0.12);
   }
