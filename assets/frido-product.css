@@ -1375,7 +1375,7 @@
 
 .frido-pdp-ugc__item {
   flex: 0 0 auto;
-  width: 8.8rem;
+  width: 140px;
   margin: 0;
   border-radius: 1.8rem;
   overflow: hidden;
@@ -1385,7 +1385,7 @@
 
 @media (min-width: 750px) {
   .frido-pdp-ugc__item {
-    width: 10rem;
+    width: 240px;
   }
 }
 
@@ -1401,6 +1401,7 @@
   0% {
     transform: translate3d(0, 0, 0);
   }
+
   100% {
     transform: translate3d(-50%, 0, 0);
   }
