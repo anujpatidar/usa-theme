@@ -32,11 +32,11 @@
         "newsletter_placeholder": "Your email",
         "newsletter_button": "Subscribe",
         "menu_help_title": "Help",
-        "menu_help": "footer",
+        "menu_help": "footer-help",
         "menu_shop_title": "Shop",
-        "menu_shop": "footer",
+        "menu_shop": "footer-shop",
         "menu_company_title": "Company",
-        "menu_company": "footer",
+        "menu_company": "footer-company",
         "copyright_name": "Frido",
         "payment_enable": true
       }
