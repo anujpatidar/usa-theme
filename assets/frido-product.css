@@ -1618,16 +1618,21 @@
 
 .frido-pdp-comfort__stat-label {
   font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(var(--color-foreground), 0.55);
+  color: rgb(var(--color-foreground));
 }
 
 .frido-pdp-comfort__bar {
+  --frido-comfort-seg-1: #c4a035;
+  --frido-comfort-seg-2: #e5c84a;
+  --frido-comfort-seg-3: #c97a3a;
+  --frido-comfort-seg-4: #3d6849;
+  --frido-comfort-seg-track: #e4e4e4;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.35rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
   width: 100%;
   max-width: 22rem;
   margin: 0 auto 1.25rem;
@@ -1635,34 +1640,34 @@
 
 .frido-pdp-comfort__bar-seg {
   position: relative;
-  height: 0.55rem;
+  height: 0.65rem;
   border-radius: 999px;
   overflow: hidden;
-  background: rgba(var(--color-foreground), 0.12);
+  background: var(--frido-comfort-seg-track);
 }
 
-.frido-pdp-comfort__bar-seg.is-full:nth-child(1) {
-  background: color-mix(in srgb, rgb(var(--color-button)) 25%, #d4922a);
-}
-
-.frido-pdp-comfort__bar-seg.is-full:nth-child(2) {
-  background: color-mix(in srgb, rgb(var(--color-button)) 15%, #e8b833);
-}
-
-.frido-pdp-comfort__bar-seg.is-full:nth-child(3) {
-  background: color-mix(in srgb, rgb(var(--color-button)) 35%, #c97b2e);
-}
-
-.frido-pdp-comfort__bar-seg.is-full:nth-child(4),
-.frido-pdp-comfort__bar-seg.is-full:nth-child(5) {
-  background: rgb(var(--color-button));
-}
-
-.frido-pdp-comfort__bar-seg.is-partial .frido-pdp-comfort__bar-seg-fill {
+.frido-pdp-comfort__bar-seg-fill {
   display: block;
+  width: 0;
   height: 100%;
   border-radius: inherit;
-  background: rgb(var(--color-button));
+  will-change: width;
+}
+
+.frido-pdp-comfort__bar-seg[data-seg='1'] .frido-pdp-comfort__bar-seg-fill {
+  background: var(--frido-comfort-seg-1);
+}
+
+.frido-pdp-comfort__bar-seg[data-seg='2'] .frido-pdp-comfort__bar-seg-fill {
+  background: var(--frido-comfort-seg-2);
+}
+
+.frido-pdp-comfort__bar-seg[data-seg='3'] .frido-pdp-comfort__bar-seg-fill {
+  background: var(--frido-comfort-seg-3);
+}
+
+.frido-pdp-comfort__bar-seg[data-seg='4'] .frido-pdp-comfort__bar-seg-fill {
+  background: var(--frido-comfort-seg-4);
 }
 
 .frido-pdp-comfort__desc {
