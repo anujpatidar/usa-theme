@@ -28,7 +28,11 @@
         <p class="frido-col-hero__subtitle">{{ hero_subtitle | escape }}</p>
       {% endif %}
 
-      <div class="frido-col-hero__desc" data-frido-col-desc>
+      <div
+        class="frido-col-hero__desc"
+        data-frido-col-desc
+        style="--frido-col-desc-lines: {{ section.settings.description_lines | default: 4 }};"
+      >
         {% if has_mf_description %}
           <div class="frido-col-hero__richtext rte">
             {{ mf_description | metafield_tag }}
@@ -129,8 +133,13 @@
     if (!desc || !btn) return;
     var richtext = desc.querySelector('.frido-col-hero__richtext');
     if (!richtext) return;
-    var collapsed = {{ section.settings.description_lines_mobile | default: 4 }};
-    if (richtext.scrollHeight > collapsed * 28) {
+    var collapsed = {{ section.settings.description_lines | default: section.settings.description_lines_mobile | default: 4 }};
+    var style = window.getComputedStyle(richtext);
+    var lineHeight = parseFloat(style.lineHeight);
+    if (!lineHeight || Number.isNaN(lineHeight)) {
+      lineHeight = parseFloat(style.fontSize) * 1.55;
+    }
+    if (richtext.scrollHeight > collapsed * lineHeight + 2) {
       root.classList.add('has-show-more');
       desc.classList.add('is-collapsed');
       btn.hidden = false;
@@ -180,11 +189,21 @@
     },
     {
       "type": "range",
+      "id": "description_lines",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Description lines before Show more",
+      "default": 4
+    },
+    {
+      "type": "range",
       "id": "description_lines_mobile",
       "min": 2,
       "max": 8,
       "step": 1,
-      "label": "Description lines before Show more (mobile)",
+      "label": "Description lines before Show more (legacy mobile)",
+      "info": "Deprecated — use “Description lines before Show more” above.",
       "default": 4
     },
     {
