@@ -137,13 +137,31 @@
         "settings": {
           "color_scheme": "scheme-1"
         }
+      },
+      "frido-cart-drawer": {
+        "type": "frido-cart-drawer",
+        "settings": {
+          "color_scheme": "",
+          "drawer_title": "Your Cart",
+          "empty_text": "Your cart is empty",
+          "empty_cta": "Continue shopping",
+          "upsell_heading": "The perfect combination:",
+          "subtotal_label": "Subtotal",
+          "discounts_label": "Item Discounts",
+          "total_label": "Total",
+          "checkout_label": "CHECKOUT",
+          "show_payment_icons": true,
+          "modal_submit_label": "Update Item",
+          "modal_submit_add_label": "ADD TO CART",
+          "modal_cancel_label": "Cancel"
+        }
       }
     },
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#fffdf3",
+          "background": "#fffffd",
           "background_gradient": "",
           "text": "#000000",
           "button": "#fcd00b",
