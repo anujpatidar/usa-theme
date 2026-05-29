@@ -58,6 +58,17 @@
 .frido-col-hero__desc.is-collapsed.is-open .frido-col-hero__richtext {
   display: block;
   -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+@media (min-width: 990px) {
+  .frido-col-hero__desc.is-collapsed:not(.is-open) .frido-col-hero__richtext {
+    display: block;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+    max-height: var(--frido-col-desc-max-height, none);
+    overflow: hidden;
+  }
 }
 
 .frido-col-hero__more {

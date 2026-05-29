@@ -31,7 +31,7 @@
       <div
         class="frido-col-hero__desc"
         data-frido-col-desc
-        style="--frido-col-desc-lines: {{ section.settings.description_lines | default: 4 }};"
+        style="--frido-col-desc-lines: {{ section.settings.description_lines | default: section.settings.description_lines_mobile | default: 4 }};"
       >
         {% if has_mf_description %}
           <div class="frido-col-hero__richtext rte">
@@ -133,22 +133,103 @@
     if (!desc || !btn) return;
     var richtext = desc.querySelector('.frido-col-hero__richtext');
     if (!richtext) return;
-    var collapsed = {{ section.settings.description_lines | default: section.settings.description_lines_mobile | default: 4 }};
-    var style = window.getComputedStyle(richtext);
-    var lineHeight = parseFloat(style.lineHeight);
-    if (!lineHeight || Number.isNaN(lineHeight)) {
-      lineHeight = parseFloat(style.fontSize) * 1.55;
+
+    var mobileLines = {{ section.settings.description_lines | default: section.settings.description_lines_mobile | default: 4 }};
+    var desktopBp = window.matchMedia('(min-width: 990px)');
+    var resizeTimer;
+
+    function isDesktop() {
+      return desktopBp.matches;
     }
-    if (richtext.scrollHeight > collapsed * lineHeight + 2) {
+
+    function readLineHeight(el) {
+      var style = window.getComputedStyle(el);
+      var lh = parseFloat(style.lineHeight);
+      if (!lh || Number.isNaN(lh)) lh = parseFloat(style.fontSize) * 1.55;
+      return lh;
+    }
+
+    function measureOverhead() {
+      var content = root.querySelector('.frido-col-hero__content');
+      if (!content) return 0;
+      var overhead = 0;
+      Array.prototype.forEach.call(content.children, function (child) {
+        if (child === desc || child === btn || child.hasAttribute('data-frido-col-features')) return;
+        var cs = window.getComputedStyle(child);
+        overhead += child.offsetHeight;
+        overhead += parseFloat(cs.marginTop) || 0;
+        overhead += parseFloat(cs.marginBottom) || 0;
+      });
+
+      var wasHidden = btn.hidden;
+      btn.hidden = false;
+      var btnCs = window.getComputedStyle(btn);
+      overhead += btn.offsetHeight;
+      overhead += parseFloat(btnCs.marginTop) || 0;
+      overhead += parseFloat(btnCs.marginBottom) || 0;
+      btn.hidden = wasHidden;
+
+      return overhead;
+    }
+
+    function getDesktopDescMaxHeight() {
+      var media = root.querySelector('.frido-col-hero__media');
+      if (!media) return null;
+      return Math.max(72, media.offsetHeight - measureOverhead());
+    }
+
+    function applyCollapseLimits() {
+      if (isDesktop()) {
+        var maxH = getDesktopDescMaxHeight();
+        if (maxH) desc.style.setProperty('--frido-col-desc-max-height', maxH + 'px');
+      } else {
+        desc.style.removeProperty('--frido-col-desc-max-height');
+      }
+    }
+
+    function collapsedHeight() {
+      applyCollapseLimits();
+      if (isDesktop()) {
+        var maxH = parseFloat(getComputedStyle(desc).getPropertyValue('--frido-col-desc-max-height'));
+        return maxH || getDesktopDescMaxHeight() || 0;
+      }
+      return mobileLines * readLineHeight(richtext);
+    }
+
+    function needsShowMore() {
+      return richtext.scrollHeight > collapsedHeight() + 2;
+    }
+
+    function onToggle() {
+      var open = desc.classList.toggle('is-open');
+      root.classList.toggle('is-expanded', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open
+        ? {{ section.settings.show_less_label | default: 'SHOW LESS' | json }}
+        : {{ section.settings.show_more_label | default: 'SHOW MORE' | json }};
+    }
+
+    function init() {
+      applyCollapseLimits();
+      if (!needsShowMore()) return;
       root.classList.add('has-show-more');
       desc.classList.add('is-collapsed');
       btn.hidden = false;
-      btn.addEventListener('click', function () {
-        var open = desc.classList.toggle('is-open');
-        root.classList.toggle('is-expanded', open);
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        btn.textContent = open ? {{ section.settings.show_less_label | default: 'SHOW LESS' | json }} : {{ section.settings.show_more_label | default: 'SHOW MORE' | json }};
-      });
+      btn.addEventListener('click', onToggle);
+    }
+
+    init();
+
+    function onResize() {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        applyCollapseLimits();
+      }, 120);
+    }
+
+    window.addEventListener('resize', onResize);
+    if (desktopBp.addEventListener) {
+      desktopBp.addEventListener('change', onResize);
     }
   })();
 </script>
@@ -191,9 +272,10 @@
       "type": "range",
       "id": "description_lines",
       "min": 2,
-      "max": 14,
+      "max": 8,
       "step": 1,
-      "label": "Description lines before Show more",
+      "label": "Description lines before Show more (mobile)",
+      "info": "On desktop, collapsed height auto-matches the banner image.",
       "default": 4
     },
     {
