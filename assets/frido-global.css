@@ -576,7 +576,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
     height: 5.6rem;
     border-radius: 6px;
     overflow: hidden;
-    background: #7e7e7e;
+    background: #fff;
   }
 
   .frido-mega__product-card-img {
@@ -836,7 +836,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  background: #7e7e7e;
+  background: #fff;
   border-radius: 6px;
 }
 
@@ -1053,7 +1053,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   inset: auto 0 0 0;
   padding: 2rem 1.5rem;
   background: linear-gradient(transparent, rgba(6, 31, 51, 0.75));
-  color: #7e7e7e;
+  color: #fff;
   text-align: center;
   font-weight: 800;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
@@ -1126,7 +1126,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: #7e7e7e;
+  background: #fff;
   border: 1px solid var(--frido-line);
   border-radius: var(--frido-radius-pill);
   padding: 0.6rem 1.2rem;
@@ -1166,7 +1166,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   height: 80px;
   margin: 0 auto 0.6rem;
   border-radius: 50%;
-  background: #7e7e7e;
+  background: #fff;
   border: 1px solid var(--frido-line);
   display: flex;
   align-items: center;
@@ -1476,7 +1476,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   justify-content: center;
   aspect-ratio: 1;
   padding: 1rem;
-  background: #7e7e7e;
+  background: #fff;
   border-radius: 10px;
   overflow: hidden;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
@@ -1555,7 +1555,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 /* ---------- Product card ---------- */
 .frido-pcard {
-  background: #7e7e7e;
+  background: #fff;
   border-radius: 6px;
   box-shadow: 0 4px 10px rgba(10, 37, 64, 0.05);
   overflow: hidden;
@@ -1752,7 +1752,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-split__shell {
-  background: #7e7e7e;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(10, 37, 64, 0.06);
@@ -1958,7 +1958,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-dual__shell {
-  background: #7e7e7e;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(10, 37, 64, 0.06);
@@ -2030,7 +2030,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 @media (min-width: 990px) {
   .frido-dual {
     padding: 4.8rem 0;
-    background: #7e7e7e;
+    background: #fff;
   }
 
   .frido-dual__shell {
@@ -2064,7 +2064,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   --frido-fit-bar-off: #d9d9d9;
   --frido-fit-line: #e5e5e5;
   padding: 2.8rem 0 3.2rem;
-  background: #7e7e7e;
+  background: #fff;
 }
 
 .frido-fit-compare__inner {
@@ -2334,7 +2334,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   width: 4.4rem;
   height: 4.4rem;
   border-radius: 50%;
-  background: #7e7e7e;
+  background: #fff;
   border: 1px solid var(--frido-line);
 }
 
@@ -2355,7 +2355,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-review-card__mini img {
   width: 100%;
   border-radius: 8px;
-  background: #7e7e7e;
+  background: #fff;
 }
 
 .frido-reviews__grid {
@@ -2445,7 +2445,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-support .frido-support__btn:hover {
   background: #000;
-  color: #7e7e7e;
+  color: #fff;
 }
 
 /* ---------- Trust ratings (above footer) ---------- */
@@ -2644,7 +2644,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   font-size: clamp(36px, 6vw, 2.75rem);
   font-weight: 400;
   line-height: 1.15;
-  color: #7e7e7e;
+  color: #fff;
   text-align: left;
 }
 
@@ -2711,7 +2711,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 /* ---------- Footer (Hike-style, black / white) ---------- */
 .frido-footer {
-  color: #7e7e7e;
+  color: #fff;
 }
 
 .frido-footer a {
@@ -2725,7 +2725,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 /* Contact bar */
 .frido-footer__contact {
-  background: #f8f8f8;
+  background: #ebe6dc;
   color: #000;
   padding: 2.4rem 0;
 }
@@ -2773,7 +2773,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 .frido-footer__contact-btn:hover {
   background: #000;
-  color: #7e7e7e;
+  color: #fff;
   opacity: 1;
 }
 
@@ -2849,7 +2849,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   gap: 0.35rem;
   margin-bottom: 1.4rem;
   text-decoration: none;
-  color: #7e7e7e;
+  color: #fff;
 }
 
 .frido-footer__logo-mark {
@@ -2933,7 +2933,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   color: #000;
-  background: #ffffff;
+  background: #fff;
 }
 
 .frido-footer__newsletter input::placeholder {
@@ -2991,7 +2991,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 }
 
 .frido-footer .frido-footer__social-list .list-social__link:hover {
-  border-color: #7e7e7e;
+  border-color: #fff;
   background: rgba(255, 255, 255, 0.08);
   opacity: 1;
 }
@@ -3005,7 +3005,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-footer .frido-footer__social-list .icon {
   width: 100%;
   height: 100%;
-  fill: #7e7e7e;
+  fill: #fff;
 }
 
 .frido-footer__bottom {
@@ -3015,14 +3015,14 @@ body.frido-menu-open .frido-header__menu-icon--close {
   gap: 1.6rem;
   margin-top: 3.2rem;
   padding: 2rem 0 2.4rem;
-  border-top: 1px solid #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   text-align: center;
 }
 
 .frido-footer__copyright {
   margin: 0;
   font-size: 1.25rem;
-  color: #7e7e7e;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .frido-footer__payments {
