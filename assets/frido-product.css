@@ -1454,7 +1454,7 @@
 .frido-pdp-story__body {
   font-size: 16px;
   line-height: 1.6;
-  font-weight: 400;
+  font-weight: 300;
   color: rgb(var(--color-foreground));
 }
 
@@ -1677,7 +1677,8 @@
 /* Features — media + accordion (HIKE-style) */
 .frido-pdp-features {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  padding: 16px;
   gap: 2.4rem;
   width: 100%;
   max-width: 100%;
@@ -2041,6 +2042,7 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(2.4rem, 4vw, 5.6rem);
     align-items: center;
+    padding: 0;
   }
 
   .frido-pdp-features__heading {
