@@ -135,7 +135,7 @@
   padding: 0 2.4rem 0 0.85rem;
   border: 1px solid rgba(var(--color-foreground), 0.18);
   border-radius: 8px;
-  background: rgb(var(--color-background));
+  background: #fff;
   color: rgb(var(--color-foreground));
   font-size: 1.2rem;
   font-weight: 500;
@@ -1896,7 +1896,8 @@
   .frido-pdp-sticky__title {
     display: inline;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 16px;
+    font-weight: 500;
     white-space: nowrap;
   }
 
@@ -1935,9 +1936,9 @@
     grid-column: unset;
     grid-row: unset;
     margin-left: auto;
-    min-height: 4.4rem;
-    padding: 0 2.2rem;
-    font-size: 1.35rem;
+    padding: 10px 16px;
+    font-size: 10px;
+    font-weight: 500;
   }
 
   .frido-pdp__head-mobile {
