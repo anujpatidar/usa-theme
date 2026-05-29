@@ -162,7 +162,6 @@
       (disc
         ? '<p class="frido-cart-item__discount"><span aria-hidden="true">🏷</span> ' + escapeHtml(disc) + '</p>'
         : '') +
-      '</div></div>' +
       '<div class="frido-cart-item__bottom">' +
       '<div class="frido-cart-item__qty">' +
       '<button type="button" data-frido-cart-qty="' +
@@ -192,7 +191,8 @@
       '" data-edit-focus="size">' +
       labels.changeSize +
       '</button>' +
-      '</div></article>'
+      '</div>' +
+      '</div></div></article>'
     );
   }
 

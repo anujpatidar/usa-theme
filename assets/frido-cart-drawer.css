@@ -146,7 +146,7 @@
 .frido-cart-item {
   padding: 16px;
   margin-bottom: 1rem;
-  border: 1px solid rgba(var(--color-foreground), 0.12);
+  border: 1px solid #000, 0.12;
   border-radius: 12px;
   background: #fff;
   transition: opacity 0.15s ease;
@@ -165,7 +165,9 @@
 .frido-cart-item__media {
   position: relative;
   flex-shrink: 0;
-  width: 8.8rem;
+  width: 100px;
+  background: #fff;
+  border: 1px solid #000, 0.12;
 }
 
 .frido-cart-item__media img {
