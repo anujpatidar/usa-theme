@@ -18,7 +18,7 @@
   <div class="frido-cart-drawer__overlay" data-frido-cart-close tabindex="-1"></div>
 
   <aside
-    class="frido-cart-drawer__panel color-{{ section.settings.color_scheme }} gradient"
+    class="frido-cart-drawer__panel"
     role="dialog"
     aria-modal="true"
     aria-labelledby="FridoCartDrawerTitle"
@@ -27,8 +27,10 @@
     <header class="frido-cart-drawer__header">
       <div class="frido-cart-drawer__header-main">
         <span class="frido-cart-drawer__cart-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M6 6 5 3H2"/>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="20" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="18" cy="20" r="1.5" fill="currentColor" stroke="none"/>
+            <path d="M2 3h2l2.4 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L20 8H6"/>
           </svg>
           <span class="frido-cart-drawer__count" data-frido-cart-drawer-count hidden>0</span>
         </span>
@@ -73,14 +75,16 @@
         <span data-frido-cart-subtotal></span>
       </div>
       <div class="frido-cart-drawer__row frido-cart-drawer__row--discount" data-frido-cart-discount-row hidden>
-        <span>
-          <span class="frido-cart-drawer__tag-icon" aria-hidden="true">🏷</span>
-          {{ section.settings.discounts_label | default: 'Item Discounts' | escape }}
+        <span class="frido-cart-drawer__discount-label">
+          <svg class="frido-cart-drawer__tag-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+          </svg>
+          {{ section.settings.discounts_label | default: 'Item Discounts' | escape }}:
         </span>
         <span data-frido-cart-discount></span>
       </div>
       <div class="frido-cart-drawer__row frido-cart-drawer__row--total">
-        <span>{{ section.settings.total_label | default: 'Total' | escape }}</span>
+        <span>{{ section.settings.total_label | default: 'Total' | escape }}:</span>
         <span data-frido-cart-total></span>
       </div>
       <a href="/checkout" class="frido-cart-drawer__checkout" data-frido-cart-checkout>
@@ -91,9 +95,13 @@
         <span aria-hidden="true">→</span>
       </a>
       {%- if section.settings.show_payment_icons -%}
-        <p class="frido-cart-drawer__payments" aria-hidden="true">
-          <span>Amex</span><span>Apple Pay</span><span>G Pay</span><span>Visa</span><span>MC</span><span>PayPal</span>
-        </p>
+        <ul class="list list-payment frido-cart-drawer__payments" role="list" aria-hidden="true">
+          {%- for type in shop.enabled_payment_types -%}
+            <li class="list-payment__item">
+              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+            </li>
+          {%- endfor -%}
+        </ul>
       {%- endif -%}
     </footer>
   </aside>
@@ -101,7 +109,7 @@
 
 <div id="FridoCartVariantModal" class="frido-cart-modal" data-frido-cart-modal hidden aria-hidden="true">
   <div class="frido-cart-modal__overlay" data-frido-cart-modal-close></div>
-  <div class="frido-cart-modal__dialog color-{{ section.settings.color_scheme }} gradient" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="frido-cart-modal__dialog" role="dialog" aria-modal="true" tabindex="-1">
     <button type="button" class="frido-cart-modal__close" data-frido-cart-modal-close aria-label="{{ 'accessibility.close' | t }}">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -136,6 +144,7 @@
   ]
 </script>
 
+{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 {{ 'frido-cart-drawer.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'frido-cart-drawer.js' | asset_url }}" defer="defer"></script>
 
