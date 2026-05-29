@@ -18,6 +18,8 @@
     assign has_mf_description = true
   endif
 
+  assign mf_mobile_img = collection.metafields.custom.mobile_img.value | default: collection.metafields.custom.mobile_img
+
 -%}
 
 <section class="frido-col-hero color-{{ section.settings.color_scheme }} gradient" id="frido-col-hero-{{ section.id }}">
@@ -78,13 +80,13 @@
     <div class="frido-col-hero__media">
       {%- liquid
         assign banner_desktop = section.settings.image | default: collection.image
-        assign banner_mobile = section.settings.image_mobile
+        assign banner_mobile = mf_mobile_img | default: section.settings.image_mobile
         if banner_desktop == blank and banner_mobile != blank
           assign banner_desktop = banner_mobile
         endif
       -%}
       {% if banner_desktop != blank or banner_mobile != blank %}
-        {%- assign hero_alt = banner_desktop.alt | default: banner_mobile.alt | default: hero_title | escape -%}
+        {%- assign hero_alt = banner_mobile.alt | default: banner_desktop.alt | default: hero_title | escape -%}
         <picture>
           {%- if banner_mobile != blank -%}
             <source
@@ -260,7 +262,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Subheading and description are read from collection metafields: custom.subheading (Single line text) and custom.hero_description (Rich text). Theme settings below are fallbacks only."
+      "content": "Collection metafields: custom.subheading (subtitle), custom.hero_description (description), custom.mobile_img (mobile banner). Theme settings below are fallbacks only."
     },
     {
       "type": "text",
@@ -320,8 +322,8 @@
     {
       "type": "image_picker",
       "id": "image_mobile",
-      "label": "Banner image (mobile)",
-      "info": "Shown below 990px. Uses desktop/collection image if empty."
+      "label": "Banner image (mobile fallback)",
+      "info": "Used below 990px when custom.mobile_img metafield is empty. Falls back to desktop/collection image if empty."
     },
     {
       "type": "text",
