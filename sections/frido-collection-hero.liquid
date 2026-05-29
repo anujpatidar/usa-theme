@@ -190,13 +190,25 @@
     function collapsedHeight() {
       applyCollapseLimits();
       if (isDesktop()) {
-        var maxH = parseFloat(getComputedStyle(desc).getPropertyValue('--frido-col-desc-max-height'));
-        return maxH || getDesktopDescMaxHeight() || 0;
+        return desc.offsetHeight || getDesktopDescMaxHeight() || 0;
       }
       return mobileLines * readLineHeight(richtext);
     }
 
     function needsShowMore() {
+      if (isDesktop()) {
+        applyCollapseLimits();
+        var prevCollapsed = desc.classList.contains('is-collapsed');
+        var prevOpen = desc.classList.contains('is-open');
+        desc.classList.add('is-collapsed');
+        desc.classList.remove('is-open');
+        var maxH = getDesktopDescMaxHeight();
+        if (maxH) desc.style.setProperty('--frido-col-desc-max-height', maxH + 'px');
+        var needs = richtext.scrollHeight > maxH + 2;
+        if (!prevCollapsed) desc.classList.remove('is-collapsed');
+        if (prevOpen) desc.classList.add('is-open');
+        return needs;
+      }
       return richtext.scrollHeight > collapsedHeight() + 2;
     }
 
