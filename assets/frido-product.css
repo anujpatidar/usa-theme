@@ -857,7 +857,7 @@
 
 .frido-pdp-bundle__title {
   font-weight: 400;
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .frido-pdp-bundle__price {
@@ -870,7 +870,7 @@
 }
 
 .frido-pdp-bundle__compare {
-  font-size: 14px;
+  font-size: 9px;
   font-weight: 300;
   color: rgba(0, 0, 0, 0.45);
 }
@@ -881,7 +881,7 @@
   border-radius: 6px;
   background: rgba(var(--color-button), 0.12);
   color: rgb(var(--color-button));
-  font-size: 14px;
+  font-size: 9px;
   font-weight: 500;
 }
 
@@ -1862,6 +1862,21 @@
     min-height: 6.4rem;
     padding: 0.75rem 0;
   }
+
+  .frido-pdp-bundle__title {
+    font-weight: 400;
+    font-size: 24px;
+  }
+
+  .frido-pdp-bundle__price {
+    font-size: 16px;
+  }
+
+  .frido-pdp-bundle__compare,
+  .frido-pdp-bundle__save {
+    font-size: 14px;
+  }
+
 
   .frido-pdp-sticky__product {
     flex: 0 1 auto;
