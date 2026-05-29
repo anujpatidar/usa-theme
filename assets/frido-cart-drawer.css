@@ -14,13 +14,20 @@
 .frido-cart-drawer {
   position: fixed;
   inset: 0;
-  z-index: 130;
+  z-index: var(--frido-z-drawer, 130);
   pointer-events: none;
+  isolation: isolate;
 }
 
 .frido-cart-drawer.is-open,
 .frido-cart-drawer.is-closing {
   pointer-events: auto;
+}
+
+/* Variant modal must sit above the cart drawer and receive clicks */
+body.frido-cart-modal-open .frido-cart-drawer.is-open,
+body.frido-cart-modal-open .frido-cart-drawer.is-closing {
+  pointer-events: none;
 }
 
 .frido-cart-modal.is-open,
@@ -158,8 +165,12 @@
 }
 
 .frido-cart-item.is-loading {
-  opacity: 0.55;
-  pointer-events: none;
+  opacity: 0.72;
+}
+
+.frido-cart-item__qty button:disabled {
+  opacity: 0.4;
+  cursor: wait;
 }
 
 .frido-cart-item__top {
@@ -471,12 +482,13 @@
 .frido-cart-modal {
   position: fixed;
   inset: 0;
-  z-index: 140;
+  z-index: var(--frido-z-cart-modal, 160);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.6rem;
   pointer-events: none;
+  isolation: isolate;
 }
 
 .frido-cart-modal__overlay {
@@ -496,6 +508,7 @@
   background: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
 }
 
 .frido-cart-modal__close {

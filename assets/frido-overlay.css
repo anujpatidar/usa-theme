@@ -6,6 +6,8 @@
   --frido-overlay-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --frido-overlay-scrim: rgba(0, 0, 0, 0.45);
   --frido-overlay-scrim-z: 125;
+  --frido-z-drawer: 130;
+  --frido-z-cart-modal: 160;
 }
 
 /* Global dim — portaled to body by frido-overlay.js (sits above page, below drawers) */

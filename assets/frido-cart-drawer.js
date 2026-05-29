@@ -296,37 +296,15 @@
     );
   }
 
-  function renderCart(cart) {
-    cartState = cart;
-    updateCounts(cart);
+  function getUncachedHandles(cart) {
+    return cart.items
+      .map(itemHandle)
+      .filter(function (handle, index, list) {
+        return handle && list.indexOf(handle) === index && !productCache[handle];
+      });
+  }
 
-    var empty = qs('[data-frido-cart-empty]', drawerEl);
-    var itemsWrap = qs('[data-frido-cart-items]', drawerEl);
-    var footer = qs('[data-frido-cart-footer]', drawerEl);
-    var upsellWrap = qs('[data-frido-cart-upsell-wrap]', drawerEl);
-
-    if (!cart.items.length) {
-      if (empty) empty.hidden = false;
-      if (itemsWrap) {
-        itemsWrap.innerHTML = '';
-        itemsWrap.hidden = true;
-      }
-      if (footer) footer.hidden = true;
-      if (upsellWrap) upsellWrap.hidden = true;
-      drawerEl.classList.add('is-empty');
-      return;
-    }
-
-    drawerEl.classList.remove('is-empty');
-    if (empty) empty.hidden = true;
-    if (itemsWrap) {
-      itemsWrap.hidden = false;
-      itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
-      enrichLineItemPrices(cart);
-    }
-    if (footer) footer.hidden = false;
-    if (upsellWrap) upsellWrap.hidden = false;
-
+  function updateCartFooter(cart) {
     var subLabel = qs('[data-frido-cart-subtotal-label]', drawerEl);
     if (subLabel) {
       subLabel.textContent = 'Subtotal (' + cart.item_count + ' Item' + (cart.item_count === 1 ? '' : 's') + '):';
@@ -348,8 +326,164 @@
 
     var total = qs('[data-frido-cart-total]', drawerEl);
     if (total) total.textContent = money(cart.total_price);
+  }
 
-    renderUpsells();
+  function patchLineItem(cart, item) {
+    var line = qs('[data-frido-cart-line="' + item.key + '"]', drawerEl);
+    if (!line) return false;
+
+    var qtySpan = qs('.frido-cart-item__qty span', line);
+    if (qtySpan) qtySpan.textContent = item.quantity;
+
+    var prices = qs('.frido-cart-item__prices', line);
+    if (prices) prices.outerHTML = renderLinePrices(item);
+
+    var pct = savePct(item);
+    var badge = qs('.frido-cart-item__save-badge', line);
+    if (pct > 0) {
+      if (!badge) {
+        var media = qs('.frido-cart-item__media', line);
+        if (media) {
+          media.insertAdjacentHTML(
+            'afterbegin',
+            '<span class="frido-cart-item__save-badge">' + labels.save + ' ' + pct + '%</span>'
+          );
+        }
+      } else {
+        badge.textContent = labels.save + ' ' + pct + '%';
+      }
+    } else if (badge) {
+      badge.remove();
+    }
+
+    var disc = lineDiscountText(item);
+    var discEl = qs('.frido-cart-item__discount', line);
+    if (disc) {
+      if (discEl) {
+        discEl.innerHTML = '<span aria-hidden="true">🏷</span> ' + escapeHtml(disc);
+      } else {
+        var bottom = qs('.frido-cart-item__bottom', line);
+        if (bottom) {
+          bottom.insertAdjacentHTML(
+            'beforebegin',
+            '<p class="frido-cart-item__discount"><span aria-hidden="true">🏷</span> ' + escapeHtml(disc) + '</p>'
+          );
+        }
+      }
+    } else if (discEl) {
+      discEl.remove();
+    }
+
+    line.classList.remove('is-loading');
+    return true;
+  }
+
+  function patchComparePrices(cart) {
+    cart.items.forEach(function (item) {
+      patchLineItem(cart, item);
+    });
+  }
+
+  function setLineBusy(key, busy) {
+    var line = qs('[data-frido-cart-line="' + key + '"]', drawerEl);
+    if (!line) return;
+    line.classList.toggle('is-loading', busy);
+    qsa('[data-frido-cart-qty]', line).forEach(function (btn) {
+      btn.disabled = busy;
+    });
+  }
+
+  function patchLineQty(key, quantity) {
+    var line = qs('[data-frido-cart-line="' + key + '"]', drawerEl);
+    if (!line) return;
+    var qtySpan = qs('.frido-cart-item__qty span', line);
+    if (qtySpan) qtySpan.textContent = quantity;
+  }
+
+  function emitCartUpdated(cart) {
+    document.dispatchEvent(new CustomEvent('frido:cart:updated', { detail: cart }));
+    if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+      publish(PUB_SUB_EVENTS.cartUpdate, { source: 'frido-cart', cartData: cart });
+    }
+  }
+
+  function applyCart(cart, opts) {
+    opts = opts || {};
+    cartState = cart;
+    updateCounts(cart);
+
+    var empty = qs('[data-frido-cart-empty]', drawerEl);
+    var itemsWrap = qs('[data-frido-cart-items]', drawerEl);
+    var footer = qs('[data-frido-cart-footer]', drawerEl);
+    var upsellWrap = qs('[data-frido-cart-upsell-wrap]', drawerEl);
+
+    if (!cart.items.length) {
+      if (empty) empty.hidden = false;
+      if (itemsWrap) {
+        itemsWrap.innerHTML = '';
+        itemsWrap.hidden = true;
+      }
+      if (footer) footer.hidden = true;
+      if (upsellWrap) upsellWrap.hidden = true;
+      drawerEl.classList.add('is-empty');
+      updateCartFooter(cart);
+      emitCartUpdated(cart);
+      return;
+    }
+
+    drawerEl.classList.remove('is-empty');
+    if (empty) empty.hidden = true;
+    if (footer) footer.hidden = false;
+    if (upsellWrap) upsellWrap.hidden = false;
+    updateCartFooter(cart);
+
+    if (opts.patchKey) {
+      var patchItem = cart.items.find(function (it) {
+        return it.key === opts.patchKey;
+      });
+      if (!patchItem || !patchLineItem(cart, patchItem)) {
+        if (itemsWrap) itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+      }
+    } else if (opts.syncItems && itemsWrap) {
+      var existingKeys = qsa('[data-frido-cart-line]', itemsWrap).map(function (el) {
+        return el.getAttribute('data-frido-cart-line');
+      });
+      var cartKeys = cart.items.map(function (it) {
+        return it.key;
+      });
+      var structureChanged =
+        existingKeys.length !== cartKeys.length ||
+        cartKeys.some(function (key, i) {
+          return existingKeys[i] !== key;
+        });
+
+      if (structureChanged) {
+        itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+      } else {
+        cart.items.forEach(function (item) {
+          patchLineItem(cart, item);
+        });
+      }
+    } else if (itemsWrap) {
+      itemsWrap.hidden = false;
+      itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+    }
+
+    if (itemsWrap && cart.items.length) {
+      var uncached = getUncachedHandles(cart);
+      if (uncached.length) {
+        enrichLineItemPrices(cart);
+      } else {
+        patchComparePrices(cart);
+      }
+    }
+
+    if (!opts.skipUpsells) renderUpsells();
+    emitCartUpdated(cart);
+  }
+
+  function renderCart(cart, opts) {
+    applyCart(cart, Object.assign({ syncItems: false }, opts || {}));
   }
 
   function renderUpsells() {
@@ -375,19 +509,14 @@
   }
 
   function enrichLineItemPrices(cart) {
-    var handles = cart.items
-      .map(itemHandle)
-      .filter(function (handle, index, list) {
-        return handle && list.indexOf(handle) === index;
-      });
-
-    if (!handles.length) return Promise.resolve();
+    var handles = getUncachedHandles(cart);
+    if (!handles.length) {
+      patchComparePrices(cart);
+      return Promise.resolve();
+    }
 
     return Promise.all(handles.map(loadProduct)).then(function () {
-      var itemsWrap = qs('[data-frido-cart-items]', drawerEl);
-      if (itemsWrap && cart.items.length) {
-        itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
-      }
+      if (cartState === cart) patchComparePrices(cart);
     });
   }
 
@@ -407,31 +536,69 @@
       });
   }
 
-  function refresh() {
+  function refresh(opts) {
     return fetchCart().then(function (cart) {
-      renderCart(cart);
-      document.dispatchEvent(new CustomEvent('frido:cart:updated', { detail: cart }));
-      if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
-        publish(PUB_SUB_EVENTS.cartUpdate, { source: 'frido-cart', cartData: cart });
-      }
+      applyCart(cart, Object.assign({ skipUpsells: false }, opts || {}));
       return cart;
     });
   }
 
   function setLineQty(key, quantity) {
+    if (pendingKey === key) return Promise.resolve();
     pendingKey = key;
-    var line = qs('[data-frido-cart-line="' + key + '"]', drawerEl);
-    if (line) line.classList.add('is-loading');
+
+    patchLineQty(key, quantity);
+    setLineBusy(key, true);
+
     return cartChange({ id: key, quantity: quantity })
       .then(handleCartError)
-      .then(refresh)
+      .then(function (cart) {
+        applyCart(cart, { syncItems: true, skipUpsells: true });
+        return cart;
+      })
+      .catch(function (err) {
+        return refresh({ skipUpsells: true }).then(function () {
+          throw err;
+        });
+      })
       .finally(function () {
         pendingKey = null;
+        setLineBusy(key, false);
       });
   }
 
   function removeLine(key) {
-    return setLineQty(key, 0);
+    if (pendingKey === key) return Promise.resolve();
+    pendingKey = key;
+
+    var line = qs('[data-frido-cart-line="' + key + '"]', drawerEl);
+    if (line) line.remove();
+
+    if (cartState) {
+      var removed = cartState.items.find(function (it) {
+        return it.key === key;
+      });
+      if (removed) {
+        updateCounts({
+          item_count: Math.max(0, cartState.item_count - removed.quantity),
+        });
+      }
+    }
+
+    return cartChange({ id: key, quantity: 0 })
+      .then(handleCartError)
+      .then(function (cart) {
+        applyCart(cart, { skipUpsells: true });
+        return cart;
+      })
+      .catch(function (err) {
+        return refresh({ skipUpsells: true }).then(function () {
+          throw err;
+        });
+      })
+      .finally(function () {
+        pendingKey = null;
+      });
   }
 
   function findVariant(product, selected) {
@@ -547,6 +714,11 @@
 
   function openModal() {
     if (!modalEl) return;
+    if (window.FridoOverlay && FridoOverlay.portal) {
+      FridoOverlay.portal(modalEl);
+    } else if (document.body) {
+      document.body.appendChild(modalEl);
+    }
     var onOpened = function () {
       var dialog = qs('.frido-cart-modal__dialog', modalEl);
       if (dialog) dialog.focus();
@@ -654,7 +826,7 @@
       .then(handleCartError)
       .then(function () {
         closeModal();
-        return refresh();
+        return refresh({ skipUpsells: true });
       });
   }
 
@@ -662,7 +834,8 @@
     if (!drawerEl) return;
     if (trigger) drawerEl._trigger = trigger;
     var onOpened = function () {
-      refresh();
+      if (cartState) applyCart(cartState, { skipUpsells: false });
+      refresh({ skipUpsells: false });
       var panel = qs('.frido-cart-drawer__panel', drawerEl);
       if (panel) panel.focus();
     };

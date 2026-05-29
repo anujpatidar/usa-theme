@@ -27,7 +27,7 @@
   }
 
   function portalToBody(el) {
-    if (el && el.parentElement !== document.body) {
+    if (el && document.body) {
       document.body.appendChild(el);
     }
   }
