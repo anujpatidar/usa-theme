@@ -710,10 +710,18 @@
     }
   }
 
+  function portalOverlays() {
+    if (!window.FridoOverlay || !FridoOverlay.portal) return;
+    if (drawerEl) FridoOverlay.portal(drawerEl);
+    if (modalEl) FridoOverlay.portal(modalEl);
+  }
+
   function init() {
     drawerEl = qs('[data-frido-cart-drawer]');
     modalEl = qs('[data-frido-cart-modal]');
     if (!drawerEl) return;
+
+    portalOverlays();
 
     moneyFormat = drawerEl.getAttribute('data-money-format') || '${{amount}}';
     labels.submitEdit = drawerEl.getAttribute('data-label-edit') || labels.submitEdit;

@@ -1,8 +1,10 @@
 /**
- * Shared overlay open/close with exit animations.
+ * Shared overlay open/close with exit animations + global viewport scrim.
  */
 (function () {
   var DEFAULT_MS = 320;
+  var scrimEl = null;
+  var openEntries = [];
 
   function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -24,9 +26,75 @@
     return !!document.querySelector(selector);
   }
 
+  function portalToBody(el) {
+    if (el && el.parentElement !== document.body) {
+      document.body.appendChild(el);
+    }
+  }
+
+  function ensureScrim() {
+    if (!scrimEl) {
+      scrimEl = document.createElement('div');
+      scrimEl.id = 'frido-overlay-scrim';
+      scrimEl.className = 'frido-overlay-scrim';
+      scrimEl.setAttribute('hidden', '');
+      scrimEl.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(scrimEl);
+      scrimEl.addEventListener('click', onScrimClick);
+    }
+    return scrimEl;
+  }
+
+  function onScrimClick() {
+    var top = openEntries[openEntries.length - 1];
+    if (!top) return;
+    closeOverlay(top.el, top.opts);
+  }
+
+  function syncScrim() {
+    var scrim = ensureScrim();
+    if (!openEntries.length) {
+      scrim.classList.remove('is-visible');
+      var ms = durationMs(scrim);
+      window.setTimeout(function () {
+        if (!openEntries.length) {
+          scrim.setAttribute('hidden', '');
+          scrim.setAttribute('aria-hidden', 'true');
+        }
+      }, ms);
+      return;
+    }
+
+    scrim.removeAttribute('hidden');
+    scrim.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        scrim.classList.add('is-visible');
+      });
+    });
+  }
+
+  function trackOpen(el, opts) {
+    var exists = openEntries.some(function (entry) {
+      return entry.el === el;
+    });
+    if (!exists) openEntries.push({ el: el, opts: opts || {} });
+    syncScrim();
+  }
+
+  function untrackOpen(el) {
+    openEntries = openEntries.filter(function (entry) {
+      return entry.el !== el;
+    });
+    syncScrim();
+  }
+
   function openOverlay(el, opts) {
     if (!el || el.classList.contains('is-open')) return;
     opts = opts || {};
+
+    portalToBody(el);
+    trackOpen(el, opts);
 
     el.classList.remove('is-closing');
     if (opts.setHidden !== false) el.removeAttribute('hidden');
@@ -50,6 +118,8 @@
       el.classList.remove('is-closing', 'is-open');
       el.setAttribute('aria-hidden', 'true');
       if (opts.setHidden !== false) el.setAttribute('hidden', '');
+
+      untrackOpen(el);
 
       if (opts.bodyClass && !shouldKeepBodyClass(opts.bodyClass, opts.keepBodyClassIf)) {
         document.body.classList.remove(opts.bodyClass);
@@ -77,6 +147,7 @@
   window.FridoOverlay = {
     open: openOverlay,
     close: closeOverlay,
+    portal: portalToBody,
     duration: DEFAULT_MS,
     durationMs: durationMs,
   };

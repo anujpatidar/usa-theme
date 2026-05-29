@@ -5,6 +5,28 @@
   --frido-overlay-duration: 0.32s;
   --frido-overlay-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --frido-overlay-scrim: rgba(0, 0, 0, 0.45);
+  --frido-overlay-scrim-z: 125;
+}
+
+/* Global dim — portaled to body by frido-overlay.js (sits above page, below drawers) */
+.frido-overlay-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--frido-overlay-scrim-z);
+  background: var(--frido-overlay-scrim);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-overlay-scrim.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.frido-overlay-scrim[hidden] {
+  display: none !important;
 }
 
 /*
@@ -40,7 +62,7 @@ body.gradient {
   background: var(--gradient-background);
 }
 
-/* ---------- Black scrim (cart, size chart, account, search, variant modal) ---------- */
+/* Click targets above panels; visual dim is #frido-overlay-scrim */
 .frido-cart-drawer__overlay,
 .frido-size-chart__overlay,
 .frido-cart-modal__overlay,
@@ -49,11 +71,9 @@ body.gradient {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: var(--frido-overlay-scrim);
-  opacity: 0;
-  pointer-events: auto;
+  background: transparent;
+  pointer-events: none;
   cursor: pointer;
-  transition: opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
 }
 
 .frido-cart-drawer.is-open .frido-cart-drawer__overlay,
@@ -66,7 +86,7 @@ body.gradient {
 .frido-search-panel.is-closing .frido-search-panel__backdrop,
 .frido-cart-modal.is-open .frido-cart-modal__overlay,
 .frido-cart-modal.is-closing .frido-cart-modal__overlay {
-  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
