@@ -82,11 +82,15 @@
                 <span class="frido-pdp-accordion__title">{{ feature.title.value | escape }}</span>
                 <span class="frido-pdp-accordion__plus" aria-hidden="true"></span>
               </summary>
-              {%- if feature.description != blank -%}
-                <div class="frido-pdp-accordion__body rte">
-                  {% render 'frido-rich-text', metafield: feature.description %}
+              <div class="frido-pdp-accordion__panel">
+                <div class="frido-pdp-accordion__panel-inner">
+                  {%- if feature.description != blank -%}
+                    <div class="frido-pdp-accordion__body rte">
+                      {% render 'frido-rich-text', metafield: feature.description %}
+                    </div>
+                  {%- endif -%}
                 </div>
-              {%- endif -%}
+              </div>
             </details>
           {%- endfor -%}
         </div>
