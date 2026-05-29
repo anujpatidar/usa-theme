@@ -22,14 +22,6 @@
     submitAdd: 'ADD TO CART',
   };
 
-  var tagIconSvg =
-    '<svg class="frido-cart-item__tag-svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
-    '<path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>';
-
-  var trashIconSvg =
-    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">' +
-    '<path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M6 6l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>';
-
   function qs(sel, root) {
     return (root || document).querySelector(sel);
   }
@@ -149,10 +141,8 @@
       '">' +
       '<div class="frido-cart-item__top">' +
       '<div class="frido-cart-item__media">' +
-      (pct > 0
-        ? '<span class="frido-cart-item__save-badge">' + tagIconSvg + ' ' + labels.save + ' ' + pct + '%</span>'
-        : '') +
-      (img ? '<img src="' + img + '" alt="" width="80" height="80" loading="lazy">' : '') +
+      (pct > 0 ? '<span class="frido-cart-item__save-badge">' + labels.save + ' ' + pct + '%</span>' : '') +
+      (img ? '<img src="' + img + '" alt="" width="88" height="88" loading="lazy">' : '') +
       '</div>' +
       '<div class="frido-cart-item__info">' +
       '<div class="frido-cart-item__title-row">' +
@@ -164,13 +154,13 @@
       '<button type="button" class="frido-cart-item__remove" data-frido-cart-remove="' +
       escapeHtml(item.key) +
       '" aria-label="Remove">' +
-      trashIconSvg +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>' +
       '</button></div>' +
       (item.variant_title && item.variant_title !== 'Default Title'
         ? '<div class="frido-cart-item__pills">' + variantPills(item.variant_title) + '</div>'
         : '') +
       (disc
-        ? '<p class="frido-cart-item__discount">' + tagIconSvg + ' <span>' + escapeHtml(disc) + '</span></p>'
+        ? '<p class="frido-cart-item__discount"><span aria-hidden="true">🏷</span> ' + escapeHtml(disc) + '</p>'
         : '') +
       '</div></div>' +
       '<div class="frido-cart-item__bottom">' +
@@ -185,13 +175,12 @@
       escapeHtml(item.key) +
       '" data-delta="1" aria-label="Increase">+</button>' +
       '</div>' +
-      '<div class="frido-cart-item__side">' +
       '<div class="frido-cart-item__prices">' +
       (item.original_line_price > item.final_line_price
         ? '<span class="frido-cart-item__compare">' + money(item.original_line_price) + '</span>'
         : '') +
       '<span class="frido-cart-item__price">' + money(item.final_line_price) + '</span>' +
-      '</div>' +
+      '</div></div>' +
       '<div class="frido-cart-item__edit">' +
       '<button type="button" data-frido-cart-edit="' +
       escapeHtml(item.key) +
@@ -203,7 +192,7 @@
       '" data-edit-focus="size">' +
       labels.changeSize +
       '</button>' +
-      '</div></div></div></article>'
+      '</div></article>'
     );
   }
 
@@ -280,8 +269,7 @@
 
     var subLabel = qs('[data-frido-cart-subtotal-label]', drawerEl);
     if (subLabel) {
-      subLabel.textContent =
-        'Subtotal (' + cart.item_count + ' Item' + (cart.item_count === 1 ? '' : 's') + '):';
+      subLabel.textContent = 'Subtotal (' + cart.item_count + ' Item' + (cart.item_count === 1 ? '' : 's') + '):';
     }
     var sub = qs('[data-frido-cart-subtotal]', drawerEl);
     if (sub) sub.textContent = money(cart.items_subtotal_price);
