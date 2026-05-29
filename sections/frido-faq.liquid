@@ -1,0 +1,120 @@
+{{ 'frido-faq.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-pdp-accordion.js' | asset_url }}" defer="defer"></script>
+
+<section class="frido-faq color-{{ section.settings.color_scheme }} gradient" id="frido-faq-{{ section.id }}">
+  <div class="frido-page-width frido-faq__inner">
+    {% if section.settings.heading != blank %}
+      <h1 class="frido-faq__title">{{ section.settings.heading | escape }}</h1>
+    {% endif %}
+
+    <div class="frido-faq__accordion" data-frido-accordion>
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'category' %}
+            <details
+              class="frido-faq__item frido-pdp-accordion__item"
+              {% if forloop.first and section.settings.open_first %}open{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <summary class="frido-faq__summary">
+                <span class="frido-faq__summary-text">{{ block.settings.title | escape }}</span>
+                <span class="frido-faq__chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="frido-faq__panel frido-pdp-accordion__panel">
+                <div class="frido-faq__panel-inner rte">
+                  {{ block.settings.body }}
+                </div>
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <details class="frido-faq__item frido-pdp-accordion__item" open>
+          <summary class="frido-faq__summary">
+            <span class="frido-faq__summary-text">1. Product Features, Fit &amp; Care</span>
+            <span class="frido-faq__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="frido-faq__panel frido-pdp-accordion__panel">
+            <div class="frido-faq__panel-inner">{% render 'frido-faq-cat-product' %}</div>
+          </div>
+        </details>
+        <details class="frido-faq__item frido-pdp-accordion__item">
+          <summary class="frido-faq__summary">
+            <span class="frido-faq__summary-text">2. Ordering, Shipping &amp; Tracking</span>
+            <span class="frido-faq__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="frido-faq__panel frido-pdp-accordion__panel">
+            <div class="frido-faq__panel-inner">{% render 'frido-faq-cat-ordering' %}</div>
+          </div>
+        </details>
+        <details class="frido-faq__item frido-pdp-accordion__item">
+          <summary class="frido-faq__summary">
+            <span class="frido-faq__summary-text">3. Returns &amp; Cancellations</span>
+            <span class="frido-faq__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="frido-faq__panel frido-pdp-accordion__panel">
+            <div class="frido-faq__panel-inner">{% render 'frido-faq-cat-returns' %}</div>
+          </div>
+        </details>
+        <details class="frido-faq__item frido-pdp-accordion__item">
+          <summary class="frido-faq__summary">
+            <span class="frido-faq__summary-text">4. Manufacturing &amp; Miscellaneous</span>
+            <span class="frido-faq__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="frido-faq__panel frido-pdp-accordion__panel">
+            <div class="frido-faq__panel-inner">{% render 'frido-faq-cat-misc' %}</div>
+          </div>
+        </details>
+      {% endif %}
+    </div>
+
+    {% if section.settings.footer_note != blank %}
+      <div class="frido-faq__footer-note rte">{{ section.settings.footer_note }}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Frido — FAQ",
+  "tag": "section",
+  "class": "section-frido-faq",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FAQs"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first category by default",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "footer_note",
+      "label": "Footer note",
+      "default": "<p>If you have any other questions that are not answered in our FAQ, please send us an email at <a href=\"mailto:hello@frido.com\">hello@frido.com</a>. We will help you as soon as possible.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "FAQ category",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Category title" },
+        { "type": "richtext", "id": "body", "label": "Questions & answers" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Frido — FAQ" }]
+}
+{% endschema %}

@@ -1,0 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "frido_faq": {
+      "type": "frido-faq",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "FAQs",
+        "open_first": true,
+        "footer_note": "<p>If you have any other questions that are not answered in our FAQ, please send us an email at <a href=\"mailto:hello@frido.com\">hello@frido.com</a>. We will help you as soon as possible.</p>"
+      }
+    },
+    "frido_bestsellers": {
+      "type": "frido-bestsellers",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "title": "Our best sellers",
+        "view_all_label": "SHOP ALL",
+        "collection": "bestsellers",
+        "products_to_show": 4,
+        "swipe_mobile": true
+      }
+    }
+  },
+  "order": [
+    "frido_faq",
+    "frido_bestsellers"
+  ]
+}
