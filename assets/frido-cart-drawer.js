@@ -916,7 +916,6 @@
     if (window.FridoOverlay) {
       FridoOverlay.close(modalEl, {
         bodyClass: 'frido-cart-modal-open',
-        keepBodyClassIf: '.frido-cart-drawer.is-open, .frido-cart-drawer.is-closing',
       });
     } else {
       modalEl.classList.remove('is-open');

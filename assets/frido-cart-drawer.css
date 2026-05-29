@@ -24,15 +24,12 @@
   pointer-events: auto;
 }
 
-/* Variant modal must sit above the cart drawer and receive clicks */
-body.frido-cart-modal-open .frido-cart-drawer.is-open,
-body.frido-cart-modal-open .frido-cart-drawer.is-closing {
-  pointer-events: none;
+.frido-cart-modal.is-open {
+  pointer-events: auto;
 }
 
-.frido-cart-modal.is-open,
 .frido-cart-modal.is-closing {
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .frido-cart-drawer__overlay {
@@ -45,6 +42,7 @@ body.frido-cart-modal-open .frido-cart-drawer.is-closing {
   right: 0;
   bottom: 0;
   z-index: 2;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   width: min(100%, 42rem);

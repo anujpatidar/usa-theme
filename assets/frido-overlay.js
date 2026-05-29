@@ -52,6 +52,13 @@
   }
 
   function syncScrim() {
+    openEntries = openEntries.filter(function (entry) {
+      return (
+        entry.el &&
+        (entry.el.classList.contains('is-open') || entry.el.classList.contains('is-closing'))
+      );
+    });
+
     var scrim = ensureScrim();
     if (!openEntries.length) {
       scrim.classList.remove('is-visible');
