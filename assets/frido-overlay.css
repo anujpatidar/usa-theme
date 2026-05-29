@@ -4,6 +4,7 @@
 :root {
   --frido-overlay-duration: 0.32s;
   --frido-overlay-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --frido-overlay-scrim: rgba(0, 0, 0, 0.45);
 }
 
 /*
@@ -39,35 +40,39 @@ body.gradient {
   background: var(--gradient-background);
 }
 
+/* ---------- Black scrim (cart, size chart, account, search, variant modal) ---------- */
 .frido-cart-drawer__overlay,
 .frido-size-chart__overlay,
 .frido-cart-modal__overlay,
 .frido-account-drawer__overlay,
 .frido-search-panel__backdrop {
+  position: fixed;
+  inset: 0;
   z-index: 0;
+  background: var(--frido-overlay-scrim);
+  opacity: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
+}
+
+.frido-cart-drawer.is-open .frido-cart-drawer__overlay,
+.frido-cart-drawer.is-closing .frido-cart-drawer__overlay,
+.frido-size-chart.is-open .frido-size-chart__overlay,
+.frido-size-chart.is-closing .frido-size-chart__overlay,
+.frido-account-drawer.is-open .frido-account-drawer__overlay,
+.frido-account-drawer.is-closing .frido-account-drawer__overlay,
+.frido-search-panel.is-open .frido-search-panel__backdrop,
+.frido-search-panel.is-closing .frido-search-panel__backdrop,
+.frido-cart-modal.is-open .frido-cart-modal__overlay,
+.frido-cart-modal.is-closing .frido-cart-modal__overlay {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --frido-overlay-duration: 0.01s;
   }
-}
-
-/* ---------- Backdrop fade ---------- */
-.frido-size-chart__overlay,
-.frido-account-drawer__overlay,
-.frido-cart-drawer__overlay,
-.frido-cart-modal__overlay,
-.frido-search-panel__backdrop {
-  transition: opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
-}
-
-.frido-cart-modal__overlay {
-  opacity: 0;
-}
-
-.frido-cart-modal.is-open:not(.is-closing) .frido-cart-modal__overlay {
-  opacity: 1;
 }
 
 /* ---------- Right-side drawers ---------- */

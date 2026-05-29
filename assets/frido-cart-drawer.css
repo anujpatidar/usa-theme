@@ -24,19 +24,6 @@
   pointer-events: auto;
 }
 
-.frido-cart-drawer__overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.frido-cart-drawer.is-open .frido-cart-drawer__overlay {
-  opacity: 1;
-}
-
 .frido-cart-drawer__panel {
   position: fixed;
   top: 0;
@@ -472,13 +459,6 @@
   pointer-events: none;
 }
 
-
-.frido-cart-modal__overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: rgba(0, 0, 0, 0.55);
-}
 
 .frido-cart-modal__dialog {
   position: relative;

@@ -31,21 +31,6 @@
   pointer-events: auto;
 }
 
-/* Dimmed backdrop — desktop only (panel is full screen on mobile) */
-.frido-size-chart__overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: rgba(var(--color-foreground), 0.45);
-  opacity: 0;
-  transition: opacity 0.28s ease;
-  cursor: pointer;
-}
-
-.frido-size-chart.is-open .frido-size-chart__overlay {
-  opacity: 1;
-}
-
 .frido-size-chart__panel {
   position: fixed;
   z-index: 1;
@@ -57,12 +42,7 @@
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Desktop: right drawer + visible overlay */
 @media screen and (min-width: 750px) {
-  .frido-size-chart__overlay {
-    display: block;
-  }
-
   .frido-size-chart__panel {
     top: 0;
     right: 0;
@@ -79,12 +59,7 @@
   }
 }
 
-/* Mobile: full-screen panel, no side peek */
 @media screen and (max-width: 749px) {
-  .frido-size-chart__overlay {
-    display: none;
-  }
-
   .frido-size-chart__panel {
     inset: 0;
     width: 100%;

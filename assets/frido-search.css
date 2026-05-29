@@ -35,18 +35,6 @@
   }
 }
 
-.frido-search-panel__backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  opacity: 0;
-  transition: opacity 0.28s ease;
-}
-
-.frido-search-panel.is-open .frido-search-panel__backdrop {
-  opacity: 1;
-}
-
 .frido-search-panel__sheet {
   position: fixed;
   left: 0;

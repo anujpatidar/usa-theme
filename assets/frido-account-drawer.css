@@ -29,20 +29,6 @@
   pointer-events: auto;
 }
 
-.frido-account-drawer__overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.28s ease;
-  cursor: pointer;
-}
-
-.frido-account-drawer.is-open .frido-account-drawer__overlay {
-  opacity: 1;
-}
-
 .frido-account-drawer__panel {
   position: fixed;
   z-index: 1;
@@ -55,10 +41,6 @@
 }
 
 @media screen and (min-width: 750px) {
-  .frido-account-drawer__overlay {
-    display: block;
-  }
-
   .frido-account-drawer__panel {
     top: 0;
     right: 0;
@@ -76,10 +58,6 @@
 }
 
 @media screen and (max-width: 749px) {
-  .frido-account-drawer__overlay {
-    display: none;
-  }
-
   .frido-account-drawer__panel {
     inset: 0;
     width: 100%;
