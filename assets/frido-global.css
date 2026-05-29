@@ -2725,7 +2725,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 /* Contact bar */
 .frido-footer__contact {
-  background: #ebe6dc;
+  background: #f8f8f8;
   color: #000;
   padding: 2.4rem 0;
 }
@@ -3015,7 +3015,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   gap: 1.6rem;
   margin-top: 3.2rem;
   padding: 2rem 0 2.4rem;
-  border-top: 1px solid #7e7e7e;
+  border-top: 1px solid #ddd;
   text-align: center;
 }
 
