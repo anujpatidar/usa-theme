@@ -1,15 +1,9 @@
 {% comment %}
-  PDP story — one product metafield → PDP Story metaobject.
-  Product metafield: custom.pdp_story (metaobject reference, type: pdp_story)
-  Metaobject fields: heading, body (rich text), media (image or video)
-
+  PDP story — per-product metafield custom.pdp_story → PDP Story metaobject.
   Reusable via section: sections/frido-pdp-story.liquid
-  @param product {Product} required
-  @param section {Section} optional — for section.id in markup
 {% endcomment %}
 {%- liquid
   assign story = product.metafields.custom.pdp_story.value
-
   assign story_heading = ''
   assign story_body_mf = null
   assign story_media = null
@@ -19,62 +13,11 @@
     assign story_body_mf = story.body
     assign story_media = story.media.value
   endif
-
-  assign story_visible = false
-  if story != blank
-    if story_heading != blank or story_body_mf != blank or story_media != blank
-      assign story_visible = true
-    endif
-  endif
 -%}
 
-{%- if story_visible -%}
-  <section class="frido-pdp-story" data-frido-pdp-story>
-    <div class="frido-pdp-story__inner">
-      {%- if story_heading != blank or story_body_mf != blank -%}
-        <div class="frido-pdp-story__text">
-          {%- if story_heading != blank -%}
-            <h2 class="frido-pdp-story__heading">{{ story_heading | escape }}</h2>
-          {%- endif -%}
-          {%- if story_body_mf != blank -%}
-            <div class="frido-pdp-story__body rte">
-              {% render 'frido-rich-text', metafield: story_body_mf %}
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
-      {%- if story_media != blank -%}
-        <div class="frido-pdp-story__media">
-          <div class="frido-pdp-story__media-frame">
-            {%- if story_media.media_type == 'video' -%}
-              {{
-                story_media
-                | video_tag:
-                  image_size: '1200x',
-                  autoplay: true,
-                  loop: true,
-                  muted: true,
-                  playsinline: true,
-                  controls: false,
-                  class: 'frido-pdp-story__video',
-                  preload: 'metadata'
-              }}
-            {%- else -%}
-              {{
-                story_media
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'frido-pdp-story__img',
-                  widths: '400,600,800,1000,1200',
-                  sizes: '(min-width: 990px) 42vw, 100vw',
-                  alt: story_heading
-              }}
-            {%- endif -%}
-          </div>
-        </div>
-      {%- endif -%}
-    </div>
-  </section>
-{%- endif -%}
+{% render 'frido-pdp-story-layout',
+  heading: story_heading,
+  body_metafield: story_body_mf,
+  media: story_media,
+  section_id: section.id
+%}

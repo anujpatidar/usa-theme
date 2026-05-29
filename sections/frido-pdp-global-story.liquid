@@ -1,0 +1,86 @@
+{{ 'frido-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading = section.settings.heading
+  assign body_html = section.settings.body
+  assign story_media = null
+
+  if section.settings.video != blank
+    assign story_media = section.settings.video
+  elsif section.settings.image != blank
+    assign story_media = section.settings.image
+  endif
+-%}
+
+{%- capture story_markup -%}
+  {% render 'frido-pdp-story-layout',
+    heading: heading,
+    body_html: body_html,
+    media: story_media,
+    section_id: section.id
+  %}
+{%- endcapture -%}
+{%- assign story_markup = story_markup | strip -%}
+
+{%- if story_markup != blank -%}
+  <div
+    class="section-frido-pdp-global-story color-{{ section.settings.color_scheme }} gradient"
+    id="FridoPdpGlobalStory-{{ section.id }}"
+  >
+    <div class="frido-page-width">
+      {{ story_markup }}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP global story",
+  "tag": "section",
+  "class": "section-frido-pdp-global-story-wrap",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Same layout as PDP story, but one set of content for every product (theme settings — not metafields)."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Strength Starts With Your Feet"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Healthy movement begins at the foundation of your body—<strong>your feet</strong>. When your feet can move naturally, the muscles responsible for <strong>balance, posture,</strong> and <strong>stability</strong> become stronger and more active, helping reduce tension, discomfort, and fatigue throughout your legs and lower body.</p><p>Hike's natural-motion footwear is designed to encourage proper foot function, allowing your body to <strong>realign, build resilience,</strong> and <strong>support</strong> itself with every step. Over time, this leads to better mobility, fewer common foot problems, and improved overall well-being.</p><p>Step into footwear that <strong>restores</strong> how your body was meant to move!</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Used when no video is set. Square or 1:1 works best."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Optional. Overrides the image when set."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP global story",
+      "settings": {
+        "heading": "Strength Starts With Your Feet"
+      }
+    }
+  ]
+}
+{% endschema %}

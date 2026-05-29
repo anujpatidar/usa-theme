@@ -1685,7 +1685,7 @@
 
 .frido-pdp-features__media {
   width: 100%;
-  min-width: 0;
+  max-width: 512px;
 }
 
 .frido-pdp-features__media-frame {
@@ -1758,8 +1758,8 @@
 }
 
 .frido-pdp-accordion__icon-img {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
 }
 
@@ -1812,7 +1812,7 @@
   transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.frido-pdp-accordion__item[open] > .frido-pdp-accordion__panel {
+.frido-pdp-accordion__item[open]>.frido-pdp-accordion__panel {
   grid-template-rows: 1fr;
 }
 
@@ -1830,6 +1830,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .frido-pdp-accordion__panel,
   .frido-pdp-accordion__plus::before,
   .frido-pdp-accordion__plus::after {

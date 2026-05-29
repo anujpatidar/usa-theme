@@ -1,0 +1,70 @@
+{% comment %}
+  Shared PDP story layout (text + media).
+  @param heading {String}
+  @param body_html {String} optional — section richtext
+  @param body_metafield {Metafield} optional — metaobject rich text
+  @param media {Media} image or video file
+  @param section_id {String} optional — for unique ids
+{% endcomment %}
+{%- liquid
+  assign story_visible = false
+  if heading != blank or body_html != blank or body_metafield != blank or media != blank
+    assign story_visible = true
+  endif
+-%}
+
+{%- if story_visible -%}
+  <section
+    class="frido-pdp-story"
+    {% if section_id != blank %}data-frido-pdp-story data-section-id="{{ section_id }}"{% else %}data-frido-pdp-story{% endif %}
+  >
+    <div class="frido-pdp-story__inner">
+      {%- if heading != blank or body_html != blank or body_metafield != blank -%}
+        <div class="frido-pdp-story__text">
+          {%- if heading != blank -%}
+            <h2 class="frido-pdp-story__heading">{{ heading | escape }}</h2>
+          {%- endif -%}
+          {%- if body_metafield != blank -%}
+            <div class="frido-pdp-story__body rte">
+              {% render 'frido-rich-text', metafield: body_metafield %}
+            </div>
+          {%- elsif body_html != blank -%}
+            <div class="frido-pdp-story__body rte">{{ body_html }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if media != blank -%}
+        <div class="frido-pdp-story__media">
+          <div class="frido-pdp-story__media-frame">
+            {%- if media.media_type == 'video' -%}
+              {{
+                media
+                | video_tag:
+                  image_size: '1200x',
+                  autoplay: true,
+                  loop: true,
+                  muted: true,
+                  playsinline: true,
+                  controls: false,
+                  class: 'frido-pdp-story__video',
+                  preload: 'metadata'
+              }}
+            {%- else -%}
+              {{
+                media
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'frido-pdp-story__img',
+                  widths: '400,600,800,1000,1200',
+                  sizes: '(min-width: 990px) 42vw, 100vw',
+                  alt: heading
+              }}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
