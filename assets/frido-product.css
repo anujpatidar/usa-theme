@@ -1336,7 +1336,7 @@
   margin: 0 0 1.25rem;
   padding: 0 0.5rem;
   font-size: clamp(1.6rem, 4.2vw, 1.8rem);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.25;
   text-align: center;
   color: rgb(var(--color-foreground));

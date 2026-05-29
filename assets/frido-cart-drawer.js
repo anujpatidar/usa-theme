@@ -130,8 +130,21 @@
   }
 
   function itemHandle(item) {
+    if (item && item.handle) return item.handle;
     var handle = (item.url || '').split('/products/')[1];
     return handle ? handle.split('?')[0] : '';
+  }
+
+  function normalizeProperties(props) {
+    if (!props) return {};
+    if (Array.isArray(props)) {
+      var out = {};
+      props.forEach(function (p) {
+        if (p && p.key) out[p.key] = p.value;
+      });
+      return out;
+    }
+    return props;
   }
 
   function getCompareLinePrice(item) {
@@ -177,7 +190,7 @@
     var disc = lineDiscountText(item);
     var busy = pendingKey === item.key ? ' is-loading' : '';
     var img = item.image ? escapeHtml(item.image) : '';
-    var handle = itemHandle(item);
+    var handle = item.handle || itemHandle(item);
 
     return (
       '<article class="frido-cart-item' +
@@ -323,17 +336,14 @@
 
     var discRow = qs('[data-frido-cart-discount-row]', drawerEl);
     var disc = qs('[data-frido-cart-discount]', drawerEl);
-    var cartDiscount = cart.total_discount > 0
-      ? cart.total_discount
-      : cart.items.reduce(function (sum, item) {
-          return sum + lineDiscountAmount(item);
-        }, 0);
+    var cartDiscount = cart.total_discount > 0 ? cart.total_discount : 0;
 
     if (cartDiscount > 0 && discRow && disc) {
       discRow.hidden = false;
       disc.textContent = '-' + money(cartDiscount);
     } else if (discRow) {
       discRow.hidden = true;
+      if (disc) disc.textContent = '';
     }
 
     var total = qs('[data-frido-cart-total]', drawerEl);
@@ -498,19 +508,26 @@
   function updateModalProductHeader(product, variant) {
     var wrap = qs('[data-frido-cart-modal-product]', modalEl);
     if (!wrap) return;
-    var img = (variant.featured_image && variant.featured_image.src) || product.featured_image || '';
+    var img =
+      (variant.featured_image && (variant.featured_image.src || variant.featured_image)) ||
+      product.featured_image ||
+      '';
     var compare = variant.compare_at_price || 0;
     wrap.hidden = false;
     wrap.innerHTML =
       '<div class="frido-cart-modal__product-inner">' +
-      (img ? '<img src="' + escapeHtml(img) + '" alt="" width="72" height="72">' : '') +
-      '<div><p class="frido-cart-modal__product-title">' +
+      (img ? '<img src="' + escapeHtml(img) + '" alt="" width="88" height="88" loading="lazy">' : '') +
+      '<div class="frido-cart-modal__product-copy">' +
+      '<p class="frido-cart-modal__product-title">' +
       escapeHtml(product.title) +
-      '</p><p class="frido-cart-modal__product-price">' +
-      '<strong>' +
+      '</p>' +
+      '<p class="frido-cart-modal__product-price">' +
+      '<span class="frido-cart-modal__product-price-current">' +
       money(variant.price) +
-      '</strong>' +
-      (compare > variant.price ? ' <s>' + money(compare) + '</s>' : '') +
+      '</span>' +
+      (compare > variant.price
+        ? '<span class="frido-cart-modal__product-price-compare">' + money(compare) + '</span>'
+        : '') +
       '</p></div></div>';
   }
 
@@ -562,23 +579,34 @@
 
   function openVariantModal(opts) {
     opts = opts || {};
+    if (!modalEl) return;
+
     modalState.mode = opts.mode || 'add';
     modalState.lineKey = opts.lineKey || null;
     modalState.quantity = opts.quantity || 1;
-    modalState.properties = opts.properties || {};
+    modalState.properties = normalizeProperties(opts.properties);
 
-    loadProduct(opts.handle).then(function (product) {
-      if (!product) return;
+    var handle = opts.handle || '';
+    if (!handle) return;
+
+    loadProduct(handle).then(function (product) {
+      if (!product || !modalEl) return;
       modalState.product = product;
       modalState.selected = {};
 
       var variantId = opts.variantId;
       var variant = variantId
         ? product.variants.find(function (v) {
-            return v.id === variantId;
+            return Number(v.id) === Number(variantId);
           })
         : null;
-      if (!variant) variant = product.variants.find(function (v) { return v.available; }) || product.variants[0];
+      if (!variant) {
+        variant = product.variants.find(function (v) {
+          return v.available;
+        }) || product.variants[0];
+      }
+      if (!variant) return;
+
       product.options.forEach(function (opt, i) {
         modalState.selected[opt] = variant['option' + (i + 1)];
       });
@@ -587,9 +615,9 @@
       if (optionsEl) optionsEl.innerHTML = buildModalOptions(product);
       syncModalVariant();
 
-      if (opts.focus === 'size') {
-        var sizeBlock = qs('[data-option-type="size"]', modalEl);
-        if (sizeBlock) sizeBlock.scrollIntoView({ block: 'nearest' });
+      if (opts.focus === 'size' || opts.focus === 'color') {
+        var focusBlock = qs('[data-option-type="' + opts.focus + '"]', modalEl);
+        if (focusBlock) focusBlock.scrollIntoView({ block: 'nearest' });
       }
 
       openModal();
@@ -619,7 +647,7 @@
           {
             id: v.id,
             quantity: modalState.quantity,
-            properties: modalState.properties,
+            properties: normalizeProperties(modalState.properties),
           },
         ]);
       })
@@ -673,20 +701,43 @@
     }
   }
 
+  var eventsBound = false;
+
   function bindEvents() {
+    if (eventsBound) return;
+    eventsBound = true;
+
     document.addEventListener('click', function (e) {
       if (e.target.closest('[data-frido-cart-open]')) {
         e.preventDefault();
         open(e.target.closest('[data-frido-cart-open]'));
         return;
       }
+
+      if (e.target.closest('[data-frido-cart-modal-close]')) {
+        e.preventDefault();
+        closeModal();
+        return;
+      }
+
       if (e.target.closest('[data-frido-cart-close]')) {
-        var inModal = e.target.closest('[data-frido-cart-modal]');
-        if (inModal) {
-          closeModal();
-        } else {
-          close();
-        }
+        e.preventDefault();
+        close();
+        return;
+      }
+
+      if (e.target.closest('[data-frido-cart-modal-submit]')) {
+        e.preventDefault();
+        var submitModal = e.target.closest('[data-frido-cart-modal-submit]');
+        submitModal.disabled = true;
+        applyModalSelection()
+          .catch(function (err) {
+            alert(err.message || (window.cartStrings && window.cartStrings.error) || 'Could not update cart');
+          })
+          .finally(function () {
+            if (submitModal) submitModal.disabled = false;
+            syncModalVariant();
+          });
         return;
       }
 
@@ -709,19 +760,22 @@
 
       var edit = e.target.closest('[data-frido-cart-edit]');
       if (edit && cartState) {
+        e.preventDefault();
         var keyE = edit.getAttribute('data-frido-cart-edit');
         var line = cartState.items.find(function (it) {
           return it.key === keyE;
         });
         if (!line) return;
-        var handle = edit.closest('[data-frido-cart-line]').getAttribute('data-product-handle');
+        var lineEl = edit.closest('[data-frido-cart-line]');
+        var handle = line.handle || (lineEl && lineEl.getAttribute('data-product-handle')) || itemHandle(line);
+        if (!handle) return;
         openVariantModal({
           mode: 'edit',
           lineKey: line.key,
           handle: handle,
           variantId: line.variant_id,
           quantity: line.quantity,
-          properties: line.properties || {},
+          properties: line.properties,
           focus: edit.getAttribute('data-edit-focus'),
         });
         return;
@@ -729,12 +783,13 @@
 
       var upsellAdd = e.target.closest('[data-frido-cart-upsell-add]');
       if (upsellAdd) {
+        e.preventDefault();
         openVariantModal({ mode: 'add', handle: upsellAdd.getAttribute('data-frido-cart-upsell-add') });
         return;
       }
 
       var pill = e.target.closest('[data-frido-modal-opt]');
-      if (pill && pill.tagName === 'BUTTON') {
+      if (pill && pill.tagName === 'BUTTON' && modalEl && modalEl.contains(pill)) {
         var opt = pill.getAttribute('data-frido-modal-opt');
         modalState.selected[opt] = pill.getAttribute('data-value');
         qsa('[data-frido-modal-opt="' + opt + '"]', modalEl).forEach(function (b) {
@@ -752,24 +807,10 @@
       }
     });
 
-    var submitModal = qs('[data-frido-cart-modal-submit]', modalEl);
-    if (submitModal) {
-      submitModal.addEventListener('click', function () {
-        submitModal.disabled = true;
-        applyModalSelection()
-          .catch(function (err) {
-            alert(err.message || window.cartStrings?.error || 'Could not update cart');
-          })
-          .finally(function () {
-            syncModalVariant();
-          });
-      });
-    }
-
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
-      if (modalEl.classList.contains('is-open')) closeModal();
-      else if (drawerEl.classList.contains('is-open')) close();
+      if (modalEl && modalEl.classList.contains('is-open')) closeModal();
+      else if (drawerEl && drawerEl.classList.contains('is-open')) close();
     });
 
     if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
@@ -789,7 +830,7 @@
   function init() {
     drawerEl = qs('[data-frido-cart-drawer]');
     modalEl = qs('[data-frido-cart-modal]');
-    if (!drawerEl) return;
+    if (!drawerEl || !modalEl) return;
 
     portalOverlays();
 
