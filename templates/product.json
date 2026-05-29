@@ -63,7 +63,13 @@
           }
         }
       },
-      "block_order": ["b1", "b2", "b3", "bundle_1", "bundle_2"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "bundle_1",
+        "bundle_2"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "social_proof_lead": "Purchased more than",
@@ -105,6 +111,14 @@
       "type": "frido-pdp-story",
       "settings": {
         "product": "",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "frido_pdp_features": {
+      "type": "frido-pdp-features",
+      "settings": {
+        "product": "",
+        "features_media_bg": "#d8dfd0",
         "color_scheme": "scheme-1"
       }
     },
@@ -152,19 +166,16 @@
           }
         }
       },
-      "block_order": ["comfort_1", "comfort_2", "comfort_3", "comfort_4"],
+      "block_order": [
+        "comfort_1",
+        "comfort_2",
+        "comfort_3",
+        "comfort_4"
+      ],
       "settings": {
         "comfort_eyebrow": "TESTED & RECOMMENDED BY PODIATRISTS",
         "comfort_heading_lead": "Engineered for All-Day",
         "comfort_heading_highlight": "Pain-Free Comfort",
-        "color_scheme": "scheme-1"
-      }
-    },
-    "frido_pdp_features": {
-      "type": "frido-pdp-features",
-      "settings": {
-        "product": "",
-        "features_media_bg": "#d8dfd0",
         "color_scheme": "scheme-1"
       }
     },
@@ -193,8 +204,8 @@
   "order": [
     "frido_product",
     "frido_pdp_story",
-    "frido_pdp_comfort",
     "frido_pdp_features",
+    "frido_pdp_comfort",
     "frido_pdp_most_loved",
     "frido_pdp_you_may_like"
   ]
