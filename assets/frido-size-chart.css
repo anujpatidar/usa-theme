@@ -31,6 +31,23 @@
   pointer-events: auto;
 }
 
+.frido-size-chart__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.frido-size-chart.is-open .frido-size-chart__overlay,
+.frido-size-chart.is-closing .frido-size-chart__overlay {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
 .frido-size-chart__panel {
   position: fixed;
   z-index: 2;

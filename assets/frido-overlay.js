@@ -3,6 +3,7 @@
  */
 (function () {
   var DEFAULT_MS = 320;
+  var SCRIM_COLOR = 'rgba(0, 0, 0, 0.45)';
   var scrimEl = null;
   var openEntries = [];
 
@@ -51,38 +52,39 @@
     closeOverlay(top.el, top.opts);
   }
 
-  function syncScrim() {
-    var scrim = ensureScrim();
-    if (!openEntries.length) {
-      scrim.classList.remove('is-visible');
-      var ms = durationMs(scrim);
-      window.setTimeout(function () {
-        if (!openEntries.length) {
-          scrim.setAttribute('hidden', '');
-          scrim.setAttribute('aria-hidden', 'true');
-        }
-      }, ms);
-      return;
-    }
-
-    scrim.removeAttribute('hidden');
-    scrim.setAttribute('aria-hidden', 'false');
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        scrim.classList.add('is-visible');
-      });
-    });
+  function setBodyOverlayActive(active) {
+    document.body.classList.toggle('frido-overlay-active', active);
   }
 
-  function pruneStaleEntries() {
-    openEntries = openEntries.filter(function (entry) {
-      return (
-        entry.el &&
-        (entry.el.classList.contains('is-open') ||
-          entry.el.classList.contains('is-closing') ||
-          entry.el.getAttribute('aria-hidden') === 'false')
-      );
-    });
+  function showScrim() {
+    var scrim = ensureScrim();
+    scrim.removeAttribute('hidden');
+    scrim.setAttribute('aria-hidden', 'false');
+    scrim.style.backgroundColor = SCRIM_COLOR;
+    scrim.classList.add('is-visible');
+    setBodyOverlayActive(true);
+  }
+
+  function hideScrim() {
+    if (!scrimEl) return;
+    scrimEl.classList.remove('is-visible');
+    scrimEl.style.backgroundColor = '';
+    var ms = durationMs(scrimEl);
+    window.setTimeout(function () {
+      if (!openEntries.length && scrimEl) {
+        scrimEl.setAttribute('hidden', '');
+        scrimEl.setAttribute('aria-hidden', 'true');
+        setBodyOverlayActive(false);
+      }
+    }, ms);
+  }
+
+  function syncScrim() {
+    if (openEntries.length) {
+      showScrim();
+    } else {
+      hideScrim();
+    }
   }
 
   function trackOpen(el, opts) {
@@ -132,7 +134,6 @@
       if (opts.setHidden !== false) el.setAttribute('hidden', '');
 
       untrackOpen(el);
-      pruneStaleEntries();
 
       if (opts.bodyClass && !shouldKeepBodyClass(opts.bodyClass, opts.keepBodyClassIf)) {
         document.body.classList.remove(opts.bodyClass);

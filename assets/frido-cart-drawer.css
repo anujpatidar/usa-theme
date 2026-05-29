@@ -16,7 +16,27 @@
   inset: 0;
   z-index: var(--frido-z-drawer, 130);
   pointer-events: none;
-  isolation: isolate;
+}
+
+.frido-cart-drawer.is-open::before,
+.frido-cart-drawer.is-closing::before {
+  z-index: 0;
+}
+
+.frido-cart-drawer__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.frido-cart-drawer.is-open .frido-cart-drawer__overlay,
+.frido-cart-drawer.is-closing .frido-cart-drawer__overlay {
+  opacity: 1 !important;
+  pointer-events: auto;
 }
 
 .frido-cart-drawer.is-open,
@@ -24,26 +44,14 @@
   pointer-events: auto;
 }
 
-.frido-cart-modal.is-open {
-  pointer-events: auto;
-}
-
-.frido-cart-modal.is-closing {
-  pointer-events: none;
-}
-
-.frido-cart-drawer__overlay {
-  z-index: 0;
-}
-
 .frido-cart-drawer__panel {
+  display: flex;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   z-index: 2;
   pointer-events: auto;
-  display: flex;
   flex-direction: column;
   width: min(100%, 42rem);
   max-width: 100%;
@@ -558,13 +566,30 @@
   justify-content: center;
   padding: 1.2rem;
   pointer-events: none;
-  isolation: isolate;
+}
+
+.frido-cart-modal.is-open {
+  pointer-events: auto;
+}
+
+.frido-cart-modal.is-closing {
+  pointer-events: none;
 }
 
 .frido-cart-modal__overlay {
   position: fixed;
   inset: 0;
   z-index: 0;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.frido-cart-modal.is-open .frido-cart-modal__overlay,
+.frido-cart-modal.is-closing .frido-cart-modal__overlay {
+  opacity: 1 !important;
+  pointer-events: auto;
 }
 
 .frido-cart-modal__dialog {
