@@ -71,7 +71,7 @@
 
 <div
   id="frido-size-chart-{{ section.id }}"
-  class="frido-size-chart color-{{ section.settings.color_scheme }} gradient"
+  class="frido-size-chart"
   data-frido-size-chart
   hidden
   aria-hidden="true"
@@ -79,7 +79,7 @@
   <div class="frido-size-chart__overlay" data-frido-size-chart-close tabindex="-1"></div>
 
   <div
-    class="frido-size-chart__panel"
+    class="frido-size-chart__panel color-{{ section.settings.color_scheme }} gradient"
     role="dialog"
     aria-modal="true"
     aria-labelledby="FridoSizeChartTitle-{{ section.id }}"

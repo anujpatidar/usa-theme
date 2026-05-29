@@ -6,6 +6,47 @@
   --frido-overlay-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/*
+ * Dawn (theme.liquid) sets background-color on .color-scheme-1, .color-scheme-2, etc.
+ * Do not use those classes on full-viewport overlay shells — only on panels/dialogs.
+ */
+.frido-cart-drawer,
+.frido-size-chart,
+.frido-cart-modal,
+.frido-account-drawer,
+.frido-search-panel {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.gradient {
+  background: rgb(var(--color-background));
+  background: var(--gradient-background);
+}
+
+.gradient:not(
+    .frido-cart-drawer,
+    .frido-size-chart,
+    .frido-cart-modal,
+    .frido-account-drawer,
+    .frido-search-panel,
+    .frido-cart-drawer__panel,
+    .frido-size-chart__panel,
+    .frido-cart-modal__dialog
+  ) {
+  background: rgb(var(--color-background));
+  background: var(--gradient-background);
+}
+
+.frido-cart-drawer__overlay,
+.frido-size-chart__overlay,
+.frido-cart-modal__overlay,
+.frido-account-drawer__overlay,
+.frido-search-panel__backdrop {
+  z-index: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --frido-overlay-duration: 0.01s;

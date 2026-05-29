@@ -7,7 +7,7 @@
 
 <div
   id="FridoCartDrawer"
-  class="frido-cart-drawer color-{{ section.settings.color_scheme }} gradient"
+  class="frido-cart-drawer"
   data-frido-cart-drawer
   data-money-format="{{ shop.money_format | escape }}"
   data-label-edit="{{ section.settings.modal_submit_label | escape }}"
@@ -18,7 +18,7 @@
   <div class="frido-cart-drawer__overlay" data-frido-cart-close tabindex="-1"></div>
 
   <aside
-    class="frido-cart-drawer__panel"
+    class="frido-cart-drawer__panel color-{{ section.settings.color_scheme }} gradient"
     role="dialog"
     aria-modal="true"
     aria-labelledby="FridoCartDrawerTitle"

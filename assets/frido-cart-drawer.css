@@ -27,6 +27,7 @@
 .frido-cart-drawer__overlay {
   position: fixed;
   inset: 0;
+  z-index: 0;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   transition: opacity 0.25s ease;
@@ -475,6 +476,7 @@
 .frido-cart-modal__overlay {
   position: fixed;
   inset: 0;
+  z-index: 0;
   background: rgba(0, 0, 0, 0.55);
 }
 

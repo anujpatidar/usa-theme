@@ -196,6 +196,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  padding: 16px;
 }
 
 .frido-pdp__head-desktop {
@@ -203,7 +204,7 @@
 }
 
 .frido-pdp__buy-col {
-  padding: 24px;
+
   min-width: 0;
   max-width: 100%;
 }
@@ -1937,10 +1938,15 @@
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: start;
+    padding: 0;
   }
 
   .frido-pdp__badges-mobile {
     display: none;
+  }
+
+  .frido-pdp__buy-col {
+    padding: 24px;
   }
 
   .frido-pdp__badges-mobile .frido-pdp__benefit,
