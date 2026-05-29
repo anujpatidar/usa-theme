@@ -663,15 +663,15 @@
 
 .frido-cart-modal__title {
   margin: 0 0 0.35rem;
-  font-size: clamp(1.45rem, 3.8vw, 1.85rem);
-  font-weight: 700;
+  font-size: 22px;
+  font-weight: 500;
   line-height: 1.2;
-  color: rgb(var(--color-button));
+  color: #000;
 }
 
 .frido-cart-modal__subtitle {
   margin: 0 0 0.85rem;
-  font-size: 0.95rem;
+  font-size: 12px;
   line-height: 1.45;
   color: rgba(var(--color-foreground), 0.62);
 }
