@@ -2933,11 +2933,7 @@ details-disclosure>details {
   word-break: break-word;
 }
 
-.gradient {
-  background: rgba(0, 0, 0, 0.05);
-  background: var(--gradient-background);
-  background-attachment: fixed;
-}
+
 
 @media screen and (forced-colors: active) {
   .icon {
