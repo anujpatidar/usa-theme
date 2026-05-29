@@ -6,6 +6,7 @@
   var modalEl;
   var moneyFormat;
   var upsells = [];
+  var upsellLimit = 3;
   var cartState = null;
   var pendingKey = null;
   var productCache = Object.create(null);
@@ -255,6 +256,47 @@
     );
   }
 
+  function formatReviewCount(count) {
+    if (count === '' || count == null) return '';
+    var n = Number(count);
+    if (!n || isNaN(n)) return String(count).indexOf('(') === 0 ? String(count) : '(' + count + ')';
+    return '(' + n.toLocaleString() + ')';
+  }
+
+  function renderUpsellStars(rating) {
+    var r = Math.max(0, Math.min(5, Math.round(Number(rating) || 5)));
+    var stars = '';
+    for (var i = 1; i <= 5; i++) {
+      stars +=
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="' +
+        (i <= r ? 'currentColor' : 'none') +
+        '" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.6-5 4.5 1.5 6.5L12 17.8 5.9 20.2l1.5-6.5-5-4.5 6.6-.6L12 2.5z"/></svg>';
+    }
+    return stars;
+  }
+
+  function getCartProductIds(cart) {
+    if (!cart || !cart.items) return [];
+    return cart.items.map(function (item) {
+      return Number(item.product_id);
+    });
+  }
+
+  function getCartHandles(cart) {
+    if (!cart || !cart.items) return [];
+    return cart.items.map(itemHandle).filter(Boolean);
+  }
+
+  function filterUpsellsForCart(cart) {
+    var handles = getCartHandles(cart);
+    var productIds = getCartProductIds(cart);
+    return upsells.filter(function (u) {
+      if (u.handle && handles.indexOf(u.handle) !== -1) return false;
+      if (u.product_id && productIds.indexOf(Number(u.product_id)) !== -1) return false;
+      return true;
+    });
+  }
+
   function renderUpsellCard(u, product) {
     var v = product.variants.find(function (x) {
       return x.available;
@@ -263,36 +305,44 @@
     var compare = v.compare_at_price || 0;
     var price = v.price;
     var pct = compare > price ? Math.round(((compare - price) * 100) / compare) : 0;
-    var img = u.image || (v.featured_image && v.featured_image.src) || (product.featured_image && product.featured_image) || '';
+    var img = u.image || (v.featured_image && v.featured_image.src) || product.featured_image || '';
+    var rating = Number(u.rating);
+    if (isNaN(rating)) rating = 5;
+    var ratingLabel = rating % 1 === 0 ? String(rating) : rating.toFixed(1);
+    var reviewLabel = formatReviewCount(u.review_count);
 
     return (
-      '<div class="frido-cart-upsell" data-frido-cart-upsell="' +
+      '<article class="frido-cart-upsell" data-frido-cart-upsell="' +
       escapeHtml(product.handle) +
       '">' +
       '<div class="frido-cart-upsell__media">' +
-      (img ? '<img src="' + escapeHtml(img) + '" alt="" width="64" height="64" loading="lazy">' : '') +
+      (img ? '<img src="' + escapeHtml(img) + '" alt="" width="80" height="80" loading="lazy">' : '') +
       '</div>' +
       '<div class="frido-cart-upsell__body">' +
       '<p class="frido-cart-upsell__title">' +
       escapeHtml(u.title || product.title) +
       '</p>' +
-      '<p class="frido-cart-upsell__rating">★ ' +
-      (u.rating || 5) +
-      ' <span>' +
-      escapeHtml(u.review_count || '') +
-      '</span></p>' +
-      '<p class="frido-cart-upsell__price">' +
-      '<strong>' +
+      '<div class="frido-cart-upsell__rating">' +
+      '<span class="frido-cart-upsell__stars" aria-hidden="true">' +
+      renderUpsellStars(rating) +
+      '</span>' +
+      '<span class="frido-cart-upsell__rating-value">' +
+      escapeHtml(ratingLabel) +
+      '</span>' +
+      (reviewLabel ? '<span class="frido-cart-upsell__review-count">' + escapeHtml(reviewLabel) + '</span>' : '') +
+      '</div>' +
+      '<div class="frido-cart-upsell__price-row">' +
+      '<span class="frido-cart-upsell__price-current">' +
       money(price) +
-      '</strong>' +
-      (compare > price ? ' <s>' + money(compare) + '</s>' : '') +
-      (pct > 0 ? ' <span class="frido-cart-upsell__save">Save ' + pct + '%</span>' : '') +
-      '</p></div>' +
+      '</span>' +
+      (compare > price ? '<span class="frido-cart-upsell__price-compare">' + money(compare) + '</span>' : '') +
+      (pct > 0 ? '<span class="frido-cart-upsell__save">' + labels.save + ' ' + pct + '%</span>' : '') +
+      '</div></div>' +
       '<button type="button" class="frido-cart-upsell__add" data-frido-cart-upsell-add="' +
       escapeHtml(product.handle) +
       '">' +
       labels.add +
-      '</button></div>'
+      '</button></article>'
     );
   }
 
@@ -478,7 +528,7 @@
       }
     }
 
-    if (!opts.skipUpsells) renderUpsells();
+    renderUpsells(cart);
     emitCartUpdated(cart);
   }
 
@@ -486,18 +536,33 @@
     applyCart(cart, Object.assign({ syncItems: false }, opts || {}));
   }
 
-  function renderUpsells() {
+  function renderUpsells(cart) {
     var list = qs('[data-frido-cart-upsell-list]', drawerEl);
-    if (!list || !upsells.length) return;
+    var wrap = qs('[data-frido-cart-upsell-wrap]', drawerEl);
+    if (!list || !upsells.length) {
+      if (wrap) wrap.hidden = true;
+      return;
+    }
+
+    cart = cart || cartState;
+    var visible = filterUpsellsForCart(cart).slice(0, upsellLimit);
+    if (!visible.length) {
+      list.innerHTML = '';
+      if (wrap) wrap.hidden = true;
+      return;
+    }
+
+    if (wrap) wrap.hidden = !cart || !cart.items || !cart.items.length;
 
     Promise.all(
-      upsells.map(function (u) {
+      visible.map(function (u) {
         return loadProduct(u.handle).then(function (p) {
           return { u: u, p: p };
         });
       })
     ).then(function (rows) {
-      list.innerHTML = rows
+      if (!list) return;
+      var html = rows
         .filter(function (r) {
           return r.p;
         })
@@ -505,6 +570,8 @@
           return renderUpsellCard(r.u, r.p);
         })
         .join('');
+      list.innerHTML = html;
+      if (wrap) wrap.hidden = !html || !cartState || !cartState.items || !cartState.items.length;
     });
   }
 
@@ -1011,12 +1078,15 @@
     labels.submitEdit = drawerEl.getAttribute('data-label-edit') || labels.submitEdit;
     labels.submitAdd = drawerEl.getAttribute('data-label-add') || labels.submitAdd;
 
-    var upsellJson = qs('[data-frido-cart-upsells]');
-    if (upsellJson) {
+    var upsellConfig = qs('[data-frido-cart-upsells-config]');
+    if (upsellConfig) {
       try {
-        upsells = JSON.parse(upsellJson.textContent);
+        var config = JSON.parse(upsellConfig.textContent);
+        upsells = (config && config.products) || [];
+        upsellLimit = (config && config.limit) || 3;
       } catch (e) {
         upsells = [];
+        upsellLimit = 3;
       }
     }
 
