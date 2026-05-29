@@ -70,8 +70,8 @@
   pointer-events: none;
   background: linear-gradient(to bottom,
       #fffdf301 0%,
-      #fffdf3 50%,
-      var(--frido-col-beige) 100%);
+      #fffdf384 50%,
+      #fffdf3 100%);
 }
 
 .frido-col-hero__desc.is-collapsed.is-open .frido-col-hero__richtext {
