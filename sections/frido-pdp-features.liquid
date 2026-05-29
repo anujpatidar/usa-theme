@@ -5,22 +5,27 @@
   if section.settings.product != blank
     assign pdp_product = section.settings.product
   endif
-  assign accordion_blocks = section.blocks | where: 'type', 'accordion'
 -%}
 
 {%- if pdp_product != blank -%}
-  <div
-    class="section-frido-pdp-features color-{{ section.settings.color_scheme }} gradient"
-    id="FridoPdpFeatures-{{ section.id }}"
-  >
-    <div class="frido-page-width">
-      {% render 'frido-pdp-features',
-        product: pdp_product,
-        section: section,
-        accordion_blocks: accordion_blocks
-      %}
+  {%- capture features_markup -%}
+    {% render 'frido-pdp-features', product: pdp_product, section: section %}
+  {%- endcapture -%}
+  {%- assign features_markup = features_markup | strip -%}
+  {%- if features_markup != blank -%}
+    <div
+      class="section-frido-pdp-features color-{{ section.settings.color_scheme }} gradient"
+      id="FridoPdpFeatures-{{ section.id }}"
+    >
+      <div class="frido-page-width">
+        {{ features_markup }}
+      </div>
     </div>
-  </div>
+  {%- elsif request.design_mode -%}
+    <div class="frido-page-width" style="padding: 1.5rem; text-align: center; opacity: 0.65; font-size: 0.9rem;">
+      <p>PDP features — assign <strong>custom.pdp_features</strong> on this product to show content.</p>
+    </div>
+  {%- endif -%}
 {%- elsif request.design_mode -%}
   <div class="frido-page-width" style="padding: 2rem 1.5rem; text-align: center; opacity: 0.7;">
     <p>Add this section on a product template, or choose a product below.</p>
@@ -41,18 +46,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Per product: metafield custom.pdp_features → PDP Features metaobject. Accordion blocks below are fallback when no metaobject is set."
-    },
-    {
-      "type": "text",
-      "id": "features_heading",
-      "label": "Features heading (blocks fallback only)",
-      "default": "Why HF Stride Works?"
-    },
-    {
-      "type": "image_picker",
-      "id": "features_image",
-      "label": "Features image (blocks fallback only)"
+      "content": "Content only from product metafield custom.pdp_features (PDP Features metaobject). Section is hidden when that metafield is empty."
     },
     {
       "type": "color",
@@ -67,43 +61,6 @@
       "default": "scheme-1"
     }
   ],
-  "blocks": [
-    {
-      "type": "accordion",
-      "name": "Feature accordion",
-      "settings": [
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "options": [
-            { "value": "feather", "label": "Feather" },
-            { "value": "foot", "label": "Foot" },
-            { "value": "blood", "label": "Blood" },
-            { "value": "toe", "label": "Toe box" },
-            { "value": "gear", "label": "Gear" }
-          ],
-          "default": "feather"
-        },
-        { "type": "text", "id": "title", "label": "Title", "default": "Breathable Material" },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content",
-          "default": "<p>Lightweight mesh keeps feet cool and comfortable all day.</p>"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "PDP features",
-      "blocks": [
-        { "type": "accordion" },
-        { "type": "accordion" },
-        { "type": "accordion" }
-      ]
-    }
-  ]
+  "presets": [{ "name": "PDP features" }]
 }
 {% endschema %}
