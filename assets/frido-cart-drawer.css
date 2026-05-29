@@ -725,8 +725,8 @@
 }
 
 .frido-cart-modal__picker-title {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
   color: rgb(var(--color-foreground));
 }
 
@@ -781,7 +781,7 @@
 .frido-cart-modal__field-label {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.78rem;
+  font-size: 12px;
   font-weight: 600;
   color: rgba(var(--color-foreground), 0.72);
 }
@@ -810,7 +810,7 @@
   border: 1px solid rgba(var(--color-foreground), 0.18);
   border-radius: 8px;
   font-family: inherit;
-  font-size: 0.82rem;
+  font-size: 12px;
   color: rgb(var(--color-foreground));
   appearance: none;
   cursor: pointer;
@@ -839,8 +839,8 @@
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
   font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: filter 0.15s ease;
