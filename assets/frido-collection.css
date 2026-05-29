@@ -174,7 +174,7 @@
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   line-height: 1.1;
   color: #fff;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.45));
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
 }
 
 .frido-col-hero__overlay em {
