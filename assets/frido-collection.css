@@ -17,7 +17,8 @@
   flex-direction: column;
   gap: 2rem;
 }
-.frido-col-hero__content{
+
+.frido-col-hero__content {
   padding: 48px 0;
 }
 
@@ -206,9 +207,9 @@
 
   .frido-col-hero__media {
     border-radius: 0;
-    height: 28rem;
-    min-height: 28rem;
-    max-height: 28rem;
+    height: 476px;
+    min-height: 476px;
+    max-height: 476px;
   }
 
   .frido-col-hero__img {
