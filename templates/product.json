@@ -63,7 +63,13 @@
           }
         }
       },
-      "block_order": ["b1", "b2", "b3", "bundle_1", "bundle_2"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "bundle_1",
+        "bundle_2"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "social_proof_lead": "Purchased more than",
@@ -105,58 +111,6 @@
       "type": "frido-pdp-story",
       "settings": {
         "product": "",
-        "color_scheme": "scheme-1"
-      }
-    },
-    "frido_pdp_comfort": {
-      "type": "frido-pdp-comfort",
-      "blocks": {
-        "comfort_1": {
-          "type": "comfort_feature",
-          "settings": {
-            "image": "shopify://shop_images/H_svg_1.svg",
-            "title": "Wide Toe Box",
-            "stat_percent": 94,
-            "stat_label": "FREER",
-            "description": "Our extra-wide toe box lets your toes spread naturally, reducing pressure and boosting stability for all-day comfort."
-          }
-        },
-        "comfort_2": {
-          "type": "comfort_feature",
-          "settings": {
-            "image": "shopify://shop_images/h_svg_5.svg",
-            "title": "Natural Alignment",
-            "stat_percent": 98,
-            "stat_label": "ALIGNED",
-            "description": "Built to mimic barefoot movement, easing joint strain and helping your body stay aligned with every step."
-          }
-        },
-        "comfort_3": {
-          "type": "comfort_feature",
-          "settings": {
-            "image": "shopify://shop_images/h_svg_6.svg",
-            "title": "Thin Soles",
-            "stat_percent": 81,
-            "stat_label": "LIGHTER",
-            "description": "Flexible, minimalist soles improve balance, stability, and natural foot strength by keeping you connected to the ground."
-          }
-        },
-        "comfort_4": {
-          "type": "comfort_feature",
-          "settings": {
-            "image": "shopify://shop_images/s2.svg",
-            "title": "Zero-Drop Base",
-            "stat_percent": 89,
-            "stat_label": "BALANCED",
-            "description": "A flat, zero-drop platform aligns your feet, knees, and hips for smoother movement and long-lasting comfort."
-          }
-        }
-      },
-      "block_order": ["comfort_1", "comfort_2", "comfort_3", "comfort_4"],
-      "settings": {
-        "comfort_eyebrow": "TESTED & RECOMMENDED BY PODIATRISTS",
-        "comfort_heading_lead": "Engineered for All-Day",
-        "comfort_heading_highlight": "Pain-Free Comfort",
         "color_scheme": "scheme-1"
       }
     },
@@ -204,12 +158,74 @@
           }
         }
       },
-      "block_order": ["acc_1", "acc_2", "acc_3", "acc_4", "acc_5"],
+      "block_order": [
+        "acc_1",
+        "acc_2",
+        "acc_3",
+        "acc_4",
+        "acc_5"
+      ],
       "settings": {
         "product": "",
         "features_heading": "Why HF Stride Works?",
-        "features_image": "",
         "features_media_bg": "#d8dfd0",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "frido_pdp_comfort": {
+      "type": "frido-pdp-comfort",
+      "blocks": {
+        "comfort_1": {
+          "type": "comfort_feature",
+          "settings": {
+            "image": "shopify://shop_images/H_svg_1.svg",
+            "title": "Wide Toe Box",
+            "stat_percent": 94,
+            "stat_label": "FREER",
+            "description": "Our extra-wide toe box lets your toes spread naturally, reducing pressure and boosting stability for all-day comfort."
+          }
+        },
+        "comfort_2": {
+          "type": "comfort_feature",
+          "settings": {
+            "image": "shopify://shop_images/h_svg_5.svg",
+            "title": "Natural Alignment",
+            "stat_percent": 98,
+            "stat_label": "ALIGNED",
+            "description": "Built to mimic barefoot movement, easing joint strain and helping your body stay aligned with every step."
+          }
+        },
+        "comfort_3": {
+          "type": "comfort_feature",
+          "settings": {
+            "image": "shopify://shop_images/h_svg_6.svg",
+            "title": "Thin Soles",
+            "stat_percent": 81,
+            "stat_label": "LIGHTER",
+            "description": "Flexible, minimalist soles improve balance, stability, and natural foot strength by keeping you connected to the ground."
+          }
+        },
+        "comfort_4": {
+          "type": "comfort_feature",
+          "settings": {
+            "image": "shopify://shop_images/s2.svg",
+            "title": "Zero-Drop Base",
+            "stat_percent": 89,
+            "stat_label": "BALANCED",
+            "description": "A flat, zero-drop platform aligns your feet, knees, and hips for smoother movement and long-lasting comfort."
+          }
+        }
+      },
+      "block_order": [
+        "comfort_1",
+        "comfort_2",
+        "comfort_3",
+        "comfort_4"
+      ],
+      "settings": {
+        "comfort_eyebrow": "TESTED & RECOMMENDED BY PODIATRISTS",
+        "comfort_heading_lead": "Engineered for All-Day",
+        "comfort_heading_highlight": "Pain-Free Comfort",
         "color_scheme": "scheme-1"
       }
     },
@@ -238,8 +254,8 @@
   "order": [
     "frido_product",
     "frido_pdp_story",
-    "frido_pdp_comfort",
     "frido_pdp_features",
+    "frido_pdp_comfort",
     "frido_pdp_most_loved",
     "frido_pdp_you_may_like"
   ]
