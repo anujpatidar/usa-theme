@@ -3,7 +3,6 @@
   --frido-pdp-sale: #c0392b;
   --frido-pdp-sage: #e9ede1;
   --frido-pdp-pill: 999px;
-  padding-bottom: 4rem;
 }
 
 /* Sticky bar — HIKE-style quick buy */
@@ -864,7 +863,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--frido-pdp-sale);
 }
@@ -1097,9 +1096,6 @@
     grid-template-columns: 1fr;
   }
 
-  .frido-pdp-bundle-pair__body {
-    flex-direction: column;
-  }
 }
 
 /* ATC */
@@ -1432,8 +1428,7 @@
 .frido-pdp-story {
   width: 100%;
   max-width: 100%;
-  margin-top: 3.2rem;
-  padding: clamp(2.8rem, 5vw, 5.6rem) 0;
+  padding: 16px;
   background: rgb(var(--color-background));
   box-sizing: border-box;
 }
@@ -1449,7 +1444,7 @@
 
 .frido-pdp-story__heading {
   margin: 0 0 1.8rem;
-  font-size: 48px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -1869,7 +1864,7 @@
   }
 
   .frido-pdp-bundle__price {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .frido-pdp-bundle__compare,
@@ -2030,7 +2025,7 @@
 
   .frido-pdp-story__heading {
     margin-bottom: 2.4rem;
-    font-size: clamp(2.8rem, 2.6vw, 3.6rem);
+    font-size: 48px;
     line-height: 1.08;
   }
 
