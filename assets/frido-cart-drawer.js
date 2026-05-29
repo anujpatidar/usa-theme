@@ -21,6 +21,10 @@
     add: '+ ADD',
     submitEdit: 'Update Item',
     submitAdd: 'ADD TO CART',
+    styleHeading: 'Choose your style',
+    ratingLabel: 'Excellent',
+    viewDetails: 'View Full Details',
+    sizeGuide: 'See Size Guide',
   };
 
   function qs(sel, root) {
@@ -668,25 +672,46 @@
       });
   }
 
-  function findVariant(product, selected) {
-    return product.variants.find(function (v) {
-      return product.options.every(function (opt, i) {
-        return v['option' + (i + 1)] === selected[opt];
-      });
-    });
+  function stripHtml(html) {
+    if (!html) return '';
+    var el = document.createElement('div');
+    el.innerHTML = html;
+    return (el.textContent || el.innerText || '').trim();
   }
 
-  function optionUiType(name) {
-    var n = name.toLowerCase();
-    if (/colou?r/.test(n)) return 'color';
-    if (/size/.test(n)) return 'size';
-    return 'select';
+  function getProductMeta(handle) {
+    return (
+      upsells.find(function (u) {
+        return u.handle === handle;
+      }) || {}
+    );
   }
 
-  function buildModalOptions(product) {
+  function formatReviewSummary(count) {
+    if (count === '' || count == null) return '';
+    var n = Number(count);
+    if (!n || isNaN(n)) {
+      var raw = String(count).replace(/[()]/g, '');
+      return raw ? raw + '+ Reviews' : '';
+    }
+    return n.toLocaleString() + '+ Reviews';
+  }
+
+  function getModalLabels() {
+    if (!drawerEl) return labels;
+    return {
+      submitEdit: drawerEl.getAttribute('data-label-edit') || labels.submitEdit,
+      submitAdd: drawerEl.getAttribute('data-label-add') || labels.submitAdd,
+      styleHeading: drawerEl.getAttribute('data-label-style-heading') || labels.styleHeading,
+      ratingLabel: drawerEl.getAttribute('data-label-rating') || labels.ratingLabel,
+      viewDetails: drawerEl.getAttribute('data-label-details') || labels.viewDetails,
+      sizeGuide: drawerEl.getAttribute('data-label-size-guide') || labels.sizeGuide,
+    };
+  }
+
+  function buildModalSelects(product) {
     var html = '';
     product.options.forEach(function (optName, idx) {
-      var type = optionUiType(optName);
       var values = product.variants
         .map(function (v) {
           return v['option' + (idx + 1)];
@@ -695,87 +720,155 @@
           return a.indexOf(v) === i;
         });
 
-      if (type === 'color' || type === 'size') {
+      html +=
+        '<div class="frido-cart-modal__field">' +
+        '<label class="frido-cart-modal__field-label">' +
+        escapeHtml(optName) +
+        '</label>' +
+        '<div class="frido-cart-modal__select-wrap">' +
+        '<select class="frido-cart-modal__select" data-frido-modal-opt="' +
+        escapeHtml(optName) +
+        '" aria-label="' +
+        escapeHtml(optName) +
+        '">';
+      values.forEach(function (val) {
         html +=
-          '<div class="frido-cart-modal__option" data-option-type="' +
-          type +
-          '"><span class="frido-cart-modal__label">' +
-          escapeHtml(optName) +
-          '</span><div class="frido-cart-modal__pills">';
-        values.forEach(function (val) {
-          var active = modalState.selected[optName] === val ? ' is-active' : '';
-          html +=
-            '<button type="button" class="frido-cart-modal__pill' +
-            active +
-            '" data-frido-modal-opt="' +
-            escapeHtml(optName) +
-            '" data-value="' +
-            escapeHtml(val) +
-            '">' +
-            escapeHtml(val) +
-            '</button>';
-        });
-        html += '</div></div>';
-      } else {
-        html +=
-          '<div class="frido-cart-modal__option"><label class="frido-cart-modal__label">' +
-          escapeHtml(optName) +
-          '</label><select class="frido-cart-modal__select" data-frido-modal-opt="' +
-          escapeHtml(optName) +
-          '">';
-        values.forEach(function (val) {
-          html +=
-            '<option value="' +
-            escapeHtml(val) +
-            '"' +
-            (modalState.selected[optName] === val ? ' selected' : '') +
-            '>' +
-            escapeHtml(val) +
-            '</option>';
-        });
-        html += '</select></div>';
-      }
+          '<option value="' +
+          escapeHtml(val) +
+          '"' +
+          (modalState.selected[optName] === val ? ' selected' : '') +
+          '>' +
+          escapeHtml(val) +
+          '</option>';
+      });
+      html += '</select></div></div>';
     });
     return html;
   }
 
-  function updateModalProductHeader(product, variant) {
-    var wrap = qs('[data-frido-cart-modal-product]', modalEl);
-    if (!wrap) return;
+  function renderQuickModal(product, variant) {
+    var wrap = qs('[data-frido-cart-modal-content]', modalEl);
+    if (!wrap || !product || !variant) return;
+
+    var modalLabels = getModalLabels();
+    var meta = modalState.meta || {};
+    var compare = variant.compare_at_price || 0;
+    var price = variant.price;
+    var pct = compare > price ? Math.round(((compare - price) * 100) / compare) : 0;
+    var rating = Number(meta.rating);
+    if (isNaN(rating)) rating = 5;
+    var ratingLabel = rating % 1 === 0 ? String(rating) : rating.toFixed(1);
+    var reviewSummary = formatReviewSummary(meta.review_count);
+    var img =
+      (variant.featured_image && (variant.featured_image.src || variant.featured_image)) ||
+      product.featured_image ||
+      meta.image ||
+      '';
+    var subtitle = stripHtml(product.description);
+    if (subtitle.length > 140) subtitle = subtitle.slice(0, 140).trim() + '…';
+    var productUrl = '/products/' + encodeURIComponent(product.handle);
+    var submitLabel = modalState.mode === 'add' ? modalLabels.submitAdd : modalLabels.submitEdit;
+
+    wrap.innerHTML =
+      '<div class="frido-cart-modal__rating">' +
+      '<span class="frido-cart-modal__stars" aria-hidden="true">' +
+      renderUpsellStars(rating) +
+      '</span>' +
+      '<span class="frido-cart-modal__rating-text">' +
+      '<strong>' +
+      escapeHtml(modalLabels.ratingLabel) +
+      ' ' +
+      escapeHtml(ratingLabel) +
+      '</strong>' +
+      (reviewSummary ? '<span class="frido-cart-modal__rating-sep">|</span><span>' + escapeHtml(reviewSummary) + '</span>' : '') +
+      '</span></div>' +
+      '<h2 id="FridoCartModalTitle" class="frido-cart-modal__title">' +
+      escapeHtml(product.title) +
+      '</h2>' +
+      (subtitle ? '<p class="frido-cart-modal__subtitle">' + escapeHtml(subtitle) + '</p>' : '') +
+      '<div class="frido-cart-modal__price-row" data-frido-cart-modal-price>' +
+      '<span class="frido-cart-modal__price-current">' +
+      money(price) +
+      '</span>' +
+      (compare > price ? '<span class="frido-cart-modal__price-compare">' + money(compare) + '</span>' : '') +
+      (pct > 0 ? '<span class="frido-cart-modal__save">' + labels.save + ' ' + pct + '%</span>' : '') +
+      '</div>' +
+      '<div class="frido-cart-modal__picker">' +
+      '<div class="frido-cart-modal__picker-head">' +
+      '<span class="frido-cart-modal__picker-title">' +
+      escapeHtml(modalLabels.styleHeading) +
+      '</span>' +
+      '<a href="' +
+      escapeHtml(productUrl) +
+      '" class="frido-cart-modal__size-guide">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"/></svg>' +
+      escapeHtml(modalLabels.sizeGuide) +
+      '</a></div>' +
+      '<div class="frido-cart-modal__picker-body">' +
+      '<div class="frido-cart-modal__thumb" data-frido-cart-modal-thumb>' +
+      (img ? '<img src="' + escapeHtml(img) + '" alt="" width="72" height="72" loading="lazy">' : '') +
+      '</div>' +
+      '<div class="frido-cart-modal__selects" data-frido-cart-modal-options>' +
+      buildModalSelects(product) +
+      '</div></div></div>' +
+      '<div class="frido-cart-modal__actions">' +
+      '<button type="button" class="frido-cart-modal__submit" data-frido-cart-modal-submit' +
+      (!variant.available ? ' disabled' : '') +
+      '>' +
+      '<span>' +
+      escapeHtml(submitLabel) +
+      '</span>' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+      '</button>' +
+      '<a href="' +
+      escapeHtml(productUrl) +
+      '" class="frido-cart-modal__details">' +
+      escapeHtml(modalLabels.viewDetails) +
+      '</a></div>';
+  }
+
+  function patchQuickModalVariant(product, variant) {
+    if (!variant) return;
+    var compare = variant.compare_at_price || 0;
+    var price = variant.price;
+    var pct = compare > price ? Math.round(((compare - price) * 100) / compare) : 0;
     var img =
       (variant.featured_image && (variant.featured_image.src || variant.featured_image)) ||
       product.featured_image ||
       '';
-    var compare = variant.compare_at_price || 0;
-    wrap.hidden = false;
-    wrap.innerHTML =
-      '<div class="frido-cart-modal__product-inner">' +
-      (img ? '<img src="' + escapeHtml(img) + '" alt="" width="88" height="88" loading="lazy">' : '') +
-      '<div class="frido-cart-modal__product-copy">' +
-      '<p class="frido-cart-modal__product-title">' +
-      escapeHtml(product.title) +
-      '</p>' +
-      '<p class="frido-cart-modal__product-price">' +
-      '<span class="frido-cart-modal__product-price-current">' +
-      money(variant.price) +
-      '</span>' +
-      (compare > variant.price
-        ? '<span class="frido-cart-modal__product-price-compare">' + money(compare) + '</span>'
-        : '') +
-      '</p></div></div>';
+
+    var priceRow = qs('[data-frido-cart-modal-price]', modalEl);
+    if (priceRow) {
+      priceRow.innerHTML =
+        '<span class="frido-cart-modal__price-current">' +
+        money(price) +
+        '</span>' +
+        (compare > price ? '<span class="frido-cart-modal__price-compare">' + money(compare) + '</span>' : '') +
+        (pct > 0 ? '<span class="frido-cart-modal__save">' + labels.save + ' ' + pct + '%</span>' : '');
+    }
+
+    var thumb = qs('[data-frido-cart-modal-thumb]', modalEl);
+    if (thumb) {
+      thumb.innerHTML = img ? '<img src="' + escapeHtml(img) + '" alt="" width="72" height="72" loading="lazy">' : '';
+    }
+
+    var submit = qs('[data-frido-cart-modal-submit]', modalEl);
+    if (submit) {
+      submit.disabled = !variant.available;
+    }
+  }
+
+  function findVariant(product, selected) {
+    return product.variants.find(function (v) {
+      return product.options.every(function (opt, i) {
+        return v['option' + (i + 1)] === selected[opt];
+      });
+    });
   }
 
   function syncModalVariant() {
     var v = findVariant(modalState.product, modalState.selected);
-    var submit = qs('[data-frido-cart-modal-submit]', modalEl);
-    if (submit) {
-      submit.disabled = !v || !v.available;
-      submit.textContent =
-        modalState.mode === 'add'
-          ? drawerEl.getAttribute('data-label-add') || labels.submitAdd
-          : drawerEl.getAttribute('data-label-edit') || labels.submitEdit;
-    }
-    if (v) updateModalProductHeader(modalState.product, v);
+    if (v && modalState.product) patchQuickModalVariant(modalState.product, v);
     return v;
   }
 
@@ -828,6 +921,8 @@
     var handle = opts.handle || '';
     if (!handle) return;
 
+    modalState.meta = opts.meta || getProductMeta(handle);
+
     loadProduct(handle).then(function (product) {
       if (!product || !modalEl) return;
       modalState.product = product;
@@ -850,13 +945,14 @@
         modalState.selected[opt] = variant['option' + (i + 1)];
       });
 
-      var optionsEl = qs('[data-frido-cart-modal-options]', modalEl);
-      if (optionsEl) optionsEl.innerHTML = buildModalOptions(product);
-      syncModalVariant();
+      renderQuickModal(product, variant);
 
       if (opts.focus === 'size' || opts.focus === 'color') {
-        var focusBlock = qs('[data-option-type="' + opts.focus + '"]', modalEl);
-        if (focusBlock) focusBlock.scrollIntoView({ block: 'nearest' });
+        qsa('[data-frido-cart-modal-options] select', modalEl).forEach(function (sel) {
+          var name = (sel.getAttribute('data-frido-modal-opt') || '').toLowerCase();
+          if (opts.focus === 'color' && /colou?r/.test(name)) sel.focus();
+          if (opts.focus === 'size' && /size/.test(name)) sel.focus();
+        });
       }
 
       openModal();
@@ -872,10 +968,7 @@
         .then(handleCartError)
         .then(function () {
           closeModal();
-          return refresh();
-        })
-        .then(function () {
-          open();
+          return refresh({ skipUpsells: true });
         });
     }
 
@@ -1024,24 +1117,20 @@
       var upsellAdd = e.target.closest('[data-frido-cart-upsell-add]');
       if (upsellAdd) {
         e.preventDefault();
-        openVariantModal({ mode: 'add', handle: upsellAdd.getAttribute('data-frido-cart-upsell-add') });
+        var upsellHandle = upsellAdd.getAttribute('data-frido-cart-upsell-add');
+        openVariantModal({
+          mode: 'add',
+          handle: upsellHandle,
+          meta: getProductMeta(upsellHandle),
+        });
         return;
       }
 
-      var pill = e.target.closest('[data-frido-modal-opt]');
-      if (pill && pill.tagName === 'BUTTON' && modalEl && modalEl.contains(pill)) {
-        var opt = pill.getAttribute('data-frido-modal-opt');
-        modalState.selected[opt] = pill.getAttribute('data-value');
-        qsa('[data-frido-modal-opt="' + opt + '"]', modalEl).forEach(function (b) {
-          if (b.tagName === 'BUTTON') b.classList.toggle('is-active', b === pill);
-        });
-        syncModalVariant();
-      }
     });
 
     document.addEventListener('change', function (e) {
       var sel = e.target.closest('[data-frido-modal-opt]');
-      if (sel && sel.tagName === 'SELECT') {
+      if (sel && sel.tagName === 'SELECT' && modalEl && modalEl.contains(sel)) {
         modalState.selected[sel.getAttribute('data-frido-modal-opt')] = sel.value;
         syncModalVariant();
       }
@@ -1077,6 +1166,10 @@
     moneyFormat = drawerEl.getAttribute('data-money-format') || '${{amount}}';
     labels.submitEdit = drawerEl.getAttribute('data-label-edit') || labels.submitEdit;
     labels.submitAdd = drawerEl.getAttribute('data-label-add') || labels.submitAdd;
+    labels.styleHeading = drawerEl.getAttribute('data-label-style-heading') || labels.styleHeading;
+    labels.ratingLabel = drawerEl.getAttribute('data-label-rating') || labels.ratingLabel;
+    labels.viewDetails = drawerEl.getAttribute('data-label-details') || labels.viewDetails;
+    labels.sizeGuide = drawerEl.getAttribute('data-label-size-guide') || labels.sizeGuide;
 
     var upsellConfig = qs('[data-frido-cart-upsells-config]');
     if (upsellConfig) {

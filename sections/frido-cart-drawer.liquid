@@ -21,6 +21,10 @@
   data-money-format="{{ shop.money_format | escape }}"
   data-label-edit="{{ section.settings.modal_submit_label | escape }}"
   data-label-add="{{ section.settings.modal_submit_add_label | escape }}"
+  data-label-style-heading="{{ section.settings.modal_style_heading | default: 'Choose your style' | escape }}"
+  data-label-rating="{{ section.settings.modal_rating_label | default: 'Excellent' | escape }}"
+  data-label-details="{{ section.settings.modal_details_label | default: 'View Full Details' | escape }}"
+  data-label-size-guide="{{ section.settings.modal_size_guide_label | default: 'See Size Guide' | escape }}"
   hidden
   aria-hidden="true"
 >
@@ -111,20 +115,17 @@
 
 <div id="FridoCartVariantModal" class="frido-cart-modal" data-frido-cart-modal hidden aria-hidden="true">
   <div class="frido-cart-modal__overlay" data-frido-cart-modal-close></div>
-  <div class="frido-cart-modal__dialog color-{{ section.settings.color_scheme }} gradient" role="dialog" aria-modal="true" tabindex="-1">
+  <div
+    class="frido-cart-modal__dialog frido-cart-modal__dialog--quick color-{{ section.settings.color_scheme }} gradient"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="FridoCartModalTitle"
+    tabindex="-1"
+  >
     <button type="button" class="frido-cart-modal__close" data-frido-cart-modal-close aria-label="{{ 'accessibility.close' | t }}">
       <span aria-hidden="true">&times;</span>
     </button>
-    <div class="frido-cart-modal__product" data-frido-cart-modal-product hidden></div>
-    <div class="frido-cart-modal__body" data-frido-cart-modal-options></div>
-    <div class="frido-cart-modal__actions">
-      <button type="button" class="frido-cart-modal__submit" data-frido-cart-modal-submit>
-        {{ section.settings.modal_submit_label | default: 'Update Item' | escape }}
-      </button>
-      <button type="button" class="frido-cart-modal__cancel" data-frido-cart-modal-close>
-        {{ section.settings.modal_cancel_label | default: 'Cancel' | escape }}
-      </button>
-    </div>
+    <div class="frido-cart-modal__content" data-frido-cart-modal-content></div>
   </div>
 </div>
 
@@ -259,14 +260,32 @@
     {
       "type": "text",
       "id": "modal_submit_add_label",
-      "label": "Variant modal — submit (new item)",
+      "label": "Quick add modal — add to cart button",
       "default": "ADD TO CART"
     },
     {
       "type": "text",
-      "id": "modal_cancel_label",
-      "label": "Variant modal — cancel",
-      "default": "Cancel"
+      "id": "modal_style_heading",
+      "label": "Quick add modal — style picker heading",
+      "default": "Choose your style"
+    },
+    {
+      "type": "text",
+      "id": "modal_rating_label",
+      "label": "Quick add modal — rating label",
+      "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "modal_details_label",
+      "label": "Quick add modal — view details link",
+      "default": "View Full Details"
+    },
+    {
+      "type": "text",
+      "id": "modal_size_guide_label",
+      "label": "Quick add modal — size guide link",
+      "default": "See Size Guide"
     }
   ],
   "presets": [{ "name": "Frido cart drawer" }]
