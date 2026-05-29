@@ -49,6 +49,22 @@
       .replace(/"/g, '&quot;');
   }
 
+  function getOptionName(opt) {
+    if (opt == null) return '';
+    if (typeof opt === 'string') return opt;
+    if (typeof opt === 'object' && opt.name != null) return String(opt.name);
+    return String(opt);
+  }
+
+  function normalizeProduct(product) {
+    if (!product || !Array.isArray(product.options)) return product;
+    product.options = product.options.map(function (opt, i) {
+      var name = getOptionName(opt);
+      return name || 'Option ' + (i + 1);
+    });
+    return product;
+  }
+
   function fetchCart() {
     return fetch('/cart.js', { headers: { Accept: 'application/json' } }).then(function (r) {
       return r.json();
@@ -593,14 +609,14 @@
 
   function loadProduct(handle) {
     if (!handle) return Promise.resolve(null);
-    if (productCache[handle]) return Promise.resolve(productCache[handle]);
+    if (productCache[handle]) return Promise.resolve(normalizeProduct(productCache[handle]));
     return fetch('/products/' + encodeURIComponent(handle) + '.js')
       .then(function (r) {
         return r.json();
       })
       .then(function (p) {
-        productCache[handle] = p;
-        return p;
+        productCache[handle] = normalizeProduct(p);
+        return productCache[handle];
       })
       .catch(function () {
         return null;
@@ -711,13 +727,14 @@
 
   function buildModalSelects(product) {
     var html = '';
-    product.options.forEach(function (optName, idx) {
+    product.options.forEach(function (opt, idx) {
+      var optName = getOptionName(opt);
       var values = product.variants
         .map(function (v) {
           return v['option' + (idx + 1)];
         })
         .filter(function (v, i, a) {
-          return a.indexOf(v) === i;
+          return v && a.indexOf(v) === i;
         });
 
       html +=
@@ -861,7 +878,7 @@
   function findVariant(product, selected) {
     return product.variants.find(function (v) {
       return product.options.every(function (opt, i) {
-        return v['option' + (i + 1)] === selected[opt];
+        return v['option' + (i + 1)] === selected[getOptionName(opt)];
       });
     });
   }
@@ -925,6 +942,7 @@
 
     loadProduct(handle).then(function (product) {
       if (!product || !modalEl) return;
+      product = normalizeProduct(product);
       modalState.product = product;
       modalState.selected = {};
 
@@ -942,7 +960,7 @@
       if (!variant) return;
 
       product.options.forEach(function (opt, i) {
-        modalState.selected[opt] = variant['option' + (i + 1)];
+        modalState.selected[getOptionName(opt)] = variant['option' + (i + 1)];
       });
 
       renderQuickModal(product, variant);
