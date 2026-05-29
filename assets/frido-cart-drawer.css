@@ -166,8 +166,10 @@
   position: relative;
   flex-shrink: 0;
   width: 100px;
+  height: 100px;
   background: #fff;
   border: 1px solid #00000012;
+  border-radius: 12px;
 }
 
 .frido-cart-item__media img {
@@ -227,10 +229,11 @@
 }
 
 .frido-cart-item__pill {
-  padding: 0.25rem 0.55rem;
+  padding: 4px 8px;
   border-radius: 4px;
   background: rgba(var(--color-foreground), 0.08);
   font-size: 12px;
+  line-height: 1;
 }
 
 .frido-cart-item__discount {
@@ -277,20 +280,19 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.15rem;
   text-align: right;
 }
 
 .frido-cart-item__compare {
   display: block;
-  font-size: 1.1rem;
+  font-size: 14px;
   line-height: 1.2;
   color: rgba(var(--color-foreground), 0.45);
   text-decoration: line-through;
 }
 
 .frido-cart-item__price {
-  font-size: 1.65rem;
+  font-size: 20px;
   font-weight: 700;
 }
 
