@@ -3015,14 +3015,14 @@ body.frido-menu-open .frido-header__menu-icon--close {
   gap: 1.6rem;
   margin-top: 3.2rem;
   padding: 2rem 0 2.4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid #7e7e7e;
   text-align: center;
 }
 
 .frido-footer__copyright {
   margin: 0;
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: #7e7e7e;
 }
 
 .frido-footer__payments {
