@@ -3063,6 +3063,10 @@ body.frido-menu-open .frido-header__menu-icon--close {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+
+  .frido-find-size-btn {
+    padding: 16px 30px;
+  }
 }
 
 /* ---------- Find my Perfect Size (site-wide, uses parent color scheme) ---------- */
@@ -3074,7 +3078,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 30px;
+  padding: 10px 30px;
   border: 1px solid rgb(var(--color-button));
   border-radius: 10px;
   background: rgb(var(--color-background));

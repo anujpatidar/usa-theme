@@ -796,7 +796,7 @@
   content: '';
   display: inline-block;
   vertical-align: middle;
-  width: 2.5rem;
+  width: 0;
   height: 1px;
   background: #ccc;
   margin: 0 0.75rem;
@@ -2000,6 +2000,12 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(3rem, 4.5vw, 6.4rem);
     align-items: center;
+  }
+
+  .frido-pdp-bundles__heading::before,
+  .frido-pdp-bundles__heading::after {
+
+    width: 2.5rem;
   }
 
   .frido-pdp-story__text {
