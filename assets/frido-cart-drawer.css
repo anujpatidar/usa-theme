@@ -146,7 +146,7 @@
 .frido-cart-item {
   padding: 16px;
   margin-bottom: 1rem;
-  border: 1px solid #000, 0.12;
+  border: 1px solid #00000012;
   border-radius: 12px;
   background: #fff;
   transition: opacity 0.15s ease;
@@ -167,7 +167,7 @@
   flex-shrink: 0;
   width: 100px;
   background: #fff;
-  border: 1px solid #000, 0.12;
+  border: 1px solid #00000012;
 }
 
 .frido-cart-item__media img {
@@ -203,8 +203,8 @@
 }
 
 .frido-cart-item__title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   line-height: 1.35;
   color: rgb(var(--color-foreground));
   text-decoration: none;
@@ -223,14 +223,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-top: 0.5rem;
+  margin-top: 4px;
 }
 
 .frido-cart-item__pill {
   padding: 0.25rem 0.55rem;
   border-radius: 4px;
   background: rgba(var(--color-foreground), 0.08);
-  font-size: 1.05rem;
+  font-size: 12px;
 }
 
 .frido-cart-item__discount {
@@ -244,7 +244,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 8px;
   gap: 1rem;
 }
 
@@ -260,7 +260,7 @@
   width: 3.2rem;
   height: 3.2rem;
   border: 0;
-  background: rgb(var(--color-background));
+  background: #fff;
   font-size: 1.4rem;
   cursor: pointer;
   color: rgb(var(--color-foreground));
@@ -270,16 +270,21 @@
   min-width: 2.4rem;
   text-align: center;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 .frido-cart-item__prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
   text-align: right;
 }
 
 .frido-cart-item__compare {
   display: block;
   font-size: 1.1rem;
+  line-height: 1.2;
   color: rgba(var(--color-foreground), 0.45);
   text-decoration: line-through;
 }

@@ -91,24 +91,32 @@
     if (hdr) hdr.hidden = n === 0;
   }
 
+  function lineDiscountAmount(item) {
+    return Math.max(0, (item.original_line_price || 0) - (item.final_line_price || 0));
+  }
+
+  function hasLineDiscount(item) {
+    return lineDiscountAmount(item) > 0;
+  }
+
   function lineDiscountText(item) {
+    if (!hasLineDiscount(item)) return '';
+
     var parts = [];
     (item.line_level_discount_allocations || []).forEach(function (d) {
       if (d.discount_application && d.discount_application.title) {
         parts.push(d.discount_application.title);
       }
     });
-    if (!parts.length) return '';
-    var amt = item.original_line_price - item.final_line_price;
-    if (amt > 0) {
-      return parts[0] + ' (-' + money(amt) + ')';
-    }
-    return parts.join(', ');
+
+    var amt = lineDiscountAmount(item);
+    var label = parts.length ? parts[0] : 'Discount';
+    return label + ' (-' + money(amt) + ')';
   }
 
   function savePct(item) {
-    if (!item.original_line_price || item.original_line_price <= item.final_line_price) return 0;
-    return Math.round(((item.original_line_price - item.final_line_price) * 100) / item.original_line_price);
+    if (!hasLineDiscount(item)) return 0;
+    return Math.round((lineDiscountAmount(item) * 100) / item.original_line_price);
   }
 
   function variantPills(title) {
@@ -121,13 +129,55 @@
       .join('');
   }
 
+  function itemHandle(item) {
+    var handle = (item.url || '').split('/products/')[1];
+    return handle ? handle.split('?')[0] : '';
+  }
+
+  function getCompareLinePrice(item) {
+    var finalLine = item.final_line_price;
+
+    if (item.compare_line_price && item.compare_line_price > finalLine) {
+      return item.compare_line_price;
+    }
+
+    var unitCompare = item.compare_at_price;
+    if (unitCompare && unitCompare * item.quantity > finalLine) {
+      return unitCompare * item.quantity;
+    }
+
+    var product = productCache[itemHandle(item)];
+    if (product && product.variants) {
+      var variant = product.variants.find(function (v) {
+        return v.id === item.variant_id;
+      });
+      if (variant && variant.compare_at_price && variant.compare_at_price * item.quantity > finalLine) {
+        return variant.compare_at_price * item.quantity;
+      }
+    }
+
+    if (item.original_line_price > finalLine) return item.original_line_price;
+    return 0;
+  }
+
+  function renderLinePrices(item) {
+    var compareLine = getCompareLinePrice(item);
+    return (
+      '<div class="frido-cart-item__prices">' +
+      (compareLine > item.final_line_price
+        ? '<span class="frido-cart-item__compare">' + money(compareLine) + '</span>'
+        : '') +
+      '<span class="frido-cart-item__price">' + money(item.final_line_price) + '</span>' +
+      '</div>'
+    );
+  }
+
   function renderLineItem(item) {
     var pct = savePct(item);
     var disc = lineDiscountText(item);
     var busy = pendingKey === item.key ? ' is-loading' : '';
     var img = item.image ? escapeHtml(item.image) : '';
-    var handle = (item.url || '').split('/products/')[1];
-    if (handle) handle = handle.split('?')[0];
+    var handle = itemHandle(item);
 
     return (
       '<article class="frido-cart-item' +
@@ -154,7 +204,7 @@
       '<button type="button" class="frido-cart-item__remove" data-frido-cart-remove="' +
       escapeHtml(item.key) +
       '" aria-label="Remove">' +
-      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>' +
       '</button></div>' +
       (item.variant_title && item.variant_title !== 'Default Title'
         ? '<div class="frido-cart-item__pills">' + variantPills(item.variant_title) + '</div>'
@@ -174,12 +224,8 @@
       escapeHtml(item.key) +
       '" data-delta="1" aria-label="Increase">+</button>' +
       '</div>' +
-      '<div class="frido-cart-item__prices">' +
-      (item.original_line_price > item.final_line_price
-        ? '<span class="frido-cart-item__compare">' + money(item.original_line_price) + '</span>'
-        : '') +
-      '<span class="frido-cart-item__price">' + money(item.final_line_price) + '</span>' +
-      '</div></div>' +
+      renderLinePrices(item) +
+      '</div>' +
       '<div class="frido-cart-item__edit">' +
       '<button type="button" data-frido-cart-edit="' +
       escapeHtml(item.key) +
@@ -263,6 +309,7 @@
     if (itemsWrap) {
       itemsWrap.hidden = false;
       itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+      enrichLineItemPrices(cart);
     }
     if (footer) footer.hidden = false;
     if (upsellWrap) upsellWrap.hidden = false;
@@ -276,9 +323,15 @@
 
     var discRow = qs('[data-frido-cart-discount-row]', drawerEl);
     var disc = qs('[data-frido-cart-discount]', drawerEl);
-    if (cart.total_discount > 0 && discRow && disc) {
+    var cartDiscount = cart.total_discount > 0
+      ? cart.total_discount
+      : cart.items.reduce(function (sum, item) {
+          return sum + lineDiscountAmount(item);
+        }, 0);
+
+    if (cartDiscount > 0 && discRow && disc) {
       discRow.hidden = false;
-      disc.textContent = '-' + money(cart.total_discount);
+      disc.textContent = '-' + money(cartDiscount);
     } else if (discRow) {
       discRow.hidden = true;
     }
@@ -308,6 +361,23 @@
           return renderUpsellCard(r.u, r.p);
         })
         .join('');
+    });
+  }
+
+  function enrichLineItemPrices(cart) {
+    var handles = cart.items
+      .map(itemHandle)
+      .filter(function (handle, index, list) {
+        return handle && list.indexOf(handle) === index;
+      });
+
+    if (!handles.length) return Promise.resolve();
+
+    return Promise.all(handles.map(loadProduct)).then(function () {
+      var itemsWrap = qs('[data-frido-cart-items]', drawerEl);
+      if (itemsWrap && cart.items.length) {
+        itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+      }
     });
   }
 
