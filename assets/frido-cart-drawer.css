@@ -312,7 +312,7 @@
   text-decoration: underline;
   text-underline-offset: 0.1em;
   cursor: pointer;
-  color: rgb(var(--color-foreground));
+  color: rgb(var(--color-foreground), 20%);
 }
 
 .frido-cart-drawer__upsell {
