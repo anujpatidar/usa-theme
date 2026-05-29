@@ -21,15 +21,16 @@
         {{ features_markup }}
       </div>
     </div>
-  {%- elsif request.design_mode -%}
-    <div class="frido-page-width" style="padding: 1.5rem; text-align: center; opacity: 0.65; font-size: 0.9rem;">
-      <p>PDP features — assign <strong>custom.pdp_features</strong> on this product to show content.</p>
-    </div>
+  {%- else -%}
+    <style>
+      #shopify-section-{{ section.id }} {
+        display: none !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    </style>
   {%- endif -%}
-{%- elsif request.design_mode -%}
-  <div class="frido-page-width" style="padding: 2rem 1.5rem; text-align: center; opacity: 0.7;">
-    <p>Add this section on a product template, or choose a product below.</p>
-  </div>
 {%- endif -%}
 
 {% schema %}
@@ -43,10 +44,6 @@
       "id": "product",
       "label": "Product",
       "info": "Leave blank on product pages to use the current product. Required on other templates."
-    },
-    {
-      "type": "paragraph",
-      "content": "Content only from product metafield custom.pdp_features (PDP Features metaobject). Section is hidden when that metafield is empty."
     },
     {
       "type": "color",
