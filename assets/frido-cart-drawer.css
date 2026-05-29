@@ -734,8 +734,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 500;
   color: rgba(var(--color-foreground), 0.62);
   text-decoration: none;
 }
