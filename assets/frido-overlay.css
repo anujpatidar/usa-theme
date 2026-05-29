@@ -64,7 +64,7 @@ body.gradient {
   background: var(--gradient-background);
 }
 
-/* Click targets above panels; visual dim is #frido-overlay-scrim */
+/* Click targets + dim inside each popup shell (global #frido-overlay-scrim is below drawers) */
 .frido-cart-drawer__overlay,
 .frido-size-chart__overlay,
 .frido-cart-modal__overlay,
@@ -73,9 +73,11 @@ body.gradient {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: transparent;
+  background: var(--frido-overlay-scrim);
+  opacity: 0;
   pointer-events: none;
   cursor: pointer;
+  transition: opacity var(--frido-overlay-duration) var(--frido-overlay-ease);
 }
 
 .frido-cart-drawer.is-open .frido-cart-drawer__overlay,
@@ -88,6 +90,7 @@ body.gradient {
 .frido-search-panel.is-closing .frido-search-panel__backdrop,
 .frido-cart-modal.is-open .frido-cart-modal__overlay,
 .frido-cart-modal.is-closing .frido-cart-modal__overlay {
+  opacity: 1;
   pointer-events: auto;
 }
 

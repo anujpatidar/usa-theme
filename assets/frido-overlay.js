@@ -52,13 +52,6 @@
   }
 
   function syncScrim() {
-    openEntries = openEntries.filter(function (entry) {
-      return (
-        entry.el &&
-        (entry.el.classList.contains('is-open') || entry.el.classList.contains('is-closing'))
-      );
-    });
-
     var scrim = ensureScrim();
     if (!openEntries.length) {
       scrim.classList.remove('is-visible');
@@ -78,6 +71,17 @@
       requestAnimationFrame(function () {
         scrim.classList.add('is-visible');
       });
+    });
+  }
+
+  function pruneStaleEntries() {
+    openEntries = openEntries.filter(function (entry) {
+      return (
+        entry.el &&
+        (entry.el.classList.contains('is-open') ||
+          entry.el.classList.contains('is-closing') ||
+          entry.el.getAttribute('aria-hidden') === 'false')
+      );
     });
   }
 
@@ -112,6 +116,7 @@
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         el.classList.add('is-open');
+        syncScrim();
         if (opts.onOpened) opts.onOpened(el);
       });
     });
@@ -127,6 +132,7 @@
       if (opts.setHidden !== false) el.setAttribute('hidden', '');
 
       untrackOpen(el);
+      pruneStaleEntries();
 
       if (opts.bodyClass && !shouldKeepBodyClass(opts.bodyClass, opts.keepBodyClassIf)) {
         document.body.classList.remove(opts.bodyClass);
