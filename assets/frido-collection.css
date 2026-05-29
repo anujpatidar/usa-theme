@@ -195,7 +195,7 @@
     display: grid;
     grid-template-columns: 1.5fr 2fr;
     gap: 3rem;
-    align-items: stretch;
+    align-items: start;
   }
 
   .frido-col-hero__features {
@@ -206,11 +206,14 @@
 
   .frido-col-hero__media {
     border-radius: 0;
+    height: 28rem;
     min-height: 28rem;
+    max-height: 28rem;
   }
 
   .frido-col-hero__img {
-    min-height: 28rem;
+    height: 100%;
+    min-height: 0;
   }
 }
 
