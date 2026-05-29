@@ -3022,7 +3022,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-footer__copyright {
   margin: 0;
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: #7e7e7e;
 }
 
 .frido-footer__payments {
