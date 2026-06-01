@@ -2,7 +2,7 @@
   assign banner_alt = section.settings.image.alt | default: section.settings.heading | escape
 -%}
 <div
-  class="frido-lifestyle{% if section.settings.image == blank %} frido-lifestyle--placeholder{% endif %}"
+  class="frido-lifestyle color-{{ section.settings.color_scheme }} gradient{% if section.settings.image != blank %} frido-lifestyle--has-image{% else %} frido-lifestyle--placeholder{% endif %}"
   role="region"
   aria-label="{{ section.settings.heading | default: 'Promotional banner' | escape }}"
 >
@@ -43,6 +43,12 @@
   "tag": "section",
   "class": "section-frido-lifestyle",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "image_picker",
       "id": "image",
