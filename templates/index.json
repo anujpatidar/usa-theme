@@ -73,6 +73,8 @@
         "color_scheme": "",
         "title": "Bestsellers",
         "view_all_label": "SHOP ALL",
+        "show_view_all": true,
+        "compact_layout": false,
         "collection": "bestsellers",
         "products_to_show": 4,
         "swipe_mobile": true
@@ -450,7 +452,7 @@
         "image": "shopify://shop_images/Shoe_Banner.png",
         "heading": "We Prioritize Healthier Foot Environment",
         "button_label": "SHOP BESTSELLERS",
-        "button_link": "shopify://collections/all"
+        "button_link": "shopify://collections/bestsellers"
       }
     },
     "frido_compare": {
