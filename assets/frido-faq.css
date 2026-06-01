@@ -1,0 +1,195 @@
+.frido-faq {
+  background: #fff;
+  padding: 4.8rem 0 5.6rem;
+}
+
+.frido-faq__inner {
+  max-width: 92rem;
+}
+
+.frido-faq__title {
+  margin: 0 0 3.2rem;
+  text-align: center;
+  font-size: clamp(2.8rem, 5vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #000;
+}
+
+.frido-faq__accordion {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.frido-faq__item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.frido-faq__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  padding: 1.8rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.frido-faq__summary::-webkit-details-marker {
+  display: none;
+}
+
+.frido-faq__summary-text {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  font-weight: 500;
+  line-height: 1.35;
+  color: #000;
+}
+
+.frido-faq__chevron {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform: rotate(45deg);
+  transition: transform 0.25s ease;
+  margin-top: -0.4rem;
+}
+
+.frido-faq__item[open] .frido-faq__chevron {
+  transform: rotate(-135deg);
+  margin-top: 0.2rem;
+}
+
+.frido-faq__panel-inner {
+  padding: 0 0 2.4rem;
+}
+
+.frido-faq__qa {
+  margin-bottom: 2rem;
+}
+
+.frido-faq__qa:last-child {
+  margin-bottom: 0;
+}
+
+.frido-faq__question {
+  margin: 0 0 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.frido-faq__answer {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.65;
+  color: #222;
+}
+
+.frido-faq__answer p {
+  margin: 0 0 1rem;
+}
+
+.frido-faq__answer p:last-child {
+  margin-bottom: 0;
+}
+
+.frido-faq__answer ul {
+  margin: 0 0 1rem;
+  padding-left: 1.6rem;
+}
+
+.frido-faq__answer li {
+  margin-bottom: 0.4rem;
+}
+
+.frido-faq__answer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.frido-faq__footer-note {
+  margin-top: 3.2rem;
+  font-size: 1.5rem;
+  line-height: 1.65;
+  color: #222;
+  text-align: center;
+}
+
+.frido-faq__footer-note p {
+  margin: 0;
+}
+
+/* FAQ page — bestsellers band below accordions */
+.frido-bestsellers--compact {
+  background: #f0f0f0;
+  padding: 4rem 0 4.8rem;
+}
+
+.frido-bestsellers--compact .frido-section-head {
+  margin-bottom: 2.4rem;
+}
+
+.frido-bestsellers--compact .frido-section-head h2 {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 700;
+  text-align: left;
+}
+
+.frido-bestsellers--compact .frido-pcard {
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(10, 37, 64, 0.08);
+}
+
+.frido-bestsellers--compact .frido-pcard__badge--sale {
+  background: #1a7f4b;
+  color: #fff;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 5px 10px;
+}
+
+.frido-bestsellers--compact .frido-pcard__img {
+  background: #f3f3f3;
+}
+
+.frido-bestsellers--compact .frido-pcard__img img {
+  mix-blend-mode: normal;
+}
+
+.frido-bestsellers--compact .frido-pcard__title {
+  font-size: 15px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.frido-bestsellers--compact .frido-pcard__price {
+  color: #c0392b;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 749px) {
+  .frido-faq {
+    padding: 3.2rem 0 4rem;
+  }
+
+  .frido-faq__title {
+    margin-bottom: 2.4rem;
+  }
+
+  .frido-faq__summary {
+    padding: 1.5rem 0;
+  }
+
+  .frido-bestsellers--compact {
+    padding: 3.2rem 0 4rem;
+  }
+}

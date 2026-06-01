@@ -21,9 +21,9 @@
     "frido_bestsellers": {
       "type": "frido-bestsellers",
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
         "title": "Our best sellers",
-        "view_all_label": "SHOP ALL",
+        "view_all_label": "",
         "collection": "bestsellers",
         "products_to_show": 4,
         "swipe_mobile": true

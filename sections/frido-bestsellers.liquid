@@ -3,13 +3,13 @@
   assign limit = section.settings.products_to_show | default: 8
 -%}
 
-<div class="frido-collection frido-bestsellers color-{{ section.settings.color_scheme }} gradient">
+<div class="frido-collection frido-bestsellers{% if section.settings.compact_layout %} frido-bestsellers--compact{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="frido-page-width">
     <div class="frido-section-head frido-bestsellers__head">
       {% if section.settings.title != blank %}
         <h2>{{ section.settings.title | escape }}</h2>
       {% endif %}
-      {% if section.settings.view_all_label != blank %}
+      {% if section.settings.show_view_all and section.settings.view_all_label != blank %}
         <a
           href="{{ coll.url | default: routes.all_products_collection_url }}"
           class="frido-btn frido-btn--outline frido-bestsellers__shop-all frido-bestsellers__shop-all--desktop"
@@ -22,7 +22,7 @@
     <div class="frido-collection__grid frido-bestsellers__grid{% if section.settings.swipe_mobile %} frido-collection--peek{% endif %}">
       {% if coll != blank and coll.products_count > 0 %}
         {% for product in coll.products limit: limit %}
-          {% render 'frido-product-card', card_product: product %}
+          {% render 'frido-product-card', card_product: product, pdp_rec: section.settings.compact_layout %}
         {% endfor %}
       {% else %}
         {% for i in (1..4) %}
@@ -42,7 +42,7 @@
       {% endif %}
     </div>
 
-    {% if section.settings.view_all_label != blank %}
+    {% if section.settings.show_view_all and section.settings.view_all_label != blank %}
       <div class="frido-bestsellers__footer">
         <a
           href="{{ coll.url | default: routes.all_products_collection_url }}"
@@ -69,6 +69,18 @@
     },
     { "type": "text", "id": "title", "label": "Heading", "default": "Bestsellers" },
     { "type": "text", "id": "view_all_label", "label": "View all label", "default": "SHOP ALL" },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show view all link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_layout",
+      "label": "Compact layout (FAQ / recs style)",
+      "info": "Gray section background, green sale badges, red prices, hides view all when unchecked above."
+    },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 1, "default": 8, "label": "Products" },
     { "type": "checkbox", "id": "swipe_mobile", "label": "Horizontal scroll on mobile", "default": true }
