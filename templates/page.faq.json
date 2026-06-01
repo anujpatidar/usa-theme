@@ -24,6 +24,8 @@
         "color_scheme": "scheme-1",
         "title": "Our best sellers",
         "view_all_label": "",
+        "show_view_all": false,
+        "compact_layout": true,
         "collection": "bestsellers",
         "products_to_show": 4,
         "swipe_mobile": true
