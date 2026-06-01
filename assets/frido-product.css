@@ -549,12 +549,49 @@
   outline-offset: 2px;
 }
 
-.frido-pdp__selling-fast-dot {
+/* Selling-fast pulse (matches frido-pdp-trust__pulse) */
+.frido-pdp__selling-fast-pulse {
+  position: relative;
   flex-shrink: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.frido-pdp__selling-fast-dot {
+  position: relative;
+  z-index: 2;
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: var(--frido-pdp-urgency-dot, #e53935);
+}
+
+.frido-pdp__selling-fast-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(229, 57, 53, 0.28);
+  animation: frido-pdp-trust-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.frido-pdp__selling-fast-ring--delay {
+  animation-delay: 1.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frido-pdp__selling-fast-ring {
+    animation: none;
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  .frido-pdp__selling-fast-ring--delay {
+    display: none;
+  }
 }
 
 .frido-pdp__selling-fast-label {

@@ -5,7 +5,11 @@
 {%- if section.settings.selling_fast != blank -%}
   <details class="frido-pdp__selling-fast">
     <summary class="frido-pdp__selling-fast-trigger">
-      <span class="frido-pdp__selling-fast-dot" aria-hidden="true"></span>
+      <span class="frido-pdp__selling-fast-pulse" aria-hidden="true">
+        <span class="frido-pdp__selling-fast-ring"></span>
+        <span class="frido-pdp__selling-fast-ring frido-pdp__selling-fast-ring--delay"></span>
+        <span class="frido-pdp__selling-fast-dot"></span>
+      </span>
       <span class="frido-pdp__selling-fast-label">{{ section.settings.selling_fast | escape }}</span>
       <span class="frido-pdp__selling-fast-chevron" aria-hidden="true">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
