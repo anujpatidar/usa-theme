@@ -350,29 +350,33 @@
         "c1": {
           "type": "category",
           "settings": {
-            "title": "Barefoot Shoes",
-            "link": ""
+            "title": "Barefoot Shoes for Men",
+            "image": "shopify://shop_images/Frido_Cloud_comfort_Shoes_Lace-ups_-Navy_dbacedc5-6412-4033-a4e7-8868c30b49ea.png",
+            "link": "shopify://collections/all-barefoot-shoes-men"
           }
         },
         "c2": {
           "type": "category",
           "settings": {
-            "title": "Barefoot Boots",
+            "title": "Barefoot Shoes for Women",
+            "image": "shopify://shop_images/02_df225f92-ba55-497e-9fbe-cf672940e567.jpg",
             "link": ""
           }
         },
         "c3": {
           "type": "category",
           "settings": {
-            "title": "Barefoot Hiking Shoes",
-            "link": ""
+            "title": "Barefoot Waking Shoes",
+            "image": "shopify://shop_images/Frido_Active_Walking_Shoes_0cedefb3-d90d-4dcb-84fa-1da533b3eb89.png",
+            "link": "shopify://collections/barefoot-walking-shoes-women"
           }
         },
         "c4": {
           "type": "category",
           "settings": {
             "title": "Barefoot Shoes for Kids",
-            "link": ""
+            "image": "shopify://shop_images/Cloud_Comfort_Shoes_Pink.png",
+            "link": "shopify://products/frido-kids-cloud-comfort-shoes-lace-ups"
           }
         }
       },
