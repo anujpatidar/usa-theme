@@ -11,60 +11,15 @@
   "sections": {
     "main": {
       "type": "frido-size-care-guide",
-      "blocks": {
-        "care_step_mqdhrY": {
-          "type": "care_step",
-          "settings": {
-            "title": "1. Preparation",
-            "body": "<p>Remove any loose dirt or debris from the shoes. Take out the insoles and laces to clean them separately.</p>",
-            "image": "shopify://shop_images/3_4d3e3f10-15de-4587-84c5-02a0ecfd49f3.png"
-          }
-        },
-        "care_step_wffMn6": {
-          "type": "care_step",
-          "settings": {
-            "title": "2. Protective Measures",
-            "body": "<p>Place the shoes, insoles, and laces into a mesh laundry bag to prevent potential damage during the wash cycle</p>",
-            "image": "shopify://shop_images/4_b4d9265c-d0b9-4f0e-9658-24a01ce45ed6.png"
-          }
-        },
-        "care_step_N3eMa4": {
-          "type": "care_step",
-          "settings": {
-            "title": "3. Washing Instructions",
-            "body": "<p><strong>Cycle Selection</strong>: Use the delicate or gentle cycle on your washing machine. This setting minimizes agitation, reducing wear on the shoes.</p><p><strong>Water Temperature</strong>: Opt for cold water to prevent any potential shrinkage or color fading.</p><p><strong>Detergent</strong>: Use a mild, dye-free, and scent-free detergent to maintain the material's integrity and avoid skin irritation.</p>",
-            "image": "shopify://shop_images/USA_-_Arcads_image_asset_49.png"
-          }
-        },
-        "care_step_V7FzW4": {
-          "type": "care_step",
-          "settings": {
-            "title": "4. Drying Process",
-            "body": "<p><strong>Air Drying</strong>: After washing, reshape the shoes and allow them to air dry at room temperature. Avoid direct sunlight or heat sources, such as radiators, which can deform or damage the materials.</p><p><strong>Insole and Lace Care</strong>: Ensure insoles and laces are thoroughly dried before reinserting them into the shoes.</p>",
-            "image": "shopify://shop_images/USA_-_Arcads_image_asset_50.png"
-          }
-        }
-      },
-      "block_order": [
-        "care_step_mqdhrY",
-        "care_step_wffMn6",
-        "care_step_N3eMa4",
-        "care_step_V7FzW4"
-      ],
       "settings": {
         "color_scheme": "scheme-1",
         "title": "Frido Shoe Size Guide and Cleaning Tips",
         "intro": "When it comes to barefoot shoes, finding the right fit is essential—especially when ordering online. This shoe size guide will help you measure your feet and find the ideal Frido fit, along with tips for cleaning shoes to keep them in top shape.",
         "tab_size_label": "Size Guidelines",
         "tab_care_label": "Care Instructions",
-        "size_banner": "shopify://shop_images/1_e187bfef-0b72-4e52-99bd-c3a3401c1a8b.png",
-        "size_table_html": "",
-        "care_banner": "shopify://shop_images/2_e2052243-8cfb-46d6-8642-c1cf31119331.png",
         "support_email": "hello@frido.com"
       }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }
