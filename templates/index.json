@@ -73,7 +73,7 @@
         "color_scheme": "",
         "title": "Bestsellers",
         "view_all_label": "SHOP ALL",
-        "collection": "all",
+        "collection": "bestsellers",
         "products_to_show": 4,
         "swipe_mobile": true
       }
