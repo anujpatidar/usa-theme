@@ -17,9 +17,14 @@
         "intro": "When it comes to barefoot shoes, finding the right fit is essential—especially when ordering online. This shoe size guide will help you measure your feet and find the ideal Frido fit, along with tips for cleaning shoes to keep them in top shape.",
         "tab_size_label": "Size Guidelines",
         "tab_care_label": "Care Instructions",
+        "size_banner": "shopify://shop_images/1_e187bfef-0b72-4e52-99bd-c3a3401c1a8b.png",
+        "size_table_html": "",
+        "care_banner": "shopify://shop_images/2_e2052243-8cfb-46d6-8642-c1cf31119331.png",
         "support_email": "hello@frido.com"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
