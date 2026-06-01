@@ -446,6 +446,7 @@
     "frido_lifestyle": {
       "type": "frido-lifestyle-banner",
       "settings": {
+        "color_scheme": "scheme-1",
         "image": "shopify://shop_images/Shoe_Banner.png",
         "heading": "We Prioritize Healthier Foot Environment",
         "button_label": "SHOP BESTSELLERS",

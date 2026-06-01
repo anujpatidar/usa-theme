@@ -553,8 +553,8 @@
 .frido-pdp__selling-fast-pulse {
   position: relative;
   flex-shrink: 0;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
