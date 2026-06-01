@@ -1,0 +1,107 @@
+{% comment %}
+  Size Guidelines tab content — @param section {section}
+{% endcomment %}
+
+<div class="frido-scg__content">
+  <h2>How to Measure Your Feet for the Right Fit</h2>
+  <p>
+    A good fit ensures comfort and durability. Here's how to measure accurately with our
+    <strong>shoe size guide</strong>:
+  </p>
+  <ol class="frido-scg__steps">
+    <li>
+      <strong>Measure the Length:</strong> Place a piece of paper against a wall and stand with your heel
+      touching it. Mark the end of your longest toe and measure the distance from the wall.
+    </li>
+    <li>
+      <strong>Measure the Width:</strong> Find the widest part of your foot and measure across.
+    </li>
+    <li>
+      <strong>Measure Both Feet:</strong> It's common for one foot to be slightly larger, so go with the
+      larger size.
+    </li>
+    <li>
+      <strong>Check the Size Guide:</strong> Use our <strong>shoe size guide</strong> to match your
+      measurements with the closest fit. If between sizes, we suggest sizing up for extra comfort,
+      especially if you wear socks.
+    </li>
+  </ol>
+  <p>
+    Following these steps ensures the best fit and makes your barefoot shoe experience as comfortable as
+    possible.
+  </p>
+
+  <h2>Tips for Finding Your Perfect Fit</h2>
+  <ul class="frido-scg__bullets">
+    <li>
+      <strong>Consider Sock Thickness:</strong> If you typically wear thicker socks, you might want to size
+      up slightly to accommodate.
+    </li>
+    <li>
+      <strong>Foot Swelling:</strong> Feet can swell throughout the day, so it's best to measure your feet
+      in the afternoon or evening for a more accurate fit.
+    </li>
+    <li>
+      <strong>Check for Width:</strong> If you have wider feet, look for shoes that offer wide sizes or
+      additional room in the toe box.
+    </li>
+    <li>
+      If your shoe size falls between two sizes, we recommend choosing the larger size. For instance, if a
+      size 7 fits you well in some brands, but a size 7.5 fits better in others, we suggest ordering size
+      7.5.
+    </li>
+  </ul>
+
+  <h2>Click the Shoe Name to View the Size Chart</h2>
+  <div class="frido-scg__product-links">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product_link' -%}
+          <a
+            class="frido-scg__product-link"
+            href="{{ block.settings.url | default: block.settings.product.url }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.label | default: block.settings.product.title | escape }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for product in collections.all.products limit: 24 -%}
+        <a class="frido-scg__product-link" href="{{ product.url }}">
+          {{- product.title | escape }} Sizes
+        </a>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.size_table_html != blank -%}
+    <div class="frido-scg__table-wrap rte">
+      {{ section.settings.size_table_html }}
+    </div>
+  {%- else -%}
+    <div class="frido-scg__table-wrap">
+      <table class="frido-scg__table">
+        <thead>
+          <tr>
+            <th scope="col">US</th>
+            <th scope="col">EU</th>
+            <th scope="col">Centimeters</th>
+            <th scope="col">Inches</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>6</td><td>36</td><td>24.0</td><td>9.4</td></tr>
+          <tr><td>6.5</td><td>37</td><td>24.42</td><td>9.6</td></tr>
+          <tr><td>7</td><td>37.5</td><td>24.85</td><td>9.8</td></tr>
+          <tr><td>7.5</td><td>38</td><td>25.27</td><td>9.9</td></tr>
+          <tr><td>8</td><td>38.5</td><td>25.69</td><td>10.1</td></tr>
+          <tr><td>8.5</td><td>39</td><td>26.12</td><td>10.3</td></tr>
+          <tr><td>9</td><td>39.5</td><td>26.54</td><td>10.4</td></tr>
+          <tr><td>9.5</td><td>40</td><td>26.96</td><td>10.6</td></tr>
+          <tr><td>10</td><td>41</td><td>27.38</td><td>10.8</td></tr>
+        </tbody>
+      </table>
+    </div>
+  {%- endif -%}
+</div>

@@ -1,0 +1,246 @@
+{{ 'frido-size-care-guide.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-size-care-guide.js' | asset_url }}" defer="defer"></script>
+
+<section
+  class="frido-scg color-{{ section.settings.color_scheme }} gradient"
+  id="frido-scg-{{ section.id }}"
+  data-frido-scg
+>
+  <div class="frido-page-width frido-scg__inner">
+    <header class="frido-scg__hero">
+      <h1 class="frido-scg__title">{{ section.settings.title | escape }}</h1>
+      {%- if section.settings.intro != blank -%}
+        <p class="frido-scg__intro">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="frido-scg__tabs" role="tablist" aria-label="{{ section.settings.title | escape }}">
+      <button
+        type="button"
+        class="frido-scg__tab is-active"
+        role="tab"
+        id="frido-scg-tab-size-{{ section.id }}"
+        aria-controls="frido-scg-panel-size-{{ section.id }}"
+        aria-selected="true"
+        data-frido-scg-tab="size"
+      >
+        {{ section.settings.tab_size_label | default: 'Size Guidelines' | escape }}
+      </button>
+      <button
+        type="button"
+        class="frido-scg__tab"
+        role="tab"
+        id="frido-scg-tab-care-{{ section.id }}"
+        aria-controls="frido-scg-panel-care-{{ section.id }}"
+        aria-selected="false"
+        data-frido-scg-tab="care"
+      >
+        {{ section.settings.tab_care_label | default: 'Care Instructions' | escape }}
+      </button>
+    </div>
+
+    <div
+      class="frido-scg__panel is-active"
+      role="tabpanel"
+      id="frido-scg-panel-size-{{ section.id }}"
+      aria-labelledby="frido-scg-tab-size-{{ section.id }}"
+      data-frido-scg-panel="size"
+    >
+      <h2 class="frido-scg__panel-title">
+        {{ section.settings.tab_size_label | default: 'Size Guidelines' | escape }}
+      </h2>
+
+      {%- if section.settings.size_banner != blank or section.settings.size_banner_mobile != blank -%}
+        <div class="frido-scg__banner">
+          {%- assign size_banner = section.settings.size_banner | default: section.settings.size_banner_mobile -%}
+          {%- assign size_banner_m = section.settings.size_banner_mobile | default: section.settings.size_banner -%}
+          <picture>
+            {%- if section.settings.size_banner_mobile != blank -%}
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ size_banner_m | image_url: width: 1100 }}"
+              >
+            {%- endif -%}
+            {{
+              size_banner
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-scg__banner--desktop',
+                widths: '750,1100,1400,1600',
+                sizes: '100vw',
+                alt: ''
+            }}
+          </picture>
+          {%- if section.settings.size_banner_mobile != blank -%}
+            {{
+              size_banner_m
+              | image_url: width: 1100
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-scg__banner--mobile',
+                widths: '750,1100',
+                sizes: '100vw',
+                alt: ''
+            }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {% render 'frido-scg-size-panel', section: section %}
+    </div>
+
+    <div
+      class="frido-scg__panel"
+      role="tabpanel"
+      id="frido-scg-panel-care-{{ section.id }}"
+      aria-labelledby="frido-scg-tab-care-{{ section.id }}"
+      data-frido-scg-panel="care"
+      hidden
+    >
+      <h2 class="frido-scg__panel-title">
+        {{ section.settings.tab_care_label | default: 'Care Instructions' | escape }}
+      </h2>
+
+      {%- if section.settings.care_banner != blank or section.settings.care_banner_mobile != blank -%}
+        <div class="frido-scg__banner">
+          {%- assign care_banner = section.settings.care_banner | default: section.settings.care_banner_mobile -%}
+          {%- assign care_banner_m = section.settings.care_banner_mobile | default: section.settings.care_banner -%}
+          <picture>
+            {%- if section.settings.care_banner_mobile != blank -%}
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ care_banner_m | image_url: width: 1100 }}"
+              >
+            {%- endif -%}
+            {{
+              care_banner
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-scg__banner--desktop',
+                widths: '750,1100,1400,1600',
+                sizes: '100vw',
+                alt: ''
+            }}
+          </picture>
+          {%- if section.settings.care_banner_mobile != blank -%}
+            {{
+              care_banner_m
+              | image_url: width: 1100
+              | image_tag:
+                loading: 'lazy',
+                class: 'frido-scg__banner--mobile',
+                widths: '750,1100',
+                sizes: '100vw',
+                alt: ''
+            }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {% render 'frido-scg-care-panel', section: section %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Frido — size & care guide",
+  "tag": "section",
+  "class": "section-frido-scg",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title",
+      "default": "Frido Shoe Size Guide and Cleaning Tips"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "When it comes to barefoot shoes, finding the right fit is essential—especially when ordering online. This shoe size guide will help you measure your feet and find the ideal Frido fit, along with tips for cleaning shoes to keep them in top shape."
+    },
+    {
+      "type": "text",
+      "id": "tab_size_label",
+      "label": "Size tab label",
+      "default": "Size Guidelines"
+    },
+    {
+      "type": "text",
+      "id": "tab_care_label",
+      "label": "Care tab label",
+      "default": "Care Instructions"
+    },
+    {
+      "type": "header",
+      "content": "Size Guidelines banners"
+    },
+    {
+      "type": "image_picker",
+      "id": "size_banner",
+      "label": "Size hero image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "size_banner_mobile",
+      "label": "Size hero image (mobile)"
+    },
+    {
+      "type": "html",
+      "id": "size_table_html",
+      "label": "Size chart table HTML",
+      "info": "Optional. Leave blank to use the default sample table."
+    },
+    {
+      "type": "header",
+      "content": "Care Instructions banners"
+    },
+    {
+      "type": "image_picker",
+      "id": "care_banner",
+      "label": "Care hero image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "care_banner_mobile",
+      "label": "Care hero image (mobile)"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "hello@frido.com"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_link",
+      "name": "Product size chart link",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "label", "label": "Link label", "info": "Defaults to “{Product title} Sizes”" },
+        { "type": "url", "id": "url", "label": "Custom URL (optional)" }
+      ]
+    },
+    {
+      "type": "care_step",
+      "name": "Care step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Step title", "default": "1. Preparation" },
+        { "type": "richtext", "id": "body", "label": "Step content" },
+        { "type": "image_picker", "id": "image", "label": "Step image" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Frido — size & care guide" }]
+}
+{% endschema %}

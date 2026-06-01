@@ -1,0 +1,137 @@
+{% comment %}
+  Care Instructions tab content — @param section {section}
+{% endcomment %}
+
+<div class="frido-scg__content">
+  <h2>Basic Cleaning Routine for Barefoot Shoes</h2>
+
+  <div class="frido-scg__care-steps">
+    {%- liquid
+      assign care_steps = section.blocks | where: 'type', 'care_step'
+    -%}
+
+    {%- if care_steps.size > 0 -%}
+      {%- for block in care_steps -%}
+        <article class="frido-scg__care-step" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="frido-scg__care-step-media">
+              {{
+                block.settings.image
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '300,400,600',
+                  sizes: '(min-width: 750px) 22rem, 100vw',
+                  alt: block.settings.title
+              }}
+            </div>
+          {%- else -%}
+            <div class="frido-scg__care-step-media">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+          <div class="frido-scg__care-step-body">
+            <h3>{{ block.settings.title | escape }}</h3>
+            <div class="rte">{{ block.settings.body }}</div>
+          </div>
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      <article class="frido-scg__care-step">
+        <div class="frido-scg__care-step-media">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        <div class="frido-scg__care-step-body">
+          <h3>1. Preparation</h3>
+          <p>
+            Remove any loose dirt or debris from the shoes. Take out the insoles and laces to clean them
+            separately.
+          </p>
+        </div>
+      </article>
+      <article class="frido-scg__care-step">
+        <div class="frido-scg__care-step-media">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        <div class="frido-scg__care-step-body">
+          <h3>2. Protective Measures</h3>
+          <p>
+            Place the shoes, insoles, and laces into a mesh laundry bag to prevent potential damage during
+            the wash cycle.
+          </p>
+        </div>
+      </article>
+      <article class="frido-scg__care-step">
+        <div class="frido-scg__care-step-media">{{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        <div class="frido-scg__care-step-body">
+          <h3>3. Washing Instructions</h3>
+          <p><strong>Cycle Selection:</strong> Use the delicate or gentle cycle on your washing machine. This setting minimizes agitation, reducing wear on the shoes.</p>
+          <p><strong>Water Temperature:</strong> Opt for cold water to prevent any potential shrinkage or color fading.</p>
+          <p><strong>Detergent:</strong> Use a mild, dye-free, and scent-free detergent to maintain the material's integrity and avoid skin irritation.</p>
+        </div>
+      </article>
+      <article class="frido-scg__care-step">
+        <div class="frido-scg__care-step-media">{{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        <div class="frido-scg__care-step-body">
+          <h3>4. Drying Process</h3>
+          <p><strong>Air Drying:</strong> After washing, reshape the shoes and allow them to air dry at room temperature. Avoid direct sunlight or heat sources, such as radiators, which can deform or damage the materials.</p>
+          <p><strong>Insole and Lace Care:</strong> Ensure insoles and laces are thoroughly dried before reinserting them into the shoes.</p>
+        </div>
+      </article>
+    {%- endif -%}
+  </div>
+
+  <h2>Odor Prevention Tips for Barefoot Shoes</h2>
+  <p>
+    Since <strong>barefoot shoes</strong> are often made from natural materials, odor buildup can be a common
+    issue. Here's how to prevent it:
+  </p>
+  <ol class="frido-scg__steps">
+    <li>
+      <strong>Air Out Regularly</strong><br>
+      After wearing your barefoot shoes, remove the insoles and let both the shoes and insoles air out
+      completely. Placing them in a dry, ventilated area will prevent moisture buildup and keep odors in
+      check.
+    </li>
+    <li>
+      <strong>Use Baking Soda</strong><br>
+      Sprinkle a little baking soda inside your barefoot shoes after wearing them. Let it sit overnight to
+      absorb moisture and neutralize any odors, then shake it out in the morning.
+    </li>
+    <li>
+      <strong>Essential Oils for Freshness</strong><br>
+      For a pleasant scent and natural antibacterial properties, add a drop of tea tree or lavender oil to a
+      cotton ball and place it inside your shoes overnight. It'll keep your barefoot shoes smelling fresh
+      and clean.
+    </li>
+  </ol>
+  <p>
+    By following these simple cleaning and odor prevention steps, you'll be able to keep your
+    <strong>barefoot shoes</strong> in great condition for longer!
+  </p>
+
+  <h2>What to Avoid When Cleaning Barefoot Shoes</h2>
+  <ol class="frido-scg__steps">
+    <li><strong>Hard Scrubbing:</strong> Excessive scrubbing can damage flexible materials.</li>
+    <li><strong>Direct Sunlight:</strong> Avoid sun exposure as it can weaken the materials.</li>
+    <li><strong>Harsh Detergents or Bleach:</strong> Stick to mild cleansers to prevent material damage.</li>
+    <li><strong>Long Soaks:</strong> Avoid soaking, as it may cause mold. Use an anti-mold spray if needed.</li>
+  </ol>
+
+  <h2>Keep Your Shoes Fresh for Every Adventure!</h2>
+  <p>
+    With this <strong>shoe size guide</strong> and simple tips for <strong>cleaning shoes</strong>, you'll
+    keep your barefoot shoes looking great and lasting longer on every journey.
+  </p>
+
+  <div class="frido-scg__help">
+    <h2>Additional Help</h2>
+    <p>
+      Need more assistance with finding the right size? Our customer service team is here to help you with
+      personalized advice.
+    </p>
+    <p>
+      <strong>📧</strong>
+      <a href="mailto:{{ section.settings.support_email | default: 'hello@frido.com' }}">
+        {{- section.settings.support_email | default: 'hello@frido.com' | escape -}}
+      </a>
+    </p>
+    <p>Feel free to reach out with any questions, and happy shopping!</p>
+  </div>
+</div>

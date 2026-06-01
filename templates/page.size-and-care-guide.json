@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "frido-size-care-guide",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "title": "Frido Shoe Size Guide and Cleaning Tips",
+        "intro": "When it comes to barefoot shoes, finding the right fit is essential—especially when ordering online. This shoe size guide will help you measure your feet and find the ideal Frido fit, along with tips for cleaning shoes to keep them in top shape.",
+        "tab_size_label": "Size Guidelines",
+        "tab_care_label": "Care Instructions",
+        "support_email": "hello@frido.com"
+      }
+    }
+  },
+  "order": ["main"]
+}
