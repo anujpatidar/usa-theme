@@ -1928,7 +1928,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
   .frido-split__prose {
     order: 2;
-    background: #7e7e7e;
+    background: #fff;
     border-radius: 12px;
     padding: 32px;
     display: flex;
