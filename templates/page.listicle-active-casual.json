@@ -1,0 +1,185 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.listicle",
+  "sections": {
+    "listicle": {
+      "type": "frido-listicle",
+      "blocks": {
+        "reason_1": {
+          "type": "reason",
+          "settings": {
+            "title": "1. They Were Ready to Wear From Day One",
+            "body": "<p>This sounds small, but breaking in new shoes used to mean a week of blisters. These Active Casual Sneakers? Comfortable from the first walk. No stiff leather. No rubbing at the heel.</p><p>The first time I wore them to work, I actually forgot they were new. Why don't more brands get this right?</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_b735c7b1-6580-45c0-81f6-0a39ef088090.jpg?v=1777534310",
+            "link_label": "See the sneakers I swear by",
+            "link_url": "shopify://products/frido-active-casual-sneakers-mens"
+          }
+        },
+        "reason_2": {
+          "type": "reason",
+          "settings": {
+            "title": "2. Comfortable All Day Without Foot Pain",
+            "body": "<p>Usually by noon my feet were screaming. I'd find excuses to sit down. With these, I'd look at the clock and realize I'd been on my feet for hours. <strong>No pain. No fatigue.</strong></p><p>The cushioned insole supports proper alignment, while the flexible design lets your feet move naturally. That reduces pressure on your knees, hips, and lower back.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_24097ef4-2a5c-44f0-99b3-f62734cd086d.jpg?v=1777534310",
+            "link_label": "See the exact shoe that ended my foot pain",
+            "link_url": "shopify://products/frido-active-casual-sneakers-mens"
+          }
+        },
+        "reason_3": {
+          "type": "reason",
+          "settings": {
+            "title": "3. My Feet Felt Steadier, Not Just More Comfortable",
+            "body": "<p>I used to feel wobbly on wet floors. Uneven sidewalks. That nervous half-second stepping off a curb. I'd grab handrails I didn't used to need.</p><p>These have a flexible, grippy sole that actually lets your feet feel the ground. Within a week I stopped reaching for the railing.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_0fbebb4f-4c1f-4763-82dc-35589b7e536c.jpg?v=1777534309",
+            "link_label": "See the grip pattern",
+            "link_url": "shopify://products/frido-active-casual-sneakers-mens"
+          }
+        },
+        "reason_4": {
+          "type": "reason",
+          "settings": {
+            "title": "4. My Bunions Finally Had Room",
+            "body": "<p>Tired of squeezing your feet into tight, narrow shoes? The wide toe box lets your toes spread naturally. No more pinching. No more throbbing by the end of the day.</p><p>First time in years my feet didn't feel squeezed. Bunions, hammer toes, wide feet — every pair of shoes used to be a negotiation. This one ends it.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05_1fd452c1-29ad-415c-aeed-ba92c9e6434b.jpg?v=1777534309"
+          }
+        },
+        "reason_5": {
+          "type": "reason",
+          "settings": {
+            "title": "5. I Stopped Counting Hours Until I Could Sit Down",
+            "body": "<p>For years my whole day was about feet. <em>How long until I can sit down. How far is the parking spot.</em></p><p>Then one Tuesday I looked at the clock. 4pm. I'd been on my feet since breakfast. <strong>I hadn't counted once.</strong> That's the whole test. These are the shoes that end the counting.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_15adb8d7-a3d7-49b5-80a7-af8d023b7025.jpg?v=1777534310"
+          }
+        },
+        "cta_1": {
+          "type": "cta",
+          "settings": {
+            "eyebrow": "BUY MORE, SAVE MORE",
+            "heading": "UP TO 23% OFF FOR A LIMITED TIME ONLY!",
+            "subtext": "I was skeptical too. But true to size, free shipping, and a 30-day money-back guarantee means there's nothing to lose.",
+            "button_label": "TRY THEM RISK-FREE",
+            "button_url": "shopify://products/frido-active-casual-sneakers-mens",
+            "urgency": "Sell-Out Risk: High",
+            "shipping_note": "FREE shipping",
+            "guarantee": "30 days to try them. If they're not right, send them back. No restocking fee, no hassle."
+          }
+        },
+        "reason_6": {
+          "type": "reason",
+          "settings": {
+            "title": "6. Arthritis Stiffness Finally Had A Shoe That Didn't Fight Back",
+            "body": "<p>My rheumatologist told me years ago: <strong>the stiffer the shoe, the harder your joints work</strong>. Every \"supportive\" shoe I'd bought was stiff as a board.</p><p>These are the opposite. The flexible sole lets your feet move through their natural range, which means your knees and hips don't compensate for what your feet can't do. Morning stiffness still exists. But I'm not adding to it with my shoes.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_a2cda0bc-537d-4e55-a8fb-e88fe3a742fe.jpg?v=1777534310"
+          }
+        },
+        "reason_7": {
+          "type": "reason",
+          "settings": {
+            "title": "7. Lighter Than Any Other Shoe I Owned",
+            "body": "<p>My old \"comfort\" shoes felt like bricks. By evening, my whole legs were tired. These are <strong>ultra-light</strong>. I didn't believe it until I wore them for a full day.</p><p>My legs actually had energy left by dinner. I walked the dog twice without thinking about it.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078"
+          }
+        },
+        "reason_8": {
+          "type": "reason",
+          "settings": {
+            "title": "8. My Feet Stayed Cool Without Me Noticing",
+            "body": "<p>Sweaty feet were my embarrassing secret. By midday, I'd be self-conscious. I'd kick my shoes off under my desk and hope nobody walked by.</p><p>The breathable upper keeps your feet cool and dry. No more damp, uncomfortable feet by lunch.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-08_5c0cdcfb-1b91-4e35-bb5c-71b995c29772.jpg?v=1769610420"
+          }
+        },
+        "reason_9": {
+          "type": "reason",
+          "settings": {
+            "title": "9. A Podiatrist Actually Recommends Them",
+            "body": "<p>Not a paid celebrity. Not a wellness influencer. A board-certified foot doctor who sees patients every day for <strong>arthritis, neuropathy, plantar fasciitis, and balance issues</strong>.</p><p>Frido designs shoes specifically for people who've tried everything else. That's the kind of endorsement I trust.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B.jpg?v=1777534310"
+          }
+        },
+        "reason_10": {
+          "type": "reason",
+          "settings": {
+            "title": "10. The Best Shoe I've Owned Cost Less Than The Worst",
+            "body": "<p>I spent <strong>over $900</strong> on shoes that didn't help. Custom orthotics: $220, didn't work. Brooks: $180, didn't work. \"Orthopedic\" shoes: $150, didn't work.</p><p>These cost <strong>$99</strong>. The only ones that actually worked. Expensive isn't the same as right.</p>",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A.jpg?v=1777534309"
+          }
+        },
+        "cta_2": {
+          "type": "cta",
+          "settings": {
+            "eyebrow": "DEAL OF THE DAY — LIMITED TIME",
+            "heading": "UP TO 23% OFF FOR A LIMITED TIME ONLY!",
+            "subtext": "Click the button below to claim your discount. Enjoy 30-Day Money Back Guarantee. Experience all-day comfort — it's that simple.",
+            "button_label": "ORDER NOW",
+            "button_url": "shopify://products/frido-active-casual-sneakers-mens",
+            "urgency": "Sell-Out Risk: High",
+            "shipping_note": "FREE shipping",
+            "guarantee": "30 days to try them. If they're not right, send them back. No restocking fee, no hassle."
+          }
+        }
+      },
+      "block_order": [
+        "reason_1",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "reason_5",
+        "cta_1",
+        "reason_6",
+        "reason_7",
+        "reason_8",
+        "reason_9",
+        "reason_10",
+        "cta_2"
+      ],
+      "settings": {
+        "show_sale_bar": true,
+        "sale_badge": "SPRING SALE",
+        "sale_text": "UP TO 23% OFF + FREE SHIPPING",
+        "show_countdown": true,
+        "sale_subtext": "Verified Lowest Price of the Year. Shop Now!",
+        "publisher_label": "FRIDO INSIDER",
+        "headline": "<em>FRIDO</em> <em>INSIDER</em><br><br>I Tried 7 Different \"Comfort\" Shoes. <em>Only One Actually Worked.</em>",
+        "intro": "<p>Let me save you the time and money I wasted.</p><p>Over the past 3 years, I've tried $180 Brooks running shoes, $220 custom orthotics, $95 memory foam sneakers, those ugly Sketchers my mom recommended, two different \"orthopedic\" brands, some $40 Amazon shoes with 5-star reviews, and finally, these Active Casual Sneakers everyone kept talking about.</p><p><strong>Six failures. One winner.</strong> Here's the difference. And what I wish someone had told me before I spent $900.</p>",
+        "note": "Note: Read this BEFORE you spend another dollar on \"comfort shoes\"",
+        "author_name": "Sarah Mitchell",
+        "author_role": "Comfort Shoe Enthusiast",
+        "show_compare": true,
+        "cta_url": "shopify://products/frido-active-casual-sneakers-mens",
+        "product_name": "Frido Active Casual Sneakers",
+        "product_price": "$99",
+        "compare_price": "$129",
+        "compare_product_image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A.jpg?v=1777534309",
+        "compare_col1_title": "Frido Active Casual",
+        "compare_col2_title": "Nursing Clogs",
+        "compare_col3_title": "Athletic Sneakers",
+        "compare_row_time_col1": "30 seconds",
+        "compare_row_time_col2": "30–60 seconds",
+        "compare_row_time_col3": "1–2 minutes",
+        "compare_row_comfort_col1": "All-day cushioned",
+        "compare_row_comfort_col2": "Rigid foot bed",
+        "compare_row_comfort_col3": "Cushioned heel",
+        "compare_row_weight_col1": "Ultra-light",
+        "compare_row_weight_col2": "14–16 oz",
+        "compare_row_weight_col3": "10–12 oz",
+        "compare_price_note": "per pair",
+        "compare_row_price_col2": "$120–$160",
+        "compare_row_price_col3": "$80–$130",
+        "tldr": "TLDR: Frido Active Casual Sneakers have 10+ benefits that make 12-hour shifts feel like 6 👇",
+        "show_proof": true,
+        "proof_label": "YES! PAIN-FREE FEET",
+        "proof_name": "Christine K.",
+        "proof_count": "AND +50,000 HAPPY CUSTOMERS"
+      }
+    }
+  },
+  "order": ["listicle"]
+}
