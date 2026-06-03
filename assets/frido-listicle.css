@@ -351,23 +351,14 @@
   color: rgb(var(--color-foreground));
 }
 
-/* ── CTA block (Hike-style split card) ── */
+/* ── CTA block (split card — theme color scheme) ── */
 .frido-listicle__cta {
-  --cta-badge-bg: #a168c1;
-  --cta-badge-text: #fff;
-  --cta-panel-tint: #f0f7f0;
-  --cta-heading: #3e5c33;
-  --cta-btn-bg: #5b7c3e;
-  --cta-btn-hover: #4a6632;
-  --cta-trust-bg: #f3f4f1;
-  --cta-border: #c5c5c5;
-
   position: relative;
   margin: 3rem 0 2.5rem;
   padding-top: 1.25rem;
-  border: 1px dashed var(--cta-border);
-  border-radius: 4px;
-  background: #fff;
+  border: 1px dashed rgba(var(--color-foreground), 0.22);
+  border-radius: var(--frido-radius, 12px);
+  background: rgb(var(--color-background));
   overflow: visible;
 }
 
@@ -377,8 +368,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  background: var(--cta-badge-bg);
-  color: var(--cta-badge-text);
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -400,7 +391,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1.5rem 1.5rem;
-  background: var(--cta-panel-tint);
+  background: rgba(var(--color-button), 0.12);
 }
 
 .frido-listicle__cta-img {
@@ -417,7 +408,7 @@
   justify-content: center;
   text-align: center;
   padding: 2rem 1.75rem 1.5rem;
-  background: #fff;
+  background: rgb(var(--color-background));
 }
 
 .frido-listicle__cta-eyebrow {
@@ -433,7 +424,7 @@
 .frido-listicle__cta-eyebrow-line {
   flex: 1;
   height: 1px;
-  background: #d0d0d0;
+  background: rgba(var(--color-foreground), 0.18);
   min-width: 24px;
 }
 
@@ -442,7 +433,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #1a1a1a;
+  color: rgb(var(--color-foreground));
   white-space: nowrap;
 }
 
@@ -453,7 +444,7 @@
   line-height: 1.2;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: var(--cta-heading);
+  color: rgb(var(--color-foreground));
   margin: 0 0 0.85rem;
   max-width: 380px;
 }
@@ -461,7 +452,7 @@
 .frido-listicle__cta-sub {
   font-size: 0.875rem;
   line-height: 1.55;
-  color: #444;
+  color: rgba(var(--color-foreground), 0.78);
   margin: 0 0 1.15rem;
   max-width: 360px;
 }
@@ -474,8 +465,8 @@
   width: 100%;
   max-width: 340px;
   padding: 0.95rem 1.5rem;
-  background: var(--cta-btn-bg);
-  color: #fff !important;
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text)) !important;
   font-family: inherit;
   font-size: 0.9375rem;
   font-weight: 700;
@@ -485,13 +476,14 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+  transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 0 rgba(var(--color-foreground), 0.1);
 }
 
 .frido-listicle__cta-btn:hover {
-  background: var(--cta-btn-hover);
+  filter: brightness(0.96);
   transform: translateY(-1px);
+  box-shadow: 0 3px 0 rgba(var(--color-foreground), 0.12);
 }
 
 .frido-listicle__cta-btn-arrow {
@@ -509,24 +501,24 @@
   max-width: 340px;
   margin-top: 0.85rem;
   padding: 0.55rem 0.75rem;
-  background: var(--cta-trust-bg);
+  background: rgba(var(--color-foreground), 0.06);
   border-radius: 4px;
   font-size: 0.75rem;
-  color: #333;
+  color: rgba(var(--color-foreground), 0.85);
 }
 
 .frido-listicle__cta-trust-item strong {
   font-weight: 800;
-  color: #1a1a1a;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-listicle__cta-trust-high {
-  color: #c0392b !important;
+  color: rgb(var(--color-secondary-button-text)) !important;
   font-weight: 800;
 }
 
 .frido-listicle__cta-trust-sep {
-  color: #999;
+  color: rgba(var(--color-foreground), 0.35);
   font-weight: 300;
 }
 
@@ -534,7 +526,7 @@
   margin: 0.85rem 0 0;
   font-size: 0.75rem;
   line-height: 1.45;
-  color: #1a1a1a;
+  color: rgba(var(--color-foreground), 0.88);
   max-width: 360px;
 }
 
