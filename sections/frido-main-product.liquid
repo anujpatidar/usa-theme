@@ -78,16 +78,11 @@
           <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
           {% render 'frido-pdp-price-row', price: price, compare_at: compare_at, save_pct: save_pct %}
         </div>
-        {%- if section.settings.rating_line != blank -%}
-          <p class="frido-pdp__rating">
-            {% render 'frido-stars', rating: 5 %}
-            {%- if section.settings.reviews_url != blank -%}
-              <a href="{{ section.settings.reviews_url }}">{{ section.settings.rating_line | escape }}</a>
-            {%- else -%}
-              <span>{{ section.settings.rating_line | escape }}</span>
-            {%- endif -%}
-          </p>
-        {%- endif -%}
+        {% render 'frido-pdp-rating',
+          product: product,
+          reviews_anchor: '#frido-product-reviews',
+          fallback_label: section.settings.rating_line
+        %}
       </div>
 
       <div class="frido-pdp__gallery-col">
@@ -110,16 +105,11 @@
             <h1 class="frido-pdp__title">{{ product.title | escape }}</h1>
             {% render 'frido-pdp-price-row', price: price, compare_at: compare_at, save_pct: save_pct %}
           </div>
-          {%- if section.settings.rating_line != blank -%}
-            <p class="frido-pdp__rating">
-              {% render 'frido-stars', rating: 5 %}
-              {%- if section.settings.reviews_url != blank -%}
-                <a href="{{ section.settings.reviews_url }}">{{ section.settings.rating_line | escape }}</a>
-              {%- else -%}
-                <span>{{ section.settings.rating_line | escape }}</span>
-              {%- endif -%}
-            </p>
-          {%- endif -%}
+          {% render 'frido-pdp-rating',
+            product: product,
+            reviews_anchor: '#frido-product-reviews',
+            fallback_label: section.settings.rating_line
+          %}
           {% render 'frido-pdp-selling-fast', section: section %}
           <div class="frido-pdp__benefits-desktop">
             {%- for block in benefit_blocks -%}

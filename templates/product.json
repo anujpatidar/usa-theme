@@ -133,6 +133,17 @@
         "color_scheme": "scheme-1"
       }
     },
+    "frido_product_reviews": {
+      "type": "frido-product-reviews",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "product": "",
+        "enable_judgeme": true,
+        "fallback_count": "7,295 Reviews",
+        "write_review_label": "Write a review",
+        "filter_label": "Sort and filter reviews"
+      }
+    },
     "frido_pdp_comfort": {
       "type": "frido-pdp-comfort",
       "blocks": {
@@ -218,6 +229,7 @@
     "frido_pdp_features",
     "frido_pdp_global_story",
     "frido_pdp_comfort",
+    "frido_product_reviews",
     "frido_pdp_most_loved",
     "frido_pdp_you_may_like"
   ]

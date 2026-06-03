@@ -235,7 +235,8 @@
   height: 16px !important;
 }
 
-.frido-pdp__rating a {
+.frido-pdp__rating a,
+.frido-pdp__rating-link {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 0.15em;

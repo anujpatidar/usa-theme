@@ -80,7 +80,10 @@
   }
 
   function syncScrim() {
-    if (openEntries.length) {
+    var needsScrim = openEntries.some(function (entry) {
+      return entry.opts.useScrim !== false;
+    });
+    if (needsScrim) {
       showScrim();
     } else {
       hideScrim();

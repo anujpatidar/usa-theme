@@ -1,0 +1,19 @@
+{% comment %}
+  Judge.me Review Widget — official install code (OS 2.0).
+  Place via sections/frido-product-reviews.liquid (not legacy product.liquid).
+  Requires: Judge.me app + Settings → Install widgets (adds judgeme_core.liquid).
+  @param product {Product}
+{% endcomment %}
+<!-- Start of Judge.me code -->
+<div style="clear: both"></div>
+<div
+  id="judgeme_product_reviews"
+  class="jdgm-widget jdgm-review-widget frido-pdp-reviews__judgeme-root"
+  data-product-title="{{ product.title | escape }}"
+  data-id="{{ product.id }}"
+  data-product-id="{{ product.id }}"
+  data-widget="review"
+>
+  {{ product.metafields.judgeme.widget }}
+</div>
+<!-- End of Judge.me code -->

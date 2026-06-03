@@ -351,8 +351,19 @@ body.frido-search-open {
   }
 }
 
-/* Desktop */
+/* Desktop — dropdown below header; no full-screen dim over nav */
 @media (min-width: 990px) {
+  .frido-search-panel.is-open::before,
+  .frido-search-panel.is-closing::before {
+    content: none;
+    display: none;
+  }
+
+  body.frido-search-open-desktop .frido-site-header,
+  body.frido-search-open-desktop .shopify-section-group-header-group {
+    z-index: 210;
+  }
+
   .frido-search__mobile-trigger {
     display: none;
   }

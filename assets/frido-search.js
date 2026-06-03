@@ -80,16 +80,24 @@
       });
     }
 
+    function searchBodyClass() {
+      return isMobile() ? 'frido-search-open' : 'frido-search-open-desktop';
+    }
+
     function setOpen(open) {
       if (open) {
         isOpen = true;
         updatePanelTop();
-        var bodyClass = isMobile() ? 'frido-search-open' : null;
+        var bodyClass = searchBodyClass();
         var onOpened = function () {
           setAriaExpanded(true);
         };
         if (window.FridoOverlay) {
-          FridoOverlay.open(panel, { bodyClass: bodyClass, onOpened: onOpened });
+          FridoOverlay.open(panel, {
+            bodyClass: bodyClass,
+            useScrim: isMobile(),
+            onOpened: onOpened,
+          });
         } else {
           panel.removeAttribute('hidden');
           panel.classList.add('is-open');
@@ -99,7 +107,7 @@
       } else {
         isOpen = false;
         setAriaExpanded(false);
-        var bodyClass = 'frido-search-open';
+        var bodyClass = searchBodyClass();
         if (window.FridoOverlay) {
           FridoOverlay.close(panel, {
             bodyClass: bodyClass,

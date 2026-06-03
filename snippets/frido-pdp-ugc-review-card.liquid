@@ -1,0 +1,51 @@
+{% comment %}
+  UGC-style review card (photo + verified + stars + text)
+  @param block {Block}
+{% endcomment %}
+{%- liquid
+  assign author = block.settings.author | default: 'Customer'
+  assign rating = block.settings.rating | default: 5
+  assign body = block.settings.body
+  assign verified = block.settings.verified
+  assign image = block.settings.image
+  assign image_url = block.settings.image_url
+-%}
+<article class="frido-pdp-ugc-card" {{ block.shopify_attributes }}>
+  <div class="frido-pdp-ugc-card__media">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 600
+        | image_tag: loading: 'lazy', class: 'frido-pdp-ugc-card__img', alt: author, widths: '300,450,600', sizes: '(min-width: 990px) 16vw, 45vw'
+      }}
+    {%- elsif image_url != blank -%}
+      <img
+        class="frido-pdp-ugc-card__img"
+        src="{{ image_url }}"
+        alt="{{ author | escape }}"
+        loading="lazy"
+        width="400"
+        height="400"
+      >
+    {%- else -%}
+      <div class="frido-pdp-ugc-card__img frido-pdp-ugc-card__img--placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+  <div class="frido-pdp-ugc-card__body">
+    <div class="frido-pdp-ugc-card__meta">
+      <span class="frido-pdp-ugc-card__name">{{ author | escape }}</span>
+      {%- if verified -%}
+        <span class="frido-pdp-ugc-card__verified">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+          </svg>
+          Verified
+        </span>
+      {%- endif -%}
+    </div>
+    {% render 'frido-stars', rating: rating %}
+    {%- if body != blank -%}
+      <div class="frido-pdp-ugc-card__text rte">{{ body }}</div>
+    {%- endif -%}
+  </div>
+</article>

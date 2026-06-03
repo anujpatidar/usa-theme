@@ -1,0 +1,240 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.listicle",
+  "sections": {
+    "listicle": {
+      "type": "frido-listicle",
+      "blocks": {
+        "reason_1": {
+          "type": "reason",
+          "settings": {
+            "title": "1. I Could Actually Put Them On",
+            "body": "<p>This sounds small, but bending down to wrestle with stiff shoes was agony for my back. These lace up in seconds — <strong>no rigid tongue, no fight getting your foot in.</strong><br/><br/>The cushioned collar and flexible opening mean you're not wrestling the shoe. The first time I wore them, I actually laughed. Why didn't anyone think of this sooner?</p>",
+            "media_type": "video",
+            "image_url": "",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/5c769f7b8cca414bbfc675a9d8338d7d.mp4",
+            "link_label": "See the lace-ups I swear by",
+            "link_url": "shopify://products/frido-womens-cloud-comfort-shoes-lace-ups"
+          }
+        },
+        "reason_2": {
+          "type": "reason",
+          "settings": {
+            "title": "2. My Balance Felt Different",
+            "body": "<p>I used to feel wobbly on wet floors or uneven sidewalks. That nervous feeling when you step on a slippery surface.<br/><br/>These have a <strong>non-slip sole</strong> that actually works. Sounds dramatic, but I stopped being scared of slipping.</p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_04_baedc234-d345-41bc-b802-1adec0939e9d.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "See the non-slip sole in action",
+            "link_url": "shopify://products/frido-womens-cloud-comfort-shoes-lace-ups"
+          }
+        },
+        "reason_3": {
+          "type": "reason",
+          "settings": {
+            "title": "3. Comfortable All Day Without Foot Pain",
+            "body": "<p>Usually by noon my feet were screaming. I'd find excuses to sit down. With these, I'd look at the clock and realize I'd been on my feet for hours. <strong>No pain. No fatigue.</strong><br/><br/>The <strong>cloud-cushioned sole</strong> supports every step, while the <strong>flexible upper</strong> lets your feet move naturally so every step feels effortless.</p>",
+            "media_type": "video",
+            "image_url": "",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/5c769f7b8cca414bbfc675a9d8338d7d.mp4",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "reason_4": {
+          "type": "reason",
+          "settings": {
+            "title": "4. Relief for Back Pain, Stiff Joints & Foot Pain",
+            "body": "<p>I didn't expect a shoe to help my back. But foot alignment affects your entire body. When your feet are off, your <strong>knees, hips, and lower back</strong> compensate.<br/><br/>The <strong>enhanced arch support</strong> provides extra comfort and stability. Many users report relief from conditions like <strong>plantar fasciitis, neuropathy, and swollen or stiff feet.</strong></p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_06_cb297876-22e0-48f3-9f64-e74fbeaae8ff.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "reason_5": {
+          "type": "reason",
+          "settings": {
+            "title": "5. My Bunions Finally Had Room",
+            "body": "<p>Tired of squeezing your feet into tight, narrow shoes? The <strong>wide toe box</strong> lets your toes spread naturally, giving you the space they need to stay comfortable and pain-free.<br/><br/>No more pinching. No more throbbing by the end of the day. First time in years my feet didn't feel squeezed.</p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01D_fd1eadb7-1236-4144-aa4d-2ed2a6ff5981.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "cta_1": {
+          "type": "cta",
+          "settings": {
+            "sale_badge": "👟 SPRING SALE",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_a0a7569b-51a8-4042-934e-ea222d20f29b.jpg?v=1769609677",
+            "eyebrow": "🎁 BUY MORE, SAVE MORE",
+            "heading": "UP TO 57% OFF FOR A LIMITED TIME ONLY!",
+            "subtext": "I was skeptical too. But with free shipping and a 30-day guarantee, there's nothing to lose.",
+            "button_label": "TRY THEM RISK-FREE",
+            "button_url": "shopify://products/frido-womens-cloud-comfort-shoes-lace-ups",
+            "urgency_prefix": "Sell-Out Risk:",
+            "urgency_highlight": "High",
+            "urgency": "",
+            "shipping_highlight": "FREE",
+            "shipping_suffix": "shipping",
+            "shipping_note": "",
+            "guarantee": "Try it today with a 30-Day Money Back Guarantee!"
+          }
+        },
+        "reason_6": {
+          "type": "reason",
+          "settings": {
+            "title": "6. That Natural, Grounded Feel (But Protected)",
+            "body": "<p>I always heard walking with proper support was healthy but didn't want to destroy my feet on concrete. These give you a <strong>natural, grounded feel</strong> with real protection.<br/><br/>The <strong>responsive cushioned sole</strong> lets you feel supported on hard floors. My feet actually felt stronger after a few weeks.</p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_03_12e02aff-e48e-4761-b05a-65c2f54cc024.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "reason_7": {
+          "type": "reason",
+          "settings": {
+            "title": "7. Easy to Clean",
+            "body": "<p>I'm not gentle with shoes. Mud, puddles, grass stains — they see it all. These just wipe down with a damp cloth. Tougher stains?<br/><br/><strong>Toss them in the washing machine.</strong> Still look new after months.</p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_07_3.jpg?v=1769687959",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "reason_8": {
+          "type": "reason",
+          "settings": {
+            "title": "8. Breathable for All-Day Freshness",
+            "body": "<p>Sweaty feet were my embarrassing secret. By midday, I'd be self-conscious. The <strong>breathable material</strong> actually works. Ventilation keeps your feet cool and dry.<br/><br/>No more damp, uncomfortable feet by lunch.</p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_08_d937c3d3-dbb1-4942-8926-afeb51a630da.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "reason_9": {
+          "type": "reason",
+          "settings": {
+            "title": "9. A Podiatrist Actually Recommends Them",
+            "body": "<p>A real podiatrist specifically recommends shoes like these for people with foot pain.<br/><br/>Not a paid celebrity. An actual doctor who treats feet for a living — for patients dealing with <strong>plantar fasciitis, neuropathy, balance issues, and everyday foot fatigue.</strong></p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_05_39c5fe27-e3c1-41dd-8ffc-adda40c6dddf.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "reason_10": {
+          "type": "reason",
+          "settings": {
+            "title": "10. Best Value for What Actually Works",
+            "body": "<p>I spent <strong>over $700</strong> on shoes that didn't help: Custom orthotics: $220, didn't work. Brooks: $180, didn't work. \"Orthopedic\" shoes: $150, didn't work.<br/><br/>These: the only ones that actually worked — and they cost a fraction of what I wasted.</p>",
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_02_fddcff2b-0954-469f-abfe-6d11a4c7b6fd.jpg?v=1769609677",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "cta_2": {
+          "type": "cta",
+          "settings": {
+            "sale_badge": "👟 SPRING SALE",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_a0a7569b-51a8-4042-934e-ea222d20f29b.jpg?v=1769609677",
+            "eyebrow": "🎁 BUY MORE, SAVE MORE",
+            "heading": "UP TO 57% OFF FOR A LIMITED TIME ONLY!",
+            "subtext": "I was skeptical too. But with free shipping and a 30-day guarantee, there's nothing to lose.",
+            "button_label": "TRY THEM RISK-FREE",
+            "button_url": "shopify://products/frido-womens-cloud-comfort-shoes-lace-ups",
+            "urgency_prefix": "Sell-Out Risk:",
+            "urgency_highlight": "High",
+            "urgency": "",
+            "shipping_highlight": "FREE",
+            "shipping_suffix": "shipping",
+            "shipping_note": "",
+            "guarantee": "Try it today with a 30-Day Money Back Guarantee!"
+          }
+        }
+      },
+      "block_order": [
+        "reason_1",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "reason_5",
+        "cta_1",
+        "reason_6",
+        "reason_7",
+        "reason_8",
+        "reason_9",
+        "reason_10",
+        "cta_2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "show_sale_bar": true,
+        "sale_badge": "SPRING SALE",
+        "sale_text": "UP TO 57% OFF + FREE SHIPPING",
+        "show_countdown": true,
+        "sale_subtext": "Verified Lowest Price of the Year. Shop Now!",
+        "publisher_label": "FRIDO INSIDER",
+        "headline": "I Tried 7 Different \"Comfort\" Shoes. <span>Only One Actually Worked.</span>",
+        "intro": "<p>Let me save you the time and money I wasted.</p><p>Over the past 3 years, I've tried $180 Brooks running shoes, <strong>$220 custom orthotics</strong>, $95 memory foam sneakers, those ugly Sketchers my mom recommended, two different \"orthopedic\" brands, some $40 Amazon shoes with 5-star reviews, and finally, these Cloud Comfort lace-ups everyone kept talking about.</p><p><strong>Six failures. One winner.</strong> Here's the difference:</p>",
+        "note": "Note: Read this BEFORE you struggle with another pair of shoes!",
+        "author_image": "shopify://shop_images/684f2753593d5a0b9c6206c4_Lorax_Pro_Barefoot_Shoes.jpg",
+        "author_name": "Athena Hudson",
+        "author_role": "Comfort Shoe Enthusiast",
+        "show_compare": true,
+        "product": "frido-womens-cloud-comfort-shoes-lace-ups",
+        "cta_url": "shopify://products/frido-womens-cloud-comfort-shoes-lace-ups",
+        "product_name": "Frido Women's Cloud Comfort Shoes - Lace ups",
+        "product_price": "$69.95",
+        "compare_price": "$129",
+        "compare_product_image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01D_fd1eadb7-1236-4144-aa4d-2ed2a6ff5981.jpg?v=1769609677",
+        "compare_col1_title": "Cloud Comfort Lace-ups",
+        "compare_col2_title": "Nursing Clogs",
+        "compare_col3_title": "Athletic Sneakers",
+        "compare_row_time_label": "Time to Put On",
+        "compare_row_time_col1": "Under 1 minute",
+        "compare_row_time_col2": "30–60 seconds",
+        "compare_row_time_col3": "1–2 minutes",
+        "compare_row_comfort_label": "Shift Comfort",
+        "compare_row_comfort_col1": "Cloud cushioned",
+        "compare_row_comfort_col2": "Rigid foot bed",
+        "compare_row_comfort_col3": "Cushioned heel",
+        "compare_row_weight_label": "Weight",
+        "compare_row_weight_col1": "Ultra-light",
+        "compare_row_weight_col2": "14–16 oz",
+        "compare_row_weight_col3": "10–12 oz",
+        "compare_row_price_label": "Price",
+        "compare_price_note": "per pair (bundle)",
+        "compare_row_price_col2": "$120–$160",
+        "compare_row_price_col3": "$80–$130",
+        "tldr": "TLDR: Frido Cloud Comfort Lace-ups have 10+ benefits that make 12-hour shifts feel like 6 👇",
+        "show_proof": true,
+        "proof_label": "YES! PAIN-FREE FEET",
+        "proof_name": "Christine K.",
+        "proof_count": "AND +1,450,000 HAPPY CUSTOMERS"
+      }
+    }
+  },
+  "order": [
+    "listicle"
+  ]
+}
