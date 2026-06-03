@@ -22,9 +22,16 @@
   }
 }
 
-.discounts__discount > .icon {
+.discounts__discount > .icon,
+.discounts__discount .frido-icon-discount {
   color: rgb(var(--color-foreground));
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   margin-right: 0.7rem;
+}
+
+.discounts__discount .frido-icon-discount svg,
+.discounts__discount > .icon {
+  width: 1.6rem;
+  height: 1.6rem;
 }

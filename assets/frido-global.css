@@ -3112,3 +3112,21 @@ body.frido-menu-open .frido-header__menu-icon--close {
 .frido-find-size-btn--drawer {
   width: 100%;
 }
+
+/* Discount / price-tag icon (icon-discount.svg) */
+.frido-icon-discount {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  line-height: 0;
+  color: inherit;
+}
+
+.frido-icon-discount svg,
+.frido-icon-discount .icon-discount {
+  width: 1.6rem;
+  height: 1.6rem;
+}

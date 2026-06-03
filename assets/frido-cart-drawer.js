@@ -12,6 +12,8 @@
   var productCache = Object.create(null);
   var modalState = { mode: 'edit', lineKey: null, product: null, selected: {}, quantity: 1, properties: {} };
 
+  var discountTagIconHtml = '';
+
   var labels = {
     itemsInCart: 'items in cart',
     itemInCart: 'item in cart',
@@ -45,6 +47,10 @@
       return Shopify.formatMoney(cents, moneyFormat);
     }
     return '$' + (cents / 100).toFixed(2);
+  }
+
+  function discountTagMarkup() {
+    return discountTagIconHtml || '';
   }
 
   function escapeHtml(str) {
@@ -348,7 +354,7 @@
         ? '<div class="frido-cart-item__pills">' + variantPills(item.variant_title) + '</div>'
         : '') +
       (disc
-        ? '<p class="frido-cart-item__discount"><span aria-hidden="true">🏷</span> ' + escapeHtml(disc) + '</p>'
+        ? '<p class="frido-cart-item__discount">' + discountTagMarkup() + ' ' + escapeHtml(disc) + '</p>'
         : '') +
       '<div class="frido-cart-item__bottom">' +
       '<div class="frido-cart-item__qty">' +
@@ -549,13 +555,13 @@
     var discEl = qs('.frido-cart-item__discount', line);
     if (disc) {
       if (discEl) {
-        discEl.innerHTML = '<span aria-hidden="true">🏷</span> ' + escapeHtml(disc);
+        discEl.innerHTML = discountTagMarkup() + ' ' + escapeHtml(disc);
       } else {
         var bottom = qs('.frido-cart-item__bottom', line);
         if (bottom) {
           bottom.insertAdjacentHTML(
             'beforebegin',
-            '<p class="frido-cart-item__discount"><span aria-hidden="true">🏷</span> ' + escapeHtml(disc) + '</p>'
+            '<p class="frido-cart-item__discount">' + discountTagMarkup() + ' ' + escapeHtml(disc) + '</p>'
           );
         }
       }
@@ -1314,6 +1320,9 @@
     portalOverlays();
 
     moneyFormat = drawerEl.getAttribute('data-money-format') || '${{amount}}';
+
+    var iconTpl = document.getElementById('FridoIconDiscountTpl');
+    if (iconTpl) discountTagIconHtml = iconTpl.innerHTML.trim();
     labels.submitEdit = drawerEl.getAttribute('data-label-edit') || labels.submitEdit;
     labels.submitAdd = drawerEl.getAttribute('data-label-add') || labels.submitAdd;
     labels.styleHeading = drawerEl.getAttribute('data-label-style-heading') || labels.styleHeading;

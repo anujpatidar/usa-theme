@@ -28,6 +28,7 @@
   hidden
   aria-hidden="true"
 >
+  <template id="FridoIconDiscountTpl">{% render 'frido-icon-discount' %}</template>
   <div class="frido-cart-drawer__overlay" data-frido-cart-close tabindex="-1"></div>
 
   <aside
@@ -88,7 +89,7 @@
       </div>
       <div class="frido-cart-drawer__row frido-cart-drawer__row--discount" data-frido-cart-discount-row hidden>
         <span>
-          <span class="frido-cart-drawer__tag-icon" aria-hidden="true">🏷</span>
+          {% render 'frido-icon-discount' %}
           {{ section.settings.discounts_label | default: 'Item Discounts' | escape }}
         </span>
         <span data-frido-cart-discount></span>
