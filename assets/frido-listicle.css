@@ -356,8 +356,8 @@
   margin: 3rem 0 2.5rem;
   border: 1px dashed rgba(var(--color-foreground), 0.22);
   border-radius: var(--frido-radius, 12px);
-  background: #fff;
-  overflow: hidden;
+
+  overflow: visible;
 }
 
 .frido-listicle__cta-badge {
@@ -388,7 +388,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(var(--color-button), 0.12);
+
 }
 
 .frido-listicle__cta-img {
@@ -405,7 +405,6 @@
   justify-content: center;
   text-align: center;
   padding: 2rem 1.75rem 1.5rem;
-  background: rgb(var(--color-background));
 }
 
 .frido-listicle__cta-eyebrow {
