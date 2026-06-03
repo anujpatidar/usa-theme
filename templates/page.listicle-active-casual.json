@@ -82,7 +82,8 @@
           "type": "cta",
           "settings": {
             "sale_badge": "👟 SPRING SALE",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A.jpg?v=1777534309",
+            "image": "shopify://shop_images/d512d5ea-0541-4d6f-93a1-40ff4ae9137b.png",
+            "image_url": "",
             "eyebrow": "🎁 BUY MORE, SAVE MORE",
             "heading": "UP TO 49% OFF FOR A LIMITED TIME ONLY!",
             "subtext": "I was skeptical too. But true to size, free shipping, and a 30-day money-back guarantee means there's nothing to lose.",
@@ -90,8 +91,10 @@
             "button_url": "shopify://products/frido-active-casual-sneakers-mens",
             "urgency_prefix": "Sell-Out Risk:",
             "urgency_highlight": "High",
+            "urgency": "",
             "shipping_highlight": "FREE",
             "shipping_suffix": "shipping",
+            "shipping_note": "",
             "guarantee": "30 days to try them. If they're not right, send them back. No restocking fee, no hassle."
           }
         },
@@ -164,7 +167,8 @@
           "type": "cta",
           "settings": {
             "sale_badge": "👟 SPRING SALE",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_b735c7b1-6580-45c0-81f6-0a39ef088090.jpg?v=1777534310",
+            "image": "shopify://shop_images/d512d5ea-0541-4d6f-93a1-40ff4ae9137b.png",
+            "image_url": "",
             "eyebrow": "🎁 BUY MORE, SAVE MORE",
             "heading": "UP TO 49% OFF FOR A LIMITED TIME ONLY!",
             "subtext": "Click the button below to claim your discount. Enjoy 30-Day Money Back Guarantee. Experience all-day comfort — it's that simple.",
@@ -172,8 +176,10 @@
             "button_url": "shopify://products/frido-active-casual-sneakers-mens",
             "urgency_prefix": "Sell-Out Risk:",
             "urgency_highlight": "High",
+            "urgency": "",
             "shipping_highlight": "FREE",
             "shipping_suffix": "shipping",
+            "shipping_note": "",
             "guarantee": "30 days to try them. If they're not right, send them back. No restocking fee, no hassle."
           }
         }
