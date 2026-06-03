@@ -166,32 +166,104 @@
 
         {%- when 'cta' -%}
           <div class="frido-listicle__cta" {{ block.shopify_attributes }}>
-            {%- if block.settings.eyebrow != blank -%}
-              <div class="frido-listicle__cta-eyebrow">{{ block.settings.eyebrow | escape }}</div>
+            {%- if block.settings.sale_badge != blank -%}
+              <div class="frido-listicle__cta-badge">{{ block.settings.sale_badge | escape }}</div>
             {%- endif -%}
-            {%- if block.settings.heading != blank -%}
-              <h3>{{ block.settings.heading | escape }}</h3>
-            {%- endif -%}
-            {%- if block.settings.subtext != blank -%}
-              <p class="frido-listicle__cta-sub">{{ block.settings.subtext | escape }}</p>
-            {%- endif -%}
-            <a
-              class="frido-btn frido-btn--blue frido-listicle__cta-btn"
-              href="{{ block.settings.button_url | default: cta_url }}"
-            >
-              {{ block.settings.button_label | default: 'TRY THEM RISK-FREE' | escape }}
-            </a>
-            <div class="frido-listicle__cta-meta">
-              {%- if block.settings.urgency != blank -%}
-                <strong>{{ block.settings.urgency | escape }}</strong>
-              {%- endif -%}
-              {%- if block.settings.shipping_note != blank -%}
-                <span>| {{ block.settings.shipping_note | escape }}</span>
-              {%- endif -%}
+
+            <div class="frido-listicle__cta-grid">
+              <div class="frido-listicle__cta-media">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 900
+                    | image_tag: loading: 'lazy', alt: block.settings.heading, class: 'frido-listicle__cta-img'
+                  }}
+                {%- elsif block.settings.image_url != blank -%}
+                  <img
+                    class="frido-listicle__cta-img"
+                    src="{{ block.settings.image_url }}"
+                    alt="{{ block.settings.heading | escape }}"
+                    loading="lazy"
+                    width="900"
+                    height="700"
+                  >
+                {%- elsif section.settings.compare_product_image_url != blank -%}
+                  <img
+                    class="frido-listicle__cta-img"
+                    src="{{ section.settings.compare_product_image_url }}"
+                    alt="{{ product_title | escape }}"
+                    loading="lazy"
+                    width="900"
+                    height="700"
+                  >
+                {%- endif -%}
+              </div>
+
+              <div class="frido-listicle__cta-content">
+                {%- if block.settings.eyebrow != blank -%}
+                  <div class="frido-listicle__cta-eyebrow">
+                    <span class="frido-listicle__cta-eyebrow-line" aria-hidden="true"></span>
+                    <span class="frido-listicle__cta-eyebrow-text">{{ block.settings.eyebrow | escape }}</span>
+                    <span class="frido-listicle__cta-eyebrow-line" aria-hidden="true"></span>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="frido-listicle__cta-heading">{{ block.settings.heading | escape }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.subtext != blank -%}
+                  <p class="frido-listicle__cta-sub">{{ block.settings.subtext | escape }}</p>
+                {%- endif -%}
+
+                <a
+                  class="frido-listicle__cta-btn"
+                  href="{{ block.settings.button_url | default: cta_url }}"
+                >
+                  {{ block.settings.button_label | default: 'TRY THEM RISK-FREE' | escape }}
+                  <span class="frido-listicle__cta-btn-arrow" aria-hidden="true">→</span>
+                </a>
+
+                {%- liquid
+                  assign urgency_prefix = block.settings.urgency_prefix
+                  assign urgency_highlight = block.settings.urgency_highlight
+                  if urgency_prefix == blank and block.settings.urgency != blank
+                    assign urgency_parts = block.settings.urgency | split: ':'
+                    assign urgency_prefix = urgency_parts[0] | append: ':'
+                    assign urgency_highlight = urgency_parts[1] | strip
+                  endif
+                -%}
+                {%- if urgency_prefix != blank or block.settings.shipping_note != blank -%}
+                  <div class="frido-listicle__cta-trust">
+                    {%- if urgency_prefix != blank -%}
+                      <span class="frido-listicle__cta-trust-item">
+                        {{ urgency_prefix | escape }}
+                        {%- if urgency_highlight != blank -%}
+                          <strong class="frido-listicle__cta-trust-high">{{ urgency_highlight | escape }}</strong>
+                        {%- endif -%}
+                      </span>
+                    {%- endif -%}
+                    {%- if block.settings.shipping_note != blank -%}
+                      {%- if urgency_prefix != blank -%}
+                        <span class="frido-listicle__cta-trust-sep" aria-hidden="true">|</span>
+                      {%- endif -%}
+                      <span class="frido-listicle__cta-trust-item">
+                        {%- if block.settings.shipping_highlight != blank -%}
+                          <strong>{{ block.settings.shipping_highlight | escape }}</strong>
+                          {{ block.settings.shipping_suffix | default: 'shipping' | escape }}
+                        {%- else -%}
+                          {{ block.settings.shipping_note | escape }}
+                        {%- endif -%}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.guarantee != blank -%}
+                  <p class="frido-listicle__cta-guarantee">{{ block.settings.guarantee | escape }}</p>
+                {%- endif -%}
+              </div>
             </div>
-            {%- if block.settings.guarantee != blank -%}
-              <p class="frido-listicle__cta-guarantee">{{ block.settings.guarantee | escape }}</p>
-            {%- endif -%}
           </div>
       {%- endcase -%}
     {%- endfor -%}
@@ -577,15 +649,31 @@
       "settings": [
         {
           "type": "text",
+          "id": "sale_badge",
+          "label": "Top badge",
+          "default": "👟 SPRING SALE"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product image (left panel)"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "Product image URL (fallback)"
+        },
+        {
+          "type": "text",
           "id": "eyebrow",
           "label": "Eyebrow",
-          "default": "BUY MORE, SAVE MORE"
+          "default": "🎁 BUY MORE, SAVE MORE"
         },
         {
           "type": "text",
           "id": "heading",
           "label": "Heading",
-          "default": "UP TO 23% OFF FOR A LIMITED TIME ONLY!"
+          "default": "UP TO 49% OFF FOR A LIMITED TIME ONLY!"
         },
         {
           "type": "text",
@@ -606,15 +694,37 @@
         },
         {
           "type": "text",
+          "id": "urgency_prefix",
+          "label": "Urgency label",
+          "default": "Sell-Out Risk:"
+        },
+        {
+          "type": "text",
+          "id": "urgency_highlight",
+          "label": "Urgency highlight (red)",
+          "default": "High"
+        },
+        {
+          "type": "text",
           "id": "urgency",
-          "label": "Urgency text",
-          "default": "Sell-Out Risk: High"
+          "label": "Urgency (legacy — use prefix + highlight instead)"
+        },
+        {
+          "type": "text",
+          "id": "shipping_highlight",
+          "label": "Shipping bold word",
+          "default": "FREE"
+        },
+        {
+          "type": "text",
+          "id": "shipping_suffix",
+          "label": "Shipping suffix",
+          "default": "shipping"
         },
         {
           "type": "text",
           "id": "shipping_note",
-          "label": "Shipping note",
-          "default": "FREE shipping"
+          "label": "Shipping note (legacy single line)"
         },
         {
           "type": "text",
