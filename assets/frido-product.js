@@ -31,21 +31,31 @@
     return Math.min(pct, 100);
   }
 
-  function computeBundleDisplay(variant, qty, discountPercent) {
-    if (!variant || qty < 1) return null;
-    var unit = variant.price;
-    var unitCompare =
-      variant.compare_at_price > variant.price ? variant.compare_at_price : variant.price;
-    var subtotal = unit * qty;
-    var bundlePrice =
+  /** Per-pair card price: bundle % off selling; save % vs MRP (compare_at). */
+  function computeBundleDisplay(variant, discountPercent) {
+    if (!variant) return null;
+    var selling = variant.price;
+    var mrp =
+      variant.compare_at_price && variant.compare_at_price > selling
+        ? variant.compare_at_price
+        : null;
+    var perPair =
       discountPercent > 0
-        ? Math.round((subtotal * (100 - discountPercent)) / 100)
-        : subtotal;
+        ? Math.round((selling * (100 - discountPercent)) / 100)
+        : selling;
+    var savePercent = 0;
+    if (mrp && mrp > perPair) {
+      savePercent = Math.round(((mrp - perPair) / mrp) * 100);
+    }
     return {
-      price: bundlePrice,
-      perPairCompare: unitCompare,
-      discountPercent: discountPercent,
+      perPair: perPair,
+      mrp: mrp,
+      savePercent: savePercent,
     };
+  }
+
+  function formatBundleMrpCompare(mrpCents, moneyFormat) {
+    return '(mrp' + formatMoney(mrpCents, moneyFormat) + ') per pair';
   }
 
   function getColorOptionIndex(product) {
@@ -750,27 +760,25 @@
       if (!v) v = ctx.getCurrent();
       if (!v) return;
       qsa('[data-frido-bundle]', bundleRoot).forEach(function (card) {
-        var qty = parseInt(card.getAttribute('data-quantity'), 10) || 1;
         var pct = getBundleDiscountPercent(card);
-        var display = computeBundleDisplay(v, qty, pct);
+        var display = computeBundleDisplay(v, pct);
         var priceEl = qs('[data-frido-bundle-price]', card);
         var compareEl = qs('[data-frido-bundle-compare]', card);
         var saveEl = qs('[data-frido-bundle-save]', card);
         if (priceEl && display) {
-          priceEl.textContent = formatMoney(display.price, moneyFormat);
+          priceEl.textContent = formatMoney(display.perPair, moneyFormat);
         }
         if (compareEl) {
-          if (display && display.perPairCompare) {
-            compareEl.textContent =
-              formatMoney(display.perPairCompare, moneyFormat) + ' Per Pair';
+          if (display && display.mrp) {
+            compareEl.textContent = formatBundleMrpCompare(display.mrp, moneyFormat);
             compareEl.hidden = false;
           } else {
             compareEl.hidden = true;
           }
         }
         if (saveEl) {
-          if (pct > 0) {
-            saveEl.textContent = 'Save ' + pct + '%';
+          if (display && display.savePercent > 0) {
+            saveEl.textContent = 'Save ' + display.savePercent + '%';
             saveEl.hidden = false;
           } else {
             saveEl.hidden = true;

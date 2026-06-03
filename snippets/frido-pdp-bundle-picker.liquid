@@ -52,13 +52,15 @@
           assign bundle_qty = block.settings.quantity | default: 1
           assign bundle_pct = block.settings.discount_percent | default: 0
           assign unit_price = current_variant.price
-          assign unit_compare = current_variant.compare_at_price | default: unit_price
-          if unit_compare < unit_price
-            assign unit_compare = unit_price
-          endif
-          assign bundle_subtotal = unit_price | times: bundle_qty
+          assign unit_mrp = current_variant.compare_at_price
           assign bundle_mult = 100 | minus: bundle_pct
-          assign bundle_price_cents = bundle_subtotal | times: bundle_mult | divided_by: 100
+          assign per_pair_discounted = unit_price | times: bundle_mult | divided_by: 100
+          assign has_mrp = false
+          assign save_from_mrp = 0
+          if unit_mrp != blank and unit_mrp > unit_price
+            assign has_mrp = true
+            assign save_from_mrp = unit_mrp | minus: per_pair_discounted | times: 100.0 | divided_by: unit_mrp | round
+          endif
           assign use_dynamic = false
           if bundle_pct > 0
             assign use_dynamic = true
@@ -100,7 +102,7 @@
           <span class="frido-pdp-bundle__price">
             <span data-frido-bundle-price>
               {%- if use_dynamic -%}
-                {{ bundle_price_cents | money }}
+                {{ per_pair_discounted | money }}
               {%- else -%}
                 {{ block.settings.price_text | escape }}
               {%- endif -%}
@@ -108,10 +110,10 @@
             <span
               class="frido-pdp-bundle__compare"
               data-frido-bundle-compare
-              {% if use_dynamic == false and block.settings.compare_text == blank %}hidden{% endif %}
+              {% if use_dynamic and has_mrp == false %}hidden{% elsif use_dynamic == false and block.settings.compare_text == blank %}hidden{% endif %}
             >
-              {%- if use_dynamic -%}
-                {{ unit_compare | money }} Per Pair
+              {%- if use_dynamic and has_mrp -%}
+                (mrp{{ unit_mrp | money }}) per pair
               {%- elsif block.settings.compare_text != blank -%}
                 {{ block.settings.compare_text | escape }}
               {%- endif -%}
@@ -120,12 +122,12 @@
           <span
             class="frido-pdp-bundle__save"
             data-frido-bundle-save
-            {% if bundle_pct == 0 and block.settings.save_label == blank %}hidden{% endif %}
+            {% if block.settings.save_label == blank and save_from_mrp == 0 %}hidden{% endif %}
           >
             {%- if block.settings.save_label != blank -%}
               {{ block.settings.save_label | escape }}
-            {%- elsif bundle_pct > 0 -%}
-              Save {{ bundle_pct }}%
+            {%- elsif save_from_mrp > 0 -%}
+              Save {{ save_from_mrp }}%
             {%- endif -%}
           </span>
         </button>
