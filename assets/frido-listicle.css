@@ -153,7 +153,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 2.5rem;
 }
 
 .frido-listicle__author-img {
@@ -267,7 +266,7 @@
 /* ── Reason blocks ── */
 .frido-listicle__reason {
   padding: 2rem 0;
-  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+
 }
 
 .frido-listicle__reason:last-of-type {
@@ -355,10 +354,9 @@
 .frido-listicle__cta {
   position: relative;
   margin: 3rem 0 2.5rem;
-  padding-top: 1.25rem;
   border: 1px dashed rgba(var(--color-foreground), 0.22);
   border-radius: var(--frido-radius, 12px);
-  background: rgb(var(--color-background));
+  background: #fff;
   overflow: visible;
 }
 
