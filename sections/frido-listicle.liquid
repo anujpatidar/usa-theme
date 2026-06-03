@@ -20,7 +20,10 @@
   endif
 -%}
 
-<article class="frido-listicle" id="frido-listicle-{{ section.id }}">
+<article
+  class="frido-listicle color-{{ section.settings.color_scheme }} gradient"
+  id="frido-listicle-{{ section.id }}"
+>
   {%- if section.settings.show_sale_bar -%}
     <div class="frido-listicle__bar" data-frido-countdown>
       <div class="frido-listicle__bar-inner">
@@ -144,19 +147,7 @@
           {%- assign reason_even = reason_index | modulo: 2 -%}
           <section class="frido-listicle__reason" {{ block.shopify_attributes }}>
             <div class="frido-listicle__reason-inner{% if reason_even == 0 %} frido-listicle__reason-inner--reverse{% endif %}">
-                {%- if block.settings.image != blank -%}
-                <div class="frido-listicle__reason-media">
-                  {{
-                    block.settings.image
-                    | image_url: width: 800
-                    | image_tag: loading: 'lazy', alt: block.settings.title
-                  }}
-                </div>
-              {%- elsif block.settings.image_url != blank -%}
-                <div class="frido-listicle__reason-media">
-                  <img src="{{ block.settings.image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="800" height="600">
-                </div>
-              {%- endif -%}
+              {% render 'frido-listicle-reason-media', block: block, alt: block.settings.title %}
               <div class="frido-listicle__reason-body">
                 {%- if block.settings.title != blank -%}
                   <h2>{{ block.settings.title }}</h2>
@@ -184,7 +175,10 @@
             {%- if block.settings.subtext != blank -%}
               <p class="frido-listicle__cta-sub">{{ block.settings.subtext | escape }}</p>
             {%- endif -%}
-            <a class="frido-listicle__cta-btn" href="{{ block.settings.button_url | default: cta_url }}">
+            <a
+              class="frido-btn frido-btn--blue frido-listicle__cta-btn"
+              href="{{ block.settings.button_url | default: cta_url }}"
+            >
               {{ block.settings.button_label | default: 'TRY THEM RISK-FREE' | escape }}
             </a>
             <div class="frido-listicle__cta-meta">
@@ -231,6 +225,12 @@
   "tag": "section",
   "class": "section-frido-listicle",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
     {
       "type": "header",
       "content": "Sale bar"
@@ -529,6 +529,16 @@
           "label": "Body"
         },
         {
+          "type": "select",
+          "id": "media_type",
+          "label": "Media type",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ],
+          "default": "image"
+        },
+        {
           "type": "image_picker",
           "id": "image",
           "label": "Image"
@@ -537,6 +547,17 @@
           "type": "text",
           "id": "image_url",
           "label": "Image URL (if no image uploaded)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (upload to Shopify)"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL (MP4 — e.g. Shopify CDN)",
+          "info": "Use when Media type is Video. Paste a direct .mp4 URL if not using uploaded video."
         },
         {
           "type": "text",

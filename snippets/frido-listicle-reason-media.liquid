@@ -1,0 +1,78 @@
+{% comment %}
+  Listicle reason media — image OR video (one per block).
+  @param block {Object} reason block
+  @param alt {String}
+{% endcomment %}
+{%- liquid
+  assign media_type = block.settings.media_type | default: 'image'
+  assign has_video = false
+  if block.settings.video != blank
+    assign has_video = true
+  elsif block.settings.video_url != blank
+    assign has_video = true
+  endif
+
+  assign has_image = false
+  if block.settings.image != blank
+    assign has_image = true
+  elsif block.settings.image_url != blank
+    assign has_image = true
+  endif
+
+  assign show_video = false
+  if media_type == 'video' and has_video
+    assign show_video = true
+  endif
+
+  assign show_image = false
+  if show_video == false and has_image
+    assign show_image = true
+  endif
+-%}
+
+{%- if show_video -%}
+  <div class="frido-listicle__reason-media frido-listicle__reason-media--video">
+    {%- if block.settings.video != blank -%}
+      {{
+        block.settings.video
+        | video_tag:
+          image_size: '800x',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          class: 'frido-listicle__reason-video'
+      }}
+    {%- else -%}
+      <video
+        class="frido-listicle__reason-video"
+        src="{{ block.settings.video_url }}"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="{{ alt | escape }}"
+      ></video>
+    {%- endif -%}
+  </div>
+{%- elsif show_image -%}
+  <div class="frido-listicle__reason-media frido-listicle__reason-media--image">
+    {%- if block.settings.image != blank -%}
+      {{
+        block.settings.image
+        | image_url: width: 800
+        | image_tag: loading: 'lazy', alt: alt, class: 'frido-listicle__reason-image'
+      }}
+    {%- else -%}
+      <img
+        class="frido-listicle__reason-image"
+        src="{{ block.settings.image_url }}"
+        alt="{{ alt | escape }}"
+        loading="lazy"
+        width="800"
+        height="600"
+      >
+    {%- endif -%}
+  </div>
+{%- endif -%}

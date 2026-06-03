@@ -4,19 +4,29 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#2b3921">
+    {%- liquid
+      assign frido_theme_color = '#fcd00b'
+      for scheme in settings.color_schemes
+        if forloop.first
+          assign frido_theme_color = scheme.settings.button
+        endif
+      endfor
+    -%}
+    <meta name="theme-color" content="{{ frido_theme_color }}">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Figtree:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    >
+    {%- if settings.frido_use_outfit_font != false -%}
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+        rel="stylesheet"
+      >
+    {%- endif -%}
 
     <title>
       {{ page_title }}
@@ -28,10 +38,40 @@
     {% endif %}
 
     {% render 'meta-tags' %}
+    {% render 'frido-tokens' %}
+
+    {{ 'frido-global.css' | asset_url | stylesheet_tag }}
+
+    {% style %}
+      {% for scheme in settings.color_schemes -%}
+        {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+        {% if forloop.index == 1 -%}
+          :root,
+        {%- endif %}
+        .color-{{ scheme.id }} {
+          --color-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+          {% if scheme.settings.background_gradient != empty %}
+            --gradient-background: {{ scheme.settings.background_gradient }};
+          {% else %}
+            --gradient-background: {{ scheme.settings.background }};
+          {% endif %}
+          --color-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+          --color-button: {{ scheme.settings.button.red }},{{ scheme.settings.button.green }},{{ scheme.settings.button.blue }};
+          --color-button-text: {{ scheme.settings.button_label.red }},{{ scheme.settings.button_label.green }},{{ scheme.settings.button_label.blue }};
+          --color-secondary-button-text: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
+        }
+      {% endfor %}
+
+      {{ scheme_classes | prepend: 'body' }} {
+        color: rgba(var(--color-foreground), 0.85);
+        background-color: rgb(var(--color-background));
+      }
+    {% endstyle %}
+
     {{ content_for_header }}
   </head>
 
-  <body class="frido-listicle-page">
+  <body class="frido-listicle-page color-scheme-1 gradient">
     <main id="MainContent" role="main">
       {{ content_for_layout }}
     </main>
