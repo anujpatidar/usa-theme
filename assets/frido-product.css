@@ -371,14 +371,14 @@
 .frido-pdp__save-badge-icon {
   display: inline-flex;
   flex-shrink: 0;
-  width: 0.875rem;
-  height: 0.875rem;
+  align-items: center;
+  line-height: 0;
 }
 
-.frido-pdp__save-badge-icon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
+.frido-pdp__save-badge-icon .frido-icon-discount,
+.frido-pdp__save-badge-icon .frido-icon-discount svg {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .frido-pdp__save-badge-text {
