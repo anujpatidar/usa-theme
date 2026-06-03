@@ -24,6 +24,14 @@
     );
   }
 
+  function setBundleThumbImg(img, src, alt) {
+    if (!img || !src) return;
+    img.src = src;
+    if (alt) img.alt = alt;
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
+  }
+
   function getBundleDiscountPercent(card) {
     if (!card) return 0;
     var pct = parseInt(card.getAttribute('data-discount-percent'), 10);
@@ -744,8 +752,7 @@
       var src = variantThumbSrc(v);
       if (!src) return;
       qsa('[data-frido-bundle-img]', bundleRoot).forEach(function (img) {
-        img.src = src;
-        img.alt = v.title || product.title || '';
+        setBundleThumbImg(img, src, v.title || product.title || '');
       });
     }
 
@@ -1342,7 +1349,7 @@
         var thumbSrc = galleryApi.colorThumbSrc(variant[colorKey]);
         if (thumbSrc) {
           qsa('[data-frido-bundle-img]', root).forEach(function (img) {
-            img.src = thumbSrc;
+            setBundleThumbImg(img, thumbSrc);
           });
         }
       }

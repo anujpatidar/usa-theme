@@ -89,17 +89,16 @@
             assign bundle_card_img = current_variant.featured_image | default: product.featured_image
           -%}
           {%- if bundle_card_img -%}
-            {{
-              bundle_card_img
-              | image_url: width: 120
-              | image_tag:
-                loading: 'lazy',
-                class: 'frido-pdp-bundle__img',
-                widths: '80,120',
-                sizes: '64px',
-                alt: '',
-                data-frido-bundle-img: ''
-            }}
+            <img
+              class="frido-pdp-bundle__img"
+              src="{{ bundle_card_img | image_url: width: 120 }}"
+              alt=""
+              width="64"
+              height="64"
+              loading="lazy"
+              decoding="async"
+              data-frido-bundle-img
+            >
           {%- endif -%}
           <span class="frido-pdp-bundle__title">{{ block.settings.title | escape }}</span>
           <span class="frido-pdp-bundle__price">

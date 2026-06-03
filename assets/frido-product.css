@@ -908,6 +908,7 @@
   font-size: 9px;
   font-weight: 300;
   color: rgba(0, 0, 0, 0.45);
+  text-decoration: line-through;
 }
 
 .frido-pdp-bundle__save {
