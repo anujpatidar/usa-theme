@@ -24,15 +24,22 @@
       assign promo_position = section.settings.promo_position | default: 4
 
       assign collection_sort_key = collection.handle | default: 'collection'
-      if collection.all_tags.size > 0
-        assign sorted_tags = collection.all_tags | sort_natural | join: '+'
+      assign active_tags = current_tags
+      if active_tags.size > 0
+        assign sorted_tags = active_tags | sort_natural | join: '+'
         assign collection_sort_key = collection.handle | append: '+' | append: sorted_tags
       endif
 
       assign collection_variant_seed = collection.id | split: '/' | last | plus: 0
-      for tag in collection.all_tags
-        assign collection_variant_seed = collection_variant_seed | times: 31 | plus: tag.size
-      endfor
+      assign collection_key_seed = collection.handle.size
+      if active_tags.size > 0
+        for tag in active_tags
+          assign collection_key_seed = collection_key_seed | plus: tag.size | times: 17
+          assign collection_variant_seed = collection_variant_seed | times: 33 | plus: tag.size
+        endfor
+      else
+        assign collection_variant_seed = collection_variant_seed | times: 31 | plus: collection.handle.size
+      endif
     -%}
 
     {% render 'frido-facets-bar',
@@ -79,7 +86,8 @@
                   {% render 'frido-product-card',
                     card_product: product,
                     show_swatches: true,
-                    collection_seed: collection_variant_seed
+                    collection_seed: collection_variant_seed,
+                    collection_key_seed: collection_key_seed
                   %}
                 </li>
               {%- endfor -%}

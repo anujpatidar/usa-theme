@@ -2,7 +2,8 @@
   @param card_product {Product}
   @param show_swatches {Boolean}
   @param pdp_rec {Boolean} — PDP recommendation row styling (green sale badge)
-  @param collection_seed {Number} — per-collection seed; varies default color + card link
+  @param collection_seed {Number} — per-collection numeric seed
+  @param collection_key_seed {Number} — hash from handle + active URL tags
 {% endcomment %}
 {%- if card_product != blank -%}
   {%- liquid
@@ -17,10 +18,12 @@
     assign default_color_value = ''
     assign swatch_start_index = 0
 
-    if collection_seed != blank
-      assign coll_num = collection_seed | plus: 0
+    if collection_seed or collection_key_seed
+      assign coll_num = collection_seed | default: 0 | plus: 0
+      assign key_seed = collection_key_seed | default: 0 | plus: 0
       assign prod_num = card_product.id | split: '/' | last | plus: 0
-      assign swatch_start_index = prod_num | plus: coll_num | modulo: 97
+      assign handle_seed = card_product.handle | size
+      assign swatch_start_index = prod_num | times: 13 | plus: coll_num | plus: handle_seed | plus: key_seed | modulo: 997
 
       for option in card_product.options_with_values
         assign opt_down = option.name | downcase
@@ -139,23 +142,8 @@
           {%- if opt_down == 'color' or opt_down == 'colour' -%}
             <div class="frido-pcard__swatches" aria-label="{{ option.name | escape }}">
               {%- assign swatch_limit = 4 -%}
-              {%- assign color_size = option.values.size -%}
-              {%- assign extra = color_size | minus: swatch_limit -%}
-              {%- if extra < 0 -%}
-                {%- assign extra = 0 -%}
-              {%- endif -%}
-              {%- if collection_seed != blank and color_size > 0 -%}
-                {%- assign pick_index = swatch_start_index | modulo: color_size -%}
-              {%- else -%}
-                {%- assign pick_index = 0 -%}
-              {%- endif -%}
-              {%- assign swatch_shown = 0 -%}
-              {%- for value in option.values -%}
-                {%- assign offset = forloop.index0 | minus: pick_index | plus: color_size | modulo: color_size -%}
-                {%- unless offset < swatch_limit -%}
-                  {%- continue -%}
-                {%- endunless -%}
-                {%- assign swatch_shown = swatch_shown | plus: 1 -%}
+              {%- assign extra = option.values.size | minus: swatch_limit -%}
+              {%- for value in option.values limit: swatch_limit -%}
                 {%- liquid
                   assign swatch_variant = nil
                   case option.position
@@ -203,9 +191,8 @@
                   {%- endif -%}
                 </button>
               {%- endfor -%}
-              {%- assign hidden_swatches = color_size | minus: swatch_shown -%}
-              {%- if hidden_swatches > 0 -%}
-                <span class="frido-pcard__swatch-more">+{{ hidden_swatches }}</span>
+              {%- if extra > 0 -%}
+                <span class="frido-pcard__swatch-more">+{{ extra }}</span>
               {%- endif -%}
             </div>
             {%- break -%}
