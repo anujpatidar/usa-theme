@@ -1,5 +1,3 @@
-{{ 'frido-collection.css' | asset_url | stylesheet_tag }}
-
 {%- liquid
   assign hero_title = section.settings.title
   if hero_title == blank
@@ -18,9 +16,35 @@
     assign has_mf_description = true
   endif
 
-  assign mf_mobile_img = collection.metafields.custom.mobile_img.value | default: collection.metafields.custom.mobile_img
+  assign has_hero_description = false
+  if has_mf_description
+    assign has_hero_description = true
+  elsif section.settings.description != blank
+    assign has_hero_description = true
+  elsif collection.description != blank
+    assign has_hero_description = true
+  endif
 
+  assign mf_mobile_img = collection.metafields.custom.mobile_img.value | default: collection.metafields.custom.mobile_img
+  assign banner_desktop = section.settings.image | default: collection.image
+  assign banner_mobile = mf_mobile_img | default: section.settings.image_mobile
+  if banner_desktop == blank and banner_mobile != blank
+    assign banner_desktop = banner_mobile
+  endif
+
+  assign has_hero_image = false
+  if banner_desktop != blank or banner_mobile != blank
+    assign has_hero_image = true
+  endif
+
+  assign show_col_hero = false
+  if has_hero_image and has_hero_description
+    assign show_col_hero = true
+  endif
 -%}
+
+{%- if show_col_hero -%}
+{{ 'frido-collection.css' | asset_url | stylesheet_tag }}
 
 <section class="frido-col-hero color-{{ section.settings.color_scheme }} gradient" id="frido-col-hero-{{ section.id }}">
   <div class="frido-page-width frido-col-hero__grid">
@@ -78,13 +102,6 @@
     </div>
 
     <div class="frido-col-hero__media">
-      {%- liquid
-        assign banner_desktop = section.settings.image | default: collection.image
-        assign banner_mobile = mf_mobile_img | default: section.settings.image_mobile
-        if banner_desktop == blank and banner_mobile != blank
-          assign banner_desktop = banner_mobile
-        endif
-      -%}
       {% if banner_desktop != blank or banner_mobile != blank %}
         {%- assign hero_alt = banner_mobile.alt | default: banner_desktop.alt | default: hero_title | escape -%}
         <picture>
@@ -109,8 +126,6 @@
               class: 'frido-col-hero__img'
           }}
         </picture>
-      {% else %}
-        {{ 'lifestyle-2' | placeholder_svg_tag: 'frido-col-hero__img placeholder-svg' }}
       {% endif %}
 
       {% if section.settings.overlay_highlight != blank or section.settings.overlay_prefix != blank %}
@@ -247,6 +262,7 @@
     }
   })();
 </script>
+{%- endif -%}
 
 {% schema %}
 {

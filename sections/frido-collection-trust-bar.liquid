@@ -1,3 +1,25 @@
+{%- liquid
+  assign mf_description = collection.metafields.custom.hero_description
+  assign has_hero_description = false
+  if mf_description != blank
+    assign has_hero_description = true
+  elsif collection.description != blank
+    assign has_hero_description = true
+  endif
+
+  assign mf_mobile_img = collection.metafields.custom.mobile_img.value | default: collection.metafields.custom.mobile_img
+  assign has_hero_image = false
+  if collection.image != blank or mf_mobile_img != blank
+    assign has_hero_image = true
+  endif
+
+  assign show_col_trust = false
+  if has_hero_image and has_hero_description
+    assign show_col_trust = true
+  endif
+-%}
+
+{%- if show_col_trust -%}
 {{ 'frido-collection.css' | asset_url | stylesheet_tag }}
 
 <section class="frido-col-trust color-{{ section.settings.color_scheme }} gradient" id="frido-col-trust-{{ section.id }}" data-frido-col-trust>
@@ -58,6 +80,7 @@
     }, { passive: true });
   })();
 </script>
+{%- endif -%}
 
 {% schema %}
 {

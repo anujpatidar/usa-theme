@@ -107,8 +107,16 @@
 }
 
 .frido-pdp-sticky__badge-icon {
-  display: flex;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
   line-height: 0;
+}
+
+.frido-pdp-sticky__badge-icon .frido-icon-discount,
+.frido-pdp-sticky__badge-icon .frido-icon-discount svg {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .frido-pdp-sticky__selects {
