@@ -126,7 +126,8 @@
   margin: 0 0 1.25rem;
 }
 
-.frido-listicle__hero h1 em {
+.frido-listicle__hero h1 span {
+
   color: rgb(var(--color-secondary-button-text));
 }
 
