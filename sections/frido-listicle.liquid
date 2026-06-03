@@ -86,8 +86,8 @@
     </div>
   </header>
 
+  {%- if section.settings.show_compare -%}
   <div class="frido-listicle__wrap frido-listicle__wrap--wide">
-    {%- if section.settings.show_compare -%}
       <div class="frido-listicle__compare">
         <div class="frido-listicle__compare-grid" role="table">
           <div class="frido-listicle__compare-cell frido-listicle__compare-cell--label frido-listicle__compare-cell--head" role="columnheader"></div>
@@ -131,12 +131,11 @@
           <div class="frido-listicle__compare-cell" role="cell">{{ section.settings.compare_row_price_col3 | escape }}</div>
         </div>
       </div>
-    {%- endif -%}
-
     {%- if section.settings.tldr != blank -%}
       <p class="frido-listicle__tldr">{{ section.settings.tldr | escape }}</p>
     {%- endif -%}
   </div>
+  {%- endif -%}
 
   <div class="frido-listicle__wrap frido-listicle__wrap--wide">
     {%- assign reason_index = 0 -%}
@@ -390,7 +389,7 @@
       "type": "checkbox",
       "id": "show_compare",
       "label": "Show comparison table",
-      "default": true
+      "default": false
     },
     {
       "type": "product",
