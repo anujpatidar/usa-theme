@@ -16,9 +16,12 @@
         "reason_1": {
           "type": "reason",
           "settings": {
-            "title": "1. They Were Ready to Wear From Day One",
-            "body": "<p>This sounds small, but breaking in new shoes used to mean a week of blisters. These Active Casual Sneakers? Comfortable from the first walk. No stiff leather. No rubbing at the heel.</p><p>The first time I wore them to work, I actually forgot they were new. Why don't more brands get this right?</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-02_b735c7b1-6580-45c0-81f6-0a39ef088090.jpg?v=1777534310",
+            "title": "1. I Could Actually Put Them On",
+            "body": "<p>This sounds small, but bending down to tie shoes was agony for my back. These? Just step in.<strong>No bending, no laces, no struggle.<br/><br/></strong>The first time I put them on, I actually laughed. Why didn't anyone think of this sooner?</p>",
+            "media_type": "video",
+            "image_url": "",
+            "video": "shopify://files/videos/Videos - Arcads video asset (1) (online-video-cutter.com) (1).mp4",
+            "video_url": "",
             "link_label": "See the sneakers I swear by",
             "link_url": "shopify://products/frido-active-casual-sneakers-mens"
           }
@@ -28,7 +31,9 @@
           "settings": {
             "title": "2. Comfortable All Day Without Foot Pain",
             "body": "<p>Usually by noon my feet were screaming. I'd find excuses to sit down. With these, I'd look at the clock and realize I'd been on my feet for hours. <strong>No pain. No fatigue.</strong></p><p>The cushioned insole supports proper alignment, while the flexible design lets your feet move naturally. That reduces pressure on your knees, hips, and lower back.</p>",
+            "media_type": "image",
             "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-03_24097ef4-2a5c-44f0-99b3-f62734cd086d.jpg?v=1777534310",
+            "video_url": "",
             "link_label": "See the exact shoe that ended my foot pain",
             "link_url": "shopify://products/frido-active-casual-sneakers-mens"
           }
@@ -38,7 +43,9 @@
           "settings": {
             "title": "3. My Feet Felt Steadier, Not Just More Comfortable",
             "body": "<p>I used to feel wobbly on wet floors. Uneven sidewalks. That nervous half-second stepping off a curb. I'd grab handrails I didn't used to need.</p><p>These have a flexible, grippy sole that actually lets your feet feel the ground. Within a week I stopped reaching for the railing.</p>",
+            "media_type": "image",
             "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-04_0fbebb4f-4c1f-4763-82dc-35589b7e536c.jpg?v=1777534309",
+            "video_url": "",
             "link_label": "See the grip pattern",
             "link_url": "shopify://products/frido-active-casual-sneakers-mens"
           }
@@ -48,7 +55,11 @@
           "settings": {
             "title": "4. My Bunions Finally Had Room",
             "body": "<p>Tired of squeezing your feet into tight, narrow shoes? The wide toe box lets your toes spread naturally. No more pinching. No more throbbing by the end of the day.</p><p>First time in years my feet didn't feel squeezed. Bunions, hammer toes, wide feet — every pair of shoes used to be a negotiation. This one ends it.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05_1fd452c1-29ad-415c-aeed-ba92c9e6434b.jpg?v=1777534309"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-05_1fd452c1-29ad-415c-aeed-ba92c9e6434b.jpg?v=1777534309",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "reason_5": {
@@ -56,7 +67,11 @@
           "settings": {
             "title": "5. I Stopped Counting Hours Until I Could Sit Down",
             "body": "<p>For years my whole day was about feet. <em>How long until I can sit down. How far is the parking spot.</em></p><p>Then one Tuesday I looked at the clock. 4pm. I'd been on my feet since breakfast. <strong>I hadn't counted once.</strong> That's the whole test. These are the shoes that end the counting.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_15adb8d7-a3d7-49b5-80a7-af8d023b7025.jpg?v=1777534310"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-06_15adb8d7-a3d7-49b5-80a7-af8d023b7025.jpg?v=1777534310",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "cta_1": {
@@ -77,7 +92,11 @@
           "settings": {
             "title": "6. Arthritis Stiffness Finally Had A Shoe That Didn't Fight Back",
             "body": "<p>My rheumatologist told me years ago: <strong>the stiffer the shoe, the harder your joints work</strong>. Every \"supportive\" shoe I'd bought was stiff as a board.</p><p>These are the opposite. The flexible sole lets your feet move through their natural range, which means your knees and hips don't compensate for what your feet can't do. Morning stiffness still exists. But I'm not adding to it with my shoes.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_a2cda0bc-537d-4e55-a8fb-e88fe3a742fe.jpg?v=1777534310"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-01_a2cda0bc-537d-4e55-a8fb-e88fe3a742fe.jpg?v=1777534310",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "reason_7": {
@@ -85,7 +104,11 @@
           "settings": {
             "title": "7. Lighter Than Any Other Shoe I Owned",
             "body": "<p>My old \"comfort\" shoes felt like bricks. By evening, my whole legs were tired. These are <strong>ultra-light</strong>. I didn't believe it until I wore them for a full day.</p><p>My legs actually had energy left by dinner. I walked the dog twice without thinking about it.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-07..jpg?v=1778333078",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "reason_8": {
@@ -93,7 +116,11 @@
           "settings": {
             "title": "8. My Feet Stayed Cool Without Me Noticing",
             "body": "<p>Sweaty feet were my embarrassing secret. By midday, I'd be self-conscious. I'd kick my shoes off under my desk and hope nobody walked by.</p><p>The breathable upper keeps your feet cool and dry. No more damp, uncomfortable feet by lunch.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-08_5c0cdcfb-1b91-4e35-bb5c-71b995c29772.jpg?v=1769610420"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-08_5c0cdcfb-1b91-4e35-bb5c-71b995c29772.jpg?v=1769610420",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "reason_9": {
@@ -101,7 +128,11 @@
           "settings": {
             "title": "9. A Podiatrist Actually Recommends Them",
             "body": "<p>Not a paid celebrity. Not a wellness influencer. A board-certified foot doctor who sees patients every day for <strong>arthritis, neuropathy, plantar fasciitis, and balance issues</strong>.</p><p>Frido designs shoes specifically for people who've tried everything else. That's the kind of endorsement I trust.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B.jpg?v=1777534310"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00B.jpg?v=1777534310",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "reason_10": {
@@ -109,7 +140,11 @@
           "settings": {
             "title": "10. The Best Shoe I've Owned Cost Less Than The Worst",
             "body": "<p>I spent <strong>over $900</strong> on shoes that didn't help. Custom orthotics: $220, didn't work. Brooks: $180, didn't work. \"Orthopedic\" shoes: $150, didn't work.</p><p>These cost <strong>$99</strong>. The only ones that actually worked. Expensive isn't the same as right.</p>",
-            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A.jpg?v=1777534309"
+            "media_type": "image",
+            "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/AS-00A.jpg?v=1777534309",
+            "video_url": "",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "cta_2": {
@@ -154,6 +189,7 @@
         "author_name": "Sarah Mitchell",
         "author_role": "Comfort Shoe Enthusiast",
         "show_compare": true,
+        "product": "",
         "cta_url": "shopify://products/frido-active-casual-sneakers-mens",
         "product_name": "Frido Active Casual Sneakers",
         "product_price": "$99",
@@ -162,15 +198,19 @@
         "compare_col1_title": "Frido Active Casual",
         "compare_col2_title": "Nursing Clogs",
         "compare_col3_title": "Athletic Sneakers",
+        "compare_row_time_label": "Time to Put On",
         "compare_row_time_col1": "30 seconds",
         "compare_row_time_col2": "30–60 seconds",
         "compare_row_time_col3": "1–2 minutes",
+        "compare_row_comfort_label": "Shift Comfort",
         "compare_row_comfort_col1": "All-day cushioned",
         "compare_row_comfort_col2": "Rigid foot bed",
         "compare_row_comfort_col3": "Cushioned heel",
+        "compare_row_weight_label": "Weight",
         "compare_row_weight_col1": "Ultra-light",
         "compare_row_weight_col2": "14–16 oz",
         "compare_row_weight_col3": "10–12 oz",
+        "compare_row_price_label": "Price",
         "compare_price_note": "per pair",
         "compare_row_price_col2": "$120–$160",
         "compare_row_price_col3": "$80–$130",
@@ -182,5 +222,7 @@
       }
     }
   },
-  "order": ["listicle"]
+  "order": [
+    "listicle"
+  ]
 }
