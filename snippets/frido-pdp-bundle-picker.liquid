@@ -59,7 +59,12 @@
           assign bundle_subtotal = unit_price | times: bundle_qty
           assign bundle_mult = 100 | minus: bundle_pct
           assign bundle_price_cents = bundle_subtotal | times: bundle_mult | divided_by: 100
-          assign use_dynamic = bundle_pct > 0 or block.settings.price_text == blank
+          assign use_dynamic = false
+          if bundle_pct > 0
+            assign use_dynamic = true
+          elsif block.settings.price_text == blank
+            assign use_dynamic = true
+          endif
         -%}
         <button
           type="button"
