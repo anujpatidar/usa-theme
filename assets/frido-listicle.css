@@ -357,7 +357,7 @@
   border: 1px dashed rgba(var(--color-foreground), 0.22);
   border-radius: var(--frido-radius, 12px);
   background: #fff;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .frido-listicle__cta-badge {
