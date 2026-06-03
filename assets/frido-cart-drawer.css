@@ -259,7 +259,13 @@
 }
 
 .frido-cart-item__discount {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   margin: 0.5rem 0 0;
+  padding: 0.35rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(var(--color-button), 0.12);
   font-size: 1.1rem;
   color: rgb(var(--color-button));
   font-weight: 600;

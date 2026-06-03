@@ -1145,36 +1145,62 @@
             throw new Error(data.description || data.message || 'Cart error');
           }
 
-          if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
-            publish(PUB_SUB_EVENTS.cartUpdate, {
-              source: 'frido-bundle',
-              cartData: data,
+          function openCartWithData(cart) {
+            if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+              publish(PUB_SUB_EVENTS.cartUpdate, {
+                source: 'frido-bundle',
+                cartData: cart,
+              });
+            }
+
+            if (window.FridoCart && typeof window.FridoCart.open === 'function') {
+              window.FridoCart.open(atc);
+              return cart;
+            }
+
+            var drawer = document.querySelector('cart-drawer');
+            if (drawer && typeof drawer.open === 'function') {
+              drawer.open(atc);
+              return cart;
+            }
+
+            window.location.href = (window.routes && window.routes.cart_url) || '/cart';
+            return cart;
+          }
+
+          function fetchCartJson() {
+            return fetch('/cart.js', { headers: { Accept: 'application/json' } }).then(function (r) {
+              return r.json();
             });
           }
 
-          var cartUrl = (window.routes && window.routes.cart_url) || '/cart';
-          if (state.discountCode) {
-            window.location.href =
-              '/discount/' +
-              encodeURIComponent(state.discountCode) +
-              '?redirect=' +
-              encodeURIComponent(cartUrl);
-            return data;
+          var code = state.discountCode;
+          if (!code) {
+            return fetchCartJson().then(openCartWithData);
           }
 
-          if (window.FridoCart && typeof window.FridoCart.open === 'function') {
-            window.FridoCart.open(atc);
-            return data;
-          }
-
-          var drawer = document.querySelector('cart-drawer');
-          if (drawer && typeof drawer.open === 'function') {
-            drawer.open(atc);
-            return data;
-          }
-
-          window.location.href = cartUrl;
-          return data;
+          return fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ discount: code }),
+          })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (cart) {
+              if (cart.status) {
+                throw new Error(cart.description || cart.message || 'Discount could not be applied');
+              }
+              return openCartWithData(cart);
+            })
+            .catch(function () {
+              window.location.href =
+                '/discount/' +
+                encodeURIComponent(code) +
+                '?redirect=' +
+                encodeURIComponent((window.routes && window.routes.cart_url) || '/cart');
+              return data;
+            });
         })
         .finally(function () {
           if (atc) {

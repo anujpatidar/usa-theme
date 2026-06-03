@@ -27,6 +27,12 @@
     sizeGuide: 'See Size Guide',
   };
 
+  /** Matches PDP bundle codes / automatic discounts in Shopify admin. */
+  var BUNDLE_DISCOUNTS = {
+    BUNDLE2: { pct: 10, label: 'Buy 2 Get 10%' },
+    BUNDLE3: { pct: 20, label: 'Buy 3 Get 20%' },
+  };
+
   function qs(sel, root) {
     return (root || document).querySelector(sel);
   }
@@ -112,32 +118,129 @@
     if (hdr) hdr.hidden = n === 0;
   }
 
+  function getItemProperty(item, key) {
+    var props = normalizeProperties(item.properties);
+    return props[key] != null ? String(props[key]).trim() : '';
+  }
+
+  function bundleCodeFromItem(item) {
+    return getItemProperty(item, '_bundle_discount_code').toUpperCase();
+  }
+
+  function bundleRuleFromCode(code) {
+    return code ? BUNDLE_DISCOUNTS[code] || null : null;
+  }
+
+  function bundleRuleFromApplication(app) {
+    if (!app) return null;
+    var code = String(app.code || app.title || '').toUpperCase();
+    if (BUNDLE_DISCOUNTS[code]) return BUNDLE_DISCOUNTS[code];
+    var keys = Object.keys(BUNDLE_DISCOUNTS);
+    for (var i = 0; i < keys.length; i++) {
+      if (code.indexOf(keys[i]) !== -1) return BUNDLE_DISCOUNTS[keys[i]];
+    }
+    if (code.indexOf('10') !== -1 && (code.indexOf('2') !== -1 || code.indexOf('TWO') !== -1)) {
+      return BUNDLE_DISCOUNTS.BUNDLE2;
+    }
+    if (code.indexOf('20') !== -1 && (code.indexOf('3') !== -1 || code.indexOf('THREE') !== -1)) {
+      return BUNDLE_DISCOUNTS.BUNDLE3;
+    }
+    return null;
+  }
+
+  function countBundleLines(cart, code) {
+    if (!cart || !cart.items || !code) return 0;
+    return cart.items.reduce(function (sum, line) {
+      return bundleCodeFromItem(line) === code ? sum + line.quantity : sum;
+    }, 0);
+  }
+
   function lineDiscountAmount(item) {
     return Math.max(0, (item.original_line_price || 0) - (item.final_line_price || 0));
   }
 
-  function hasLineDiscount(item) {
-    return lineDiscountAmount(item) > 0;
+  function cartLevelShare(item, cart) {
+    if (!cart || !cart.total_discount || !cart.original_total_price) return 0;
+    if (lineDiscountAmount(item) > 0) return 0;
+    return Math.round((cart.total_discount * item.original_line_price) / cart.original_total_price);
   }
 
-  function lineDiscountText(item) {
-    if (!hasLineDiscount(item)) return '';
+  function getLineDiscountInfo(item, cart) {
+    var shopifyAmt = lineDiscountAmount(item);
+    var rule = bundleRuleFromCode(bundleCodeFromItem(item));
+    var label = rule ? rule.label : '';
+    var badgePct = rule ? rule.pct : 0;
 
-    var parts = [];
     (item.line_level_discount_allocations || []).forEach(function (d) {
-      if (d.discount_application && d.discount_application.title) {
-        parts.push(d.discount_application.title);
+      if (!d.discount_application) return;
+      var appRule = bundleRuleFromApplication(d.discount_application);
+      if (appRule) {
+        rule = appRule;
+        label = appRule.label;
+        badgePct = appRule.pct;
+      } else if (!label && d.discount_application.title) {
+        label = d.discount_application.title;
       }
     });
 
-    var amt = lineDiscountAmount(item);
-    var label = parts.length ? parts[0] : 'Discount';
-    return label + ' (-' + money(amt) + ')';
+    if (shopifyAmt > 0) {
+      return {
+        amount: shopifyAmt,
+        label: label || 'Discount',
+        badgePct: badgePct || Math.round((shopifyAmt * 100) / item.original_line_price),
+      };
+    }
+
+    var code = bundleCodeFromItem(item);
+    rule = bundleRuleFromCode(code);
+    if (rule && cart) {
+      var need = code === 'BUNDLE2' ? 2 : code === 'BUNDLE3' ? 3 : 0;
+      if (need && countBundleLines(cart, code) >= need) {
+        var est = Math.round((item.original_line_price * rule.pct) / 100);
+        if (est > 0) {
+          return { amount: est, label: rule.label, badgePct: rule.pct };
+        }
+      }
+    }
+
+    if (cart && cart.cart_level_discount_applications && cart.cart_level_discount_applications.length) {
+      var app = cart.cart_level_discount_applications[0];
+      rule = bundleRuleFromApplication(app);
+      var share = cartLevelShare(item, cart);
+      if (share > 0) {
+        return {
+          amount: share,
+          label: (rule && rule.label) || app.title || 'Item Discounts',
+          badgePct: rule ? rule.pct : 0,
+        };
+      }
+    }
+
+    return null;
   }
 
-  function savePct(item) {
-    if (!hasLineDiscount(item)) return 0;
-    return Math.round((lineDiscountAmount(item) * 100) / item.original_line_price);
+  function lineDiscountText(item, cart) {
+    var info = getLineDiscountInfo(item, cart);
+    if (!info || !info.amount) return '';
+    return info.label + ' (-' + money(info.amount) + ')';
+  }
+
+  function savePct(item, cart) {
+    var info = getLineDiscountInfo(item, cart);
+    return info && info.badgePct ? info.badgePct : 0;
+  }
+
+  function displayLinePricing(item, cart) {
+    var info = getLineDiscountInfo(item, cart);
+    var finalLine = item.final_line_price;
+    if (info && info.amount && lineDiscountAmount(item) === 0) {
+      finalLine = Math.max(0, (item.original_line_price || 0) - info.amount);
+    }
+    var compareLine = getCompareLinePrice(item);
+    if (compareLine <= finalLine && item.original_line_price > finalLine) {
+      compareLine = item.original_line_price;
+    }
+    return { finalLine: finalLine, compareLine: compareLine };
   }
 
   function variantPills(title) {
@@ -194,21 +297,22 @@
     return 0;
   }
 
-  function renderLinePrices(item) {
-    var compareLine = getCompareLinePrice(item);
+  function renderLinePrices(item, cart) {
+    var prices = displayLinePricing(item, cart);
     return (
       '<div class="frido-cart-item__prices">' +
-      (compareLine > item.final_line_price
-        ? '<span class="frido-cart-item__compare">' + money(compareLine) + '</span>'
+      (prices.compareLine > prices.finalLine
+        ? '<span class="frido-cart-item__compare">' + money(prices.compareLine) + '</span>'
         : '') +
-      '<span class="frido-cart-item__price">' + money(item.final_line_price) + '</span>' +
+      '<span class="frido-cart-item__price">' + money(prices.finalLine) + '</span>' +
       '</div>'
     );
   }
 
-  function renderLineItem(item) {
-    var pct = savePct(item);
-    var disc = lineDiscountText(item);
+  function renderLineItem(item, cart) {
+    cart = cart || cartState;
+    var pct = savePct(item, cart);
+    var disc = lineDiscountText(item, cart);
     var busy = pendingKey === item.key ? ' is-loading' : '';
     var img = item.image ? escapeHtml(item.image) : '';
     var handle = item.handle || itemHandle(item);
@@ -258,7 +362,7 @@
       escapeHtml(item.key) +
       '" data-delta="1" aria-label="Increase">+</button>' +
       '</div>' +
-      renderLinePrices(item) +
+      renderLinePrices(item, cart) +
       '</div>' +
       '<div class="frido-cart-item__edit">' +
       '<button type="button" data-frido-cart-edit="' +
@@ -374,17 +478,28 @@
       });
   }
 
+  function getCartDiscountTotal(cart) {
+    if (cart.total_discount > 0) return cart.total_discount;
+    var sum = 0;
+    cart.items.forEach(function (item) {
+      var info = getLineDiscountInfo(item, cart);
+      if (info) sum += info.amount;
+    });
+    return sum;
+  }
+
   function updateCartFooter(cart) {
     var subLabel = qs('[data-frido-cart-subtotal-label]', drawerEl);
     if (subLabel) {
       subLabel.textContent = 'Subtotal (' + cart.item_count + ' Item' + (cart.item_count === 1 ? '' : 's') + '):';
     }
     var sub = qs('[data-frido-cart-subtotal]', drawerEl);
-    if (sub) sub.textContent = money(cart.items_subtotal_price);
+    var subtotalCents = cart.original_total_price || cart.items_subtotal_price || 0;
+    if (sub) sub.textContent = money(subtotalCents);
 
     var discRow = qs('[data-frido-cart-discount-row]', drawerEl);
     var disc = qs('[data-frido-cart-discount]', drawerEl);
-    var cartDiscount = cart.total_discount > 0 ? cart.total_discount : 0;
+    var cartDiscount = getCartDiscountTotal(cart);
 
     if (cartDiscount > 0 && discRow && disc) {
       discRow.hidden = false;
@@ -395,7 +510,11 @@
     }
 
     var total = qs('[data-frido-cart-total]', drawerEl);
-    if (total) total.textContent = money(cart.total_price);
+    var totalCents =
+      cart.total_discount > 0
+        ? cart.total_price
+        : Math.max(0, subtotalCents - cartDiscount);
+    if (total) total.textContent = money(totalCents);
   }
 
   function patchLineItem(cart, item) {
@@ -406,9 +525,9 @@
     if (qtySpan) qtySpan.textContent = item.quantity;
 
     var prices = qs('.frido-cart-item__prices', line);
-    if (prices) prices.outerHTML = renderLinePrices(item);
+    if (prices) prices.outerHTML = renderLinePrices(item, cart);
 
-    var pct = savePct(item);
+    var pct = savePct(item, cart);
     var badge = qs('.frido-cart-item__save-badge', line);
     if (pct > 0) {
       if (!badge) {
@@ -426,7 +545,7 @@
       badge.remove();
     }
 
-    var disc = lineDiscountText(item);
+    var disc = lineDiscountText(item, cart);
     var discEl = qs('.frido-cart-item__discount', line);
     if (disc) {
       if (discEl) {
@@ -511,8 +630,14 @@
       var patchItem = cart.items.find(function (it) {
         return it.key === opts.patchKey;
       });
-      if (!patchItem || !patchLineItem(cart, patchItem)) {
-        if (itemsWrap) itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+        if (!patchItem || !patchLineItem(cart, patchItem)) {
+        if (itemsWrap) {
+          itemsWrap.innerHTML = cart.items
+            .map(function (item) {
+              return renderLineItem(item, cart);
+            })
+            .join('');
+        }
       }
     } else if (opts.syncItems && itemsWrap) {
       var existingKeys = qsa('[data-frido-cart-line]', itemsWrap).map(function (el) {
@@ -528,7 +653,11 @@
         });
 
       if (structureChanged) {
-        itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+        itemsWrap.innerHTML = cart.items
+          .map(function (item) {
+            return renderLineItem(item, cart);
+          })
+          .join('');
       } else {
         cart.items.forEach(function (item) {
           patchLineItem(cart, item);
@@ -536,7 +665,11 @@
       }
     } else if (itemsWrap) {
       itemsWrap.hidden = false;
-      itemsWrap.innerHTML = cart.items.map(renderLineItem).join('');
+      itemsWrap.innerHTML = cart.items
+        .map(function (item) {
+          return renderLineItem(item, cart);
+        })
+        .join('');
     }
 
     if (itemsWrap && cart.items.length) {
