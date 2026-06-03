@@ -27,22 +27,32 @@
   {%- if section.settings.show_sale_bar -%}
     <div class="frido-listicle__bar" data-frido-countdown>
       <div class="frido-listicle__bar-inner">
-        <span class="frido-listicle__bar-badge">👟 {{ section.settings.sale_badge | escape }}</span>
-        <span>{{ section.settings.sale_text | escape }}</span>
+        <div class="frido-listicle__bar-copy">
+          {%- if section.settings.sale_badge != blank -%}
+            <p class="frido-listicle__bar-title">{{ section.settings.sale_badge | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.sale_text != blank -%}
+            <p class="frido-listicle__bar-subline">{{ section.settings.sale_text | escape }}</p>
+          {%- endif -%}
+        </div>
+
         {%- if section.settings.show_countdown -%}
-          <span class="frido-listicle__countdown" aria-label="Sale ends in">
-            <span class="frido-listicle__countdown-num" data-countdown-hours>00</span>
-            <span class="frido-listicle__countdown-sep">Hrs</span>
-            <span class="frido-listicle__countdown-sep">:</span>
-            <span class="frido-listicle__countdown-num" data-countdown-mins>00</span>
-            <span class="frido-listicle__countdown-sep">Min</span>
-            <span class="frido-listicle__countdown-sep">:</span>
-            <span class="frido-listicle__countdown-num" data-countdown-secs>00</span>
-            <span class="frido-listicle__countdown-sep">Sec</span>
-          </span>
-        {%- endif -%}
-        {%- if section.settings.sale_subtext != blank -%}
-          <span class="frido-listicle__bar-sub">{{ section.settings.sale_subtext | escape }}</span>
+          <div class="frido-listicle__countdown" aria-label="Sale ends in">
+            <div class="frido-listicle__countdown-unit">
+              <span class="frido-listicle__countdown-num" data-countdown-hours>00</span>
+              <span class="frido-listicle__countdown-label">HRS</span>
+            </div>
+            <span class="frido-listicle__countdown-colon" aria-hidden="true">:</span>
+            <div class="frido-listicle__countdown-unit">
+              <span class="frido-listicle__countdown-num" data-countdown-mins>00</span>
+              <span class="frido-listicle__countdown-label">MIN</span>
+            </div>
+            <span class="frido-listicle__countdown-colon" aria-hidden="true">:</span>
+            <div class="frido-listicle__countdown-unit">
+              <span class="frido-listicle__countdown-num" data-countdown-secs>00</span>
+              <span class="frido-listicle__countdown-label">SEC</span>
+            </div>
+          </div>
         {%- endif -%}
       </div>
     </div>
@@ -315,14 +325,14 @@
     {
       "type": "text",
       "id": "sale_badge",
-      "label": "Sale badge",
+      "label": "Sale title (line 1)",
       "default": "SPRING SALE"
     },
     {
       "type": "text",
       "id": "sale_text",
-      "label": "Sale text",
-      "default": "UP TO 23% OFF + FREE SHIPPING"
+      "label": "Sale subline (line 2)",
+      "default": "UP TO 49% OFF + FREE SHIPPING"
     },
     {
       "type": "checkbox",

@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     {%- liquid
-      assign frido_theme_color = '#fcd00b'
+      assign frido_theme_color = '#1c1917'
       for scheme in settings.color_schemes
         if forloop.first
-          assign frido_theme_color = scheme.settings.button
+          assign frido_theme_color = scheme.settings.text
         endif
       endfor
     -%}

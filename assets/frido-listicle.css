@@ -28,59 +28,92 @@
   color: inherit;
 }
 
-/* ── Sticky sale bar ── */
+/* ── Sticky sale bar (two-line copy + pill countdown) ── */
 .frido-listicle__bar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgb(var(--color-button));
-  color: rgb(var(--color-button-text));
-  text-align: center;
-  padding: 0.55rem 1rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+  padding: 0.5rem 1.25rem;
 }
 
 .frido-listicle__bar-inner {
-  max-width: 720px;
+  max-width: 920px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem 0.75rem;
+  gap: 1rem 1.5rem;
 }
 
-.frido-listicle__bar-badge {
-  font-weight: 700;
+.frido-listicle__bar-copy {
+  text-align: left;
+  line-height: 1.2;
+}
+
+.frido-listicle__bar-title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--color-background));
+}
+
+.frido-listicle__bar-subline {
+  margin: 0.15rem 0 0;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(var(--color-background), 0.92);
 }
 
 .frido-listicle__countdown {
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  padding: 0.4rem 0.85rem;
+  background: rgba(var(--color-button), 0.35);
+  border-radius: var(--frido-radius-pill, 999px);
   font-variant-numeric: tabular-nums;
 }
 
+.frido-listicle__countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2rem;
+}
+
 .frido-listicle__countdown-num {
-  background: rgba(var(--color-button-text), 0.12);
-  border-radius: 4px;
-  padding: 0.1rem 0.35rem;
-  min-width: 1.75rem;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgb(var(--color-background));
+}
+
+.frido-listicle__countdown-label {
+  margin-top: 0.15rem;
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--color-background), 0.9);
+}
+
+.frido-listicle__countdown-colon {
+  align-self: flex-start;
+  margin-top: 0.12rem;
+  font-size: 1rem;
   font-weight: 700;
-}
-
-.frido-listicle__countdown-sep {
-  opacity: 0.75;
-  font-weight: 400;
-}
-
-.frido-listicle__bar-sub {
-  width: 100%;
-  font-size: 0.75rem;
-  font-weight: 500;
-  opacity: 0.9;
+  line-height: 1;
+  color: rgb(var(--color-background));
+  opacity: 0.95;
 }
 
 /* ── Publisher nav ── */
@@ -571,8 +604,32 @@
 /* ── Mobile ── */
 @media (max-width: 749px) {
   .frido-listicle__bar {
+    padding: 0.45rem 0.75rem;
+  }
+
+  .frido-listicle__bar-inner {
+    gap: 0.65rem 1rem;
+  }
+
+  .frido-listicle__bar-title {
     font-size: 0.75rem;
-    padding: 0.5rem 0.75rem;
+  }
+
+  .frido-listicle__bar-subline {
+    font-size: 0.5625rem;
+  }
+
+  .frido-listicle__countdown {
+    padding: 0.35rem 0.65rem;
+    gap: 0.25rem;
+  }
+
+  .frido-listicle__countdown-num {
+    font-size: 0.875rem;
+  }
+
+  .frido-listicle__countdown-unit {
+    min-width: 1.65rem;
   }
 
   .frido-listicle__hero {
