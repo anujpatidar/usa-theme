@@ -16,6 +16,38 @@
     return '$' + (cents / 100).toFixed(2);
   }
 
+  function getMoneyFormat(root) {
+    return (
+      (root && root.getAttribute('data-money-format')) ||
+      window.theme?.moneyFormat ||
+      '${{amount}}'
+    );
+  }
+
+  function getBundleDiscountPercent(card) {
+    if (!card) return 0;
+    var pct = parseInt(card.getAttribute('data-discount-percent'), 10);
+    if (isNaN(pct) || pct < 0) return 0;
+    return Math.min(pct, 100);
+  }
+
+  function computeBundleDisplay(variant, qty, discountPercent) {
+    if (!variant || qty < 1) return null;
+    var unit = variant.price;
+    var unitCompare =
+      variant.compare_at_price > variant.price ? variant.compare_at_price : variant.price;
+    var subtotal = unit * qty;
+    var bundlePrice =
+      discountPercent > 0
+        ? Math.round((subtotal * (100 - discountPercent)) / 100)
+        : subtotal;
+    return {
+      price: bundlePrice,
+      perPairCompare: unitCompare,
+      discountPercent: discountPercent,
+    };
+  }
+
   function getColorOptionIndex(product) {
     return product.options.findIndex(function (o) {
       return /colou?r/i.test(o);
@@ -666,6 +698,7 @@
     var maxPairs = Math.min(parseInt(bundleRoot.getAttribute('data-bundle-max-pairs'), 10) || 3, 3);
     var colorKey = ctx.colorKey || getColorOptionKey(product);
     var syncingFromPair = false;
+    var moneyFormat = getMoneyFormat(root);
 
     var state = {
       card: null,
@@ -713,7 +746,45 @@
       });
     }
 
-    root._fridoUpdateBundleCardImages = updateBundleCardImages;
+    function updateBundleCardPrices(v) {
+      if (!v) v = ctx.getCurrent();
+      if (!v) return;
+      qsa('[data-frido-bundle]', bundleRoot).forEach(function (card) {
+        var qty = parseInt(card.getAttribute('data-quantity'), 10) || 1;
+        var pct = getBundleDiscountPercent(card);
+        var display = computeBundleDisplay(v, qty, pct);
+        var priceEl = qs('[data-frido-bundle-price]', card);
+        var compareEl = qs('[data-frido-bundle-compare]', card);
+        var saveEl = qs('[data-frido-bundle-save]', card);
+        if (priceEl && display) {
+          priceEl.textContent = formatMoney(display.price, moneyFormat);
+        }
+        if (compareEl) {
+          if (display && display.perPairCompare) {
+            compareEl.textContent =
+              formatMoney(display.perPairCompare, moneyFormat) + ' Per Pair';
+            compareEl.hidden = false;
+          } else {
+            compareEl.hidden = true;
+          }
+        }
+        if (saveEl) {
+          if (pct > 0) {
+            saveEl.textContent = 'Save ' + pct + '%';
+            saveEl.hidden = false;
+          } else {
+            saveEl.hidden = true;
+          }
+        }
+      });
+    }
+
+    function refreshBundleCards(v) {
+      updateBundleCardImages(v);
+      updateBundleCardPrices(v);
+    }
+
+    root._fridoUpdateBundleCardImages = refreshBundleCards;
 
     function pairVariant(row) {
       var opts = {};
@@ -780,15 +851,20 @@
         }
       });
 
+      var discountPct = state.card ? getBundleDiscountPercent(state.card) : 0;
+      var finalTotal =
+        discountPct > 0 ? Math.round((total * (100 - discountPct)) / 100) : total;
+      var compareDisplay = Math.max(compareTotal, discountPct > 0 ? total : 0);
+
       var atcPrice = qs('[data-frido-atc-price]', root);
       var atcCompare = qs('[data-frido-atc-compare]', root);
       var stickyPrice = qs('[data-frido-sticky-price]', root);
-      if (atcPrice) atcPrice.textContent = formatMoney(total);
-      if (stickyPrice) stickyPrice.textContent = formatMoney(total);
+      if (atcPrice) atcPrice.textContent = formatMoney(finalTotal, moneyFormat);
+      if (stickyPrice) stickyPrice.textContent = formatMoney(finalTotal, moneyFormat);
       if (atcCompare) {
-        if (compareTotal > total) {
+        if (compareDisplay > finalTotal) {
           atcCompare.style.display = '';
-          atcCompare.textContent = formatMoney(compareTotal);
+          atcCompare.textContent = formatMoney(compareDisplay, moneyFormat);
         } else {
           atcCompare.style.display = 'none';
         }
@@ -817,7 +893,7 @@
         syncingFromPair = true;
         ctx.setCurrent(v);
         ctx.updateUI(v);
-        updateBundleCardImages(v);
+        refreshBundleCards(v);
         syncingFromPair = false;
       }
     }
@@ -834,7 +910,7 @@
         if (sel) sel.value = v['option' + (idx + 1)];
       });
       updatePairRow(first);
-      updateBundleCardImages(v);
+      refreshBundleCards(v);
     }
 
     root._fridoSyncMainToFirstPair = syncMainToFirstPair;
@@ -950,7 +1026,7 @@
       updateAddPairVisibility();
       updateBundleAtcPrices();
       var v = ctx.getCurrent();
-      if (v) updateBundleCardImages(v);
+      if (v) refreshBundleCards(v);
     }
 
     function applyCardState(card) {
@@ -963,7 +1039,7 @@
       root._fridoSyncMainToFirstPair = syncMainToFirstPair;
       showConfig(true);
       if (ctx.qtyInput) ctx.qtyInput.value = state.baseQty;
-      root._fridoUpdateBundleCardImages = updateBundleCardImages;
+      root._fridoUpdateBundleCardImages = refreshBundleCards;
     }
 
     function activateBundle(card) {
@@ -978,7 +1054,7 @@
       applyCardState(card);
       setPairRows(qty);
       var v = ctx.getCurrent();
-      if (v) updateBundleCardImages(v);
+      if (v) refreshBundleCards(v);
     }
 
     function deactivateBundle() {
@@ -1017,6 +1093,7 @@
     }
 
     showConfig(false);
+    refreshBundleCards(ctx.getCurrent());
 
     function addBundleToCart() {
       var rows = qsa('[data-frido-bundle-pair]', pairsWrap);

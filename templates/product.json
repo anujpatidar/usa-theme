@@ -44,9 +44,9 @@
             "title": "2 Pairs",
             "quantity": 2,
             "discount_code": "BUNDLE2",
-            "price_text": "$63",
-            "compare_text": "$140 Per Pair",
-            "save_label": "Save 55%"
+            "price_text": "",
+            "compare_text": "",
+            "save_label": ""
           }
         },
         "bundle_2": {
@@ -57,9 +57,9 @@
             "title": "3 Pairs",
             "quantity": 3,
             "discount_code": "BUNDLE3",
-            "price_text": "$56",
-            "compare_text": "$140 Per Pair",
-            "save_label": "Save 60%"
+            "price_text": "",
+            "compare_text": "",
+            "save_label": ""
           }
         }
       },

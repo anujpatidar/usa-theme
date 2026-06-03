@@ -48,11 +48,25 @@
 
     <div class="frido-pdp-bundles__grid">
       {%- for block in bundle_blocks -%}
+        {%- liquid
+          assign bundle_qty = block.settings.quantity | default: 1
+          assign bundle_pct = block.settings.discount_percent | default: 0
+          assign unit_price = current_variant.price
+          assign unit_compare = current_variant.compare_at_price | default: unit_price
+          if unit_compare < unit_price
+            assign unit_compare = unit_price
+          endif
+          assign bundle_subtotal = unit_price | times: bundle_qty
+          assign bundle_mult = 100 | minus: bundle_pct
+          assign bundle_price_cents = bundle_subtotal | times: bundle_mult | divided_by: 100
+          assign use_dynamic = bundle_pct > 0 or block.settings.price_text == blank
+        -%}
         <button
           type="button"
           class="frido-pdp-bundle"
           data-frido-bundle
-          data-quantity="{{ block.settings.quantity | default: 1 }}"
+          data-quantity="{{ bundle_qty }}"
+          data-discount-percent="{{ bundle_pct }}"
           data-discount-code="{{ block.settings.discount_code | escape }}"
           data-bundle-title="{{ block.settings.title | escape }}"
           aria-pressed="false"
@@ -78,13 +92,37 @@
             }}
           {%- endif -%}
           <span class="frido-pdp-bundle__title">{{ block.settings.title | escape }}</span>
-          <span class="frido-pdp-bundle__price">{{ block.settings.price_text | escape }} {%- if block.settings.compare_text != blank -%}
-            <span class="frido-pdp-bundle__compare">{{ block.settings.compare_text | escape }}</span>
-          {%- endif -%}</span>
-        
-          {%- if block.settings.save_label != blank -%}
-            <span class="frido-pdp-bundle__save">{{ block.settings.save_label | escape }}</span>
-          {%- endif -%}
+          <span class="frido-pdp-bundle__price">
+            <span data-frido-bundle-price>
+              {%- if use_dynamic -%}
+                {{ bundle_price_cents | money }}
+              {%- else -%}
+                {{ block.settings.price_text | escape }}
+              {%- endif -%}
+            </span>
+            <span
+              class="frido-pdp-bundle__compare"
+              data-frido-bundle-compare
+              {% if use_dynamic == false and block.settings.compare_text == blank %}hidden{% endif %}
+            >
+              {%- if use_dynamic -%}
+                {{ unit_compare | money }} Per Pair
+              {%- elsif block.settings.compare_text != blank -%}
+                {{ block.settings.compare_text | escape }}
+              {%- endif -%}
+            </span>
+          </span>
+          <span
+            class="frido-pdp-bundle__save"
+            data-frido-bundle-save
+            {% if bundle_pct == 0 and block.settings.save_label == blank %}hidden{% endif %}
+          >
+            {%- if block.settings.save_label != blank -%}
+              {{ block.settings.save_label | escape }}
+            {%- elsif bundle_pct > 0 -%}
+              Save {{ bundle_pct }}%
+            {%- endif -%}
+          </span>
         </button>
       {%- endfor -%}
     </div>

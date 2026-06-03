@@ -19,6 +19,7 @@
   id="FridoProduct-{{ section.id }}"
   data-section="{{ section.id }}"
   data-product-id="{{ product.id }}"
+  data-money-format="{{ shop.money_format | escape }}"
   data-frido-pdp
 >
   <script type="application/json" data-frido-product-json>
@@ -487,9 +488,35 @@
           "label": "Discount code",
           "info": "Shopify discount code applied after add to cart (e.g. BUNDLE2, BUNDLE3). Create matching automatic discounts in Shopify admin."
         },
-        { "type": "text", "id": "price_text", "label": "Price display", "default": "$63" },
-        { "type": "text", "id": "compare_text", "label": "Compare text", "default": "$140 Per Pair" },
-        { "type": "text", "id": "save_label", "label": "Save badge", "default": "Save 55%" }
+        {
+          "type": "range",
+          "id": "discount_percent",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "%",
+          "label": "Bundle discount (%)",
+          "info": "Applied to the sum of pair prices on the card and Add to Cart. Must match your Shopify discount.",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Price override (optional)",
+          "info": "Leave blank to calculate from the selected variant."
+        },
+        {
+          "type": "text",
+          "id": "compare_text",
+          "label": "Compare override (optional)",
+          "info": "Leave blank to show per-pair compare price from the variant."
+        },
+        {
+          "type": "text",
+          "id": "save_label",
+          "label": "Save badge override (optional)",
+          "info": "Leave blank to use “Save X%” from bundle discount % above."
+        }
       ]
     },
     {
