@@ -2,9 +2,11 @@
   @param card_product {Product}
   @param show_swatches {Boolean}
   @param pdp_rec {Boolean} — PDP recommendation row styling (green sale badge)
+  @param collection_seed {Number} — per-collection seed; varies default color + card link
 {% endcomment %}
 {%- if card_product != blank -%}
   {%- liquid
+    assign card_url = card_product.url
     assign compare = card_product.compare_at_price
     assign price = card_product.price
     assign discount_pct = 0
@@ -12,6 +14,57 @@
       assign discount_pct = compare | minus: price | times: 100.0 | divided_by: compare | round
     endif
     assign default_media = card_product.featured_media
+    assign default_color_value = ''
+    assign swatch_start_index = 0
+
+    if collection_seed != blank
+      assign coll_num = collection_seed | plus: 0
+      assign prod_num = card_product.id | split: '/' | last | plus: 0
+      assign swatch_start_index = prod_num | plus: coll_num | modulo: 97
+
+      for option in card_product.options_with_values
+        assign opt_down = option.name | downcase
+        if opt_down == 'color' or opt_down == 'colour'
+          assign color_count = option.values.size
+          if color_count > 0
+            assign pick_index = swatch_start_index | modulo: color_count
+            for value in option.values
+              if forloop.index0 == pick_index
+                assign default_color_value = value
+              endif
+            endfor
+
+            case option.position
+              when 1
+                assign picked_variant = card_product.variants | where: 'option1', default_color_value | first
+              when 2
+                assign picked_variant = card_product.variants | where: 'option2', default_color_value | first
+              when 3
+                assign picked_variant = card_product.variants | where: 'option3', default_color_value | first
+            endcase
+
+            if picked_variant != blank
+              if picked_variant.featured_media != blank
+                assign default_media = picked_variant.featured_media
+              elsif picked_variant.image != blank
+                assign default_media = picked_variant.image
+              endif
+              assign price = picked_variant.price
+              assign compare = picked_variant.compare_at_price
+              if compare != blank and compare > price
+                assign discount_pct = compare | minus: price | times: 100.0 | divided_by: compare | round
+              else
+                assign discount_pct = 0
+              endif
+              assign variant_id_num = picked_variant.id | split: '/' | last
+              assign card_url = card_product.url | append: '?variant=' | append: variant_id_num
+            endif
+          endif
+          break
+        endif
+      endfor
+    endif
+
     assign default_image_url = ''
     if default_media
       assign default_image_url = default_media | image_url: width: 800
@@ -21,6 +74,7 @@
   <article
     class="frido-pcard{% if pdp_rec %} frido-pcard--pdp-rec{% endif %}"
     data-frido-pcard
+    data-product-id="{{ card_product.id }}"
     {% if default_image_url != blank %}data-default-image="{{ default_image_url }}"{% endif %}
   >
     {%- if discount_pct > 0 -%}
@@ -30,7 +84,7 @@
       <span class="frido-pcard__badge frido-pcard__badge--secondary">{{ card_badge_secondary | escape }}</span>
     {%- endif -%}
 
-    <a class="frido-pcard__link" href="{{ card_product.url }}">
+    <a class="frido-pcard__link" href="{{ card_url }}">
       <div class="frido-pcard__img">
         {%- if default_media -%}
           {%- assign img_alt = default_media.alt | default: card_product.title | escape -%}
@@ -52,7 +106,7 @@
     </a>
 
     <div class="frido-pcard__body">
-      <a class="frido-pcard__body-link" href="{{ card_product.url }}">
+      <a class="frido-pcard__body-link" href="{{ card_url }}">
         <div class="frido-pcard__cat">
           {%- if card_product.type != blank -%}
             {{ card_product.type | upcase }}
@@ -85,8 +139,23 @@
           {%- if opt_down == 'color' or opt_down == 'colour' -%}
             <div class="frido-pcard__swatches" aria-label="{{ option.name | escape }}">
               {%- assign swatch_limit = 4 -%}
-              {%- assign extra = option.values.size | minus: swatch_limit -%}
-              {%- for value in option.values limit: swatch_limit -%}
+              {%- assign color_size = option.values.size -%}
+              {%- assign extra = color_size | minus: swatch_limit -%}
+              {%- if extra < 0 -%}
+                {%- assign extra = 0 -%}
+              {%- endif -%}
+              {%- if collection_seed != blank and color_size > 0 -%}
+                {%- assign pick_index = swatch_start_index | modulo: color_size -%}
+              {%- else -%}
+                {%- assign pick_index = 0 -%}
+              {%- endif -%}
+              {%- assign swatch_shown = 0 -%}
+              {%- for value in option.values -%}
+                {%- assign offset = forloop.index0 | minus: pick_index | plus: color_size | modulo: color_size -%}
+                {%- unless offset < swatch_limit -%}
+                  {%- continue -%}
+                {%- endunless -%}
+                {%- assign swatch_shown = swatch_shown | plus: 1 -%}
                 {%- liquid
                   assign swatch_variant = nil
                   case option.position
@@ -112,7 +181,10 @@
                 -%}
                 <button
                   type="button"
-                  class="frido-pcard__swatch{% if swatch_image_url == blank %} frido-pcard__swatch--no-img{% endif %}"
+                  class="frido-pcard__swatch{% if swatch_image_url == blank %} frido-pcard__swatch--no-img{% endif %}{% if default_color_value != blank and value == default_color_value %} is-active{% endif %}"
+                  {% if default_color_value != blank and value == default_color_value %}
+                    data-frido-pcard-swatch-default
+                  {% endif %}
                   title="{{ value | escape }}"
                   aria-label="{{ value | escape }}"
                   {% if swatch_image_url != blank %}
@@ -131,8 +203,9 @@
                   {%- endif -%}
                 </button>
               {%- endfor -%}
-              {%- if extra > 0 -%}
-                <span class="frido-pcard__swatch-more">+{{ extra }}</span>
+              {%- assign hidden_swatches = color_size | minus: swatch_shown -%}
+              {%- if hidden_swatches > 0 -%}
+                <span class="frido-pcard__swatch-more">+{{ hidden_swatches }}</span>
               {%- endif -%}
             </div>
             {%- break -%}

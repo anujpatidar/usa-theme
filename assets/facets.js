@@ -91,6 +91,10 @@ class FacetFiltersForm extends HTMLElement {
       .forEach((element) => {
         element.classList.add('scroll-trigger--cancel');
       });
+
+    const grid = document.getElementById('product-grid');
+    if (grid) grid.removeAttribute('data-frido-order-applied');
+    document.dispatchEvent(new CustomEvent('frido:collection:grid-updated'));
   }
 
   static renderProductCount(html) {
