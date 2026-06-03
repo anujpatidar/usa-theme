@@ -1,0 +1,48 @@
+{% comment %}
+  Mobile catalog filter groups (tag-based links).
+  @param collection {Collection}
+  @param section {Section}
+{% endcomment %}
+{%- if collection != blank -%}
+{%- liquid
+  assign groups = 'Category|Shoes,Socks::Gender|Women,Men::Activity|Walking,Work::Condition|Plantar Fasciitis,Diabetes,Bunions,Flat Feet,Arthritis,Back Pain,Gout,Hammer Toes,Heel Spurs,Hip Pain,Knee Pain,Neuropathy,Overpronation,Swollen Feet' | split: '::'
+-%}
+
+{%- for group in groups -%}
+  {%- assign parts = group | split: '|' -%}
+  {%- assign group_label = parts[0] -%}
+  {%- assign tags_csv = parts[1] -%}
+  {%- assign tag_list = tags_csv | split: ',' -%}
+  <details class="frido-col-facets-drawer__group js-filter" id="Details-Mobile-catalog-{{ group_label | handleize }}-{{ section.id }}">
+    <summary class="frido-col-facets-drawer__group-head">
+      <span>{{ group_label | escape }}</span>
+      <span class="frido-col-facets-drawer__chev" aria-hidden="true"></span>
+    </summary>
+    <div class="frido-col-facets-drawer__group-body">
+      <ul class="frido-col-facets-drawer__list" role="list">
+        {%- for tag in tag_list -%}
+          {%- liquid
+            assign tag_trim = tag | strip
+            assign tag_active = false
+            for t in current_tags
+              if t == tag_trim
+                assign tag_active = true
+              endif
+            endfor
+          -%}
+          {%- render 'frido-facet-tag-url', collection: collection, tag: tag_trim, active: tag_active -%}
+          <li>
+            <a
+              href="{{ facet_tag_url }}"
+              class="frido-col-facets-drawer__check frido-facets__tag-link{% if tag_active %} is-active{% endif %}"
+            >
+              <span class="frido-col-facets-drawer__box" aria-hidden="true"></span>
+              <span>{{ tag_trim | escape }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </details>
+{%- endfor -%}
+{%- endif -%}

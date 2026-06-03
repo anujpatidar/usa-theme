@@ -1,5 +1,6 @@
 /**
- * Collection product cards — per-collection order, default swatch, image swap on hover
+ * Collection product cards — default swatch + image swap on hover.
+ * Product order is set server-side in snippets/frido-collection-grid-items.liquid.
  */
 (function () {
   function getCardImg(card) {
@@ -35,48 +36,6 @@
       btn.classList.toggle('is-active', btn === swatch);
     });
   }
-
-  function sortKey(collectionKey, productId) {
-    var str = String(collectionKey || '') + '|' + String(productId || '');
-    var h = 0;
-    for (var i = 0; i < str.length; i++) {
-      h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
-    }
-    return h;
-  }
-
-  function initCollectionGridOrder() {
-    var list = document.getElementById('product-grid');
-    if (!list || list.getAttribute('data-frido-order-applied') === '1') return;
-
-    var collectionKey = list.getAttribute('data-collection-key');
-    if (!collectionKey) return;
-
-    var items = Array.prototype.slice.call(
-      list.querySelectorAll(':scope > .frido-collection-page__item:not(.frido-collection-page__item--promo)')
-    );
-    if (items.length < 2) return;
-
-    items.sort(function (a, b) {
-      var cardA = a.querySelector('[data-frido-pcard]');
-      var cardB = b.querySelector('[data-frido-pcard]');
-      var idA = cardA && cardA.getAttribute('data-product-id');
-      var idB = cardB && cardB.getAttribute('data-product-id');
-      return sortKey(collectionKey, idA) - sortKey(collectionKey, idB);
-    });
-
-    items.forEach(function (item) {
-      list.appendChild(item);
-    });
-    list.setAttribute('data-frido-order-applied', '1');
-  }
-
-  function initCollectionGrid() {
-    initCollectionGridOrder();
-  }
-
-  document.addEventListener('DOMContentLoaded', initCollectionGrid);
-  document.addEventListener('frido:collection:grid-updated', initCollectionGrid);
 
   document.addEventListener(
     'mouseenter',

@@ -1,0 +1,35 @@
+{% comment %}
+  Build collection URL with tag added or removed (path-based: /collections/handle/tag1+tag2).
+  @param collection {Collection}
+  @param tag {String} — exact product tag
+  @param active {Boolean} — if true, returns URL with this tag removed
+{% endcomment %}
+{%- liquid
+  assign tag_handle = tag | handleize
+  assign handles = ''
+
+  for t in current_tags
+    unless active and t == tag
+      assign h = t | handleize
+      if handles == ''
+        assign handles = h
+      else
+        assign handles = handles | append: '+' | append: h
+      endif
+    endunless
+  endfor
+
+  unless active
+    if handles == ''
+      assign handles = tag_handle
+    else
+      assign handles = handles | append: '+' | append: tag_handle
+    endif
+  endunless
+
+  if handles == ''
+    assign facet_tag_url = collection.url
+  else
+    assign facet_tag_url = collection.url | append: '/' | append: handles
+  endif
+-%}

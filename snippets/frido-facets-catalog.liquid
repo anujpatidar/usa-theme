@@ -1,0 +1,35 @@
+{% comment %}
+  Standard catalog filters on every collection (tag-based paths).
+  @param collection {Collection}
+  @param section {Section}
+{% endcomment %}
+{%- if collection != blank -%}
+  {% render 'frido-facets-catalog-group',
+    collection: collection,
+    section: section,
+    group_id: 'category',
+    label: 'Category',
+    tags_csv: 'Shoes,Socks'
+  %}
+  {% render 'frido-facets-catalog-group',
+    collection: collection,
+    section: section,
+    group_id: 'gender',
+    label: 'Gender',
+    tags_csv: 'Women,Men'
+  %}
+  {% render 'frido-facets-catalog-group',
+    collection: collection,
+    section: section,
+    group_id: 'activity',
+    label: 'Activity',
+    tags_csv: 'Walking,Work'
+  %}
+  {% render 'frido-facets-catalog-group',
+    collection: collection,
+    section: section,
+    group_id: 'condition',
+    label: 'Condition',
+    tags_csv: 'Plantar Fasciitis,Diabetes,Bunions,Flat Feet,Arthritis,Back Pain,Gout,Hammer Toes,Heel Spurs,Hip Pain,Knee Pain,Neuropathy,Overpronation,Swollen Feet'
+  %}
+{%- endif -%}

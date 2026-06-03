@@ -524,3 +524,18 @@
   background: rgba(0, 0, 0, 0.4);
   z-index: 119;
 }
+
+/* Tag-based catalog filters (always on collection pages) */
+a.frido-facets__tag-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a.frido-facets__tag-link:hover {
+  color: #000;
+}
+
+.frido-facets__dropdown--catalog .facets__panel {
+  max-height: 28rem;
+  overflow-y: auto;
+}

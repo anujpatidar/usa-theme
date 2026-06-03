@@ -71,8 +71,18 @@
               </details>
             {%- endif -%}
 
+            {%- if collection != blank -%}
+              {% render 'frido-facets-catalog-mobile', collection: collection, section: section %}
+            {%- endif -%}
+
             {%- if enable_filtering -%}
               {%- for filter in results.filters -%}
+                {%- liquid
+                  assign filter_label_down = filter.label | downcase
+                  if filter_label_down == 'category' or filter_label_down == 'gender' or filter_label_down == 'activity' or filter_label_down == 'condition'
+                    continue
+                  endif
+                -%}
                 <details class="frido-col-facets-drawer__group js-filter" id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}">
                   <summary class="frido-col-facets-drawer__group-head">
                     <span>{{ filter.label | escape }}</span>

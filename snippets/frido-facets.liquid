@@ -54,6 +54,9 @@
 
       {%- liquid
         assign has_active_facets = false
+        if current_tags.size > 0
+          assign has_active_facets = true
+        endif
         for filter in results.filters
           if filter.active_values.size > 0
             assign has_active_facets = true
@@ -71,6 +74,27 @@
       -%}
 
       <div class="active-facets active-facets-desktop frido-facets__active{% unless has_active_facets %} frido-facets__active--empty{% endunless %}">
+        {%- if collection != blank -%}
+        {%- for tag in current_tags -%}
+          {%- liquid
+            assign tag_group = 'Condition'
+            if tag == 'Shoes' or tag == 'Socks'
+              assign tag_group = 'Category'
+            elsif tag == 'Women' or tag == 'Men'
+              assign tag_group = 'Gender'
+            elsif tag == 'Walking' or tag == 'Work'
+              assign tag_group = 'Activity'
+            endif
+          -%}
+          {%- render 'frido-facet-tag-url', collection: collection, tag: tag, active: true -%}
+          <facet-remove>
+            <a href="{{ facet_tag_url }}" class="frido-facets__pill">
+              <span>{{ tag_group | escape }}: {{ tag | escape }}</span>
+              <span class="frido-facets__pill-x" aria-hidden="true">×</span>
+            </a>
+          </facet-remove>
+        {%- endfor -%}
+        {%- endif -%}
         {%- for filter in results.filters -%}
           {%- for value in filter.active_values -%}
             <facet-remove>
@@ -133,9 +157,17 @@
           </details>
         {%- endif -%}
 
+        {%- if collection != blank -%}
+          {% render 'frido-facets-catalog', collection: collection, section: section %}
+        {%- endif -%}
+
         {%- if enable_filtering -%}
           {%- for filter in results.filters -%}
             {%- liquid
+              assign filter_label_down = filter.label | downcase
+              if filter_label_down == 'category' or filter_label_down == 'gender' or filter_label_down == 'activity' or filter_label_down == 'condition'
+                continue
+              endif
               assign active_count = filter.active_values.size
               if filter.type == 'price_range'
                 assign min = filter.min_value.value
@@ -237,6 +269,7 @@
   <div class="frido-facets__mobile-bar">
     {% render 'frido-facets-mobile',
       results: results,
+      collection: collection,
       enable_filtering: enable_filtering,
       enable_sorting: enable_sorting,
       section: section,

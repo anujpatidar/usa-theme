@@ -1,0 +1,74 @@
+{% comment %}
+  Collection product grid items — sorted per collection + tags (stable pseudo-random order).
+  @param collection {Collection}
+  @param collection_sort_key {String}
+  @param collection_variant_seed {Number}
+  @param collection_key_seed {Number}
+  @param promo_block {Block}
+  @param promo_position {Number}
+  @param use_collection_order {Boolean}
+  @param section {Section}
+{% endcomment %}
+{%- liquid
+  assign placed_ids = '|'
+  assign products_count = collection.products.size
+  assign promo_position = promo_position | default: 4
+  assign use_collection_order = use_collection_order | default: true
+-%}
+
+{%- unless use_collection_order -%}
+  {%- for product in collection.products -%}
+    {%- if promo_block != blank and forloop.index == promo_position -%}
+      <li class="frido-collection-page__item frido-collection-page__item--promo">
+        {% render 'frido-collection-promo', block: promo_block %}
+      </li>
+    {%- endif -%}
+    <li class="frido-collection-page__item">
+      {% render 'frido-product-card',
+        card_product: product,
+        show_swatches: true,
+        collection_seed: collection_variant_seed,
+        collection_key_seed: collection_key_seed
+      %}
+    </li>
+  {%- endfor -%}
+{%- else -%}
+
+{%- for display_slot in (1..products_count) -%}
+  {%- if promo_block != blank and display_slot == promo_position -%}
+    <li class="frido-collection-page__item frido-collection-page__item--promo">
+      {% render 'frido-collection-promo', block: promo_block %}
+    </li>
+  {%- endif -%}
+
+  {%- liquid
+    assign best_hash = 'ffffffffffffffffffffffffffffffff'
+    assign best_product = nil
+
+    for product in collection.products
+      assign id_token = '|' | append: product.id | append: '|'
+      unless placed_ids contains id_token
+        assign sort_mix = collection_sort_key | append: '|' | append: product.id
+        assign product_hash = sort_mix | md5
+        if product_hash < best_hash
+          assign best_hash = product_hash
+          assign best_product = product
+        endif
+      endunless
+    endfor
+  -%}
+
+  {%- if best_product != blank -%}
+    {%- assign placed_ids = placed_ids | append: best_product.id | append: '|' -%}
+    <li class="frido-collection-page__item">
+      {% render 'frido-product-card',
+        card_product: best_product,
+        show_swatches: true,
+        collection_seed: collection_variant_seed,
+        collection_key_seed: collection_key_seed
+      %}
+    </li>
+  {%- endif -%}
+{%- endfor -%}
+
+{%- endunless -%}

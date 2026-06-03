@@ -1,0 +1,56 @@
+{% comment %}
+  One catalog filter dropdown (tag-based).
+  @param collection {Collection}
+  @param section {Section}
+  @param group_id {String}
+  @param label {String}
+  @param tags_csv {String} — comma-separated product tags
+{% endcomment %}
+{%- liquid
+  assign tag_list = tags_csv | split: ','
+  assign active_count = 0
+  for tag in tag_list
+    assign tag_trim = tag | strip
+    for t in current_tags
+      if t == tag_trim
+        assign active_count = active_count | plus: 1
+      endif
+    endfor
+  endfor
+-%}
+<details
+  id="Details-catalog-{{ group_id }}-{{ section.id }}"
+  class="frido-facets__dropdown js-filter disclosure-has-popup facets__disclosure frido-facets__dropdown--catalog{% if active_count > 0 %} frido-facets__dropdown--active{% endif %}"
+>
+  <summary class="frido-facets__summary facets__summary">
+    <span class="frido-facets__summary-label">{{ label | escape }}</span>
+    {%- if active_count > 0 -%}
+      <span class="frido-facets__badge">{{ active_count }}</span>
+    {%- endif -%}
+    <span class="frido-facets__chevron" aria-hidden="true"></span>
+  </summary>
+  <div class="facets__display frido-facets__panel">
+    <ul class="facets-layout facets-layout-list facets__list list-unstyled" role="list">
+      {%- for tag in tag_list -%}
+        {%- liquid
+          assign tag_trim = tag | strip
+          assign tag_active = false
+          for t in current_tags
+            if t == tag_trim
+              assign tag_active = true
+            endif
+          endfor
+        -%}
+        {%- render 'frido-facet-tag-url', collection: collection, tag: tag_trim, active: tag_active -%}
+        <li class="list-menu__item facets__item">
+          <a
+            href="{{ facet_tag_url }}"
+            class="facets__label facet-checkbox frido-facets__tag-link{% if tag_active %} active{% endif %}"
+          >
+            <span class="facet-checkbox__text-label">{{ tag_trim | escape }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</details>

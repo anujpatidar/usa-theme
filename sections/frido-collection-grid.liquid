@@ -40,10 +40,16 @@
       else
         assign collection_variant_seed = collection_variant_seed | times: 31 | plus: collection.handle.size
       endif
+
+      assign use_collection_order = true
+      if collection.sort_by != blank and collection.sort_by != collection.default_sort_by
+        assign use_collection_order = false
+      endif
     -%}
 
     {% render 'frido-facets-bar',
       results: collection,
+      collection: collection,
       section: section,
       enable_filtering: section.settings.enable_filtering,
       enable_sorting: section.settings.enable_sorting,
@@ -73,24 +79,20 @@
               id="product-grid"
               data-id="{{ section.id }}"
               data-collection-key="{{ collection_sort_key }}"
+              data-frido-sorted="liquid"
               class="frido-collection-page__list"
               style="--frido-cols: {{ section.settings.columns_desktop }}; --frido-cols-m: {{ section.settings.columns_mobile }};"
             >
-              {%- for product in collection.products -%}
-                {%- if promo_block != blank and forloop.index == promo_position -%}
-                  <li class="frido-collection-page__item frido-collection-page__item--promo">
-                    {% render 'frido-collection-promo', block: promo_block %}
-                  </li>
-                {%- endif -%}
-                <li class="frido-collection-page__item">
-                  {% render 'frido-product-card',
-                    card_product: product,
-                    show_swatches: true,
-                    collection_seed: collection_variant_seed,
-                    collection_key_seed: collection_key_seed
-                  %}
-                </li>
-              {%- endfor -%}
+              {% render 'frido-collection-grid-items',
+                collection: collection,
+                collection_sort_key: collection_sort_key,
+                collection_variant_seed: collection_variant_seed,
+                collection_key_seed: collection_key_seed,
+                promo_block: promo_block,
+                promo_position: promo_position,
+                use_collection_order: use_collection_order,
+                section: section
+              %}
             </ul>
 
             {%- if paginate.pages > 1 -%}
