@@ -70,7 +70,7 @@
     "frido_bestsellers": {
       "type": "frido-bestsellers",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "title": "Bestsellers",
         "view_all_label": "SHOP ALL",
         "show_view_all": true,
