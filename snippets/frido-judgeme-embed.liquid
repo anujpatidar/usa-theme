@@ -1,17 +1,13 @@
 {% comment %}
-  Judge.me Review Widget — official install code.
-  Rendered on product pages via sections/frido-product-reviews.liquid
-  (replaces legacy templates/product.liquid placement).
+  Judge.me Review Widget — official install code (from Judge.me admin).
   @param product {Product}
 {% endcomment %}
 <!-- Start of Judge.me code -->
-{%- liquid
-  assign has_legacy = false
-  if product.metafields.judgeme.widget.size > 20
-    assign has_legacy = true
-  endif
--%}
-<div style="clear: both"></div>
+{%- assign has_legacy = false -%}
+{%- if product.metafields.judgeme.widget.size > 20 -%}
+  {%- assign has_legacy = true -%}
+{%- endif -%}
+<div style="clear:both"></div>
 <div
   id="judgeme_product_reviews"
   class="jdgm-widget jdgm-review-widget"
@@ -19,7 +15,7 @@
   data-id="{{ product.id }}"
   data-product-id="{{ product.id }}"
   data-widget="review"
-  data-auto-install="true"
+  data-auto-install="false"
   data-shop-reviews-count="{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}"
   data-entry-point="review_widget.js"
   data-entry-key="review-widget/main.js"
