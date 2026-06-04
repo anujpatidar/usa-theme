@@ -11,16 +11,16 @@
 }
 
 @media (max-width: 989px) {
-  .frido-facets__title--desktop {
-    display: none;
+  /* Hide desktop filter bar (title, dropdown pills, active tags) — mobile uses drawer only */
+  .frido-facets.facets-container {
+    display: block;
+    padding-top: 0;
+    grid-template-columns: none;
+    grid-template-rows: none;
   }
 
-  .frido-facets__toolbar--desktop {
-    display: none;
-  }
-
-  .frido-facets__active {
-    display: none;
+  .frido-facets > facet-filters-form {
+    display: none !important;
   }
 
   .frido-facets__mobile-bar {
@@ -53,6 +53,14 @@
     padding: 1.6rem 1.8rem;
     border-radius: 6px;
     background: #fff;
+  }
+
+  .frido-facets__title--desktop {
+    display: flex;
+  }
+
+  .frido-facets__toolbar--desktop {
+    display: flex;
   }
 }
 
@@ -137,7 +145,6 @@
 }
 
 .frido-facets__toolbar {
-  display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.8rem;
