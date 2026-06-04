@@ -56,11 +56,13 @@ body.gradient {
 .gradient:not(
     .frido-cart-drawer,
     .frido-size-chart,
+    .frido-size-quiz,
     .frido-cart-modal,
     .frido-account-drawer,
     .frido-search-panel,
     .frido-cart-drawer__panel,
     .frido-size-chart__panel,
+    .frido-size-quiz__panel,
     .frido-cart-modal__dialog
   ) {
   background: rgb(var(--color-background));
