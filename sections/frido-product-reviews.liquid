@@ -1,5 +1,4 @@
 {{ 'frido-product-reviews.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'frido-product-reviews.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign review_product = product
@@ -7,23 +6,17 @@
     assign review_product = section.settings.product
   endif
 
-  assign rating_obj = review_product.metafields.reviews.rating.value
   assign review_count = review_product.metafields.reviews.rating_count.value | default: 0 | plus: 0
-  assign star_rating = 5
-  if rating_obj != blank and review_count > 0
-    assign star_rating = rating_obj.rating | floor
-  endif
-
   assign ugc_blocks = section.blocks | where: 'type', 'ugc_review'
   assign app_blocks = section.blocks | where: 'type', '@app'
   assign use_judgeme = section.settings.enable_judgeme
   assign show_fallback = false
-  if ugc_blocks.size > 0
+  if ugc_blocks.size > 0 and use_judgeme == false
     assign show_fallback = true
   endif
 
   assign has_reviews = false
-  if review_count > 0 or show_fallback or app_blocks.size > 0
+  if review_count > 0 or show_fallback or app_blocks.size > 0 or use_judgeme
     assign has_reviews = true
   endif
 
@@ -34,55 +27,16 @@
 -%}
 
 {%- unless show_section -%}
-  {%- comment -%} Hidden — product has no reviews (see hide_when_no_reviews). {%- endcomment -%}
+  {%- comment -%} Hidden when no reviews and Judge.me off. {%- endcomment -%}
 {%- else -%}
 
 <section
   id="frido-product-reviews"
-  class="frido-pdp-reviews color-{{ section.settings.color_scheme }} gradient"
+  class="frido-pdp-reviews color-{{ section.settings.color_scheme }} gradient{% if use_judgeme %} frido-pdp-reviews--judgeme{% endif %}"
   data-frido-pdp-reviews
   data-section-id="{{ section.id }}"
 >
   <div class="frido-pdp-reviews__wrap">
-    <header class="frido-pdp-reviews__header">
-      <div class="frido-pdp-reviews__summary">
-        {%- if review_count > 0 -%}
-          {% render 'frido-stars', rating: star_rating %}
-        {%- endif -%}
-        <p class="frido-pdp-reviews__count">
-          {%- if review_count > 0 -%}
-            {{ review_count }} Reviews
-          {%- else -%}
-            {{ section.settings.empty_count_label | default: 'No reviews yet' | escape }}
-          {%- endif -%}
-        </p>
-      </div>
-
-      <div class="frido-pdp-reviews__actions">
-        <a
-          href="#frido-product-reviews"
-          class="frido-pdp-reviews__write-btn jdgm-write-rev-link"
-          data-frido-write-review
-          data-product-id="{{ review_product.id }}"
-        >
-          {{ section.settings.write_review_label | escape }}
-        </a>
-        {%- if use_judgeme -%}
-          <button
-            type="button"
-            class="frido-pdp-reviews__filter-btn"
-            data-frido-reviews-filter
-            aria-pressed="false"
-            aria-label="{{ section.settings.filter_label | escape }}"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M3.33 4.17H8.33M8.33 4.17C8.33 5.09 9.08 5.83 10 5.83C10.92 5.83 11.67 5.09 11.67 4.17M8.33 4.17C8.33 3.25 9.08 2.5 10 2.5C10.92 2.5 11.67 3.25 11.67 4.17M11.67 4.17H16.67M3.33 10H13.33M13.33 10C13.33 10.92 14.08 11.67 15 11.67C15.92 11.67 16.67 10.92 16.67 10M13.33 10C13.33 9.08 14.08 8.33 15 8.33C15.92 8.33 16.67 9.08 16.67 10M6.67 15.83H16.67M6.67 15.83C6.67 14.91 5.92 14.17 5 14.17C4.08 14.17 3.33 14.91 3.33 15.83C3.33 16.75 4.08 17.5 5 17.5C5.92 17.5 6.67 16.75 6.67 15.83Z" stroke="currentColor" stroke-linecap="round"/>
-            </svg>
-          </button>
-        {%- endif -%}
-      </div>
-    </header>
-
     {%- for block in app_blocks -%}
       <div class="frido-pdp-reviews__app" {{ block.shopify_attributes }}>
         {% render block %}
@@ -93,20 +47,21 @@
       <div class="frido-pdp-reviews__judgeme" data-frido-judgeme-root>
         {% render 'frido-judgeme-embed', product: review_product %}
       </div>
-    {%- endif -%}
-
-    {%- if show_fallback -%}
+    {%- elsif show_fallback -%}
+      <header class="frido-pdp-reviews__header">
+        <p class="frido-pdp-reviews__count">{{ section.settings.empty_count_label | default: 'Customer reviews' | escape }}</p>
+      </header>
       <div class="frido-pdp-reviews__masonry" data-frido-reviews-fallback>
         {%- for block in ugc_blocks -%}
           {% render 'frido-pdp-ugc-review-card', block: block %}
         {%- endfor -%}
       </div>
-    {%- elsif review_count == 0 and use_judgeme == false and app_blocks.size == 0 -%}
+    {%- else -%}
       <div class="frido-pdp-reviews__setup">
         <p>
           <strong>Reviews not connected yet.</strong><br>
-          Install <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>, import reviews, then enable
-          <strong>Judge.me widget</strong> in this section — or add <strong>UGC review</strong> blocks as a fallback.
+          Install <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>, run <strong>Install widgets</strong> in the app, import reviews, then enable
+          <strong>Judge.me widget</strong> in this section.
         </p>
       </div>
     {%- endif -%}
@@ -137,33 +92,20 @@
       "id": "enable_judgeme",
       "label": "Show Judge.me review widget",
       "default": true,
-      "info": "Requires Judge.me app + theme widget install. Syncs to all products via the app."
+      "info": "Uses Judge.me header (stars, count, Write a review, filters). Requires Judge.me app + judgeme_core in theme."
     },
     {
       "type": "checkbox",
       "id": "hide_when_no_reviews",
-      "label": "Hide section when product has no reviews",
-      "default": true,
-      "info": "Uses reviews.rating_count from Shopify/Judge.me. No fake counts on empty products."
+      "label": "Hide section when Judge.me is off and product has no reviews",
+      "default": false,
+      "info": "When Judge.me is on, the section always shows so the widget can load."
     },
     {
       "type": "text",
       "id": "empty_count_label",
-      "label": "Label when count is zero (section visible only)",
-      "default": "No reviews yet",
-      "info": "Only shown if “Hide section…” is off and the product has 0 reviews."
-    },
-    {
-      "type": "text",
-      "id": "write_review_label",
-      "label": "Write review button",
-      "default": "Write a review"
-    },
-    {
-      "type": "text",
-      "id": "filter_label",
-      "label": "Filter button aria-label",
-      "default": "Sort and filter reviews"
+      "label": "Fallback section title (UGC blocks only)",
+      "default": "Customer reviews"
     }
   ],
   "blocks": [

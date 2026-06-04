@@ -1,4 +1,4 @@
-/* PDP — UGC reviews grid (Frido + Judge.me) */
+/* PDP — Judge.me review widget (native header + masonry reviews) */
 
 .frido-pdp-reviews {
   padding: 3.2rem 0 4.8rem;
@@ -11,90 +11,18 @@
   margin: 0 auto;
 }
 
+/* Fallback UGC header (only when Judge.me is off) */
 .frido-pdp-reviews__header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem 2rem;
   margin-bottom: 2rem;
-}
-
-.frido-pdp-reviews__summary {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-}
-
-.frido-pdp-reviews__summary .frido-stars svg {
-  width: 18px;
-  height: 18px;
-  color: #f5b301;
 }
 
 .frido-pdp-reviews__count {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #111;
+  color: rgb(var(--color-foreground));
 }
 
-.frido-pdp-reviews__actions {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.frido-pdp-reviews__write-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 4rem;
-  padding: 0 2rem;
-  border: none;
-  border-radius: 4px;
-  background: #fcd00b;
-  color: #000;
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background 0.2s ease, filter 0.2s ease;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-}
-
-.frido-pdp-reviews__write-btn:hover {
-  filter: brightness(0.97);
-  color: #000;
-}
-
-.frido-pdp-reviews__filter-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  padding: 0;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: #fff;
-  color: #111;
-  cursor: pointer;
-}
-
-.frido-pdp-reviews__filter-btn svg {
-  display: block;
-}
-
-.frido-pdp-reviews__filter-btn[aria-pressed='true'] {
-  border-color: #111;
-  background: #f3f4f6;
-}
-
-/* Fallback UGC masonry */
 .frido-pdp-reviews__masonry {
   column-gap: 1rem;
   column-count: 2;
@@ -103,13 +31,13 @@
 .frido-pdp-ugc-card {
   break-inside: avoid;
   margin-bottom: 1rem;
-  background: #fff;
+  background: rgb(var(--color-background));
 }
 
 .frido-pdp-ugc-card__media {
   overflow: hidden;
   border-radius: 2px;
-  background: #f3f4f6;
+  background: rgba(var(--color-foreground), 0.06);
 }
 
 .frido-pdp-ugc-card__img {
@@ -138,8 +66,8 @@
 
 .frido-pdp-ugc-card__name {
   font-size: 1.35rem;
-  font-weight: 700;
-  color: #111;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-pdp-ugc-card__verified {
@@ -147,8 +75,8 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 1.15rem;
-  font-weight: 600;
-  color: #111;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-pdp-ugc-card__body .frido-stars {
@@ -165,42 +93,98 @@
 .frido-pdp-ugc-card__text {
   font-size: 1.25rem;
   line-height: 1.45;
-  color: #111;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-pdp-ugc-card__text p {
   margin: 0;
 }
 
-.frido-pdp-reviews__empty,
 .frido-pdp-reviews__setup {
   padding: 2rem;
-  border: 1px dashed #d1d5db;
+  border: 1px dashed rgba(var(--color-foreground), 0.2);
   border-radius: 6px;
   font-size: 1.35rem;
   line-height: 1.5;
-  color: #4b5563;
+  color: rgba(var(--color-foreground), 0.72);
   text-align: center;
 }
 
 .frido-pdp-reviews__setup strong {
-  color: #111;
+  color: rgb(var(--color-foreground));
 }
 
-/* Judge.me — hide duplicate header, masonry photo reviews */
-.frido-pdp-reviews__judgeme .jdgm-rev-widg__header,
-.frido-pdp-reviews__judgeme .jdgm-widget-actions-wrapper {
-  display: none !important;
+/* Judge.me — native widget header + actions (do not hide) */
+.frido-pdp-reviews--judgeme .jdgm-rev-widg {
+  margin: 0;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-rev-widg__reviews,
-.frido-pdp-reviews__judgeme .jdgm-rev-widg__body {
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__header {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.frido-pdp-reviews--judgeme .jdgm-widget-actions-wrapper {
+  display: flex !important;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.frido-pdp-reviews--judgeme .jdgm-write-rev-link,
+.frido-pdp-reviews--judgeme .jdgm-write-review-link,
+.frido-pdp-reviews--judgeme .jdgm-write-rev-link a {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  padding: 0 2rem !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background: #fcd00b !important;
+  color: #000 !important;
+  font-size: 1.35rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__summary,
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__summary-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__summary-text {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: rgb(var(--color-foreground)) !important;
+}
+
+.frido-pdp-reviews--judgeme .jdgm-star {
+  color: #f5b301 !important;
+}
+
+.frido-pdp-reviews--judgeme .jdgm-sort-dropdown,
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__sort-wrapper .jdgm-sort-dropdown-wrapper {
+  border: 1px solid rgba(var(--color-foreground), 0.2) !important;
+  border-radius: 4px !important;
+}
+
+/* Masonry photo reviews */
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__reviews,
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__body {
   column-count: 2;
   column-gap: 1rem;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-rev,
-.frido-pdp-reviews__judgeme .jdgm-rev-widg__review {
+.frido-pdp-reviews--judgeme .jdgm-rev,
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__review {
   break-inside: avoid;
   margin-bottom: 1rem !important;
   padding: 0 !important;
@@ -208,68 +192,59 @@
   background: transparent !important;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-rev__header {
+.frido-pdp-reviews--judgeme .jdgm-rev__header {
   padding: 0.9rem 0 0 !important;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-rev__author {
+.frido-pdp-reviews--judgeme .jdgm-rev__author {
   font-size: 1.35rem !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-rev__buyer-badge {
+.frido-pdp-reviews--judgeme .jdgm-rev__buyer-badge {
   font-size: 1.15rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-star {
-  color: #f5b301 !important;
-}
-
-.frido-pdp-reviews__judgeme .jdgm-rev__body {
+.frido-pdp-reviews--judgeme .jdgm-rev__body {
   font-size: 1.25rem !important;
   line-height: 1.45 !important;
 }
 
-.frido-pdp-reviews__judgeme .jdgm-rev__pic-img,
-.frido-pdp-reviews__judgeme .jdgm-rev__pics .jdgm-rev__pic-link img {
+.frido-pdp-reviews--judgeme .jdgm-rev__pic-img,
+.frido-pdp-reviews--judgeme .jdgm-rev__pics .jdgm-rev__pic-link img {
   width: 100% !important;
   height: auto !important;
   border-radius: 2px;
 }
 
-.frido-pdp-reviews--filters-open .frido-pdp-reviews__judgeme .jdgm-rev-widg__sort-wrapper,
-.frido-pdp-reviews--filters-open .frido-pdp-reviews__judgeme .jdgm-subtab {
-  display: block !important;
-}
-
-.frido-pdp-reviews__judgeme .jdgm-rev-widg__sort-wrapper {
+.frido-pdp-reviews--judgeme .jdgm-rev-widg__sort-wrapper {
   margin-bottom: 1.2rem;
 }
 
 @media (min-width: 750px) {
   .frido-pdp-reviews__masonry,
-  .frido-pdp-reviews__judgeme .jdgm-rev-widg__reviews,
-  .frido-pdp-reviews__judgeme .jdgm-rev-widg__body {
+  .frido-pdp-reviews--judgeme .jdgm-rev-widg__reviews,
+  .frido-pdp-reviews--judgeme .jdgm-rev-widg__body {
     column-count: 4;
   }
 }
 
 @media (min-width: 990px) {
   .frido-pdp-reviews__masonry,
-  .frido-pdp-reviews__judgeme .jdgm-rev-widg__reviews,
-  .frido-pdp-reviews__judgeme .jdgm-rev-widg__body {
+  .frido-pdp-reviews--judgeme .jdgm-rev-widg__reviews,
+  .frido-pdp-reviews--judgeme .jdgm-rev-widg__body {
     column-count: 6;
   }
 }
 
 @media (max-width: 749px) {
-  .frido-pdp-reviews__header {
+  .frido-pdp-reviews--judgeme .jdgm-rev-widg__header {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .frido-pdp-reviews__actions {
+  .frido-pdp-reviews--judgeme .jdgm-widget-actions-wrapper {
     justify-content: space-between;
   }
 }
