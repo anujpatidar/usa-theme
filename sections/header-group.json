@@ -42,7 +42,7 @@
         "ann_3"
       ],
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "announcement": "<p>30-day money-back guarantee</p>",
         "announcement_interval": 4,
         "announcement_fade_duration": 500,
