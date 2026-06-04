@@ -1,4 +1,5 @@
 {{ 'frido-product-reviews.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'frido-product-reviews.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign review_product = product
@@ -6,65 +7,127 @@
     assign review_product = section.settings.product
   endif
 
+  assign rating_obj = review_product.metafields.reviews.rating.value
   assign review_count = review_product.metafields.reviews.rating_count.value | default: 0 | plus: 0
+  assign star_rating = 5
+  if rating_obj != blank
+    assign star_rating = rating_obj.rating | round
+  endif
+
   assign ugc_blocks = section.blocks | where: 'type', 'ugc_review'
   assign app_blocks = section.blocks | where: 'type', '@app'
   assign use_judgeme = section.settings.enable_judgeme
-  assign show_fallback = false
-  if ugc_blocks.size > 0 and use_judgeme == false
-    assign show_fallback = true
+
+  assign has_legacy_widget = false
+  if review_product.metafields.judgeme.widget.size > 20
+    assign has_legacy_widget = true
   endif
 
-  assign has_reviews = false
-  if review_count > 0 or show_fallback or app_blocks.size > 0 or use_judgeme
-    assign has_reviews = true
+  assign has_widget_data = false
+  if review_product.metafields.judgeme.review_widget_data != blank
+    assign has_widget_data = true
+  endif
+
+  assign show_fallback_masonry = false
+  if ugc_blocks.size > 0 and use_judgeme == false
+    assign show_fallback_masonry = true
   endif
 
   assign show_section = true
-  if section.settings.hide_when_no_reviews and has_reviews == false
+  if section.settings.hide_when_no_reviews and use_judgeme == false and review_count == 0 and ugc_blocks.size == 0
     assign show_section = false
   endif
 -%}
 
 {%- unless show_section -%}
-  {%- comment -%} Hidden when no reviews and Judge.me off. {%- endcomment -%}
 {%- else -%}
 
 <section
   id="frido-product-reviews"
-  class="frido-pdp-reviews color-{{ section.settings.color_scheme }} gradient{% if use_judgeme %} frido-pdp-reviews--judgeme{% endif %}"
+  class="frido-pdp-reviews color-{{ section.settings.color_scheme }} gradient"
   data-frido-pdp-reviews
   data-section-id="{{ section.id }}"
+  data-product-id="{{ review_product.id }}"
 >
   <div class="frido-pdp-reviews__wrap">
+    {%- if use_judgeme -%}
+      <header class="frido-pdp-reviews__header">
+        <div class="frido-pdp-reviews__summary">
+          {% render 'frido-stars', rating: star_rating %}
+          <p class="frido-pdp-reviews__count" data-frido-reviews-count>
+            {%- if review_count > 0 -%}
+              {{ review_count }} Reviews
+            {%- else -%}
+              <span data-frido-reviews-count-placeholder>Reviews</span>
+            {%- endif -%}
+          </p>
+        </div>
+        <div class="frido-pdp-reviews__actions">
+          <button type="button" class="frido-pdp-reviews__write-btn" data-frido-write-review>
+            {{ section.settings.write_review_label | escape }}
+          </button>
+          <button
+            type="button"
+            class="frido-pdp-reviews__filter-btn"
+            data-frido-reviews-filter
+            aria-pressed="false"
+            aria-label="{{ section.settings.filter_label | escape }}"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M3.33 4.17H8.33M8.33 4.17C8.33 5.09 9.08 5.83 10 5.83C10.92 5.83 11.67 5.09 11.67 4.17M8.33 4.17C8.33 3.25 9.08 2.5 10 2.5C10.92 2.5 11.67 3.25 11.67 4.17M11.67 4.17H16.67M3.33 10H13.33M13.33 10C13.33 10.92 14.08 11.67 15 11.67C15.92 11.67 16.67 10.92 16.67 10M13.33 10C13.33 9.08 14.08 8.33 15 8.33C15.92 8.33 16.67 9.08 16.67 10M6.67 15.83H16.67M6.67 15.83C6.67 14.91 5.92 14.17 5 14.17C4.08 14.17 3.33 14.91 3.33 15.83C3.33 16.75 4.08 17.5 5 17.5C5.92 17.5 6.67 16.75 6.67 15.83Z" stroke="currentColor" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="frido-pdp-reviews__judgeme" data-frido-judgeme-root>
+        {%- if has_legacy_widget and has_widget_data == false -%}
+          <div class="frido-pdp-reviews__legacy jdgm-widget jdgm-review-widget" data-frido-judgeme-legacy>
+            {{ review_product.metafields.judgeme.widget }}
+          </div>
+        {%- else -%}
+          {% render 'frido-judgeme-embed', product: review_product %}
+        {%- endif -%}
+      </div>
+
+      <p class="frido-pdp-reviews__loading" data-frido-reviews-loading hidden>
+        Loading reviews…
+      </p>
+      <p class="frido-pdp-reviews__error" data-frido-reviews-error hidden>
+        Reviews are still syncing. Refresh the page, or open
+        <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>
+        and run <strong>Install widgets</strong> + import reviews.
+      </p>
+    {%- elsif show_fallback_masonry -%}
+      <header class="frido-pdp-reviews__header">
+        <div class="frido-pdp-reviews__summary">
+          {% render 'frido-stars', rating: star_rating %}
+          <p class="frido-pdp-reviews__count">{{ review_count }} Reviews</p>
+        </div>
+      </header>
+      <div class="frido-pdp-reviews__masonry">
+        {%- for block in ugc_blocks -%}
+          {% render 'frido-pdp-ugc-review-card', block: block %}
+        {%- endfor -%}
+      </div>
+      <div class="frido-pdp-reviews__more-wrap">
+        <button type="button" class="frido-pdp-reviews__more-btn" disabled>Show more reviews</button>
+      </div>
+    {%- else -%}
+      <div class="frido-pdp-reviews__setup">
+        <p>
+          <strong>Reviews not connected.</strong><br>
+          Install <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>, run <strong>Install widgets</strong>, import reviews, then enable
+          <strong>Judge.me widget</strong> in this section.
+        </p>
+      </div>
+    {%- endif -%}
+
     {%- for block in app_blocks -%}
       <div class="frido-pdp-reviews__app" {{ block.shopify_attributes }}>
         {% render block %}
       </div>
     {%- endfor -%}
-
-    {%- if use_judgeme -%}
-      <div class="frido-pdp-reviews__judgeme" data-frido-judgeme-root>
-        {% render 'frido-judgeme-embed', product: review_product %}
-      </div>
-    {%- elsif show_fallback -%}
-      <header class="frido-pdp-reviews__header">
-        <p class="frido-pdp-reviews__count">{{ section.settings.empty_count_label | default: 'Customer reviews' | escape }}</p>
-      </header>
-      <div class="frido-pdp-reviews__masonry" data-frido-reviews-fallback>
-        {%- for block in ugc_blocks -%}
-          {% render 'frido-pdp-ugc-review-card', block: block %}
-        {%- endfor -%}
-      </div>
-    {%- else -%}
-      <div class="frido-pdp-reviews__setup">
-        <p>
-          <strong>Reviews not connected yet.</strong><br>
-          Install <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>, run <strong>Install widgets</strong> in the app, import reviews, then enable
-          <strong>Judge.me widget</strong> in this section.
-        </p>
-      </div>
-    {%- endif -%}
   </div>
 </section>
 
@@ -91,77 +154,43 @@
       "type": "checkbox",
       "id": "enable_judgeme",
       "label": "Show Judge.me review widget",
-      "default": true,
-      "info": "Uses Judge.me header (stars, count, Write a review, filters). Requires Judge.me app + judgeme_core in theme."
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "hide_when_no_reviews",
-      "label": "Hide section when Judge.me is off and product has no reviews",
-      "default": false,
-      "info": "When Judge.me is on, the section always shows so the widget can load."
+      "label": "Hide section when Judge.me is off and count is zero",
+      "default": false
     },
     {
       "type": "text",
-      "id": "empty_count_label",
-      "label": "Fallback section title (UGC blocks only)",
-      "default": "Customer reviews"
+      "id": "write_review_label",
+      "label": "Write review button",
+      "default": "Write a review"
+    },
+    {
+      "type": "text",
+      "id": "filter_label",
+      "label": "Filter button label",
+      "default": "Sort and filter reviews"
     }
   ],
   "blocks": [
-    {
-      "type": "@app"
-    },
+    { "type": "@app" },
     {
       "type": "ugc_review",
-      "name": "UGC review (fallback)",
+      "name": "UGC review fallback",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Customer photo"
-        },
-        {
-          "type": "text",
-          "id": "image_url",
-          "label": "Photo URL (if no upload)"
-        },
-        {
-          "type": "text",
-          "id": "author",
-          "label": "Customer name",
-          "default": "Erin B."
-        },
-        {
-          "type": "checkbox",
-          "id": "verified",
-          "label": "Show verified badge",
-          "default": true
-        },
-        {
-          "type": "range",
-          "id": "rating",
-          "min": 1,
-          "max": 5,
-          "step": 1,
-          "label": "Star rating",
-          "default": 5
-        },
-        {
-          "type": "richtext",
-          "id": "body",
-          "label": "Review text"
-        }
+        { "type": "image_picker", "id": "image", "label": "Customer photo" },
+        { "type": "text", "id": "image_url", "label": "Photo URL" },
+        { "type": "text", "id": "author", "label": "Customer name", "default": "Erin B." },
+        { "type": "checkbox", "id": "verified", "label": "Verified badge", "default": true },
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Stars", "default": 5 },
+        { "type": "richtext", "id": "body", "label": "Review text" }
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Frido — PDP reviews"
-    }
-  ],
-  "enabled_on": {
-    "templates": ["product"]
-  }
+  "presets": [{ "name": "Frido — PDP reviews" }],
+  "enabled_on": { "templates": ["product"] }
 }
 {% endschema %}
