@@ -76,7 +76,7 @@
         "cta_1": {
           "type": "cta",
           "settings": {
-            "sale_badge": "👟 SPRING SALE",
+            "sale_badge": "👟 SUMMER SALE",
             "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_a0a7569b-51a8-4042-934e-ea222d20f29b.jpg?v=1769609677",
             "eyebrow": "🎁 BUY MORE, SAVE MORE",
             "heading": "UP TO 57% OFF FOR A LIMITED TIME ONLY!",
@@ -155,7 +155,7 @@
         "cta_2": {
           "type": "cta",
           "settings": {
-            "sale_badge": "👟 SPRING SALE",
+            "sale_badge": "👟 SUMMER SALE",
             "image_url": "https://cdn.shopify.com/s/files/1/0553/0419/2034/files/CS_01_a0a7569b-51a8-4042-934e-ea222d20f29b.jpg?v=1769609677",
             "eyebrow": "🎁 BUY MORE, SAVE MORE",
             "heading": "UP TO 57% OFF FOR A LIMITED TIME ONLY!",
@@ -189,7 +189,7 @@
       "settings": {
         "color_scheme": "scheme-2",
         "show_sale_bar": true,
-        "sale_badge": "SPRING SALE",
+        "sale_badge": "SUMMER SALE",
         "sale_text": "UP TO 57% OFF + FREE SHIPPING",
         "show_countdown": true,
         "sale_subtext": "Verified Lowest Price of the Year. Shop Now!",

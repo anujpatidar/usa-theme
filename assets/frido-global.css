@@ -2717,9 +2717,11 @@ body.frido-menu-open .frido-header__menu-icon--close {
   }
 }
 
-/* ---------- Footer (theme color scheme) ---------- */
+/* ---------- Footer (theme color scheme + gradient) ---------- */
 .frido-footer {
   color: rgb(var(--color-foreground));
+  background: rgb(var(--color-background));
+  background: var(--gradient-background);
 }
 
 .frido-footer a {
@@ -2734,7 +2736,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 /* Contact bar */
 .frido-footer__contact {
-  background: rgb(var(--color-background));
+  background: transparent;
   color: rgb(var(--color-foreground));
   padding: 2.4rem 0;
 }
@@ -2797,7 +2799,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
 
 /* Main footer */
 .frido-footer__main {
-  background: rgb(var(--color-background));
+  background: transparent;
   padding: 48px 0 0;
 }
 
@@ -2943,7 +2945,7 @@ body.frido-menu-open .frido-header__menu-icon--close {
   font-size: 1.4rem;
   font-weight: 400;
   color: rgb(var(--color-foreground));
-  background: rgb(var(--color-background));
+  background-color: rgb(var(--color-background));
 }
 
 .frido-footer__newsletter input::placeholder {

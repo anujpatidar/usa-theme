@@ -31,7 +31,7 @@
         "ann_3": {
           "type": "announcement_message",
           "settings": {
-            "text": "<p>Spring Sale — up to 50% off bestsellers</p>",
+            "text": "<p>Summer Sale — up to 50% off bestsellers</p>",
             "link": "shopify://collections/all"
           }
         }
@@ -42,7 +42,7 @@
         "ann_3"
       ],
       "settings": {
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "announcement": "<p>30-day money-back guarantee</p>",
         "announcement_interval": 4,
         "announcement_fade_duration": 500,
@@ -62,7 +62,7 @@
         "logo_text": "Frido",
         "logo_subtitle": "",
         "menu": "main-menu",
-        "sale_label": "Spring Sale",
+        "sale_label": "Summer Sale",
         "sale_link": "shopify://collections/bestsellers",
         "mobile_hide_home": true,
         "account_welcome_heading": "Welcome to Frido",
