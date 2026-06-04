@@ -106,7 +106,7 @@
 .frido-size-chart__title {
   margin: 0;
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--frido-chart-text);
@@ -159,7 +159,7 @@
   background: rgba(var(--color-button), 0.08);
   color: var(--frido-chart-accent);
   font-size: 1.45rem;
-  font-weight: 700;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -168,7 +168,7 @@
 }
 
 .frido-size-chart__recommended-label {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .frido-size-chart__find-mobile {
@@ -194,7 +194,7 @@
 .frido-size-chart__rec-heading {
   margin: 0 0 1rem;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--frido-chart-text);
 }
 
@@ -206,7 +206,7 @@
 }
 
 .frido-size-chart__rec-text strong {
-  font-weight: 700;
+  font-weight: 500;
   color: var(--frido-chart-accent);
 }
 
@@ -224,7 +224,7 @@
 .frido-size-chart__product-title {
   margin: 0;
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   color: var(--frido-chart-text);
 }
@@ -263,14 +263,20 @@
 
 .frido-size-chart__table thead th {
   background: var(--frido-chart-surface);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--frido-chart-text);
+}
+
+.frido-size-chart__table [data-frido-us-col].is-highlight,
+.frido-size-chart__table thead th[data-frido-us-col].is-highlight {
+  background: rgba(var(--color-button), 0.18);
+  font-weight: 500;
 }
 
 .frido-size-chart__table tbody th[scope='row'],
 .frido-size-chart__table th:first-child {
   background: var(--frido-chart-header-bg);
-  font-weight: 600;
+  font-weight: 500;
   text-align: left;
   color: var(--frido-chart-text);
 }
@@ -281,6 +287,13 @@
 
 .frido-size-chart__table-wrap a {
   color: var(--frido-chart-accent);
+}
+
+.frido-size-chart__empty {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: rgba(var(--color-foreground), 0.72);
 }
 
 body.frido-size-chart-open {

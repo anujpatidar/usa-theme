@@ -11,68 +11,67 @@
 
   assign chart_title = section.settings.size_chart_title | default: 'Size & Fit Chart'
   assign chart_product_title = section.settings.size_chart_product_title | default: product.title
-  assign chart_subtitle = section.settings.size_chart_subtitle
   assign rec_prefix = section.settings.size_chart_rec_prefix | default: 'Recommended Size:'
+
+  assign chart_source = product
+  assign chart_ref = product.metafields.custom.size_chart_product.value
+  if chart_ref != blank
+    assign chart_source = chart_ref
+  endif
+
+  assign chart_gender = 'unknown'
+  assign gender_meta = chart_source.metafields.custom.gender.value | default: chart_source.metafields.custom.gender | downcase | strip
+  assign handle = chart_source.handle | downcase
+
+  case handle
+    when 'frido-active-casual-sneakers-womens', 'frido-active-walking-shoes-womens', 'frido-womens-cloud-comfort-shoes-lace-ups'
+      assign chart_gender = 'women'
+    when 'frido-active-casual-sneakers-mens', 'frido-active-walking-shoes-mens', 'frido-cloud-comfort-shoes-with-lace', 'frido-cloud-comfort-slip-on-shoes', 'frido-comfort-dress-shoes'
+      assign chart_gender = 'men'
+    when 'frido-kids-cloud-comfort-shoes-lace-ups'
+      assign chart_gender = 'kids'
+  endcase
+
+  if chart_gender == 'unknown'
+    if gender_meta == 'women' or gender_meta == 'woman' or gender_meta == 'w' or gender_meta == 'female'
+      assign chart_gender = 'women'
+    elsif gender_meta == 'men' or gender_meta == 'man' or gender_meta == 'm' or gender_meta == 'male'
+      assign chart_gender = 'men'
+    elsif handle contains 'womens' or handle contains 'women'
+      assign chart_gender = 'women'
+    elsif handle contains 'kids'
+      assign chart_gender = 'kids'
+    elsif handle contains 'mens' or handle contains '-men'
+      assign chart_gender = 'men'
+    endif
+  endif
+
+  if chart_gender == 'unknown'
+    assign chart_gender = 'men'
+  endif
+
+  if chart_gender == 'women'
+    assign chart_subtitle = "Women's Size Chart"
+  elsif chart_gender == 'kids'
+    assign chart_subtitle = "Kids Size Chart"
+  else
+    assign chart_subtitle = "Men's Size Chart"
+  endif
+
+  assign custom_subtitle = product.metafields.custom.size_chart_subtitle.value | default: product.metafields.custom.size_chart_subtitle
+  if custom_subtitle != blank
+    assign chart_subtitle = custom_subtitle
+  endif
 -%}
 {%- unless chart_enabled -%}
   {%- comment -%} Size chart disabled in section settings {%- endcomment -%}
 {%- else -%}
 
-{%- capture default_chart_table -%}
-<div class="frido-size-chart__scroll">
-  <table class="frido-size-chart__table">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">4</th>
-        <th scope="col">4.5</th>
-        <th scope="col">5</th>
-        <th scope="col">5.5</th>
-        <th scope="col">6</th>
-        <th scope="col">6.5</th>
-        <th scope="col">7</th>
-        <th scope="col">7.5</th>
-        <th scope="col">8</th>
-        <th scope="col">8.5</th>
-        <th scope="col">9</th>
-        <th scope="col">9.5</th>
-        <th scope="col">10</th>
-        <th scope="col">10.5</th>
-        <th scope="col">11</th>
-        <th scope="col">11.5</th>
-        <th scope="col">12</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">USA / CA</th>
-        <td>4</td><td>4.5</td><td>5</td><td>5.5</td><td>6</td><td>6.5</td><td>7</td><td>7.5</td><td>8</td><td>8.5</td><td>9</td><td>9.5</td><td>10</td><td>10.5</td><td>11</td><td>11.5</td><td>12</td>
-      </tr>
-      <tr>
-        <th scope="row">EU</th>
-        <td>35</td><td>35.5</td><td>36</td><td>36.5</td><td>37</td><td>37.5</td><td>38</td><td>38.5</td><td>39</td><td>39.5</td><td>40</td><td>40.5</td><td>41</td><td>41.5</td><td>42</td><td>42.5</td><td>43</td>
-      </tr>
-      <tr>
-        <th scope="row">UK</th>
-        <td>3</td><td>3.5</td><td>4</td><td>4.5</td><td>5</td><td>5.5</td><td>6</td><td>6.5</td><td>7</td><td>7.5</td><td>8</td><td>8.5</td><td>9</td><td>9.5</td><td>10</td><td>10.5</td><td>11</td>
-      </tr>
-      <tr>
-        <th scope="row">Inches</th>
-        <td>8.7</td><td>8.9</td><td>9.0</td><td>9.2</td><td>9.4</td><td>9.5</td><td>9.7</td><td>9.9</td><td>10.0</td><td>10.2</td><td>10.4</td><td>10.5</td><td>10.7</td><td>10.9</td><td>11.0</td><td>11.2</td><td>11.4</td>
-      </tr>
-      <tr>
-        <th scope="row">Centimeters</th>
-        <td>22.1</td><td>22.5</td><td>22.9</td><td>23.2</td><td>23.6</td><td>24.0</td><td>24.4</td><td>24.8</td><td>25.2</td><td>25.6</td><td>26.0</td><td>26.4</td><td>26.8</td><td>27.2</td><td>27.6</td><td>28.0</td><td>28.4</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-{%- endcapture -%}
-
 <div
   id="frido-size-chart-{{ section.id }}"
   class="frido-size-chart"
   data-frido-size-chart
+  data-frido-chart-gender="{{ chart_gender }}"
   hidden
   aria-hidden="true"
 >
@@ -130,16 +129,18 @@
 
       <div class="frido-size-chart__product">
         <h3 class="frido-size-chart__product-title">{{ chart_product_title | escape }}</h3>
-        {%- if chart_subtitle != blank -%}
-          <p class="frido-size-chart__product-sub">{{ chart_subtitle | escape }}</p>
-        {%- endif -%}
+        <p class="frido-size-chart__product-sub">{{ chart_subtitle | escape }}</p>
       </div>
 
       <div class="frido-size-chart__table-wrap rte">
-        {%- if section.settings.size_chart_table != blank -%}
-          {{ section.settings.size_chart_table }}
+        {%- if product.metafields.custom.size_chart_html != blank -%}
+          {{ product.metafields.custom.size_chart_html.value | default: product.metafields.custom.size_chart_html }}
         {%- else -%}
-          {{ default_chart_table }}
+          {% render 'frido-size-chart-table',
+            product: product,
+            chart_gender: chart_gender,
+            table_class: 'frido-size-chart__table'
+          %}
         {%- endif -%}
       </div>
     </div>

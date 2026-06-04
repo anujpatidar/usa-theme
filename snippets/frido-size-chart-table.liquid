@@ -1,0 +1,230 @@
+{% comment %}
+  Hike Footwear–style size chart (men / women / kids).
+  Gender uses shoe-finder handles + metafields (see scripts/shoe-finder-tags.json).
+  Columns filtered to this product's size variants when mapped.
+  @param product {Product}
+  @param chart_gender {String} optional men | women | kids
+  @param table_class {String} frido-size-chart__table | frido-scg__table
+{% endcomment %}
+{%- liquid
+  assign table_class = table_class | default: 'frido-size-chart__table'
+  assign scroll_class = 'frido-size-chart__scroll'
+  if table_class == 'frido-scg__table'
+    assign scroll_class = 'frido-scg__table-scroll'
+  endif
+
+  assign chart_source = product
+  assign chart_ref = product.metafields.custom.size_chart_product.value
+  if chart_ref != blank
+    assign chart_source = chart_ref
+  endif
+
+  if chart_gender == blank
+    assign chart_gender = 'unknown'
+    assign gender_meta = chart_source.metafields.custom.gender.value | default: chart_source.metafields.custom.gender | downcase | strip
+    assign handle = chart_source.handle | downcase
+
+    case handle
+      when 'frido-active-casual-sneakers-womens', 'frido-active-walking-shoes-womens', 'frido-womens-cloud-comfort-shoes-lace-ups'
+        assign chart_gender = 'women'
+      when 'frido-active-casual-sneakers-mens', 'frido-active-walking-shoes-mens', 'frido-cloud-comfort-shoes-with-lace', 'frido-cloud-comfort-slip-on-shoes', 'frido-comfort-dress-shoes'
+        assign chart_gender = 'men'
+      when 'frido-kids-cloud-comfort-shoes-lace-ups'
+        assign chart_gender = 'kids'
+    endcase
+
+    if chart_gender == 'unknown'
+      if gender_meta == 'women' or gender_meta == 'woman' or gender_meta == 'w' or gender_meta == 'female'
+        assign chart_gender = 'women'
+      elsif gender_meta == 'men' or gender_meta == 'man' or gender_meta == 'm' or gender_meta == 'male'
+        assign chart_gender = 'men'
+      elsif handle contains 'womens' or handle contains 'women'
+        assign chart_gender = 'women'
+      elsif handle contains 'kids'
+        assign chart_gender = 'kids'
+      elsif handle contains 'mens' or handle contains '-men'
+        assign chart_gender = 'men'
+      endif
+    endif
+
+    if chart_gender == 'unknown'
+      assign chart_gender = 'men'
+    endif
+  endif
+
+  assign size_option = nil
+  for option in chart_source.options_with_values
+    assign oname = option.name | downcase
+    if size_option == nil and oname contains 'size'
+      assign size_option = option
+    endif
+  endfor
+
+  assign visible_us = ''
+  if size_option != nil
+    for size_label in size_option.values
+      assign label = size_label | strip
+      case label
+        when 'M 6 - 6.5'
+          assign visible_us = visible_us | append: '|6|6.5|'
+        when 'M 7 - 7.5'
+          assign visible_us = visible_us | append: '|7|7.5|'
+        when 'M 8 - 8.5'
+          assign visible_us = visible_us | append: '|8|8.5|'
+        when 'M 9 - 9.5'
+          assign visible_us = visible_us | append: '|9|9.5|'
+        when 'M 10 - 10.5'
+          assign visible_us = visible_us | append: '|10|10.5|'
+        when 'M 11 - 11.5'
+          assign visible_us = visible_us | append: '|11|11.5|'
+        when 'M 12 - 12.5'
+          assign visible_us = visible_us | append: '|12|12.5|'
+        when 'M 13'
+          assign visible_us = visible_us | append: '|13|'
+        when 'W 6'
+          assign visible_us = visible_us | append: '|6|'
+        when 'W 7 - 7.5'
+          assign visible_us = visible_us | append: '|7|7.5|'
+        when 'W 8 - 8.5'
+          assign visible_us = visible_us | append: '|8|8.5|'
+        when 'W 9 - 9.5'
+          assign visible_us = visible_us | append: '|9|9.5|'
+        when 'W 10 - 10.5'
+          assign visible_us = visible_us | append: '|10|10.5|'
+        when 'W 11 - 11.5'
+          assign visible_us = visible_us | append: '|11|11.5|'
+        when 'W 12 - 12.5'
+          assign visible_us = visible_us | append: '|12|12.5|'
+        when 'W 13 - 13.5'
+          assign visible_us = visible_us | append: '|13|13.5|'
+        when 'W -14'
+          assign visible_us = visible_us | append: '|14|'
+        else
+          assign plain = label | remove: 'M ' | remove: 'W ' | strip
+          assign visible_us = visible_us | append: '|' | append: plain | append: '|'
+      endcase
+    endfor
+  endif
+
+  if chart_gender == 'women' and visible_us != ''
+    unless visible_us contains '|6|' or visible_us contains '|7|' or visible_us contains '|8|' or visible_us contains '|9|' or visible_us contains '|10|' or visible_us contains '|11|' or visible_us contains '|12|' or visible_us contains '|13|' or visible_us contains '|14|'
+      assign visible_us = ''
+    endunless
+  endif
+
+  if chart_gender == 'men' and visible_us != ''
+    unless visible_us contains '|4|' or visible_us contains '|5|' or visible_us contains '|6|' or visible_us contains '|7|' or visible_us contains '|8|' or visible_us contains '|9|' or visible_us contains '|10|' or visible_us contains '|11|' or visible_us contains '|12|' or visible_us contains '|13|'
+      assign visible_us = ''
+    endunless
+  endif
+
+  if chart_gender == 'women'
+    assign hike_us = '6,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5,14' | split: ','
+    assign hike_eu = '36,37,38,39,39,40,40,41,41,42,42,43,43,44,44,45' | split: ','
+    assign hike_uk = '3,4,5,6,6,6.5,6.5,7,7,8,8,9,9,9.5,9.5,10' | split: ','
+    assign hike_in = '8.7,8.9,9.2,9.5,9.5,9.7,9.7,10,10,10.2,10.2,10.5,10.5,10.8,10.8,11' | split: ','
+    assign hike_cm = '22.0,22.7,23.4,24.0,24.0,24.7,24.7,25.3,25.3,26,26,26.7,26.7,27.3,27.3,28.9' | split: ','
+  elsif chart_gender == 'men'
+    assign hike_us = '4,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,13' | split: ','
+    assign hike_eu = '36,37,38,39,39,40,40,41,41,42,42,43,43,44,44,45,46' | split: ','
+    assign hike_uk = '3,4,5,6,6,6.5,6.5,7,7,8,8,9,9,9.5,9.5,10,12' | split: ','
+    assign hike_in = '8.7,8.9,9.2,9.5,9.5,9.7,9.7,10,10,10.2,10.2,10.5,10.5,10.8,10.8,11,11.9' | split: ','
+    assign hike_cm = '22.0,22.7,23.4,24.0,24.0,24.7,24.7,25.3,25.3,26,26,26.7,26.7,27.3,27.3,28.9,29.4' | split: ','
+  endif
+-%}
+
+{%- if chart_gender == 'kids' -%}
+  {%- if size_option == nil or size_option.values.size == 0 -%}
+    <p class="frido-size-chart__empty">Size chart is not available for this product.</p>
+  {%- else -%}
+    <div class="{{ scroll_class }}">
+      <table class="{{ table_class }}" data-frido-chart-gender="kids">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            {%- for size_label in size_option.values -%}
+              <th scope="col">{{ size_label | escape }}</th>
+            {%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">EU</th>
+            {%- for size_label in size_option.values -%}
+              <td>{{ size_label | remove: 'EU' | strip }}</td>
+            {%- endfor -%}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {%- endif -%}
+{%- elsif chart_gender == 'women' or chart_gender == 'men' -%}
+  <div class="{{ scroll_class }}">
+    <table
+      class="{{ table_class }}"
+      data-frido-chart-gender="{{ chart_gender }}"
+      data-frido-chart-visible="{{ visible_us }}"
+    >
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          {%- for us_col in hike_us -%}
+            {%- assign us_key = '|' | append: us_col | append: '|' -%}
+            {%- if visible_us == '' or visible_us contains us_key -%}
+              <th scope="col" data-frido-us-col="{{ us_col }}">{{ us_col }}</th>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">USA / CA</th>
+          {%- for us_col in hike_us -%}
+            {%- assign us_key = '|' | append: us_col | append: '|' -%}
+            {%- if visible_us == '' or visible_us contains us_key -%}
+              <td data-frido-us-col="{{ us_col }}">{{ us_col }}</td>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">EU</th>
+          {%- for us_col in hike_us -%}
+            {%- assign us_key = '|' | append: us_col | append: '|' -%}
+            {%- if visible_us == '' or visible_us contains us_key -%}
+              <td data-frido-us-col="{{ us_col }}">{{ hike_eu[forloop.index0] }}</td>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">UK</th>
+          {%- for us_col in hike_us -%}
+            {%- assign us_key = '|' | append: us_col | append: '|' -%}
+            {%- if visible_us == '' or visible_us contains us_key -%}
+              <td data-frido-us-col="{{ us_col }}">{{ hike_uk[forloop.index0] }}</td>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">Inches</th>
+          {%- for us_col in hike_us -%}
+            {%- assign us_key = '|' | append: us_col | append: '|' -%}
+            {%- if visible_us == '' or visible_us contains us_key -%}
+              <td data-frido-us-col="{{ us_col }}">{{ hike_in[forloop.index0] }}</td>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">Centimeters</th>
+          {%- for us_col in hike_us -%}
+            {%- assign us_key = '|' | append: us_col | append: '|' -%}
+            {%- if visible_us == '' or visible_us contains us_key -%}
+              <td data-frido-us-col="{{ us_col }}">{{ hike_cm[forloop.index0] }}</td>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{%- else -%}
+  <p class="frido-size-chart__empty">Size chart is not available for this product.</p>
+{%- endif -%}

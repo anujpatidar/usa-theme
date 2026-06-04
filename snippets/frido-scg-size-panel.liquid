@@ -54,54 +54,94 @@
 
   <h2>Click the Shoe Name to View the Size Chart</h2>
   <div class="frido-scg__product-links">
-    {%- if section.blocks.size > 0 -%}
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'product_link' -%}
-          <a
-            class="frido-scg__product-link"
-            href="{{ block.settings.url | default: block.settings.product.url }}"
-            {{ block.shopify_attributes }}
-          >
-            {{ block.settings.label | default: block.settings.product.title | escape }}
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
-    {%- else -%}
+    {%- assign has_product_links = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product_link' and block.settings.product != blank -%}
+        {%- assign has_product_links = true -%}
+        {%- liquid
+          assign link_product = block.settings.product
+          assign chart_product = block.settings.size_chart_product | default: link_product
+          assign link_href = block.settings.url
+          if link_href == blank
+            assign link_href = '#frido-scg-chart-' | append: link_product.handle
+          endif
+        -%}
+        <a
+          class="frido-scg__product-link"
+          href="{{ link_href }}"
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.label | default: link_product.title | escape }}
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- unless has_product_links -%}
       {%- for product in collections.all.products limit: 24 -%}
-        <a class="frido-scg__product-link" href="{{ product.url }}">
+        <a class="frido-scg__product-link" href="#frido-scg-chart-{{ product.handle }}">
           {{- product.title | escape }} Sizes
         </a>
       {%- endfor -%}
-    {%- endif -%}
+    {%- endunless -%}
   </div>
 
   {%- if section.settings.size_table_html != blank -%}
     <div class="frido-scg__table-wrap rte">
       {{ section.settings.size_table_html }}
     </div>
-  {%- else -%}
-    <div class="frido-scg__table-wrap">
-      <table class="frido-scg__table">
-        <thead>
-          <tr>
-            <th scope="col">US</th>
-            <th scope="col">EU</th>
-            <th scope="col">Centimeters</th>
-            <th scope="col">Inches</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>6</td><td>36</td><td>24.0</td><td>9.4</td></tr>
-          <tr><td>6.5</td><td>37</td><td>24.42</td><td>9.6</td></tr>
-          <tr><td>7</td><td>37.5</td><td>24.85</td><td>9.8</td></tr>
-          <tr><td>7.5</td><td>38</td><td>25.27</td><td>9.9</td></tr>
-          <tr><td>8</td><td>38.5</td><td>25.69</td><td>10.1</td></tr>
-          <tr><td>8.5</td><td>39</td><td>26.12</td><td>10.3</td></tr>
-          <tr><td>9</td><td>39.5</td><td>26.54</td><td>10.4</td></tr>
-          <tr><td>9.5</td><td>40</td><td>26.96</td><td>10.6</td></tr>
-          <tr><td>10</td><td>41</td><td>27.38</td><td>10.8</td></tr>
-        </tbody>
-      </table>
-    </div>
   {%- endif -%}
+
+  <div class="frido-scg__product-charts">
+    {%- if has_product_links -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product_link' and block.settings.product != blank -%}
+          {%- liquid
+            assign link_product = block.settings.product
+            assign chart_product = block.settings.size_chart_product | default: link_product
+            assign chart_gender = 'men'
+            assign chart_handle = chart_product.handle | downcase
+            case chart_handle
+              when 'frido-active-casual-sneakers-womens', 'frido-active-walking-shoes-womens', 'frido-womens-cloud-comfort-shoes-lace-ups'
+                assign chart_gender = 'women'
+              when 'frido-kids-cloud-comfort-shoes-lace-ups'
+                assign chart_gender = 'kids'
+            endcase
+            if chart_gender == 'men' and chart_handle contains 'women'
+              assign chart_gender = 'women'
+            endif
+            if chart_gender == 'women'
+              assign chart_subtitle = "Women's Size Chart"
+            elsif chart_gender == 'kids'
+              assign chart_subtitle = "Kids Size Chart"
+            else
+              assign chart_subtitle = "Men's Size Chart"
+            endif
+          -%}
+          <section
+            id="frido-scg-chart-{{ link_product.handle }}"
+            class="frido-scg__product-chart"
+            {{ block.shopify_attributes }}
+          >
+            <h3 class="frido-scg__product-chart-title">{{ link_product.title | escape }}</h3>
+            <p class="frido-scg__product-chart-sub">{{ chart_subtitle | escape }}</p>
+            <div class="frido-scg__table-wrap">
+              {% render 'frido-size-chart-table',
+                product: chart_product,
+                chart_gender: chart_gender,
+                table_class: 'frido-scg__table'
+              %}
+            </div>
+          </section>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for product in collections.all.products limit: 24 -%}
+        <section id="frido-scg-chart-{{ product.handle }}" class="frido-scg__product-chart">
+          <h3 class="frido-scg__product-chart-title">{{ product.title | escape }}</h3>
+          <div class="frido-scg__table-wrap">
+            {% render 'frido-size-chart-table', product: product, table_class: 'frido-scg__table' %}
+          </div>
+        </section>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
 </div>

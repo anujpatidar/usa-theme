@@ -12,6 +12,87 @@
     "main": {
       "type": "frido-size-care-guide",
       "blocks": {
+        "pl_mens_casual": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-active-casual-sneakers-mens",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_womens_casual": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-active-casual-sneakers-womens",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_mens_walking": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-active-walking-shoes-mens",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_womens_walking": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-active-walking-shoes-womens",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_cloud_lace_men": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-cloud-comfort-shoes-with-lace",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_cloud_slip_men": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-cloud-comfort-slip-on-shoes",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_cloud_lace_women": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-womens-cloud-comfort-shoes-lace-ups",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_dress": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-comfort-dress-shoes",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
+        "pl_kids": {
+          "type": "product_link",
+          "settings": {
+            "product": "frido-kids-cloud-comfort-shoes-lace-ups",
+            "size_chart_product": "",
+            "label": "",
+            "url": ""
+          }
+        },
         "care_step_jrPdAP": {
           "type": "care_step",
           "settings": {
@@ -46,6 +127,15 @@
         }
       },
       "block_order": [
+        "pl_mens_casual",
+        "pl_womens_casual",
+        "pl_mens_walking",
+        "pl_womens_walking",
+        "pl_cloud_lace_men",
+        "pl_cloud_slip_men",
+        "pl_cloud_lace_women",
+        "pl_dress",
+        "pl_kids",
         "care_step_jrPdAP",
         "care_step_FaRBhq",
         "care_step_D9T6DR",

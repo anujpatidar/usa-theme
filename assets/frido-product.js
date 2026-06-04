@@ -1404,6 +1404,9 @@
           var recVal = qs('[data-frido-size-chart-rec-value]', chartDrawer);
           if (recVal) recVal.textContent = sizeVal;
           if (recBox) recBox.classList.toggle('is-visible', !!sizeVal);
+          if (window.FridoSizeChart && window.FridoSizeChart.highlight) {
+            window.FridoSizeChart.highlight(chartDrawer, sizeVal);
+          }
         }
       }
 
