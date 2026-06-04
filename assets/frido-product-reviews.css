@@ -180,9 +180,47 @@
   margin: 0.35rem 1rem 0 !important;
 }
 
-.frido-judgeme-reviews .jdgm-star,
-.frido-judgeme-reviews .jdgm-rev__rating .jdgm-star {
-  color: #f5b301 !important;
+/* Stars — SVG fallback (Frido global Outfit breaks JudgemeStar icon font) */
+.frido-judgeme-reviews .jdgm-star {
+  display: inline-block !important;
+  width: 14px !important;
+  height: 14px !important;
+  margin: 0 1px 0 0 !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  vertical-align: middle;
+  background: center / contain no-repeat;
+}
+
+.frido-judgeme-reviews .jdgm-star::before,
+.frido-judgeme-reviews .jdgm-star::after {
+  content: none !important;
+  display: none !important;
+}
+
+.frido-judgeme-reviews .jdgm-star.jdgm--on,
+.frido-judgeme-reviews .jdgm-star.jdgm--filled,
+.frido-judgeme-reviews .jdgm-star:not(.jdgm--off):not(.jdgm--half) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5b301'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.6-5 4.5 1.5 6.5L12 17.8 5.9 20.2l1.5-6.5-5-4.5 6.6-.6L12 2.5z'/%3E%3C/svg%3E") !important;
+}
+
+.frido-judgeme-reviews .jdgm-star.jdgm--off,
+.frido-judgeme-reviews .jdgm-star.jdgm--half {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5b301' stroke-width='1.4'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.6-5 4.5 1.5 6.5L12 17.8 5.9 20.2l1.5-6.5-5-4.5 6.6-.6L12 2.5z'/%3E%3C/svg%3E") !important;
+}
+
+.frido-judgeme-reviews .jdgm-paginate__first-page,
+.frido-judgeme-reviews .jdgm-paginate__last-page,
+.frido-judgeme-reviews .jdgm-paginate__prev-page,
+.frido-judgeme-reviews .jdgm-paginate__next-page,
+.frido-judgeme-reviews .jdgm-rev__share-btn,
+.frido-judgeme-reviews .jdgm-rev__thumb-btn,
+.frido-judgeme-reviews .jdgm-rev[data-verified-buyer='true'] .jdgm-rev__icon::after {
+  font-family: JudgemeIcons, sans-serif !important;
+  font-style: normal !important;
+  font-weight: normal !important;
 }
 
 .frido-judgeme-reviews .jdgm-rev__body {

@@ -72,7 +72,38 @@
     }
   }
 
+  function fixStarGlyphs(root) {
+    qsa('.jdgm-rev__rating, .jdgm-rev-widg__summary-stars', root).forEach(function (rating) {
+      var stars = qsa('.jdgm-star', rating);
+      if (!stars.length) return;
+
+      var hasState = stars.some(function (s) {
+        return s.classList.contains('jdgm--on') || s.classList.contains('jdgm--off') || s.classList.contains('jdgm--filled');
+      });
+      if (hasState) return;
+
+      var score = parseFloat(rating.getAttribute('data-score') || '', 10);
+      if (isNaN(score)) {
+        var label = rating.getAttribute('aria-label') || '';
+        var match = label.match(/(\d+(?:\.\d+)?)/);
+        score = match ? parseFloat(match[1], 10) : 5;
+      }
+
+      var filled = Math.round(score);
+      stars.forEach(function (star, idx) {
+        if (idx < filled) {
+          star.classList.add('jdgm--on');
+          star.classList.remove('jdgm--off');
+        } else {
+          star.classList.add('jdgm--off');
+          star.classList.remove('jdgm--on');
+        }
+      });
+    });
+  }
+
   function markReady(root) {
+    fixStarGlyphs(root);
     root.classList.add('frido-judgeme-reviews--ready');
     syncCount(root);
     wireActions(root);
