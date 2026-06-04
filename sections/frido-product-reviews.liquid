@@ -17,24 +17,10 @@
   assign ugc_blocks = section.blocks | where: 'type', 'ugc_review'
   assign app_blocks = section.blocks | where: 'type', '@app'
   assign use_judgeme = section.settings.enable_judgeme
-
-  assign has_legacy_widget = false
-  if review_product.metafields.judgeme.widget.size > 20
-    assign has_legacy_widget = true
-  endif
-
-  assign has_widget_data = false
-  if review_product.metafields.judgeme.review_widget_data != blank
-    assign has_widget_data = true
-  endif
-
-  assign show_fallback_masonry = false
-  if ugc_blocks.size > 0 and use_judgeme == false
-    assign show_fallback_masonry = true
-  endif
+  assign per_page = section.settings.reviews_per_page | default: 12
 
   assign show_section = true
-  if section.settings.hide_when_no_reviews and use_judgeme == false and review_count == 0 and ugc_blocks.size == 0
+  if section.settings.hide_when_no_reviews and review_count == 0 and ugc_blocks.size == 0 and use_judgeme == false
     assign show_section = false
   endif
 -%}
@@ -48,6 +34,7 @@
   data-frido-pdp-reviews
   data-section-id="{{ section.id }}"
   data-product-id="{{ review_product.id }}"
+  data-reviews-per-page="{{ per_page }}"
 >
   <div class="frido-pdp-reviews__wrap">
     {%- if use_judgeme -%}
@@ -58,7 +45,7 @@
             {%- if review_count > 0 -%}
               {{ review_count }} Reviews
             {%- else -%}
-              <span data-frido-reviews-count-placeholder>Reviews</span>
+              Reviews
             {%- endif -%}
           </p>
         </div>
@@ -80,45 +67,75 @@
         </div>
       </header>
 
-      <div class="frido-pdp-reviews__judgeme" data-frido-judgeme-root>
-        {%- if has_legacy_widget and has_widget_data == false -%}
-          <div class="frido-pdp-reviews__legacy jdgm-widget jdgm-review-widget" data-frido-judgeme-legacy>
-            {{ review_product.metafields.judgeme.widget }}
+      {%- if review_product.metafields.judgeme.review_widget_data != blank -%}
+        <script type="application/json" data-frido-judgeme-json>
+          {{ review_product.metafields.judgeme.review_widget_data }}
+        </script>
+      {%- endif -%}
+
+      <div class="frido-pdp-reviews__grid" data-frido-reviews-grid>
+        {%- for block in ugc_blocks -%}
+          {%- liquid
+            assign card_image_url = block.settings.image_url
+            if block.settings.image != blank
+              assign card_image_url = block.settings.image | image_url: width: 800
+            endif
+          -%}
+          <div data-frido-reviews-ugc-card {{ block.shopify_attributes }}>
+            {% render 'frido-pdp-review-card',
+              author: block.settings.author,
+              rating: block.settings.rating,
+              body_html: block.settings.body,
+              image_url: card_image_url,
+              verified: block.settings.verified
+            %}
           </div>
-        {%- else -%}
-          {% render 'frido-judgeme-embed', product: review_product %}
-        {%- endif -%}
+        {%- endfor -%}
       </div>
 
-      <p class="frido-pdp-reviews__loading" data-frido-reviews-loading hidden>
-        Loading reviews…
-      </p>
+      <div class="frido-pdp-reviews__judgeme" data-frido-judgeme-root hidden>
+        {% render 'frido-judgeme-embed', product: review_product %}
+      </div>
+
+      <div class="frido-pdp-reviews__more-wrap" data-frido-reviews-more-wrap hidden>
+        <button type="button" class="frido-pdp-reviews__more-btn" data-frido-reviews-more>
+          {{ section.settings.show_more_label | escape }}
+        </button>
+      </div>
+
+      <p class="frido-pdp-reviews__loading" data-frido-reviews-loading>Loading reviews…</p>
       <p class="frido-pdp-reviews__error" data-frido-reviews-error hidden>
-        Reviews are still syncing. Refresh the page, or open
-        <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>
-        and run <strong>Install widgets</strong> + import reviews.
+        Add reviews in Judge.me, or add <strong>UGC review fallback</strong> blocks in the theme editor.
       </p>
-    {%- elsif show_fallback_masonry -%}
+    {%- elsif ugc_blocks.size > 0 -%}
       <header class="frido-pdp-reviews__header">
         <div class="frido-pdp-reviews__summary">
           {% render 'frido-stars', rating: star_rating %}
           <p class="frido-pdp-reviews__count">{{ review_count }} Reviews</p>
         </div>
       </header>
-      <div class="frido-pdp-reviews__masonry">
+      <div class="frido-pdp-reviews__grid" data-frido-reviews-grid>
         {%- for block in ugc_blocks -%}
-          {% render 'frido-pdp-ugc-review-card', block: block %}
+          {%- liquid
+            assign card_image_url = block.settings.image_url
+            if block.settings.image != blank
+              assign card_image_url = block.settings.image | image_url: width: 800
+            endif
+          -%}
+          {% render 'frido-pdp-review-card',
+            author: block.settings.author,
+            rating: block.settings.rating,
+            body_html: block.settings.body,
+            image_url: card_image_url,
+            verified: block.settings.verified
+          %}
         {%- endfor -%}
-      </div>
-      <div class="frido-pdp-reviews__more-wrap">
-        <button type="button" class="frido-pdp-reviews__more-btn" disabled>Show more reviews</button>
       </div>
     {%- else -%}
       <div class="frido-pdp-reviews__setup">
         <p>
-          <strong>Reviews not connected.</strong><br>
-          Install <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a>, run <strong>Install widgets</strong>, import reviews, then enable
-          <strong>Judge.me widget</strong> in this section.
+          <strong>Reviews not connected.</strong> Install
+          <a href="https://apps.shopify.com/judgeme" rel="noopener">Judge.me</a> or add UGC review blocks.
         </p>
       </div>
     {%- endif -%}
@@ -153,13 +170,28 @@
     {
       "type": "checkbox",
       "id": "enable_judgeme",
-      "label": "Show Judge.me review widget",
+      "label": "Show Judge.me reviews",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "reviews_per_page",
+      "min": 6,
+      "max": 24,
+      "step": 6,
+      "label": "Reviews shown initially",
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "show_more_label",
+      "label": "Show more button",
+      "default": "Show more reviews"
     },
     {
       "type": "checkbox",
       "id": "hide_when_no_reviews",
-      "label": "Hide section when Judge.me is off and count is zero",
+      "label": "Hide when Judge.me off and no blocks",
       "default": false
     },
     {

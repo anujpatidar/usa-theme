@@ -1,0 +1,48 @@
+{% comment %}
+  Single review card — Hike-style (photo, name, verified, stars, text)
+  @param author {String}
+  @param rating {Number}
+  @param body_html {String}
+  @param image_url {String}
+  @param verified {Boolean}
+  @param card_class {String} optional extra class
+{% endcomment %}
+{%- liquid
+  assign author = author | default: 'Customer'
+  assign rating = rating | default: 5 | at_most: 5 | at_least: 1
+  assign verified = verified | default: false
+  assign card_class = card_class | default: 'frido-pdp-review-card'
+-%}
+<article class="{{ card_class }}">
+  <div class="frido-pdp-review-card__media">
+    {%- if image_url != blank -%}
+      <img
+        class="frido-pdp-review-card__img"
+        src="{{ image_url }}"
+        alt="{{ author | escape }}"
+        loading="lazy"
+        width="400"
+        height="400"
+      >
+    {%- else -%}
+      <div class="frido-pdp-review-card__img frido-pdp-review-card__img--placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+  <div class="frido-pdp-review-card__body">
+    <div class="frido-pdp-review-card__meta">
+      <span class="frido-pdp-review-card__name">{{ author | escape }}</span>
+      {%- if verified -%}
+        <span class="frido-pdp-review-card__verified">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+          </svg>
+          Verified
+        </span>
+      {%- endif -%}
+    </div>
+    {% render 'frido-stars', rating: rating %}
+    {%- if body_html != blank -%}
+      <div class="frido-pdp-review-card__text rte">{{ body_html }}</div>
+    {%- endif -%}
+  </div>
+</article>
