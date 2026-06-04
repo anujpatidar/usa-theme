@@ -147,7 +147,13 @@
 
   {% render 'frido-search-panel', section: section %}
 
-  <div id="FridoMenu-{{ section.id }}" class="frido-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'sections.header.menu' | t }}">
+  <div
+    id="FridoMenu-{{ section.id }}"
+    class="frido-menu-panel color-{{ section.settings.color_scheme }} gradient"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'sections.header.menu' | t }}"
+  >
     <div class="frido-menu-panel__inner">
       <div class="frido-menu-panel__view frido-menu-panel__view--root is-active" data-menu-view="root">
         <div class="frido-menu-panel__scroll">
