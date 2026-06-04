@@ -138,8 +138,7 @@
         "color_scheme": "scheme-1",
         "product": "",
         "enable_judgeme": true,
-        "hide_when_no_reviews": false,
-        "empty_count_label": "Customer reviews"
+        "hide_when_no_reviews": false
       }
     },
     "frido_pdp_comfort": {
