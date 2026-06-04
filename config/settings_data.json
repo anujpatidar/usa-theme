@@ -222,11 +222,11 @@
       },
       "scheme-8eaf73f9-e380-41b9-b4fb-da5872e82238": {
         "settings": {
-          "background": "#fffbeb",
+          "background": "#333333",
           "background_gradient": "",
-          "text": "#1c1917",
-          "button": "#fcd00b",
-          "button_label": "#1c1917",
+          "text": "#ffffff",
+          "button": "#ffffff",
+          "button_label": "#333333",
           "secondary_button_label": "#92400e",
           "shadow": "#fcd00b"
         }
