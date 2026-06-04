@@ -40,7 +40,7 @@
   var TOE_OPTIONS = [
     { id: 'snug', emoji: '🤏', title: 'Snug fit', desc: 'Minimal space, like athletic shoes' },
     { id: 'natural', emoji: '😊', title: 'Natural fit', desc: 'Comfortable wiggle room' },
-    { id: 'extra_room', emoji: '😌', title: 'Extra space (barefoot feel)', desc: 'Maximum toe freedom' },
+    { id: 'extra_space', emoji: '😌', title: 'Extra space (barefoot feel)', desc: 'Maximum toe freedom' },
   ];
 
   var CONDITION_OPTIONS = [
@@ -57,8 +57,7 @@
     { id: 'work', emoji: '💼', title: 'Work (long hours standing)', desc: 'All day standing/walking' },
     { id: 'casual', emoji: '😎', title: 'Casual', desc: 'Parks and outdoor activities' },
     { id: 'hiking', emoji: '⛰️', title: 'Hiking', desc: 'Trails and outdoor terrain' },
-    { id: 'gym', emoji: '🏋️', title: 'Gym/Training', desc: 'Workouts and training' },
-    { id: 'running', emoji: '🏃', title: 'Running', desc: 'Road or treadmill runs' },
+    { id: 'exercise', emoji: '🏋️', title: 'Gym/Training', desc: 'Workouts and training' },
   ];
 
   function qs(sel, root) {
@@ -323,16 +322,22 @@
   }
 
   function buildPayload(state, config) {
+    var conditions = state.footConditions.slice();
+    if (!conditions.length) {
+      conditions = ['none'];
+    }
+
+    var toe = state.toeRoomPreference;
+    if (toe === 'extra_room') toe = 'extra_space';
+
     return {
       brand: brandLabel(state.brand),
       genderCategory: state.genderCategory,
       brandSize: state.brandSize,
       fitFeeling: state.fitFeeling,
       footWidth: state.footWidth,
-      toeRoomPreference: state.toeRoomPreference,
-      footConditions: state.footConditions.filter(function (c) {
-        return c !== 'none';
-      }),
+      toeRoomPreference: toe,
+      footConditions: conditions,
       activity: state.activity,
       availableSizes: config.availableSizes || [],
       productTitle: config.productTitle || '',
@@ -459,11 +464,16 @@
           try {
             json = JSON.parse(text);
           } catch (e) {
-            throw new Error(
-              'Size service unavailable. Install the Size Quiz app proxy or try again later.'
-            );
+            if (text.indexOf('<!doctype') !== -1 || text.indexOf('<html') !== -1) {
+              throw new Error(
+                'Size Quiz app proxy is not connected. Install the Size Quiz app on this store and redeploy the backend proxy route.'
+              );
+            }
+            throw new Error('Size service returned an invalid response.');
           }
-          if (!res.ok) throw new Error(json.error || json.message || 'Request failed');
+          if (!res.ok) {
+            throw new Error(json.error || json.message || 'Request failed (' + res.status + ')');
+          }
           return json;
         });
       })
@@ -485,7 +495,11 @@
       })
       .catch(function (err) {
         ctx.state.error = err.message;
-        alert('We could not get a size recommendation. Please try again or pick a size manually.');
+        console.error('[FridoSizeQuiz]', err);
+        alert(
+          err.message ||
+            'We could not get a size recommendation. Please try again or pick a size manually.'
+        );
       });
   }
 
