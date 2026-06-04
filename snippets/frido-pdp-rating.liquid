@@ -2,7 +2,6 @@
   PDP star rating — Shopify standard review metafields (synced by Judge.me, etc.)
   @param product {Product}
   @param reviews_anchor {String} e.g. #frido-product-reviews
-  @param fallback_label {String} optional static line when no metafields
 {% endcomment %}
 {%- liquid
   assign rating_obj = product.metafields.reviews.rating.value
