@@ -125,6 +125,8 @@
     "frido_header_sticky": true,
     "frido_use_outfit_font": true,
     "frido_use_cart_drawer": true,
+    "frido_find_size_behavior": "quiz",
+    "frido_size_proxy_path": "/apps/frido-size-recommendation",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
