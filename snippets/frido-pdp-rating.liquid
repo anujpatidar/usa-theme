@@ -6,33 +6,24 @@
 {% endcomment %}
 {%- liquid
   assign rating_obj = product.metafields.reviews.rating.value
-  assign review_count = product.metafields.reviews.rating_count.value | default: 0
+  assign review_count = product.metafields.reviews.rating_count.value | default: 0 | plus: 0
   assign star_rating = 5
   assign rating_label = ''
 
-  if rating_obj != blank
-    assign star_rating = rating_obj.rating | floor
-    if review_count > 0
-      assign rating_label = review_count | append: ' Reviews'
+  unless review_count > 0
+    assign rating_label = ''
+  else
+    if rating_obj != blank
+      assign star_rating = rating_obj.rating | floor
     endif
-  endif
-
-  if rating_label == blank and fallback_label != blank
-    assign rating_label = fallback_label
-    assign star_rating = 5
-  endif
+    assign rating_label = review_count | append: ' Reviews'
+  endunless
 
   assign reviews_anchor = reviews_anchor | default: '#frido-product-reviews'
 -%}
-{%- if rating_label != blank -%}
+{%- if review_count > 0 -%}
   <p class="frido-pdp__rating">
     {% render 'frido-stars', rating: star_rating %}
-    <a href="{{ reviews_anchor }}" class="frido-pdp__rating-link">
-      {%- if rating_label != blank -%}
-        {{ rating_label | escape }}
-      {%- else -%}
-        {{ fallback_label | escape }}
-      {%- endif -%}
-    </a>
+    <a href="{{ reviews_anchor }}" class="frido-pdp__rating-link">{{ rating_label | escape }}</a>
   </p>
 {%- endif -%}

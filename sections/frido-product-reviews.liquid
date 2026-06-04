@@ -8,9 +8,9 @@
   endif
 
   assign rating_obj = review_product.metafields.reviews.rating.value
-  assign review_count = review_product.metafields.reviews.rating_count.value | default: 0
+  assign review_count = review_product.metafields.reviews.rating_count.value | default: 0 | plus: 0
   assign star_rating = 5
-  if rating_obj != blank
+  if rating_obj != blank and review_count > 0
     assign star_rating = rating_obj.rating | floor
   endif
 
@@ -21,7 +21,21 @@
   if ugc_blocks.size > 0
     assign show_fallback = true
   endif
+
+  assign has_reviews = false
+  if review_count > 0 or show_fallback or app_blocks.size > 0
+    assign has_reviews = true
+  endif
+
+  assign show_section = true
+  if section.settings.hide_when_no_reviews and has_reviews == false
+    assign show_section = false
+  endif
 -%}
+
+{%- unless show_section -%}
+  {%- comment -%} Hidden — product has no reviews (see hide_when_no_reviews). {%- endcomment -%}
+{%- else -%}
 
 <section
   id="frido-product-reviews"
@@ -32,14 +46,14 @@
   <div class="frido-pdp-reviews__wrap">
     <header class="frido-pdp-reviews__header">
       <div class="frido-pdp-reviews__summary">
-        {% render 'frido-stars', rating: star_rating %}
+        {%- if review_count > 0 -%}
+          {% render 'frido-stars', rating: star_rating %}
+        {%- endif -%}
         <p class="frido-pdp-reviews__count">
           {%- if review_count > 0 -%}
-            {{ review_count | number_with_delimiter }} Reviews
-          {%- elsif section.settings.fallback_count != blank -%}
-            {{ section.settings.fallback_count | escape }}
+            {{ review_count }} Reviews
           {%- else -%}
-            Reviews
+            {{ section.settings.empty_count_label | default: 'No reviews yet' | escape }}
           {%- endif -%}
         </p>
       </div>
@@ -87,7 +101,7 @@
           {% render 'frido-pdp-ugc-review-card', block: block %}
         {%- endfor -%}
       </div>
-    {%- elsif use_judgeme == false and app_blocks.size == 0 -%}
+    {%- elsif review_count == 0 and use_judgeme == false and app_blocks.size == 0 -%}
       <div class="frido-pdp-reviews__setup">
         <p>
           <strong>Reviews not connected yet.</strong><br>
@@ -98,6 +112,8 @@
     {%- endif -%}
   </div>
 </section>
+
+{%- endunless -%}
 
 {% schema %}
 {
@@ -124,10 +140,18 @@
       "info": "Requires Judge.me app + theme widget install. Syncs to all products via the app."
     },
     {
+      "type": "checkbox",
+      "id": "hide_when_no_reviews",
+      "label": "Hide section when product has no reviews",
+      "default": true,
+      "info": "Uses reviews.rating_count from Shopify/Judge.me. No fake counts on empty products."
+    },
+    {
       "type": "text",
-      "id": "fallback_count",
-      "label": "Review count (fallback if app not synced)",
-      "default": "7,295 Reviews"
+      "id": "empty_count_label",
+      "label": "Label when count is zero (section visible only)",
+      "default": "No reviews yet",
+      "info": "Only shown if “Hide section…” is off and the product has 0 reviews."
     },
     {
       "type": "text",
