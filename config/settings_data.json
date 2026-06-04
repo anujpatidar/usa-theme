@@ -146,7 +146,7 @@
           "empty_text": "Your cart is empty",
           "empty_cta": "Continue shopping",
           "upsell_enable": true,
-          "upsell_collection": "socks-1",
+          "upsell_collection": "socks",
           "upsell_limit": 3,
           "upsell_heading": "The perfect combination:",
           "subtotal_label": "Subtotal",
@@ -167,7 +167,7 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#fffef9",
+          "background": "#fffdf3",
           "background_gradient": "",
           "text": "#000000",
           "button": "#fcd00b",
