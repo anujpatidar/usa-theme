@@ -1,5 +1,5 @@
 {% comment %}
-  PDP star rating — Judge.me preview badge (official) + Shopify reviews.* fallback.
+  PDP star rating — Shopify standard review metafields (synced by Judge.me, etc.)
   @param product {Product}
   @param reviews_anchor {String} e.g. #frido-product-reviews
 {% endcomment %}
@@ -8,27 +8,21 @@
   assign review_count = product.metafields.reviews.rating_count.value | default: 0 | plus: 0
   assign star_rating = 5
   assign rating_label = ''
-  assign reviews_anchor = reviews_anchor | default: '#frido-product-reviews'
 
-  if review_count > 0
+  unless review_count > 0
+    assign rating_label = ''
+  else
     if rating_obj != blank
       assign star_rating = rating_obj.rating | floor
     endif
     assign rating_label = review_count | append: ' Reviews'
-  endif
+  endunless
+
+  assign reviews_anchor = reviews_anchor | default: '#frido-product-reviews'
 -%}
-
-<p class="frido-pdp__rating frido-pdp__rating--judgeme">
-  <a href="{{ reviews_anchor }}" class="frido-pdp__rating-link frido-pdp__rating-link--judgeme" aria-label="Read product reviews">
-    {% render 'frido-judgeme-badge', product: product, class: 'frido-pdp__judgeme-badge' %}
-  </a>
-</p>
-
 {%- if review_count > 0 -%}
-  <noscript>
-    <p class="frido-pdp__rating">
-      {% render 'frido-stars', rating: star_rating %}
-      <a href="{{ reviews_anchor }}" class="frido-pdp__rating-link">{{ rating_label | escape }}</a>
-    </p>
-  </noscript>
+  <p class="frido-pdp__rating">
+    {% render 'frido-stars', rating: star_rating %}
+    <a href="{{ reviews_anchor }}" class="frido-pdp__rating-link">{{ rating_label | escape }}</a>
+  </p>
 {%- endif -%}

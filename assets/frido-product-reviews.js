@@ -1,5 +1,5 @@
 /**
- * PDP reviews — filter toggle, write-review helper, Judge.me count sync
+ * PDP reviews — filter toggle + write-review helper for Judge.me
  */
 (function () {
   function initSection(root) {
@@ -27,43 +27,6 @@
         }
       });
     });
-
-    syncJudgeMeCount(root);
-  }
-
-  function syncJudgeMeCount(root) {
-    var countEl = root.querySelector('[data-frido-reviews-count-jdgm]');
-    if (!countEl) return;
-
-    function applyCount() {
-      var widget = root.querySelector('.jdgm-rev-widg');
-      if (!widget) return false;
-
-      var n = 0;
-      var dataCount = widget.getAttribute('data-number-of-reviews');
-      if (dataCount) n = parseInt(dataCount, 10) || 0;
-      if (!n) {
-        var summary = widget.querySelector('.jdgm-rev-widg__summary-text, .jdgm-rev-widg__title');
-        if (summary && summary.textContent) {
-          var m = summary.textContent.match(/(\d[\d,]*)\s*review/i);
-          if (m) n = parseInt(m[1].replace(/,/g, ''), 10) || 0;
-        }
-      }
-      if (!n) {
-        n = root.querySelectorAll('.jdgm-rev[data-review-id], .jdgm-rev').length;
-      }
-      if (n > 0) {
-        countEl.textContent = n.toLocaleString() + ' Reviews';
-        return true;
-      }
-      return false;
-    }
-
-    var tries = 0;
-    var timer = setInterval(function () {
-      tries += 1;
-      if (applyCount() || tries > 40) clearInterval(timer);
-    }, 500);
   }
 
   document.querySelectorAll('[data-frido-pdp-reviews]').forEach(initSection);
