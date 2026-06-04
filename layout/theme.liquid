@@ -70,8 +70,9 @@
       {{ body_font_italic | font_face: font_display: 'swap' }}
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
-      .frido-pdp-reviews__wrap{
+      .frido-judgeme-reviews .page-width{
         width: var(--frido-page);
+        max-width: 100%;
       }
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
@@ -410,6 +411,5 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {% render 'judgeme_core' %}
   </body>
 </html>
