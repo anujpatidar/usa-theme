@@ -407,5 +407,7 @@
     {%- if settings.frido_use_cart_drawer == false and settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {% render 'judgeme_core' %}
   </body>
 </html>

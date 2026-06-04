@@ -242,6 +242,31 @@
   text-underline-offset: 0.15em;
 }
 
+.frido-pdp__rating--judgeme .frido-pdp__rating-link--judgeme {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.frido-pdp__rating--judgeme .jdgm-preview-badge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.frido-pdp__rating--judgeme .jdgm-star {
+  color: #f5b301 !important;
+}
+
+.frido-pdp__rating--judgeme .jdgm-prev-badge__text {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: rgba(var(--color-foreground), 0.75);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .frido-pdp__find-size-wrap {
   margin: 1.2rem 0 0;
 }

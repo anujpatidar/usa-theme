@@ -22,13 +22,20 @@
     assign show_fallback = true
   endif
 
+  assign judgeme_widget_html = review_product.metafields.judgeme.widget.value | default: review_product.metafields.judgeme.widget
+  assign judgeme_data = review_product.metafields.judgeme.review_widget_data.value | default: review_product.metafields.judgeme.review_widget_data
+  assign has_judgeme_metafields = false
+  if judgeme_widget_html != blank or judgeme_data != blank
+    assign has_judgeme_metafields = true
+  endif
+
   assign has_reviews = false
-  if review_count > 0 or show_fallback or app_blocks.size > 0
+  if review_count > 0 or show_fallback or app_blocks.size > 0 or has_judgeme_metafields
     assign has_reviews = true
   endif
 
   assign show_section = true
-  if section.settings.hide_when_no_reviews and has_reviews == false
+  if section.settings.hide_when_no_reviews and has_reviews == false and use_judgeme == false
     assign show_section = false
   endif
 -%}
@@ -49,9 +56,11 @@
         {%- if review_count > 0 -%}
           {% render 'frido-stars', rating: star_rating %}
         {%- endif -%}
-        <p class="frido-pdp-reviews__count">
+        <p class="frido-pdp-reviews__count" data-frido-reviews-count>
           {%- if review_count > 0 -%}
             {{ review_count }} Reviews
+          {%- elsif use_judgeme -%}
+            <span data-frido-reviews-count-jdgm>{{ section.settings.empty_count_label | default: 'Reviews' | escape }}</span>
           {%- else -%}
             {{ section.settings.empty_count_label | default: 'No reviews yet' | escape }}
           {%- endif -%}
@@ -143,8 +152,8 @@
       "type": "checkbox",
       "id": "hide_when_no_reviews",
       "label": "Hide section when product has no reviews",
-      "default": true,
-      "info": "Uses reviews.rating_count from Shopify/Judge.me. No fake counts on empty products."
+      "default": false,
+      "info": "Only hides when Judge.me widget is off and reviews.rating_count is 0. With Judge.me enabled, the section stays visible so imported reviews can load."
     },
     {
       "type": "text",
