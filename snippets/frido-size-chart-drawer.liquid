@@ -105,7 +105,7 @@
       </p>
 
       <div class="frido-size-chart__find-mobile">
-        {% render 'frido-find-size-button', class: 'frido-find-size-btn--drawer', color_scheme: section.settings.color_scheme %}
+        {% render 'frido-find-size-button', class: 'frido-find-size-btn--drawer', color_scheme: section.settings.color_scheme, section_id: section.id %}
       </div>
 
       {%- if section.settings.size_chart_recommendations != blank -%}

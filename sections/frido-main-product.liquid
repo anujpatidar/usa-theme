@@ -120,7 +120,7 @@
           {% render 'frido-pdp-variants', product: product, section: section %}
 
           <div class="frido-pdp__find-size-wrap">
-            {% render 'frido-find-size-button', color_scheme: section.settings.color_scheme %}
+            {% render 'frido-find-size-button', color_scheme: section.settings.color_scheme, section_id: section.id %}
           </div>
 
           {% render 'frido-pdp-bundle-picker', product: product, section: section, bundle_blocks: bundle_blocks %}
@@ -149,6 +149,7 @@
 </div>
 
 {% render 'frido-size-chart-drawer', section: section, product: product %}
+{% render 'frido-size-quiz-modal', section: section, product: product %}
 
 {% schema %}
 {

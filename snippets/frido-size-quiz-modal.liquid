@@ -1,0 +1,112 @@
+{% comment %}
+  Find my Perfect Size — 7-step quiz modal (PDP).
+  @param product {Product}
+  @param section {Section}
+{% endcomment %}
+{%- liquid
+  assign size_option = nil
+  for option in product.options_with_values
+    assign oname = option.name | downcase
+    if size_option == nil and oname contains 'size'
+      assign size_option = option
+    endif
+  endfor
+
+  assign proxy_path = settings.frido_size_proxy_path | default: '/apps/frido-size-recommendation'
+  assign quiz_scheme = section.settings.color_scheme | default: 'scheme-1'
+-%}
+
+<div
+  id="frido-size-quiz-{{ section.id }}"
+  class="frido-size-quiz color-{{ quiz_scheme }} gradient"
+  data-frido-size-quiz
+  data-section-id="{{ section.id }}"
+  hidden
+  aria-hidden="true"
+>
+  <div class="frido-size-quiz__overlay" data-frido-size-quiz-close tabindex="-1"></div>
+
+  <div
+    class="frido-size-quiz__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="FridoSizeQuizTitle-{{ section.id }}"
+    tabindex="-1"
+  >
+    <script type="application/json" data-frido-size-quiz-config>
+      {
+        "sectionId": {{ section.id | json }},
+        "productTitle": {{ product.title | json }},
+        "availableSizes": [
+          {%- if size_option -%}
+            {%- for value in size_option.values -%}
+              {{ value | json }}{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          {%- endif -%}
+        ],
+        "proxyPath": {{ proxy_path | json }},
+        "defaultGender": {% if product.handle contains 'womens' or product.handle contains 'women' %}"womens"{% elsif product.handle contains 'mens' or product.handle contains 'men' %}"mens"{% else %}"womens"{% endif %}
+      }
+    </script>
+
+    <div class="frido-size-quiz__quiz" data-frido-size-quiz-quiz>
+      <header class="frido-size-quiz__header">
+        <div class="frido-size-quiz__header-top">
+          <div class="frido-size-quiz__header-brand">
+            <span class="frido-size-quiz__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6h16M4 12h12M4 18h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M18 10v8M15 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div class="frido-size-quiz__header-text">
+              <h2 id="FridoSizeQuizTitle-{{ section.id }}" class="frido-size-quiz__title">
+                Find my Perfect Size
+              </h2>
+              <p class="frido-size-quiz__subtitle" data-frido-size-quiz-eta>
+                Answer a few quick questions • Takes 60 seconds
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="frido-size-quiz__close"
+            data-frido-size-quiz-close
+            aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="frido-size-quiz__progress" data-frido-size-quiz-progress aria-hidden="true"></div>
+      </header>
+
+      <div class="frido-size-quiz__body" data-frido-size-quiz-body></div>
+
+      <footer class="frido-size-quiz__footer">
+        <button type="button" class="frido-size-quiz__back" data-frido-size-quiz-back hidden>
+          <span aria-hidden="true">&lsaquo;</span> Previous Question
+        </button>
+        <button type="button" class="frido-size-quiz__proceed" data-frido-size-quiz-proceed hidden>
+          Proceed
+        </button>
+      </footer>
+    </div>
+
+    <div class="frido-size-quiz__result" data-frido-size-quiz-result hidden>
+      <button
+        type="button"
+        class="frido-size-quiz__result-close"
+        data-frido-size-quiz-close
+        aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="frido-size-quiz__result-inner" data-frido-size-quiz-result-inner></div>
+    </div>
+
+    <div class="frido-size-quiz__loading" data-frido-size-quiz-loading hidden aria-live="polite">
+      <div class="frido-size-quiz__spinner" aria-hidden="true"></div>
+      <p>Finding your perfect fit…</p>
+    </div>
+  </div>
+</div>

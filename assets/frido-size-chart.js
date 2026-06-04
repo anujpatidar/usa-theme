@@ -146,6 +146,12 @@
       return;
     }
 
+    var quizBtn = e.target.closest('[data-frido-size-quiz-open]');
+    if (quizBtn) {
+      closeAll();
+      return;
+    }
+
     var scrollBtn = e.target.closest('[data-frido-find-size-scroll]');
     if (scrollBtn) {
       e.preventDefault();

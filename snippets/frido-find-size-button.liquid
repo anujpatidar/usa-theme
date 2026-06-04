@@ -2,7 +2,8 @@
   Reusable "Find my Perfect Size" control — theme settings → Theme settings → Frido brand.
   @param label {String} optional override
   @param url {String} optional override
-  @param behavior {String} link | scroll — optional override
+  @param behavior {String} quiz | scroll | link — optional override
+  @param section_id {String} PDP section id (required for quiz on product page)
   @param class {String} extra classes
   @param full_width {Boolean} default true
   @param tag {String} button | submit — for forms (default button)
@@ -12,7 +13,8 @@
   assign btn_label = label | default: settings.frido_find_size_label | default: 'Find my Perfect Size'
   assign btn_scheme = color_scheme | default: 'scheme-1'
   assign btn_url = url | default: settings.frido_find_size_url
-  assign btn_behavior = behavior | default: settings.frido_find_size_behavior | default: 'scroll'
+  assign btn_behavior = behavior | default: settings.frido_find_size_behavior | default: 'quiz'
+  assign btn_section_id = section_id | default: ''
   assign btn_class = class | default: ''
   assign btn_tag = tag | default: 'button'
   assign is_full = true
@@ -29,6 +31,16 @@
       <a href="{{ btn_url }}" class="{{ btn_classes | strip }}">
         {{ btn_label | escape }}
       </a>
+    {%- elsif btn_behavior == 'quiz' and btn_section_id != blank -%}
+      <button
+        type="{{ btn_tag }}"
+        class="{{ btn_classes | strip }}"
+        data-frido-size-quiz-open
+        data-frido-size-quiz-section="{{ btn_section_id }}"
+        aria-haspopup="dialog"
+      >
+        {{ btn_label | escape }}
+      </button>
     {%- else -%}
       <button
         type="{{ btn_tag }}"

@@ -1503,8 +1503,12 @@
         "type": "select",
         "id": "frido_find_size_behavior",
         "label": "Button behavior",
-        "default": "scroll",
+        "default": "quiz",
         "options": [
+          {
+            "value": "quiz",
+            "label": "Open size quiz (7 steps)"
+          },
           {
             "value": "scroll",
             "label": "Scroll to Shoe Finder section"
@@ -1514,6 +1518,13 @@
             "label": "Open custom URL"
           }
         ]
+      },
+      {
+        "type": "text",
+        "id": "frido_size_proxy_path",
+        "label": "Size recommendation proxy path",
+        "default": "/apps/frido-size-recommendation",
+        "info": "Shopify App Proxy subpath. See scripts/SIZE-RECOMMENDATION-SETUP.md. Never call the backend URL from theme JavaScript."
       }
     ]
   }
