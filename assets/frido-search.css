@@ -41,10 +41,12 @@
   right: 0;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  box-shadow: 0 16px 48px rgba(var(--color-shadow), 0.12);
   max-height: 92vh;
   overflow: hidden;
+  font-family: var(--frido-font, inherit);
   transition: transform 0.28s ease, opacity 0.28s ease;
 }
 
@@ -55,7 +57,7 @@
   gap: 0.8rem;
   flex-shrink: 0;
   padding: 0.75rem 1.2rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
   background: rgb(var(--color-background));
 }
 
@@ -80,11 +82,12 @@
   box-sizing: border-box;
   border: 1px solid rgb(var(--color-button));
   border-radius: var(--frido-radius-pill, 999px);
-  background: #fff;
+  background: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
   padding: 0.9rem 1.2rem 0.9rem 3.2rem;
   font-family: inherit;
   font-size: 1.45rem;
+  font-weight: 400;
   outline: none;
 }
 
@@ -107,7 +110,7 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 1.6rem 1.5rem 2.4rem;
-  background: #e9ede1;
+  background: rgb(var(--color-background));
 }
 
 .frido-search-panel__loading {
@@ -123,7 +126,7 @@
 .frido-search-panel__spinner {
   width: 2.4rem;
   height: 2.4rem;
-  border: 2px solid rgba(0, 0, 0, 0.12);
+  border: 2px solid rgba(var(--color-foreground), 0.12);
   border-top-color: rgb(var(--color-button));
   border-radius: 50%;
   animation: frido-search-spin 0.7s linear infinite;
@@ -142,16 +145,18 @@
 
 .frido-search-panel__heading {
   margin: 0 0 1.2rem;
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #000;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-search-panel__subheading {
   margin: 0 0 0.6rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #000;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-search-panel__subheading--spaced {
@@ -160,7 +165,7 @@
 
 .frido-search-panel__rule {
   border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(var(--color-foreground), 0.12);
   margin: 0 0 1rem;
 }
 
@@ -173,13 +178,15 @@
 .frido-search-panel__links a {
   display: block;
   padding: 0.35rem 0;
-  font-size: 1.45rem;
-  color: #000;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: rgb(var(--color-foreground));
   text-decoration: none;
 }
 
 .frido-search-panel__links a:hover {
-  opacity: 0.7;
+  color: rgb(var(--color-button));
+  opacity: 1;
 }
 
 .frido-search-panel__cta,
@@ -194,7 +201,7 @@
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.04em;
   text-decoration: none;
   text-transform: uppercase;
@@ -209,13 +216,15 @@
 .frido-search-results__count {
   margin: 0 0 1.2rem;
   font-size: 1.35rem;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.55);
+  font-weight: 400;
+  color: rgba(var(--color-foreground), 0.55);
 }
 
 .frido-search-results__empty {
   margin: 0;
-  font-size: 1.45rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: rgb(var(--color-foreground));
 }
 
 .frido-search-results__foot {
@@ -230,10 +239,11 @@
 
 /* Search product card */
 .frido-scard {
-  background: #fff;
+  background: rgb(var(--color-background));
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(var(--color-foreground), 0.08);
+  box-shadow: 0 1px 4px rgba(var(--color-shadow), 0.06);
 }
 
 .frido-scard__link {
@@ -248,7 +258,7 @@
   justify-content: center;
   min-height: 9rem;
   padding: 0.8rem;
-  background: #f5f5f5;
+  background: rgba(var(--color-foreground), 0.04);
 }
 
 .frido-scard__img img {
@@ -265,9 +275,9 @@
 .frido-scard__cat {
   margin: 0 0 0.35rem;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.06em;
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(var(--color-foreground), 0.45);
   text-transform: uppercase;
 }
 
@@ -289,13 +299,13 @@
 
 .frido-scard__reviews {
   font-size: 1.15rem;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(var(--color-foreground), 0.5);
 }
 
 .frido-scard__title {
   margin: 0;
   font-size: 1.35rem;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -313,13 +323,14 @@
 
 .frido-scard__price {
   font-size: 1.35rem;
-  font-weight: 700;
-  color: #c0392b;
+  font-weight: 500;
+  color: rgb(var(--color-button));
 }
 
 .frido-scard__compare {
   font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.45);
+  font-weight: 400;
+  color: rgba(var(--color-foreground), 0.45);
   text-decoration: line-through;
 }
 
@@ -390,7 +401,7 @@ body.frido-search-open {
     max-height: min(75vh, 44rem);
     transform: translateY(-0.5rem);
     opacity: 0;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 40px rgba(var(--color-shadow), 0.12);
   }
 
   .frido-search-panel.is-open .frido-search-panel__sheet {
@@ -400,7 +411,7 @@ body.frido-search-open {
 
   .frido-search-panel__body {
     padding: 2.4rem 3rem 2.8rem;
-    background: #fff;
+    background: rgb(var(--color-background));
   }
 
   .frido-search-panel__idle {
