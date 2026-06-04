@@ -31,7 +31,7 @@
   data-product-id="{{ review_product.id }}"
 >
   <div class="frido-judgeme-reviews__wrap page-width">
-    <header class="frido-judgeme-reviews__header">
+    <header class="frido-judgeme-reviews__header" data-frido-reviews-header-fallback hidden>
       <div class="frido-judgeme-reviews__summary">
         {% render 'frido-stars', rating: star_rating %}
         <p class="frido-judgeme-reviews__count" data-frido-reviews-count>
@@ -60,7 +60,7 @@
       </div>
     </header>
 
-    <div class="frido-judgeme-reviews__widget">
+    <div class="frido-judgeme-reviews__widget" data-frido-judgeme-widget>
       {% render 'frido-judgeme-embed', product: review_product %}
     </div>
   </div>

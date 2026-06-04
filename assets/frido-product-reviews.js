@@ -1,5 +1,5 @@
 /**
- * Style Judge.me widget as Hike masonry — wire header actions only (single widget).
+ * Judge.me PDP reviews — fallback header when widget missing; masonry styling when loaded.
  */
 (function () {
   function qs(sel, root) {
@@ -10,8 +10,29 @@
     return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
 
-  function hasReviews(root) {
-    return qsa('.jdgm-rev', root).length > 0;
+  function getWidgetEl(root) {
+    return qs('[data-frido-judgeme-widget]', root) || qs('.frido-judgeme-reviews__widget', root);
+  }
+
+  function widgetHydrated(root) {
+    var widget = getWidgetEl(root);
+    if (!widget) return false;
+    return !!(widget.querySelector('.jdgm-rev-widg') || widget.querySelector('.jdgm-rev'));
+  }
+
+  function setFallbackHeader(root, show) {
+    var header = qs('[data-frido-reviews-header-fallback]', root);
+    if (!header) return;
+
+    if (show) {
+      root.classList.add('frido-judgeme-reviews--no-widget');
+      root.classList.remove('frido-judgeme-reviews--widget-loaded');
+      header.hidden = false;
+    } else {
+      root.classList.remove('frido-judgeme-reviews--no-widget');
+      root.classList.add('frido-judgeme-reviews--widget-loaded');
+      header.hidden = true;
+    }
   }
 
   function renderWidgets() {
@@ -78,7 +99,11 @@
       if (!stars.length) return;
 
       var hasState = stars.some(function (s) {
-        return s.classList.contains('jdgm--on') || s.classList.contains('jdgm--off') || s.classList.contains('jdgm--filled');
+        return (
+          s.classList.contains('jdgm--on') ||
+          s.classList.contains('jdgm--off') ||
+          s.classList.contains('jdgm--filled')
+        );
       });
       if (hasState) return;
 
@@ -102,10 +127,17 @@
     });
   }
 
-  function markReady(root) {
+  function markWidgetReady(root) {
     fixStarGlyphs(root);
+    setFallbackHeader(root, false);
     root.classList.add('frido-judgeme-reviews--ready');
     syncCount(root);
+    wireActions(root);
+  }
+
+  function markWidgetMissing(root) {
+    setFallbackHeader(root, true);
+    root.classList.add('frido-judgeme-reviews--ready');
     wireActions(root);
   }
 
@@ -113,19 +145,26 @@
     if (!root || root._fridoJudgemeInit) return;
     root._fridoJudgemeInit = true;
 
+    if (!getWidgetEl(root)) {
+      markWidgetMissing(root);
+      return;
+    }
+
     wireActions(root);
     renderWidgets();
 
     var attempts = 0;
     function poll() {
       attempts += 1;
-      if (hasReviews(root)) {
-        markReady(root);
+      if (widgetHydrated(root)) {
+        markWidgetReady(root);
         return;
       }
       if (attempts < 40) {
         window.setTimeout(poll, 500);
+        return;
       }
+      markWidgetMissing(root);
     }
 
     poll();

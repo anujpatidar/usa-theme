@@ -12,14 +12,23 @@
   margin: 0 auto;
 }
 
-/* Hike header (replaces Judge.me top bar) */
+/* Hike header — fallback only when Judge.me widget does not load */
 .frido-judgeme-reviews__header {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1.2rem 2rem;
   margin-bottom: 2rem;
+}
+
+.frido-judgeme-reviews--no-widget .frido-judgeme-reviews__header,
+.frido-judgeme-reviews--no-widget .frido-judgeme-reviews__header[hidden] {
+  display: flex !important;
+}
+
+.frido-judgeme-reviews--widget-loaded .frido-judgeme-reviews__header {
+  display: none !important;
 }
 
 .frido-judgeme-reviews__summary {
@@ -81,29 +90,22 @@
   border-color: rgb(var(--color-foreground));
 }
 
-/* Hide Judge.me chrome we replace with theme header */
-.frido-judgeme-reviews .jdgm-rev-widg__title,
-.frido-judgeme-reviews .jdgm-rev-widg__header,
-.frido-judgeme-reviews .jdgm-widget-actions-wrapper,
-.frido-judgeme-reviews .jdgm-rev-widg__summary,
-.frido-judgeme-reviews .jdgm-histogram,
-.frido-judgeme-reviews .jdgm-rev-widg__histogram,
-.frido-judgeme-reviews .jdgm-rev-widg__pic-gallery,
-.frido-judgeme-reviews .jdgm-rev-widg__pics,
-.frido-judgeme-reviews .jdgm-rev-widg__gallery,
-.frido-judgeme-reviews .jdgm-rev-widg__actions {
+/* Masonry layout — hide Judge.me photo strip (not the main widget header) */
+.frido-judgeme-reviews--widget-loaded .jdgm-rev-widg__pic-gallery,
+.frido-judgeme-reviews--widget-loaded .jdgm-rev-widg__pics,
+.frido-judgeme-reviews--widget-loaded .jdgm-rev-widg__gallery {
   display: none !important;
 }
 
-/* Sort / filter panel — shown via filter button */
-.frido-judgeme-reviews .jdgm-rev-widg__sort-wrapper,
-.frido-judgeme-reviews .jdgm-subtab {
+/* Sort / filter — fallback header filter button only */
+.frido-judgeme-reviews--no-widget .jdgm-rev-widg__sort-wrapper,
+.frido-judgeme-reviews--no-widget .jdgm-subtab {
   display: none;
   margin-bottom: 1.6rem;
 }
 
-.frido-judgeme-reviews--filters-open .jdgm-rev-widg__sort-wrapper,
-.frido-judgeme-reviews--filters-open .jdgm-subtab {
+.frido-judgeme-reviews--no-widget.frido-judgeme-reviews--filters-open .jdgm-rev-widg__sort-wrapper,
+.frido-judgeme-reviews--no-widget.frido-judgeme-reviews--filters-open .jdgm-subtab {
   display: block !important;
 }
 
