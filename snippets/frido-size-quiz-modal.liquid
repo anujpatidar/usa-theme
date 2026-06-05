@@ -26,7 +26,7 @@
   <div class="frido-size-quiz__overlay" data-frido-size-quiz-close tabindex="-1"></div>
 
   <div
-    class="frido-size-quiz__panel"
+    class="frido-size-quiz__panel color-{{ section.settings.color_scheme | default: 'scheme-1' }} gradient"
     role="dialog"
     aria-modal="true"
     aria-labelledby="FridoSizeQuizTitle-{{ section.id }}"

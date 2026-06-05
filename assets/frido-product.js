@@ -9,6 +9,43 @@
     return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
 
+  function normalizeSizeLabel(str) {
+    return String(str || '')
+      .trim()
+      .toUpperCase()
+      .replace(/\s+/g, ' ');
+  }
+
+  function sizeLabelMatches(target, candidate) {
+    if (!target || candidate == null) return false;
+    var a = normalizeSizeLabel(target);
+    var b = normalizeSizeLabel(candidate);
+    if (a === b) return true;
+
+    var numA = a.match(/(\d+(?:\.\d+)?)/);
+    var numB = b.match(/(\d+(?:\.\d+)?)/);
+    if (!numA || !numB || numA[1] !== numB[1]) return false;
+
+    var prefixA = a.replace(numA[1], '').replace(/[^WM]/g, '');
+    var prefixB = b.replace(numB[1], '').replace(/[^WM]/g, '');
+    if (!prefixA || !prefixB) return true;
+    return prefixA.charAt(0) === prefixB.charAt(0);
+  }
+
+  function matchSizeOptionValue(target, candidates) {
+    if (!target || !candidates || !candidates.length) return null;
+
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i] === target) return candidates[i];
+    }
+
+    for (var j = 0; j < candidates.length; j++) {
+      if (sizeLabelMatches(target, candidates[j])) return candidates[j];
+    }
+
+    return null;
+  }
+
   function formatMoney(cents, format) {
     if (typeof Shopify !== 'undefined' && Shopify.formatMoney) {
       return Shopify.formatMoney(cents, format || window.theme?.moneyFormat);
@@ -1414,6 +1451,29 @@
       refreshVariantOptionButtons(root, product, selectedOptions);
     }
 
+    function selectSizeOnProduct(sizeLabel) {
+      var sizeOpt = product.options.find(function (opt) {
+        return /size/i.test(opt);
+      });
+      if (!sizeOpt) return false;
+
+      var wrap = qs('.frido-pdp-sizes', root);
+      if (!wrap) return false;
+
+      var buttons = qsa('[data-frido-option-value]', wrap);
+      var values = buttons.map(function (btn) {
+        return btn.getAttribute('data-frido-option-value');
+      });
+      var matched = matchSizeOptionValue(sizeLabel, values);
+      if (!matched) return false;
+
+      applyOptionChange(sizeOpt, matched);
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return true;
+    }
+
+    root._fridoSelectSize = selectSizeOnProduct;
+
     qsa('[data-frido-gender-nav]', root).forEach(function (btn) {
       btn.addEventListener('click', function () {
         if (btn.classList.contains('is-active')) return;
@@ -1536,6 +1596,25 @@
       initPdp(root);
     });
   }
+
+  window.FridoPdp = window.FridoPdp || {};
+  window.FridoPdp.selectSize = function (sizeLabel, rootEl) {
+    if (!sizeLabel) return false;
+    var root = rootEl || document.querySelector('[data-frido-pdp]');
+    if (root && typeof root._fridoSelectSize === 'function') {
+      return root._fridoSelectSize(sizeLabel);
+    }
+    return false;
+  };
+  window.FridoPdp.findPdpRoot = function (sectionId) {
+    if (sectionId) {
+      return (
+        document.getElementById('FridoProduct-' + sectionId) ||
+        document.querySelector('[data-frido-pdp][data-section="' + sectionId + '"]')
+      );
+    }
+    return document.querySelector('[data-frido-pdp]');
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

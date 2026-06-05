@@ -94,13 +94,20 @@
   }
 
   function cartAdd(items) {
+    fridoCartInternalAdd = true;
     return fetch((window.routes && window.routes.cart_add_url) || '/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({ items: items }),
-    }).then(function (r) {
-      return r.json();
-    });
+    })
+      .then(function (r) {
+        return r.json();
+      })
+      .finally(function () {
+        window.setTimeout(function () {
+          fridoCartInternalAdd = false;
+        }, 120);
+      });
   }
 
   function handleCartError(data) {
@@ -1124,7 +1131,7 @@
         .then(handleCartError)
         .then(function () {
           closeModal();
-          return refresh({ skipUpsells: true });
+          return openAfterCartAdd();
         });
     }
 
@@ -1191,6 +1198,146 @@
   }
 
   var eventsBound = false;
+  var fridoCartInternalAdd = false;
+  var thirdPartyApisHijacked = false;
+  var fetchInterceptorInstalled = false;
+  var openAfterCartAddTimer = null;
+
+  var THIRD_PARTY_DRAWER_SELECTORS = [
+    '#slidecarthq',
+    '#slide-cart',
+    '#slideCart',
+    '#side-cart',
+    '.slidecarthq',
+    '.slide-cart',
+    '.slideCart',
+    '[id*="slidecart" i]',
+    '[class*="slidecart" i]',
+    '[id*="slide-cart" i]',
+    '[class*="slide-cart" i]',
+    'cart-drawer.drawer',
+  ];
+
+  function suppressThirdPartyCartDrawers() {
+    THIRD_PARTY_DRAWER_SELECTORS.forEach(function (sel) {
+      try {
+        qsa(sel).forEach(function (el) {
+          if (el.closest('[data-frido-cart-drawer]')) return;
+          el.classList.remove('is-open', 'active', 'open', 'visible', 'drawer--is-open', 'show');
+          el.setAttribute('aria-hidden', 'true');
+          if (el.tagName === 'DIALOG') {
+            try {
+              el.close();
+            } catch (err) {
+              /* ignore */
+            }
+          }
+        });
+      } catch (err) {
+        /* ignore invalid selectors in older browsers */
+      }
+    });
+
+    ['SlideCart', 'slideCart', 'Slidecart', 'SideCart', 'sideCart', 'slideCartHQ'].forEach(function (name) {
+      var api = window[name];
+      if (!api) return;
+      if (typeof api.close === 'function') {
+        try {
+          api.close();
+        } catch (err) {
+          /* ignore */
+        }
+      }
+      if (typeof api.hide === 'function') {
+        try {
+          api.hide();
+        } catch (err) {
+          /* ignore */
+        }
+      }
+    });
+
+    document.documentElement.classList.remove('slidecart-open', 'slide-cart-open', 'cart-open');
+    document.body.classList.remove('slidecart-open', 'slide-cart-open');
+  }
+
+  function routeThirdPartyCartOpen(trigger) {
+    if (window.FridoCart && typeof window.FridoCart.open === 'function') {
+      window.FridoCart.open(trigger);
+    }
+  }
+
+  function hijackThirdPartyCartApis() {
+    if (thirdPartyApisHijacked) return;
+    thirdPartyApisHijacked = true;
+
+    ['SlideCart', 'slideCart', 'Slidecart', 'SideCart', 'sideCart'].forEach(function (name) {
+      var api = window[name];
+      if (!api || api.__fridoHijacked) return;
+
+      ['open', 'show', 'toggle'].forEach(function (method) {
+        if (typeof api[method] !== 'function') return;
+        api[method] = function () {
+          suppressThirdPartyCartDrawers();
+          routeThirdPartyCartOpen();
+        };
+      });
+
+      api.__fridoHijacked = true;
+    });
+  }
+
+  function openAfterCartAdd(trigger) {
+    if (openAfterCartAddTimer) window.clearTimeout(openAfterCartAddTimer);
+    return new Promise(function (resolve) {
+      openAfterCartAddTimer = window.setTimeout(function () {
+        openAfterCartAddTimer = null;
+        suppressThirdPartyCartDrawers();
+        refresh({ skipUpsells: false })
+          .then(function () {
+            open(trigger);
+            suppressThirdPartyCartDrawers();
+            window.setTimeout(suppressThirdPartyCartDrawers, 60);
+            window.setTimeout(suppressThirdPartyCartDrawers, 250);
+          })
+          .then(resolve, resolve);
+      }, 30);
+    });
+  }
+
+  function shouldOpenDrawerForCartEvent(evt) {
+    if (!evt) return false;
+    if (evt.source === 'frido-cart' || evt.source === 'cart-items') return false;
+    return true;
+  }
+
+  function installCartAddInterceptor() {
+    if (fetchInterceptorInstalled || typeof window.fetch !== 'function') return;
+    fetchInterceptorInstalled = true;
+
+    var nativeFetch = window.fetch.bind(window);
+    window.fetch = function (input, init) {
+      var url = typeof input === 'string' ? input : input && input.url;
+      var isCartAdd = url && /\/cart\/add(\.js)?(\?|$)/.test(url);
+
+      return nativeFetch(input, init).then(function (response) {
+        if (!isCartAdd || !response.ok || fridoCartInternalAdd || !drawerEl) return response;
+
+        response
+          .clone()
+          .json()
+          .then(function (data) {
+            if (!data || data.status || !window.FridoCart) return;
+            openAfterCartAdd();
+          })
+          .catch(function () {
+            /* ignore non-json */
+          });
+
+        return response;
+      });
+    };
+  }
 
   function bindEvents() {
     if (eventsBound) return;
@@ -1300,7 +1447,11 @@
 
     if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
       subscribe(PUB_SUB_EVENTS.cartUpdate, function (evt) {
-        if (evt && evt.source === 'frido-cart') return;
+        if (!evt || evt.source === 'frido-cart') return;
+        if (shouldOpenDrawerForCartEvent(evt)) {
+          openAfterCartAdd();
+          return;
+        }
         refresh();
       });
     }
@@ -1343,6 +1494,9 @@
     }
 
     bindEvents();
+    hijackThirdPartyCartApis();
+    installCartAddInterceptor();
+    window.setInterval(hijackThirdPartyCartApis, 2000);
     refresh();
   }
 
@@ -1350,11 +1504,16 @@
     open: open,
     close: close,
     refresh: refresh,
+    suppressThirdParty: suppressThirdPartyCartDrawers,
     addItems: function (items) {
-      return cartAdd(items).then(handleCartError).then(refresh).then(open);
+      return cartAdd(items).then(handleCartError).then(function () {
+        return openAfterCartAdd();
+      });
     },
     openVariantModal: openVariantModal,
   };
+
+  installCartAddInterceptor();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

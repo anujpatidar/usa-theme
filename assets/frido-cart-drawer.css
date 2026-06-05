@@ -907,6 +907,21 @@ body.frido-cart-modal-open {
   overflow: hidden;
 }
 
+/* Keep SlideCart / side-cart apps from appearing over the Frido drawer */
+#slidecarthq,
+#slide-cart,
+#slideCart,
+#side-cart,
+.slidecarthq,
+.slide-cart,
+.slideCart,
+[id*='slidecart' i],
+[class*='slidecart' i] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 @media screen and (max-width: 749px) {
   .frido-cart-modal {
     padding: 0;

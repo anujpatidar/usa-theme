@@ -62,7 +62,38 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
+              if (window.FridoCart) {
+                const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
+                if (!this.error)
+                  publish(PUB_SUB_EVENTS.cartUpdate, {
+                    source: 'product-form',
+                    productVariantId: formData.get('id'),
+                    cartData: response,
+                  }).then(() => {
+                    CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
+                  });
+                this.error = false;
+                const quickAddModal = this.closest('quick-add-modal');
+                if (quickAddModal) quickAddModal.hide(true);
+                return;
+              }
               window.location = window.routes.cart_url;
+              return;
+            }
+
+            if (window.FridoCart && typeof window.FridoCart.open === 'function') {
+              const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
+              if (!this.error)
+                publish(PUB_SUB_EVENTS.cartUpdate, {
+                  source: 'product-form',
+                  productVariantId: formData.get('id'),
+                  cartData: response,
+                }).then(() => {
+                  CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
+                });
+              this.error = false;
+              const quickAddModal = this.closest('quick-add-modal');
+              if (quickAddModal) quickAddModal.hide(true);
               return;
             }
 

@@ -440,6 +440,8 @@
         '</span></p>';
     }
 
+    var selectSize = data.recommendedSize || usNum || displaySize;
+
     inner.innerHTML =
       '<div class="fsq-result__badge"><span class="fsq-result__badge-icon" aria-hidden="true">' +
       RIBBON_SVG +
@@ -475,7 +477,7 @@
       '<div class="fsq-result__stat"><span class="fsq-result__stat-val">2.4M+</span><span class="fsq-result__stat-label">Perfect fits delivered</span></div>' +
       '</div>' +
       '<button type="button" class="fsq-result__cta" data-fsq-select-size="' +
-      (data.recommendedSize || displaySize).replace(/"/g, '&quot;') +
+      String(selectSize).replace(/"/g, '&quot;') +
       '">✓ Select Size ' +
       displaySize +
       ' ›</button>';
@@ -483,22 +485,79 @@
     var cta = qs('[data-fsq-select-size]', inner);
     if (cta) {
       cta.addEventListener('click', function () {
-        selectSizeOnPdp(cta.getAttribute('data-fsq-select-size'));
+        selectSizeOnPdp(cta.getAttribute('data-fsq-select-size'), modal);
         closeModal(modal);
       });
     }
   }
 
-  function selectSizeOnPdp(sizeLabel) {
-    if (!sizeLabel) return;
-    var pdp = document.querySelector('[data-frido-pdp]');
-    if (!pdp) return;
-    var sel = '[data-frido-option-value="' + sizeLabel.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"]';
-    var btn = pdp.querySelector(sel);
-    if (btn) {
-      btn.click();
-      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  function getPdpRoot(modal) {
+    var sectionId = modal && modal._fridoSizeQuizCtx && modal._fridoSizeQuizCtx.config
+      ? modal._fridoSizeQuizCtx.config.sectionId
+      : null;
+    if (window.FridoPdp && typeof window.FridoPdp.findPdpRoot === 'function') {
+      return window.FridoPdp.findPdpRoot(sectionId);
     }
+    if (sectionId) {
+      return (
+        document.getElementById('FridoProduct-' + sectionId) ||
+        document.querySelector('[data-frido-pdp][data-section="' + sectionId + '"]')
+      );
+    }
+    return document.querySelector('[data-frido-pdp]');
+  }
+
+  function selectSizeOnPdp(sizeLabel, modal) {
+    if (!sizeLabel) return false;
+    var pdpRoot = getPdpRoot(modal);
+
+    if (window.FridoPdp && typeof window.FridoPdp.selectSize === 'function') {
+      if (window.FridoPdp.selectSize(sizeLabel, pdpRoot)) return true;
+
+      var config = modal && modal._fridoSizeQuizCtx ? modal._fridoSizeQuizCtx.config : {};
+      var available = config.availableSizes || [];
+      for (var i = 0; i < available.length; i++) {
+        if (sizeLabelMatches(sizeLabel, available[i])) {
+          if (window.FridoPdp.selectSize(available[i], pdpRoot)) return true;
+        }
+      }
+      return false;
+    }
+
+    if (!pdpRoot) return false;
+    var wrap = pdpRoot.querySelector('.frido-pdp-sizes');
+    if (!wrap) return false;
+
+    var buttons = wrap.querySelectorAll('[data-frido-option-value]');
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      var val = btn.getAttribute('data-frido-option-value');
+      if (val === sizeLabel || sizeLabelMatches(sizeLabel, val)) {
+        if (!btn.disabled) btn.click();
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function sizeLabelMatches(target, candidate) {
+    var a = String(target || '')
+      .trim()
+      .toUpperCase()
+      .replace(/\s+/g, ' ');
+    var b = String(candidate || '')
+      .trim()
+      .toUpperCase()
+      .replace(/\s+/g, ' ');
+    if (a === b) return true;
+    var numA = a.match(/(\d+(?:\.\d+)?)/);
+    var numB = b.match(/(\d+(?:\.\d+)?)/);
+    if (!numA || !numB || numA[1] !== numB[1]) return false;
+    var prefixA = a.replace(numA[1], '').replace(/[^WM]/g, '');
+    var prefixB = b.replace(numB[1], '').replace(/[^WM]/g, '');
+    if (!prefixA || !prefixB) return true;
+    return prefixA.charAt(0) === prefixB.charAt(0);
   }
 
   function showQuizView(modal) {
