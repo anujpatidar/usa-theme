@@ -1,6 +1,7 @@
 (function () {
   var BODY_CLASS = 'frido-size-quiz-open';
   var TOTAL_STEPS = 7;
+  var REC_STORAGE_PREFIX = 'frido_size_recommendation_v1_';
 
   var BRANDS_POPULAR = [
     {
@@ -129,6 +130,69 @@
   function extractUsNum(size) {
     var m = String(size).match(/(\d+(?:\.\d+)?)/);
     return m ? m[1] : '';
+  }
+
+  function recStorageKey(productId) {
+    return REC_STORAGE_PREFIX + String(productId);
+  }
+
+  function loadRecommendation(productId) {
+    if (!productId) return null;
+    try {
+      var raw = localStorage.getItem(recStorageKey(productId));
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      if (!data || !data.result) return null;
+      return data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveRecommendation(config, state, result) {
+    if (!config || !config.productId || !result) return;
+    try {
+      var payload = {
+        productId: config.productId,
+        genderCategory: state.genderCategory,
+        result: result,
+        savedAt: Date.now(),
+      };
+      localStorage.setItem(recStorageKey(config.productId), JSON.stringify(payload));
+      updateFindSizeButtons(config.productId, result, state.genderCategory);
+    } catch (e) {
+      /* ignore quota errors */
+    }
+  }
+
+  function compactDisplaySize(displaySize) {
+    return String(displaySize || '').replace(/\s+/g, '');
+  }
+
+  function recommendedButtonLabel(displaySize) {
+    return 'Recommended Size: ' + compactDisplaySize(displaySize);
+  }
+
+  function updateFindSizeButtons(productId, result, genderCategory) {
+    if (!productId || !result) return;
+    var display = formatDisplaySize(result.displaySize || result.recommendedSize, genderCategory);
+    var label = recommendedButtonLabel(display);
+    qsa('[data-frido-size-quiz-product="' + productId + '"]').forEach(function (btn) {
+      btn.textContent = label;
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('data-frido-size-quiz-has-result', 'true');
+    });
+  }
+
+  function syncFindSizeButtonsFromPage() {
+    qsa('[data-frido-size-quiz]').forEach(function (modal) {
+      var config = parseConfig(modal);
+      if (!config.productId) return;
+      var cached = loadRecommendation(config.productId);
+      if (cached && cached.result) {
+        updateFindSizeButtons(config.productId, cached.result, cached.genderCategory);
+      }
+    });
   }
 
   function qs(sel, root) {
@@ -627,6 +691,7 @@
     fetchRecommendation(modal, ctx.state, ctx.config)
       .then(function (data) {
         ctx.state.result = data;
+        saveRecommendation(ctx.config, ctx.state, data);
         showResultView(modal, data, ctx.state);
       })
       .catch(function (err) {
@@ -741,6 +806,11 @@
     updateChrome(modal, ctx.state);
   }
 
+  function prepareModalForClose(modal) {
+    setLoading(modal, false);
+    showQuizView(modal);
+  }
+
   function resetModal(modal) {
     setLoading(modal, false);
     var config = parseConfig(modal);
@@ -753,7 +823,19 @@
   function openModal(modal) {
     if (!modal) return;
     bindModal(modal);
-    resetModal(modal);
+
+    var config = parseConfig(modal);
+    var cached = loadRecommendation(config.productId);
+
+    if (cached && cached.result) {
+      var cachedState = createState(config);
+      cachedState.genderCategory = cached.genderCategory || cachedState.genderCategory;
+      cachedState.result = cached.result;
+      modal._fridoSizeQuizCtx = { config: config, state: cachedState };
+      showResultView(modal, cached.result, cachedState);
+    } else {
+      resetModal(modal);
+    }
 
     function onOpened() {
       var panel = qs('.frido-size-quiz__panel', modal);
@@ -776,7 +858,7 @@
     setLoading(modal, false);
 
     function onClosed() {
-      resetModal(modal);
+      prepareModalForClose(modal);
     }
 
     if (window.FridoOverlay) {
@@ -802,6 +884,7 @@
 
   function init() {
     qsa('[data-frido-size-quiz]').forEach(bindModal);
+    syncFindSizeButtonsFromPage();
   }
 
   document.addEventListener('click', function (e) {
@@ -825,7 +908,12 @@
     qsa('.frido-size-quiz.is-open').forEach(closeModal);
   });
 
-  window.FridoSizeQuiz = { open: openModal, close: closeModal };
+  window.FridoSizeQuiz = {
+    open: openModal,
+    close: closeModal,
+    getRecommendation: loadRecommendation,
+    updateButtons: updateFindSizeButtons,
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

@@ -120,7 +120,7 @@
           {% render 'frido-pdp-variants', product: product, section: section %}
 
           <div class="frido-pdp__find-size-wrap">
-            {% render 'frido-find-size-button', color_scheme: section.settings.color_scheme, section_id: section.id %}
+            {% render 'frido-find-size-button', color_scheme: section.settings.color_scheme, section_id: section.id, product_id: product.id %}
           </div>
 
           {% render 'frido-pdp-bundle-picker', product: product, section: section, bundle_blocks: bundle_blocks %}

@@ -8,6 +8,7 @@
   @param full_width {Boolean} default true
   @param tag {String} button | submit — for forms (default button)
   @param color_scheme {String} Shopify color scheme id (e.g. scheme-1) for button colors
+  @param product_id {String|Number} product id for cached size recommendation
 {% endcomment %}
 {%- liquid
   assign btn_label = label | default: settings.frido_find_size_label | default: 'Find my Perfect Size'
@@ -15,6 +16,7 @@
   assign btn_url = url | default: settings.frido_find_size_url
   assign btn_behavior = behavior | default: settings.frido_find_size_behavior | default: 'quiz'
   assign btn_section_id = section_id | default: ''
+  assign btn_product_id = product_id | default: ''
   assign btn_class = class | default: ''
   assign btn_tag = tag | default: 'button'
   assign is_full = true
@@ -37,6 +39,8 @@
         class="{{ btn_classes | strip }}"
         data-frido-size-quiz-open
         data-frido-size-quiz-section="{{ btn_section_id }}"
+        data-frido-find-size-default="{{ btn_label | escape }}"
+        {% if btn_product_id != blank %}data-frido-size-quiz-product="{{ btn_product_id }}"{% endif %}
         aria-haspopup="dialog"
       >
         {{ btn_label | escape }}

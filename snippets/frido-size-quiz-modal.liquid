@@ -35,6 +35,7 @@
     <script type="application/json" data-frido-size-quiz-config>
       {
         "sectionId": {{ section.id | json }},
+        "productId": {{ product.id | json }},
         "productTitle": {{ product.title | json }},
         "availableSizes": [
           {%- if size_option -%}
