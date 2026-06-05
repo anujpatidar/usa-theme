@@ -3,8 +3,18 @@
   var TOTAL_STEPS = 7;
 
   var BRANDS_POPULAR = [
-    { id: 'nike', label: 'Nike', logo: '✓' },
-    { id: 'adidas', label: 'Adidas', logo: '◆' },
+    {
+      id: 'nike',
+      label: 'Nike',
+      logo:
+        '<svg width="32" height="18" viewBox="0 0 32 18" fill="none" aria-hidden="true"><path d="M2 14.5C8 11 14 7.5 22 5.5C26 4.5 28.5 4 30 3.5C28 8 22 12 14 14.5C10 16 6 16.5 2 14.5Z" fill="#111"/></svg>',
+    },
+    {
+      id: 'adidas',
+      label: 'Adidas',
+      logo:
+        '<svg width="28" height="18" viewBox="0 0 28 18" fill="none" aria-hidden="true"><path d="M2 15L12 3L14 5L6 15H2Z" fill="#111"/><path d="M8 15L18 3L20 5L12 15H8Z" fill="#111"/><path d="M14 15L24 3L26 5L18 15H14Z" fill="#111"/></svg>',
+    },
   ];
 
   var BRANDS_OTHER = [
@@ -25,7 +35,7 @@
   ];
 
   var FIT_OPTIONS = [
-    { id: 'tight', emoji: '😖', title: 'Too tight', desc: 'My toes feel cramped' },
+    { id: 'tight', emoji: '😣', title: 'Too tight', desc: 'My toes feel cramped' },
     { id: 'perfect', emoji: '😊', title: 'Perfect', desc: 'Comfortable all day' },
     { id: 'loose', emoji: '😐', title: 'Too loose', desc: 'My foot slides around' },
   ];
@@ -40,12 +50,12 @@
   var TOE_OPTIONS = [
     { id: 'snug', emoji: '🤏', title: 'Snug fit', desc: 'Minimal space, like athletic shoes' },
     { id: 'natural', emoji: '😊', title: 'Natural fit', desc: 'Comfortable wiggle room' },
-    { id: 'extra_space', emoji: '😌', title: 'Extra space (barefoot feel)', desc: 'Maximum toe freedom' },
+    { id: 'extra_space', emoji: '😫', title: 'Extra space (barefoot feel)', desc: 'Maximum toe freedom' },
   ];
 
   var CONDITION_OPTIONS = [
     { id: 'bunions', title: 'Bunions', desc: 'Bony bump at big toe joint' },
-    { id: 'neuropathy', title: 'Neuropathy', desc: 'Nerve pain or numbness' },
+    { id: 'neuropathy', title: 'Neuropathy', desc: 'Any bump or drop toe joint' },
     { id: 'flat_feet', title: 'Flat feet', desc: 'Low or no arch' },
     { id: 'high_arches', title: 'High arches', desc: 'Pronounced arch' },
     { id: 'plantar_fasciitis', title: 'Plantar fasciitis', desc: 'Heel pain' },
@@ -59,6 +69,67 @@
     { id: 'hiking', emoji: '⛰️', title: 'Hiking', desc: 'Trails and outdoor terrain' },
     { id: 'exercise', emoji: '🏋️', title: 'Gym/Training', desc: 'Workouts and training' },
   ];
+
+  var RIBBON_SVG =
+    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 14.5h6l-.8 6.5-2.2-1.5-2.2 1.5-.8-6.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+
+  var TREND_SVG =
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 16l5-5 4 4 7-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 7h5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var EU_WOMENS = {
+    '5': '35',
+    '5.5': '35.5',
+    '6': '36',
+    '6.5': '37',
+    '7': '37.5',
+    '7.5': '38',
+    '8': '38.5',
+    '8.5': '39',
+    '9': '40',
+    '9.5': '40.5',
+    '10': '41',
+    '10.5': '41.5',
+    '11': '42',
+    '11.5': '42.5',
+    '12': '43',
+  };
+
+  var EU_MENS = {
+    '7': '40',
+    '7.5': '40.5',
+    '8': '41',
+    '8.5': '42',
+    '9': '42.5',
+    '9.5': '43',
+    '10': '44',
+    '10.5': '44.5',
+    '11': '45',
+    '11.5': '45.5',
+    '12': '46',
+    '12.5': '47',
+    '13': '48',
+    '13.5': '48.5',
+    '14': '49',
+  };
+
+  function euSizeFor(gender, usNum) {
+    var map = gender === 'mens' ? EU_MENS : EU_WOMENS;
+    return map[usNum] || '';
+  }
+
+  function formatDisplaySize(raw, gender) {
+    if (!raw) return '—';
+    if (/^[MW]\s/i.test(raw)) return raw;
+    var num = String(raw).replace(/[^\d.]/g, '');
+    if (!num) return raw;
+    var prefix = gender === 'mens' ? 'M' : 'W';
+    return prefix + ' ' + num;
+  }
+
+  function extractUsNum(size) {
+    var m = String(size).match(/(\d+(?:\.\d+)?)/);
+    return m ? m[1] : '';
+  }
 
   function qs(sel, root) {
     return (root || document).querySelector(sel);
@@ -277,6 +348,10 @@
             '</span></button>';
         });
         html += '</div>';
+        html +=
+          '<button type="button" class="fsq-step__proceed" data-fsq-proceed' +
+          (state.footConditions.length === 0 ? ' disabled' : '') +
+          '>Proceed</button>';
         break;
 
       case 7:
@@ -308,16 +383,11 @@
     var progress = qs('[data-frido-size-quiz-progress]', modal);
     var eta = qs('[data-frido-size-quiz-eta]', modal);
     var back = qs('[data-frido-size-quiz-back]', modal);
-    var proceed = qs('[data-frido-size-quiz-proceed]', modal);
     var body = qs('[data-frido-size-quiz-body]', modal);
 
     if (progress) renderProgress(progress, state.step);
     if (eta) eta.textContent = etaText(state.step);
     if (back) back.hidden = state.step <= 1;
-    if (proceed) {
-      proceed.hidden = state.step !== 6;
-      proceed.disabled = state.footConditions.length === 0;
-    }
     if (body) renderStep(body, state);
   }
 
@@ -344,9 +414,11 @@
     };
   }
 
-  function renderResult(inner, data, state) {
-    var size = data.displaySize || data.recommendedSize || '—';
-    var confidence = data.confidence != null ? data.confidence : 87;
+  function renderResult(inner, data, state, modal) {
+    var displaySize = formatDisplaySize(data.displaySize || data.recommendedSize, state.genderCategory);
+    var usNum = extractUsNum(data.recommendedSize || displaySize);
+    var eu = euSizeFor(state.genderCategory, usNum);
+    var confidence = data.confidence != null ? Math.round(data.confidence) : 87;
     var adjustments = data.adjustments || [];
 
     var reasonsHtml = '';
@@ -369,18 +441,26 @@
     }
 
     inner.innerHTML =
-      '<div class="fsq-result__badge"><span class="fsq-result__badge-icon" aria-hidden="true">🏅</span></div>' +
+      '<div class="fsq-result__badge"><span class="fsq-result__badge-icon" aria-hidden="true">' +
+      RIBBON_SVG +
+      '</span></div>' +
       '<h3 class="fsq-result__title">Your Perfect Fit Found!</h3>' +
       '<p class="fsq-result__sub">Based on your unique foot profile</p>' +
       '<div class="fsq-result__card">' +
       '<p class="fsq-result__label">We recommend</p>' +
       '<div class="fsq-result__size-row">' +
       '<span class="fsq-result__size">' +
-      size +
+      displaySize +
       '</span>' +
-      '<span class="fsq-result__eu">US Size</span>' +
+      (eu
+        ? '<span class="fsq-result__eu-wrap"><span class="fsq-result__eu">(EU ' +
+          eu +
+          ')</span><span class="fsq-result__us-label">US Size</span></span>'
+        : '<span class="fsq-result__eu-wrap"><span class="fsq-result__us-label">US Size</span></span>') +
       '</div>' +
-      '<div class="fsq-result__confidence"><span aria-hidden="true">↗</span> ' +
+      '<div class="fsq-result__confidence">' +
+      TREND_SVG +
+      ' ' +
       confidence +
       '% match confidence</div>' +
       '<div class="fsq-result__reasons">' +
@@ -394,13 +474,10 @@
       '<div class="fsq-result__stat"><span class="fsq-result__stat-val">4.8★</span><span class="fsq-result__stat-label">Size accuracy rating</span></div>' +
       '<div class="fsq-result__stat"><span class="fsq-result__stat-val">2.4M+</span><span class="fsq-result__stat-label">Perfect fits delivered</span></div>' +
       '</div>' +
-      (data.reasoning
-        ? '<p class="fsq-result__reasoning">' + data.reasoning + '</p>'
-        : '') +
       '<button type="button" class="fsq-result__cta" data-fsq-select-size="' +
-      (data.recommendedSize || size).replace(/"/g, '&quot;') +
+      (data.recommendedSize || displaySize).replace(/"/g, '&quot;') +
       '">✓ Select Size ' +
-      size +
+      displaySize +
       ' ›</button>';
 
     var cta = qs('[data-fsq-select-size]', inner);
@@ -437,7 +514,7 @@
     var inner = qs('[data-frido-size-quiz-result-inner]', modal);
     if (quiz) quiz.hidden = true;
     if (result) result.hidden = false;
-    if (inner) renderResult(inner, data, state);
+    if (inner) renderResult(inner, data, state, modal);
   }
 
   function setLoading(modal, on) {
@@ -522,10 +599,6 @@
       goBack(modal, ctx);
     });
 
-    qs('[data-frido-size-quiz-proceed]', modal).addEventListener('click', function () {
-      if (ctx.state.step === 6 && ctx.state.footConditions.length) goNext(modal, ctx);
-    });
-
     qsa('[data-frido-size-quiz-close]', modal).forEach(function (btn) {
       btn.addEventListener('click', function () {
         closeModal(modal);
@@ -590,6 +663,12 @@
           else ctx.state.footConditions.splice(idx, 1);
         }
         updateChrome(modal, ctx.state);
+        return;
+      }
+
+      var proceedBtn = e.target.closest('[data-fsq-proceed]');
+      if (proceedBtn && !proceedBtn.disabled) {
+        if (ctx.state.step === 6 && ctx.state.footConditions.length) goNext(modal, ctx);
         return;
       }
 
